@@ -1,0 +1,40 @@
+/* ── Abadikan Sans (custom, user-supplied) ─────────────────────────────── */
+/* Drop your .woff2 files into src/assets/fonts/ and they will be loaded here */
+@font-face {
+  font-family: 'Abadikan Sans';
+  src: url('@/assets/fonts/AbadikanSans-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Abadikan Sans';
+  src: url('@/assets/fonts/AbadikanSans-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Abadikan Sans';
+  src: url('@/assets/fonts/AbadikanSans-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Abadikan Sans';
+  src: url('@/assets/fonts/AbadikanSans-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── Inter (system UI font) ────────────────────────────────────────────── */
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+
+/* ── JetBrains Mono (code / data) ──────────────────────────────────────── */
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';

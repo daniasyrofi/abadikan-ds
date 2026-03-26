@@ -1,0 +1,83 @@
+<script setup lang="ts">
+import { provide, ref, watch, computed } from 'vue'
+import { cn } from '@/lib/utils'
+
+export type TabsVariant      = 'line' | 'pill' | 'boxed'
+export type TabsOrientation  = 'horizontal' | 'vertical'
+export type TabsSize         = 'sm' | 'md' | 'lg'
+
+export const TABS_KEY = Symbol('tabs')
+
+export interface TabsContext {
+  activeTab:    ReturnType<typeof ref<string>>
+  variant:      TabsVariant
+  orientation:  TabsOrientation
+  size:         TabsSize
+  selectTab:    (value: string) => void
+  registerTab:  (value: string) => void
+  unregisterTab:(value: string) => void
+  tabs:         ReturnType<typeof ref<string[]>>
+}
+
+interface Props {
+  modelValue:   string
+  variant?:     TabsVariant
+  orientation?: TabsOrientation
+  size?:        TabsSize
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  variant:     'line',
+  orientation: 'horizontal',
+  size:        'md',
+})
+
+const emit = defineEmits<{ 'update:modelValue': [value: string] }>()
+
+const activeTab = ref(props.modelValue)
+const tabs      = ref<string[]>([])
+
+watch(() => props.modelValue, (val) => {
+  activeTab.value = val
+})
+
+function selectTab(value: string) {
+  activeTab.value = value
+  emit('update:modelValue', value)
+}
+
+function registerTab(value: string) {
+  if (!tabs.value.includes(value)) {
+    tabs.value.push(value)
+  }
+}
+
+function unregisterTab(value: string) {
+  const idx = tabs.value.indexOf(value)
+  if (idx !== -1) tabs.value.splice(idx, 1)
+}
+
+provide<TabsContext>(TABS_KEY, {
+  activeTab,
+  variant:     props.variant,
+  orientation: props.orientation,
+  size:        props.size,
+  selectTab,
+  registerTab,
+  unregisterTab,
+  tabs,
+})
+
+const classes = computed(() =>
+  cn(
+    'flex',
+    props.orientation === 'vertical' ? 'flex-row gap-4' : 'flex-col',
+  )
+)
+</script>
+
+<template>
+  <div :class="classes">
+    <slot />
+  </div>
+</template>
