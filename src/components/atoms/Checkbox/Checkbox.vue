@@ -40,45 +40,76 @@ function handleChange(e: Event) {
   }
 }
 
-// Size maps
 const boxSizeClass: Record<CheckboxSize, string> = {
-  sm: 'size-3.5',
-  md: 'size-4',
-  lg: 'size-5',
+  sm: 'size-4',    // 16px
+  md: 'size-5',    // 20px
+  lg: 'size-6',    // 24px
 }
 
 const iconSizePx: Record<CheckboxSize, number> = {
-  sm: 10,
-  md: 12,
-  lg: 14,
+  sm: 12,
+  md: 14,
+  lg: 16,
 }
 
 const labelTextClass: Record<CheckboxSize, string> = {
-  sm: 'text-sm',
-  md: 'text-sm',
-  lg: 'text-base',
+  sm: 'text-xs',   // 12px
+  md: 'text-sm',   // 14px
+  lg: 'text-base', // 16px
 }
 
 const descTextClass: Record<CheckboxSize, string> = {
-  sm: 'text-xs',
-  md: 'text-sm',
+  sm: 'text-[11px]',
+  md: 'text-xs',
   lg: 'text-sm',
+}
+
+// Math for baseline alignment: (BoxHeight - LineHeight) / 2
+// Assumes text uses leading-none (LineHeight = FontSize)
+const offsetClass: Record<CheckboxSize, string> = {
+  sm: 'mt-[2px]',  // (16 - 12)/2 = 2px
+  md: 'mt-[3px]',  // (20 - 14)/2 = 3px
+  lg: 'mt-[4px]',  // (24 - 16)/2 = 4px
 }
 
 const boxClasses = computed(() =>
   cn(
-    'shrink-0 inline-flex items-center justify-center rounded-[--radius-sm]',
-    'border transition-all duration-[--duration-normal] ease-[--ease-default]',
+    'checkbox-box shrink-0 inline-flex items-center justify-center',
+    'border-2 transition-all duration-150 ease-out',
     boxSizeClass[props.size],
-    isActive.value
-      ? hasError.value
-        ? 'bg-[--color-danger] border-[--color-danger]'
-        : 'bg-[--color-primary] border-[--color-primary]'
-      : hasError.value
-        ? 'bg-[--color-surface] border-[--color-danger]'
-        : 'bg-[--color-surface] border-[--color-border-strong]',
     props.disabled && 'opacity-50 cursor-not-allowed',
   )
+)
+
+const boxStyle = computed(() => {
+  const styles: Record<string, string> = {
+    borderRadius: 'var(--radius-sm)',
+  }
+
+  if (isActive.value) {
+    if (hasError.value) {
+      styles.backgroundColor = 'var(--color-danger)'
+      styles.borderColor = 'var(--color-danger)'
+    } else {
+      styles.backgroundColor = 'var(--color-primary)'
+      styles.borderColor = 'var(--color-primary)'
+      styles.transform = 'scale(1.05)'
+    }
+  } else {
+    if (hasError.value) {
+      styles.backgroundColor = 'var(--color-danger-light)'
+      styles.borderColor = 'var(--color-danger)'
+    } else {
+      styles.backgroundColor = 'var(--color-surface)'
+      styles.borderColor = 'var(--color-border-strong)'
+    }
+  }
+
+  return styles
+})
+
+const focusRingVar = computed(() =>
+  hasError.value ? 'var(--ring-danger)' : '0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-primary)'
 )
 </script>
 
@@ -86,9 +117,12 @@ const boxClasses = computed(() =>
   <div :class="cn('inline-flex flex-col gap-1', disabled && 'cursor-not-allowed')">
     <label
       :class="cn(
-        'inline-flex items-start gap-2',
+        'checkbox-label relative flex items-start gap-2.5',
         disabled ? 'cursor-not-allowed' : 'cursor-pointer',
       )"
+      :data-active="isActive || undefined"
+      :data-error="hasError || undefined"
+      :data-disabled="disabled || undefined"
     >
       <!-- Hidden native input -->
       <input
@@ -109,40 +143,47 @@ const boxClasses = computed(() =>
       <!-- Visual box -->
       <span
         :class="boxClasses"
+        :style="[boxStyle, { '--focus-ring': focusRingVar }]"
         aria-hidden="true"
       >
         <RiCheckLine
           v-if="isChecked"
           :size="iconSizePx[size]"
-          class="text-white stroke-[0.5]"
+          class="stroke-[0.5]"
+          :style="{ color: 'var(--color-text-inverse)' }"
         />
         <RiSubtractLine
           v-else-if="isIndeterminate"
           :size="iconSizePx[size]"
-          class="text-white"
+          :style="{ color: 'var(--color-text-inverse)' }"
         />
       </span>
 
       <!-- Text content -->
       <span
         v-if="label || description"
-        class="flex flex-col gap-0.5 pt-px"
+        :class="cn('flex flex-col gap-1', offsetClass[size])"
       >
         <span
           v-if="label"
           :class="cn(
             labelTextClass[size],
-            'font-medium leading-snug',
-            hasError ? 'text-[--color-danger]' : 'text-[--color-text-primary]',
+            'font-medium leading-none transition-colors overflow-hidden truncate',
             disabled && 'opacity-50',
           )"
+          :style="{
+            color: hasError
+              ? 'var(--color-danger)'
+              : 'var(--color-text-primary)',
+          }"
         >
           {{ label }}
         </span>
         <span
           v-if="description && !error"
           :id="`${inputId}-desc`"
-          :class="cn(descTextClass[size], 'text-[--color-text-secondary]', disabled && 'opacity-50')"
+          :class="cn(descTextClass[size], disabled && 'opacity-50')"
+          :style="{ color: 'var(--color-text-secondary)' }"
         >
           {{ description }}
         </span>
@@ -153,9 +194,23 @@ const boxClasses = computed(() =>
     <p
       v-if="error"
       :id="`${inputId}-desc`"
-      class="text-sm text-[--color-danger] ml-6"
+      class="text-sm ml-7"
+      :style="{ color: 'var(--color-danger)' }"
     >
       {{ error }}
     </p>
   </div>
 </template>
+
+<style scoped>
+/* Focus ring via peer-focus-visible on the hidden input */
+.peer:focus-visible ~ .checkbox-box {
+  box-shadow: var(--focus-ring);
+  outline: none;
+}
+
+/* Hover: darken border on unchecked, non-error, non-disabled checkboxes */
+.checkbox-label:not([data-active]):not([data-error]):not([data-disabled]):hover .checkbox-box {
+  border-color: var(--color-neutral-hover);
+}
+</style>

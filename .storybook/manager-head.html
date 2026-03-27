@@ -1,0 +1,354 @@
+<style>
+  /* ══════════════════════════════════════════
+     ABADIKAN DESIGN SYSTEM — Storybook Sidebar
+  ══════════════════════════════════════════ */
+
+  @font-face {
+    font-family: 'AbadikanSans';
+    src: url('/AbadikanSans.otf') format('opentype');
+    font-weight: 100 900;
+    font-style: normal;
+  }
+
+  /* ── Tokens ── */
+  :root {
+    --sx: 16px;                             /* horizontal inset — all elements align here */
+    --s-bg:            oklch(1 0 0);
+    --s-border:        oklch(0.90 0.010 80);
+    --s-border-strong: oklch(0.82 0.010 80);
+    --s-text:          oklch(0.20 0.010 80);
+    --s-text-sec:      oklch(0.60 0.010 80);
+    --s-hover:         oklch(0.96 0.005 80);
+    --s-active:        oklch(0.90 0.010 80);
+    --s-icon-bg:       oklch(0.93 0.008 80);
+    --s-line:          oklch(0.85 0.010 80);
+    --s-line-on:       oklch(0.20 0.010 80);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --s-bg:            oklch(0.18 0.008 80);
+      --s-border:        oklch(0.28 0.010 80);
+      --s-border-strong: oklch(0.35 0.010 80);
+      --s-text:          oklch(0.96 0.005 80);
+      --s-text-sec:      oklch(0.68 0.005 80);
+      --s-hover:         oklch(0.24 0.008 80);
+      --s-active:        oklch(0.30 0.010 80);
+      --s-icon-bg:       oklch(0.28 0.010 80);
+      --s-line:          oklch(0.32 0.010 80);
+      --s-line-on:       oklch(0.90 0.005 80);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'AbadikanSans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    -webkit-font-smoothing: antialiased !important;
+  }
+
+  /* ══ SIDEBAR SHELL ══ */
+  .sidebar-container {
+    background: var(--s-bg) !important;
+    border-right: 1px solid var(--s-border) !important;
+    padding: 0 !important;
+  }
+
+  /* ══ BRAND HEADER ══ */
+  .sidebar-header {
+    padding: 14px var(--sx) !important;
+    border-bottom: 1px solid var(--s-border) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0 !important;
+  }
+  .sidebar-header > div {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+  .sidebar-header div a {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    font-family: 'AbadikanSans', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: var(--s-text) !important;
+    letter-spacing: -0.02em !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    width: 100% !important;
+  }
+  .sidebar-header div a::before {
+    content: '' !important;
+    display: inline-block !important;
+    flex-shrink: 0 !important;
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 8px !important;
+    background-image: url('/AbadikanLogo.svg') !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+  }
+  .sidebar-header > button {
+    flex-shrink: 0 !important;
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 6px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: none !important;
+    border: none !important;
+    color: var(--s-text-sec) !important;
+    cursor: pointer !important;
+    opacity: 0.5 !important;
+    transition: opacity 0.15s, background 0.15s !important;
+  }
+  .sidebar-header > button:hover { background: var(--s-hover) !important; opacity: 1 !important; }
+
+  /* ══ SEARCH ══ */
+  .sidebar-container form,
+  .sidebar-container [class*="search"] { padding: 0 !important; margin: 0 !important; }
+  .search-field {
+    margin: 10px var(--sx) !important;
+    background: var(--s-bg) !important;
+    border: 1px solid var(--s-border) !important;
+    border-radius: 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 8px !important;
+    height: 36px !important;
+    gap: 6px !important;
+    transition: border-color 0.15s !important;
+  }
+  .search-field:focus-within { border-color: var(--s-border-strong) !important; }
+
+  /* Search icon */
+  .search-field > div:first-child {
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: var(--s-text-sec) !important;
+    width: 18px !important;
+    height: 18px !important;
+  }
+  .search-field > div:first-child svg { width: 15px !important; height: 15px !important; }
+
+  /* Input */
+  .search-field input {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    outline: none !important;
+    box-shadow: none !important;
+    font-family: 'AbadikanSans', sans-serif !important;
+    font-size: 12.5px !important;
+    color: var(--s-text) !important;
+    padding: 0 !important;
+    height: 100% !important;
+  }
+  .search-field input::placeholder { color: var(--s-text-sec) !important; opacity: 0.7 !important; }
+
+  /* "/" shortcut — hide ⌘K, show "/" instead */
+  .search-field code,
+  .search-field code span {
+    font-size: 0 !important;
+    flex-shrink: 0 !important;
+  }
+  .search-field code::after {
+    content: '/' !important;
+    font-size: 12px !important;
+    font-family: 'AbadikanSans', sans-serif !important;
+    color: var(--s-text-sec) !important;
+    opacity: 0.55 !important;
+  }
+
+  /* Filter button — no background */
+  .search-field > div:last-child {
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: none !important;
+    width: 24px !important;
+    height: 24px !important;
+    color: var(--s-text-sec) !important;
+    cursor: pointer !important;
+    opacity: 0.6 !important;
+    transition: opacity 0.15s !important;
+  }
+  .search-field > div:last-child:hover { opacity: 1 !important; }
+  .search-field > div:last-child svg { width: 14px !important; height: 14px !important; }
+
+  .sidebar-container label { display: none !important; }
+
+  /* ══ HIDE CLUTTER ══ */
+  .sidebar-header + div, .css-13yxcra,
+  #sidebar-bottom-wrapper, #sidebar-bottom-spacer,
+  [data-item-id="configure-your-project--docs"],
+  .sidebar-item a[href*="storybook-preview-wrapper"],
+  .sidebar-item a[href*="storybook-root"] { display: none !important; }
+
+  /* ══ SECTION HEADERS (ATOMS / MOLECULES / etc.) ══ */
+  .sidebar-subheading {
+    display: flex !important;
+    align-items: center !important;
+    padding: 10px var(--sx) 4px !important;
+    margin: 8px 0 2px !important;
+    border-top: 1px solid var(--s-border) !important;
+  }
+  .sidebar-subheading:first-of-type { border-top: none !important; margin-top: 2px !important; }
+
+  .sidebar-subheading > button:first-child {
+    flex: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0 !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    font-family: 'AbadikanSans', sans-serif !important;
+    font-size: 10.5px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.08em !important;
+    color: var(--s-text-sec) !important;
+  }
+  /* Chevron to right */
+  .sidebar-subheading > button:first-child > div {
+    order: 2 !important;
+    opacity: 0.5 !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+  .sidebar-subheading-action { display: none !important; }
+
+  /* ══ COMPONENT ROWS (Level 2) ══ */
+  [data-nodetype="component"] {
+    margin: 1px 0 !important;
+    border-radius: 0 !important;
+  }
+  [data-nodetype="component"] > button {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+    width: 100% !important;
+    padding: 5px var(--sx) !important;
+    min-height: 34px !important;
+    border-radius: 6px !important;
+    font-family: 'AbadikanSans', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    color: var(--s-text) !important;
+    letter-spacing: -0.01em !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    text-align: left !important;
+  }
+  [data-nodetype="component"] > button:hover { background: var(--s-hover) !important; }
+  [data-nodetype="component"][data-selected="true"] > button,
+  [data-nodetype="component"][data-highlighted="true"] > button {
+    background: var(--s-active) !important;
+    font-weight: 600 !important;
+  }
+  /* Icon box — flex: 0 0 28px prevents flex-grow override */
+  [data-nodetype="component"] > button > div {
+    flex: 0 0 28px !important;
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 6px !important;
+    background: var(--s-icon-bg) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+  }
+  /* Hide expand chevron arrow inside icon box */
+  [data-nodetype="component"] > button > div > div:first-child {
+    display: none !important;
+  }
+  /* Component icon SVG inside the box */
+  [data-nodetype="component"] > button > div > svg {
+    width: 14px !important;
+    height: 14px !important;
+    color: var(--s-text-sec) !important;
+  }
+
+  /* ══ STORY ITEMS (Level 3) ══ */
+  [data-nodetype="story"],
+  [data-nodetype="document"] {
+    position: relative !important;
+    margin: 0 !important;
+    padding-left: var(--sx) !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: none !important;
+  }
+  /* Vertical bar */
+  [data-nodetype="story"]::before,
+  [data-nodetype="document"]::before {
+    content: '' !important;
+    position: absolute !important;
+    left: calc(var(--sx) + 13px) !important;
+    top: 0 !important; bottom: 0 !important;
+    width: 1.5px !important;
+    background: var(--s-line) !important;
+    border-radius: 1px !important;
+    pointer-events: none !important;
+  }
+  [data-nodetype="story"][data-selected="true"]::before,
+  [data-nodetype="document"][data-selected="true"]::before {
+    background: var(--s-line-on) !important;
+  }
+  .sidebar-item a {
+    display: flex !important;
+    align-items: center !important;
+    margin-left: 28px !important;
+    padding: 4px 10px !important;
+    min-height: 28px !important;
+    border-radius: 6px !important;
+    font-family: 'AbadikanSans', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    color: var(--s-text) !important;
+    text-decoration: none !important;
+    transition: background 0.1s !important;
+  }
+  .sidebar-item a > div:first-child,
+  .sidebar-item a > svg:first-child { display: none !important; }
+  [data-nodetype="document"] a { color: var(--s-text-sec) !important; }
+  [data-nodetype="story"]:not([data-selected="true"]):hover a,
+  [data-nodetype="document"]:not([data-selected="true"]):hover a { background: var(--s-hover) !important; }
+  [data-nodetype="story"][data-selected="true"] a,
+  [data-nodetype="document"][data-selected="true"] a {
+    background: var(--s-active) !important;
+    font-weight: 600 !important;
+  }
+
+  /* ══ HIDE ACTION DOTS ══ */
+  .sidebar-item > button ~ button,
+  .sidebar-item > a ~ button { display: none !important; }
+
+  /* ══ TOOLBAR ══ */
+  [role="toolbar"], #storybook-toolbar {
+    background: var(--s-bg) !important;
+    border-bottom: 1px solid var(--s-border) !important;
+  }
+  [role="tab"][aria-selected="true"] {
+    box-shadow: 0 -2px 0 0 var(--s-text) inset !important;
+    color: var(--s-text) !important;
+  }
+
+  /* ══ SCROLLBAR ══ */
+  ::-webkit-scrollbar { width: 3px; height: 3px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--s-border-strong); border-radius: 10px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--s-line); }
+</style>

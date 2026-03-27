@@ -25,56 +25,58 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<{ remove: [] }>()
 
-// ── Color maps ─────────────────────────────────────────────────────────────
+// ── Semantic color map ──────────────────────────────────────────────────────
+type ColorTokens = { bg: string; light: string; text: string }
 
-const subtleClasses: Record<Variant, string> = {
-  neutral:   'bg-[--color-neutral-light] text-[--color-text-primary]',
-  primary:   'bg-[--color-primary-light] text-[--color-primary]',
-  danger:    'bg-[--color-danger-light] text-[--color-danger]',
-  success:   'bg-[--color-success-light] text-[--color-success]',
-  warning:   'bg-[--color-warning-light] text-[--color-warning]',
-  info:      'bg-[--color-info-light] text-[--color-info]',
-  secondary: 'bg-[--color-secondary-light] text-[--color-secondary]',
+const colorMap: Record<Variant, ColorTokens> = {
+  neutral:   { bg: 'var(--color-neutral)',   light: 'var(--color-neutral-light)',   text: 'var(--color-neutral)' },
+  primary:   { bg: 'var(--color-primary)', light: 'var(--color-primary-light)', text: 'var(--color-primary)' },
+  danger:    { bg: 'var(--color-danger)',     light: 'var(--color-danger-light)',    text: 'var(--color-danger)' },
+  success:   { bg: 'var(--color-success)',    light: 'var(--color-success-light)',   text: 'var(--color-success)' },
+  warning:   { bg: 'var(--color-warning)',    light: 'var(--color-warning-light)',   text: 'var(--color-warning)' },
+  info:      { bg: 'var(--color-info)',       light: 'var(--color-info-light)',      text: 'var(--color-info)' },
+  secondary: { bg: 'var(--color-secondary)',  light: 'var(--color-secondary-light)', text: 'var(--color-secondary)' },
 }
 
-const solidClasses: Record<Variant, string> = {
-  neutral:   'bg-[--color-neutral] text-[--color-text-inverse]',
-  primary:   'bg-[--color-primary] text-[--color-primary-text]',
-  danger:    'bg-[--color-danger] text-white',
-  success:   'bg-[--color-success] text-white',
-  warning:   'bg-[--color-warning] text-white',
-  info:      'bg-[--color-info] text-white',
-  secondary: 'bg-[--color-secondary] text-white',
-}
+// ── Computed inline styles based on variant + badgeStyle ────────────────────
+const badgeInlineStyle = computed(() => {
+  const tokens = colorMap[props.variant]
 
-const outlineClasses: Record<Variant, string> = {
-  neutral:   'border border-[--color-border-strong] text-[--color-text-primary]',
-  primary:   'border border-[--color-primary] text-[--color-primary]',
-  danger:    'border border-[--color-danger] text-[--color-danger]',
-  success:   'border border-[--color-success] text-[--color-success]',
-  warning:   'border border-[--color-warning] text-[--color-warning]',
-  info:      'border border-[--color-info] text-[--color-info]',
-  secondary: 'border border-[--color-secondary] text-[--color-secondary]',
-}
+  switch (props.badgeStyle) {
+    case 'subtle':
+      return {
+        backgroundColor: tokens.light,
+        color: tokens.text,
+      }
+    case 'solid':
+      return {
+        backgroundColor: tokens.bg,
+        color: 'var(--color-text-inverse)',
+      }
+    case 'outline':
+      return {
+        backgroundColor: 'transparent',
+        color: tokens.text,
+        borderWidth: '1px',
+        borderStyle: 'solid',
+        borderColor: tokens.bg,
+      }
+  }
+})
 
-const dotColorClass: Record<Variant, string> = {
-  neutral:   'bg-[--color-text-secondary]',
-  primary:   'bg-[--color-primary]',
-  danger:    'bg-[--color-danger]',
-  success:   'bg-[--color-success]',
-  warning:   'bg-[--color-warning]',
-  info:      'bg-[--color-info]',
-  secondary: 'bg-[--color-secondary]',
-}
+const dotInlineStyle = computed(() => ({
+  backgroundColor: colorMap[props.variant].bg,
+}))
 
+// ── Size classes (layout only, no color) ────────────────────────────────────
 const sizeClasses: Record<Size, string> = {
-  sm: 'text-[11px] leading-none px-1.5 py-0.5 gap-1 rounded-[--radius-sm]',
-  md: 'text-xs leading-none px-2 py-1 gap-1.5 rounded-[--radius-sm]',
-  lg: 'text-sm leading-none px-2.5 py-1 gap-1.5 rounded-[--radius-md]',
+  sm: 'text-[11px] leading-none px-2 py-0.5 gap-1 rounded-[var(--radius-sm)] min-h-5',
+  md: 'text-xs leading-none px-2.5 py-0.5 gap-1.5 rounded-[var(--radius-md)] min-h-6',
+  lg: 'text-sm leading-none px-3 py-1 gap-1.5 rounded-[var(--radius-lg)] min-h-7',
 }
 
 const dotSizeClass: Record<Size, string> = {
-  sm: 'size-1',
+  sm: 'size-1.5',
   md: 'size-1.5',
   lg: 'size-2',
 }
@@ -85,46 +87,33 @@ const removeButtonSizeClass: Record<Size, string> = {
   lg: 'size-4',
 }
 
-const variantColorMap: Record<BadgeStyle, Record<Variant, string>> = {
-  subtle:  subtleClasses,
-  solid:   solidClasses,
-  outline: outlineClasses,
-}
-
 const classes = computed(() =>
   cn(
-    'inline-flex items-center font-medium select-none',
+    'inline-flex items-center font-medium select-none overflow-hidden max-w-full',
     sizeClasses[props.size],
-    variantColorMap[props.badgeStyle][props.variant],
   )
 )
 </script>
 
 <template>
-  <span :class="classes">
-    <!-- Dot indicator -->
+  <span :class="classes" :style="badgeInlineStyle">
     <span
       v-if="dot"
-      :class="cn('shrink-0 rounded-full', dotSizeClass[size], dotColorClass[variant])"
+      :class="cn('shrink-0 rounded-full', dotSizeClass[size])"
+      :style="dotInlineStyle"
       aria-hidden="true"
     />
-
-    <!-- Leading slot (icon) -->
-    <span v-if="$slots.leading" class="shrink-0 -ml-0.5 flex items-center">
+    <span v-if="$slots.leading" class="shrink-0 -ml-1 flex items-center justify-center">
       <slot name="leading" />
     </span>
-
-    <!-- Label -->
-    <slot />
-
-    <!-- Remove button -->
+    <span class="truncate">
+      <slot />
+    </span>
     <button
       v-if="removable"
       type="button"
       :class="cn(
-        'shrink-0 -mr-0.5 flex items-center justify-center rounded-sm opacity-60',
-        'hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[--color-primary]',
-        'transition-opacity duration-[--duration-normal] cursor-pointer',
+        'shrink-0 -mr-0.5 flex items-center justify-center rounded-sm opacity-60 hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-1 transition-opacity duration-150 cursor-pointer',
         removeButtonSizeClass[size],
       )"
       aria-label="Remove"

@@ -46,12 +46,10 @@ function recalcHeight() {
   const el = textareaEl.value
   if (!el || !props.autoResize) return
 
-  // Reset to auto to get correct scrollHeight
   el.style.height = 'auto'
 
   let newHeight = el.scrollHeight
 
-  // Apply maxRows cap if set
   if (props.maxRows) {
     const lineHeight = parseInt(getComputedStyle(el).lineHeight) || 20
     const paddingTop    = parseInt(getComputedStyle(el).paddingTop) || 0
@@ -71,7 +69,6 @@ function handleInput(e: Event) {
   }
 }
 
-// Recalc when value changes externally
 watch(() => props.modelValue, () => {
   nextTick(recalcHeight)
 })
@@ -89,9 +86,9 @@ const textSizeClass: Record<TextareaSize, string> = {
 }
 
 const paddingClass: Record<TextareaSize, string> = {
-  sm: 'px-2.5 py-1.5',
-  md: 'px-3 py-2',
-  lg: 'px-3.5 py-2.5',
+  sm: 'px-3 py-2',
+  md: 'px-3.5 py-2.5',
+  lg: 'px-4 py-3',
 }
 
 const resizeStyle = computed(() => {
@@ -101,21 +98,19 @@ const resizeStyle = computed(() => {
 
 const wrapperClasses = computed(() =>
   cn(
-    'relative w-full rounded-[--radius-md] border bg-[--color-surface]',
-    'transition-colors duration-[--duration-normal] ease-[--ease-default]',
-    'focus-within:outline-2 focus-within:outline-offset-0 focus-within:outline-[--color-primary]',
-    hasError.value
-      ? 'border-[--color-danger] focus-within:outline-[--color-danger]'
-      : 'border-[--color-border] hover:border-[--color-border-strong]',
-    props.disabled && 'opacity-50 cursor-not-allowed bg-[--color-bg-subtle]',
-    props.readonly && 'bg-[--color-bg-subtle]',
+    'ds-textarea-wrapper',
+    'relative w-full overflow-hidden transition-all duration-200 ease-out',
+    'rounded-[var(--radius-lg)] border outline-none',
+    hasError.value && 'ds-textarea-wrapper--error',
+    props.disabled && 'ds-textarea-wrapper--disabled cursor-not-allowed',
+    props.readonly && 'ds-textarea-wrapper--readonly',
   )
 )
 
 const textareaClasses = computed(() =>
   cn(
-    'block w-full bg-transparent outline-none',
-    'text-[--color-text-primary] placeholder:text-[--color-text-tertiary]',
+    'ds-textarea-native',
+    'block w-full bg-transparent outline-none focus-visible:outline-none border-none focus:ring-0 focus-visible:ring-0',
     textSizeClass[props.size],
     paddingClass[props.size],
     'leading-relaxed',
@@ -126,15 +121,16 @@ const textareaClasses = computed(() =>
 </script>
 
 <template>
-  <div class="flex flex-col gap-1 w-full">
+  <div class="flex flex-col gap-1.5 w-full">
     <!-- Label -->
     <label
       v-if="label"
       :for="textareaId"
       :class="cn(
-        'text-sm font-medium text-[--color-text-primary]',
+        'text-sm font-medium select-none',
         disabled && 'opacity-50',
       )"
+      :style="{ color: 'var(--color-text-heading)' }"
     >
       {{ label }}
     </label>
@@ -162,32 +158,97 @@ const textareaClasses = computed(() =>
     <!-- Bottom row: helper/error + counter -->
     <div
       v-if="helperText || error || (counter && maxlength)"
-      class="flex items-start justify-between gap-2"
+      class="flex items-start justify-between gap-4 mt-1"
     >
       <p
-        v-if="helperText || error"
+        v-if="error"
         :id="`${textareaId}-hint`"
-        :class="cn(
-          'text-sm',
-          hasError ? 'text-[--color-danger]' : 'text-[--color-text-secondary]',
-        )"
+        class="text-[13px] leading-snug font-medium animate-in fade-in slide-in-from-top-1"
+        :style="{ color: 'var(--color-danger)' }"
       >
-        {{ error ?? helperText }}
+        {{ error }}
+      </p>
+      <p
+        v-else-if="helperText"
+        :id="`${textareaId}-hint`"
+        class="text-[13px] leading-snug"
+        :style="{ color: 'var(--color-text-secondary)' }"
+      >
+        {{ helperText }}
       </p>
       <span v-else />
 
-      <!-- Character counter -->
       <span
         v-if="counter && maxlength"
         :class="cn(
-          'text-xs shrink-0 tabular-nums',
-          charCount >= maxlength
-            ? 'text-[--color-danger]'
-            : 'text-[--color-text-tertiary]',
+          'text-[13px] font-medium shrink-0 tabular-nums',
         )"
+        :style="{ color: charCount >= maxlength ? 'var(--color-danger)' : 'var(--color-text-tertiary)' }"
       >
         {{ charCount }}/{{ maxlength }}
       </span>
     </div>
   </div>
 </template>
+
+<style scoped>
+/* ── Wrapper base ── */
+.ds-textarea-wrapper {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-xs);
+}
+
+.ds-textarea-wrapper:hover:not(.ds-textarea-wrapper--disabled):not(.ds-textarea-wrapper--readonly) {
+  border-color: var(--color-border-strong);
+}
+
+.ds-textarea-wrapper:focus-within:not(.ds-textarea-wrapper--error) {
+  border-color: var(--color-text-primary);
+  box-shadow: 0 0 0 1px var(--color-text-primary);
+}
+
+/* ── Error state ── */
+.ds-textarea-wrapper--error {
+  border-color: var(--color-danger);
+}
+
+.ds-textarea-wrapper--error:focus-within {
+  border-color: var(--color-danger);
+  box-shadow: var(--ring-danger);
+}
+
+/* ── Disabled state ── */
+.ds-textarea-wrapper--disabled {
+  opacity: 0.5;
+  background-color: var(--color-bg-subtle);
+}
+
+/* ── Readonly state ── */
+.ds-textarea-wrapper--readonly {
+  background-color: var(--color-bg-subtle);
+}
+
+/* ── Native textarea ── */
+.ds-textarea-native {
+  color: var(--color-text-primary);
+}
+
+.ds-textarea-native::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.ds-textarea-native:focus,
+.ds-textarea-native:focus-visible,
+.ds-textarea-native:focus-within {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+  --tw-ring-shadow: none !important;
+  --tw-ring-color: transparent !important;
+}
+
+.ds-textarea-wrapper--disabled .ds-textarea-native {
+  color: var(--color-text-disabled);
+}
+</style>

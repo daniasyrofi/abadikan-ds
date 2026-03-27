@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import Radio from './Radio.vue'
 
 const meta: Meta<typeof Radio> = {
@@ -22,10 +22,15 @@ export default meta
 type Story = StoryObj<typeof Radio>
 
 export const Default: Story = {
-  render: (args) => ({
+  parameters: { layout: 'centered' },
+  render: (args: any) => ({
     components: { Radio },
-    setup: () => ({ value: ref(''), args }),
-    template: '<Radio v-bind="args" v-model="value" label="Option 1" value="option1" />',
+    setup() {
+      const value = ref(args.modelValue ?? '')
+      watch(() => args.modelValue, (val) => { value.value = val })
+      return { args, value }
+    },
+    template: '<Radio v-bind="args" v-model="value" label="Option 1" :value="args.value || \'option1\'" />',
   }),
 }
 

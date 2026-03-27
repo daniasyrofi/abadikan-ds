@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { cn } from '@/lib/utils'
+import Spinner from '@/components/atoms/Spinner/Spinner.vue'
 
 type Variant = 'default' | 'secondary' | 'ghost' | 'danger' | 'link'
 type Size    = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
@@ -33,38 +34,73 @@ const emit = defineEmits<{ click: [e: MouseEvent] }>()
 const tag = computed(() => props.href ? 'a' : props.as)
 
 const baseClasses = [
-  'inline-flex items-center justify-center gap-2',
-  'font-medium leading-none',
-  'border border-transparent',
+  'ds-btn',
+  'inline-flex items-center justify-center',
+  'overflow-hidden',
+  'font-medium leading-tight',
   'cursor-pointer select-none',
-  'transition-all duration-[--duration-normal] ease-[--ease-default]',
-  'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[--color-primary]',
+  'transition-all duration-200 ease-out',
+  'focus-visible:outline-none',
   'disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none',
-  'active:scale-[0.98]',
+  'active:scale-[0.97]',
 ]
 
 const variants: Record<Variant, string> = {
-  default:   'bg-[--color-neutral] text-[--color-text-inverse] hover:bg-[--color-neutral-hover]',
-  secondary: 'bg-transparent text-[--color-text-primary] border-[--color-border] hover:bg-[--color-neutral-light] hover:border-[--color-border-strong]',
-  ghost:     'bg-transparent text-[--color-text-primary] hover:bg-[--color-neutral-light]',
-  danger:    'bg-[--color-danger] text-white hover:bg-[--color-danger-hover]',
-  link:      'bg-transparent text-[--color-primary] underline-offset-4 hover:underline p-0 h-auto',
+  default: [
+    'ds-btn--default',
+    'bg-[var(--color-primary)] text-[var(--color-text-inverse)]',
+    'border border-[var(--color-primary)]',
+    'hover:bg-[var(--color-primary-hover)] hover:border-[var(--color-primary-hover)]',
+  ].join(' '),
+  secondary: [
+    'ds-btn--secondary',
+    'bg-[var(--color-surface)] text-[var(--color-text-primary)]',
+    'border border-[var(--color-border)]',
+    'hover:bg-[var(--color-bg-subtle)] hover:border-[var(--color-border-strong)]',
+  ].join(' '),
+  ghost: [
+    'ds-btn--ghost',
+    'bg-transparent text-[var(--color-text-secondary)]',
+    'border border-transparent',
+    'hover:bg-[var(--color-neutral-light)] hover:text-[var(--color-text-heading)]',
+  ].join(' '),
+  danger: [
+    'ds-btn--danger',
+    'bg-[var(--color-danger)] text-[var(--color-primary-text)]',
+    'border border-[var(--color-danger)]',
+    'hover:bg-[var(--color-danger-hover)] hover:border-[var(--color-danger-hover)]',
+  ].join(' '),
+  link: [
+    'ds-btn--link',
+    'bg-transparent text-[var(--color-secondary)]',
+    'border-none',
+    'underline-offset-4 hover:underline',
+    'p-0! h-auto!',
+  ].join(' '),
 }
 
 const sizes: Record<Size, string> = {
-  xs: 'h-7 px-2.5 text-xs rounded-[--radius-sm]',
-  sm: 'h-8 px-3   text-sm rounded-[--radius-md]',
-  md: 'h-9 px-4   text-sm rounded-[--radius-md]',
-  lg: 'h-10 px-5  text-base rounded-[--radius-lg]',
-  xl: 'h-12 px-6  text-base rounded-[--radius-lg]',
+  xs: 'px-3 py-1 text-xs rounded-[var(--radius-md)] min-h-7 gap-1.5',
+  sm: 'px-4 py-1.5 text-sm rounded-[var(--radius-md)] min-h-8 gap-1.5',
+  md: 'px-5 py-2 text-sm rounded-[var(--radius-lg)] min-h-10 gap-2',
+  lg: 'px-6 py-2.5 text-base rounded-[var(--radius-xl)] min-h-12 gap-2',
+  xl: 'px-8 py-3 text-lg rounded-[var(--radius-xl)] min-h-14 gap-2',
 }
 
 const iconSizes: Record<Size, string> = {
-  xs: 'h-7 w-7   rounded-[--radius-sm]',
-  sm: 'h-8 w-8   rounded-[--radius-md]',
-  md: 'h-9 w-9   rounded-[--radius-md]',
-  lg: 'h-10 w-10 rounded-[--radius-lg]',
-  xl: 'h-12 w-12 rounded-[--radius-lg]',
+  xs: 'h-7 w-7 rounded-[var(--radius-md)]',
+  sm: 'h-8 w-8 rounded-[var(--radius-md)]',
+  md: 'h-10 w-10 rounded-[var(--radius-lg)]',
+  lg: 'h-12 w-12 rounded-[var(--radius-xl)]',
+  xl: 'h-14 w-14 rounded-[var(--radius-xl)]',
+}
+
+const spinnerSizes: Record<Size, 'xs' | 'sm' | 'md'> = {
+  xs: 'xs',
+  sm: 'xs',
+  md: 'sm',
+  lg: 'sm',
+  xl: 'md',
 }
 
 const classes = computed(() =>
@@ -73,7 +109,6 @@ const classes = computed(() =>
     variants[props.variant],
     props.iconOnly ? iconSizes[props.size] : sizes[props.size],
     props.fullWidth && 'w-full',
-    props.variant === 'link' && 'h-auto px-0',
   )
 )
 </script>
@@ -90,33 +125,60 @@ const classes = computed(() =>
     v-bind="$attrs"
     @click="!disabled && !loading && emit('click', $event)"
   >
-    <!-- Leading slot (Figma: "Leading Icon") -->
-    <span v-if="$slots.leading && !loading" class="shrink-0">
+    <!-- Leading slot -->
+    <span v-if="$slots.leading && !loading" class="shrink-0 -ml-1 flex items-center justify-center">
       <slot name="leading" />
     </span>
 
     <!-- Loading spinner -->
-    <svg
-      v-if="loading"
-      class="shrink-0 animate-spin"
-      :class="['xs','sm'].includes(size) ? 'size-3' : 'size-4'"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-    >
-      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
-      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-    </svg>
+    <span v-if="loading" class="shrink-0">
+      <Spinner :size="spinnerSizes[size]" />
+    </span>
 
     <!-- Default slot (label) -->
-    <slot v-if="!iconOnly" />
+    <span v-if="!iconOnly" class="truncate">
+      <slot />
+    </span>
 
     <!-- Icon-only slot -->
     <slot v-else name="icon" />
 
-    <!-- Trailing slot (Figma: "Trailing Icon") -->
-    <span v-if="$slots.trailing && !loading" class="shrink-0">
+    <!-- Trailing slot -->
+    <span v-if="$slots.trailing && !loading" class="shrink-0 -mr-1 flex items-center justify-center">
       <slot name="trailing" />
     </span>
   </component>
 </template>
+
+<style scoped>
+/* Shadow and focus ring styles using CSS custom properties.
+   Tailwind arbitrary values handle colors/radius; these handle
+   box-shadow which doesn't have clean Tailwind token mapping. */
+
+.ds-btn--default,
+.ds-btn--secondary,
+.ds-btn--danger {
+  box-shadow: var(--shadow-sm);
+}
+
+.ds-btn--default:hover,
+.ds-btn--secondary:hover,
+.ds-btn--danger:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Ghost and link get no shadow */
+.ds-btn--ghost,
+.ds-btn--link {
+  box-shadow: none;
+}
+
+/* Focus rings using secondary (pink) for all except danger */
+.ds-btn:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-primary);
+}
+
+.ds-btn--danger:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-danger);
+}
+</style>

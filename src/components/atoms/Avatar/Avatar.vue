@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { cn } from '@/lib/utils'
+import { computed, ref, type Component } from 'vue'
 import * as RemixIcons from '@remixicon/vue'
-import type { Component } from 'vue'
+import { cn } from '@/lib/utils'
 
 type AvatarSize   = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
-type AvatarShape  = 'circle' | 'rounded'
-type AvatarStatus = 'online' | 'offline' | 'busy' | 'away'
+type AvatarShape  = 'circle' | 'rounded' | 'square'
+type AvatarStatus = 'online' | 'offline' | 'busy' | 'away' | null
 
 interface Props {
   src?:          string
@@ -25,61 +24,55 @@ const props = withDefaults(defineProps<Props>(), {
 
 const imgError = ref(false)
 
-const sizePx: Record<AvatarSize, number> = {
-  xs:   24,
-  sm:   32,
-  md:   40,
-  lg:   48,
-  xl:   56,
-  '2xl': 72,
-}
+// ── Size classes ───────────────────────────────────────────────────────────
 
 const sizeClass: Record<AvatarSize, string> = {
-  xs:   'size-6',
-  sm:   'size-8',
-  md:   'size-10',
-  lg:   'size-12',
-  xl:   'size-14',
-  '2xl': 'size-[72px]',
+  xs:  'size-6',
+  sm:  'size-8',
+  md:  'size-10',
+  lg:  'size-12',
+  xl:  'size-14',
+  '2xl': 'size-16',
 }
 
 const textSizeClass: Record<AvatarSize, string> = {
-  xs:   'text-[10px] font-semibold',
-  sm:   'text-xs font-semibold',
-  md:   'text-sm font-semibold',
-  lg:   'text-base font-semibold',
-  xl:   'text-lg font-semibold',
-  '2xl': 'text-2xl font-semibold',
+  xs:  'text-[10px] font-semibold leading-none',
+  sm:  'text-xs font-semibold leading-none',
+  md:  'text-sm font-semibold leading-none',
+  lg:  'text-base font-semibold leading-none',
+  xl:  'text-lg font-semibold leading-none',
+  '2xl': 'text-xl font-semibold leading-none',
 }
 
 const iconSizePx: Record<AvatarSize, number> = {
-  xs:   12,
-  sm:   16,
-  md:   20,
-  lg:   24,
-  xl:   28,
-  '2xl': 36,
-}
-
-const statusSizeClass: Record<AvatarSize, string> = {
-  xs:   'size-1.5 ring-1',
-  sm:   'size-2 ring-1',
-  md:   'size-2.5 ring-[1.5px]',
-  lg:   'size-3 ring-2',
-  xl:   'size-3.5 ring-2',
-  '2xl': 'size-4 ring-2',
-}
-
-const statusColorClass: Record<AvatarStatus, string> = {
-  online:  'bg-[--color-success]',
-  offline: 'bg-[--color-text-tertiary]',
-  busy:    'bg-[--color-danger]',
-  away:    'bg-[--color-warning]',
+  xs:  12,
+  sm:  16,
+  md:  20,
+  lg:  24,
+  xl:  28,
+  '2xl': 32,
 }
 
 const shapeClass: Record<AvatarShape, string> = {
   circle:  'rounded-full',
-  rounded: 'rounded-[--radius-lg]',
+  rounded: 'rounded-xl',
+  square:  'rounded-md',
+}
+
+const statusSizeClass: Record<AvatarSize, string> = {
+  xs:  'size-1.5 ring-1',
+  sm:  'size-2 ring-[1.5px]',
+  md:  'size-2.5 ring-2',
+  lg:  'size-3 ring-2',
+  xl:  'size-3.5 ring-2',
+  '2xl': 'size-4 ring-[3px]',
+}
+
+const statusColors: Record<NonNullable<AvatarStatus>, string> = {
+  online:  'var(--color-success)',
+  busy:    'var(--color-danger)',
+  away:    'var(--color-warning)',
+  offline: 'var(--color-text-tertiary)',
 }
 
 // Derive initials from name
@@ -90,12 +83,44 @@ const initials = computed(() => {
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
 })
 
-// Show image when src present and not errored
-const showImage = computed(() => !!props.src && !imgError.value)
-// Show initials when no image, has name
+// Derive a consistent hue from the name for unique per-user avatar colors
+function nameToHue(name: string): number {
+  let hash = 0
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash)
+  }
+  const hues = [55, 90, 130, 170, 200, 230, 260, 290]
+  return hues[Math.abs(hash) % hues.length]
+}
+
+const initialsStyle = computed(() => {
+  if (!props.name) return {}
+  const hue = nameToHue(props.name)
+  return {
+    backgroundColor: `oklch(0.92 0.06 ${hue})`,
+    color: `oklch(0.45 0.12 ${hue})`,
+  }
+})
+
+// Fallback (icon) inline style using semantic tokens
+const fallbackStyle = computed(() => ({
+  backgroundColor: 'var(--color-bg-subtle)',
+  color: 'var(--color-text-secondary)',
+}))
+
+// Status dot inline style
+const statusDotStyle = computed(() => {
+  if (!props.status) return {}
+  return {
+    backgroundColor: statusColors[props.status],
+    '--tw-ring-color': 'var(--color-surface)',
+  } as Record<string, string>
+})
+
+// Show logic
+const showImage    = computed(() => !!props.src && !imgError.value)
 const showInitials = computed(() => !showImage.value && !!initials.value)
-// Show fallback icon when no image, no initials
-const showIcon = computed(() => !showImage.value && !showInitials.value)
+const showIcon     = computed(() => !showImage.value && !showInitials.value)
 
 const fallbackIconComponent = computed<Component | null>(() => {
   const iconName = props.fallbackIcon ?? 'RiUser3Line'
@@ -105,23 +130,28 @@ const fallbackIconComponent = computed<Component | null>(() => {
 
 const containerClass = computed(() =>
   cn(
-    'relative inline-flex items-center justify-center shrink-0 overflow-hidden',
-    'bg-[--color-neutral-light] text-[--color-text-secondary]',
+    'relative inline-flex items-center justify-center shrink-0',
     'select-none',
     sizeClass[props.size],
     shapeClass[props.shape],
   )
 )
+
+const containerStyle = computed(() => {
+  if (showInitials.value) return initialsStyle.value
+  if (showImage.value) return undefined
+  return fallbackStyle.value
+})
 </script>
 
 <template>
-  <span :class="containerClass">
+  <span :class="containerClass" :style="containerStyle">
     <!-- Image -->
     <img
       v-if="showImage"
       :src="src"
       :alt="alt ?? name ?? 'Avatar'"
-      class="size-full object-cover"
+      :class="cn('size-full object-cover', shapeClass[shape])"
       @error="imgError = true"
     />
 
@@ -146,10 +176,10 @@ const containerClass = computed(() =>
     <span
       v-if="status"
       :class="cn(
-        'absolute bottom-0 right-0 rounded-full ring-[--color-surface]',
+        'absolute bottom-0 right-0 rounded-full',
         statusSizeClass[size],
-        statusColorClass[status],
       )"
+      :style="statusDotStyle"
       :aria-label="status"
     />
   </span>

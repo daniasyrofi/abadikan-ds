@@ -1,6 +1,5 @@
-<script setup lang="ts">
-import { provide, ref, watch, computed } from 'vue'
-import { cn } from '@/lib/utils'
+<script lang="ts">
+import type { Ref } from 'vue'
 
 export type TabsVariant      = 'line' | 'pill' | 'boxed'
 export type TabsOrientation  = 'horizontal' | 'vertical'
@@ -9,15 +8,20 @@ export type TabsSize         = 'sm' | 'md' | 'lg'
 export const TABS_KEY = Symbol('tabs')
 
 export interface TabsContext {
-  activeTab:    ReturnType<typeof ref<string>>
+  activeTab:    Ref<string>
   variant:      TabsVariant
   orientation:  TabsOrientation
   size:         TabsSize
   selectTab:    (value: string) => void
   registerTab:  (value: string) => void
   unregisterTab:(value: string) => void
-  tabs:         ReturnType<typeof ref<string[]>>
+  tabs:         Ref<string[]>
 }
+</script>
+
+<script setup lang="ts">
+import { provide, ref, watch, computed } from 'vue'
+import { cn } from '@/lib/utils'
 
 interface Props {
   modelValue:   string

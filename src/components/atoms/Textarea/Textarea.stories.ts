@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import Textarea from './Textarea.vue'
 
 const meta: Meta<typeof Textarea> = {
@@ -28,9 +28,14 @@ export default meta
 type Story = StoryObj<typeof Textarea>
 
 export const Default: Story = {
-  render: (args) => ({
+  parameters: { layout: 'padded' },
+  render: (args: any) => ({
     components: { Textarea },
-    setup: () => ({ value: ref(''), args }),
+    setup() {
+      const value = ref(args.modelValue ?? '')
+      watch(() => args.modelValue, (val) => { value.value = val })
+      return { args, value }
+    },
     template: '<Textarea v-bind="args" v-model="value" placeholder="Enter text..." />',
   }),
 }

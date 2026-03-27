@@ -19,13 +19,24 @@ const meta: Meta<typeof Avatar> = {
 export default meta
 type Story = StoryObj<typeof Avatar>
 
-export const WithImage: Story = {
+export const Default: Story = {
   args: {
     src:  'https://i.pravatar.cc/150?img=1',
     alt:  'Jane Doe',
     name: 'Jane Doe',
-    size: 'md',
+    size: 'lg',
+    status: 'online',
   },
+  parameters: {
+    layout: 'centered',
+  },
+  render: (args: any) => ({
+    components: { Avatar },
+    setup() {
+      return { args }
+    },
+    template: '<Avatar v-bind="args" />',
+  }),
 }
 
 export const Initials: Story = {

@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { cn } from '@/lib/utils'
 
-type Variant = 'default' | 'outlined' | 'elevated' | 'flat'
+type Variant = 'default' | 'outlined' | 'elevated' | 'flat' | 'glass'
 type Padding  = 'none' | 'sm' | 'md' | 'lg'
 type Radius   = 'sm' | 'md' | 'lg' | 'xl'
 
@@ -27,10 +27,11 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{ click: [e: MouseEvent] }>()
 
 const variantClasses: Record<Variant, string> = {
-  default:  'bg-[--color-surface] border border-[--color-border] shadow-[--shadow-sm]',
+  default:  'bg-[--color-surface] border border-[--color-border] shadow-[--shadow-sm] [border-top-color:oklch(1_0_0/0.8)]',
   outlined: 'bg-[--color-surface] border border-[--color-border]',
   elevated: 'bg-[--color-surface] shadow-[--shadow-lg]',
   flat:     'bg-[--color-surface]',
+  glass:    'border border-[--glass-border] shadow-[--shadow-md]',
 }
 
 const paddingClasses: Record<Padding, string> = {
@@ -57,17 +58,18 @@ const bodyPaddingClasses: Record<Padding, string> = {
 const classes = computed(() =>
   cn(
     'relative overflow-hidden flex flex-col',
-    'transition-all duration-[--duration-normal] ease-[--ease-default]',
+    'transition-all duration-[--duration-slow] ease-[--ease-out]',
     variantClasses[props.variant],
+    props.variant === 'glass' && '[background:var(--color-surface-glass)] [backdrop-filter:var(--glass-blur)]',
     radiusClasses[props.radius],
     // Only apply padding when no structural slots are used
     !hasStructuredSlots.value && paddingClasses[props.padding],
-    props.hoverable && 'hover:shadow-[--shadow-md] hover:-translate-y-0.5',
+    props.hoverable && 'hover:shadow-[--shadow-lg] hover:-translate-y-1 cursor-default',
     props.clickable && [
       'cursor-pointer',
-      'hover:shadow-[--shadow-md] hover:-translate-y-0.5',
+      'hover:shadow-[--shadow-lg] hover:-translate-y-1',
       'active:scale-[0.99] active:translate-y-0',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[--color-primary]',
+      'focus-visible:outline-none focus-visible:shadow-[--ring-primary]',
     ],
   )
 )

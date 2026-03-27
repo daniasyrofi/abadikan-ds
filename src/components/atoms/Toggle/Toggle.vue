@@ -1,126 +1,143 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, useId } from 'vue'
 import { cn } from '@/lib/utils'
 
-type ToggleSize = 'sm' | 'md' | 'lg'
+type Size = 'sm' | 'md' | 'lg'
 
 interface Props {
-  modelValue:     boolean
-  size?:          ToggleSize
-  disabled?:      boolean
-  label?:         string
-  labelPosition?: 'left' | 'right'
+  modelValue?: boolean
+  size?:       Size
+  disabled?:   boolean
+  label?:      string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  size:          'md',
-  disabled:      false,
-  labelPosition: 'right',
+  modelValue: false,
+  size:       'md',
+  disabled:   false,
 })
 
 const emit = defineEmits<{ 'update:modelValue': [value: boolean] }>()
+const inputId = useId()
 
 function toggle() {
-  if (!props.disabled) {
-    emit('update:modelValue', !props.modelValue)
-  }
+  if (!props.disabled) emit('update:modelValue', !props.modelValue)
 }
 
-// Track dimensions per size
-const trackClass: Record<ToggleSize, string> = {
-  sm: 'w-7 h-4',
-  md: 'w-9 h-5',
-  lg: 'w-11 h-6',
+const trackClass: Record<Size, string> = {
+  sm: 'w-7 h-4',   // 16px high
+  md: 'w-9 h-5',   // 20px high
+  lg: 'w-11 h-6',  // 24px high
 }
 
-const thumbClass: Record<ToggleSize, string> = {
+const thumbClass: Record<Size, string> = {
   sm: 'size-3',
-  md: 'size-[14px]',
-  lg: 'size-[18px]',
+  md: 'size-4',
+  lg: 'size-5',
 }
 
-const thumbTranslate: Record<ToggleSize, { off: string; on: string }> = {
-  sm: { off: 'translate-x-0.5', on: 'translate-x-3.5' },
-  md: { off: 'translate-x-[3px]', on: 'translate-x-[19px]' },
-  lg: { off: 'translate-x-[3px]', on: 'translate-x-[23px]' },
+const thumbTranslate: Record<Size, { on: string; off: string }> = {
+  sm: { on: 'translate-x-3.5', off: 'translate-x-[2px]' },
+  md: { on: 'translate-x-4.5', off: 'translate-x-[2px]' },
+  lg: { on: 'translate-x-5.5', off: 'translate-x-[2px]' },
 }
 
-const labelTextClass: Record<ToggleSize, string> = {
-  sm: 'text-sm',
-  md: 'text-sm',
-  lg: 'text-base',
+const labelTextClass: Record<Size, string> = {
+  sm: 'text-xs',   // 12px
+  md: 'text-sm',   // 14px
+  lg: 'text-base', // 16px
+}
+
+// Math for baseline alignment: (TrackHeight - LineHeight) / 2
+// Assumes text uses leading-none (LineHeight = FontSize)
+const offsetClass: Record<Size, string> = {
+  sm: 'mt-[2px]',  // (16 - 12)/2 = 2px
+  md: 'mt-[3px]',  // (20 - 14)/2 = 3px
+  lg: 'mt-[4px]',  // (24 - 16)/2 = 4px
 }
 
 const trackClasses = computed(() =>
   cn(
-    'relative inline-flex shrink-0 items-center rounded-full',
+    'relative inline-flex shrink-0 items-center',
     'cursor-pointer select-none',
-    'transition-all duration-[--duration-normal] ease-[--ease-default]',
-    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[--color-primary]',
+    'transition-all duration-200 ease-out',
     trackClass[props.size],
-    props.modelValue
-      ? 'bg-[--color-primary]'
-      : 'bg-[--color-border-strong]',
+    'shadow-inner',
     props.disabled && 'opacity-50 cursor-not-allowed pointer-events-none',
+    'active:scale-[0.96]',
   )
 )
 
+const trackStyle = computed(() => ({
+  backgroundColor: props.modelValue
+    ? 'var(--color-primary)'
+    : 'var(--color-border-strong)',
+  borderRadius: 'var(--radius-full)',
+}))
+
 const thumbClasses = computed(() =>
   cn(
-    'rounded-full bg-white shadow-sm',
-    'transition-transform duration-[--duration-normal] ease-[--ease-default]',
+    'transition-transform duration-200 ease-out',
     thumbClass[props.size],
     props.modelValue
       ? thumbTranslate[props.size].on
       : thumbTranslate[props.size].off,
   )
 )
+
+const thumbStyle = {
+  backgroundColor: 'var(--color-surface)',
+  borderRadius: 'var(--radius-full)',
+  boxShadow: 'var(--shadow-sm)',
+}
 </script>
 
 <template>
-  <label
-    :class="cn(
-      'inline-flex items-center gap-2',
-      disabled ? 'cursor-not-allowed' : 'cursor-pointer',
-    )"
-  >
-    <!-- Label left -->
-    <span
-      v-if="label && labelPosition === 'left'"
-      :class="cn(
-        labelTextClass[size],
-        'font-medium text-[--color-text-primary]',
-        disabled && 'opacity-50',
-      )"
-    >
-      {{ label }}
-    </span>
+  <div class="relative flex items-start gap-2.5">
+    <input
+      :id="inputId"
+      type="checkbox"
+      role="switch"
+      class="sr-only peer"
+      :checked="modelValue"
+      :disabled="disabled"
+      :aria-label="label || 'Toggle'"
+      @change="toggle"
+    />
 
-    <!-- Track -->
     <button
       type="button"
-      role="switch"
-      :aria-checked="modelValue"
-      :aria-label="label"
-      :disabled="disabled"
       :class="trackClasses"
+      :style="trackStyle"
+      class="ds-toggle-track focus-visible:outline-none"
+      :aria-checked="modelValue"
+      role="switch"
+      :tabindex="disabled ? -1 : 0"
       @click="toggle"
       @keydown.space.prevent="toggle"
       @keydown.enter.prevent="toggle"
     >
-      <span :class="thumbClasses" aria-hidden="true" />
+      <span :class="thumbClasses" :style="thumbStyle" />
     </button>
 
-    <!-- Label right -->
-    <span
-      v-if="label && labelPosition === 'right'"
+    <label
+      v-if="label"
+      :for="inputId"
       :class="cn(
         labelTextClass[size],
-        'font-medium text-[--color-text-primary]',
-        disabled && 'opacity-50',
+        offsetClass[size],
+        'font-medium leading-none select-none transition-colors',
+        disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
       )"
+      :style="{ color: 'var(--color-text-primary)' }"
     >
       {{ label }}
-    </span>
-  </label>
+    </label>
+  </div>
 </template>
+
+<style scoped>
+.ds-toggle-track:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-primary);
+}
+</style>

@@ -20,6 +20,12 @@ type Story = StoryObj<typeof Icon>
 
 export const Default: Story = {
   args: { name: 'RiHomeLine', size: 'md' },
+  parameters: { layout: 'centered' },
+  render: (args: any) => ({
+    components: { Icon },
+    setup: () => ({ args }),
+    template: '<Icon v-bind="args" />',
+  }),
 }
 
 const commonIcons = [

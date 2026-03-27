@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { ref } from 'vue'
+
+import { ref, watch } from 'vue'
 import Checkbox from './Checkbox.vue'
 
 const meta: Meta<typeof Checkbox> = {
@@ -21,18 +22,24 @@ export default meta
 type Story = StoryObj<typeof Checkbox>
 
 export const Default: Story = {
-  render: (args) => ({
+  parameters: { layout: 'centered' },
+  render: (args: any) => ({
     components: { Checkbox },
-    setup: () => ({ value: ref(false), args }),
-    template: '<Checkbox v-bind="args" v-model="value" label="Accept terms" />',
+    setup() {
+      const value = ref(args.modelValue ?? false)
+      watch(() => args.modelValue, (val) => { value.value = val })
+      return { args, value }
+    },
+    template: '<Checkbox v-bind="args" v-model="value" label="Accept terms and conditions" />',
   }),
 }
 
 export const Checked: Story = {
-  render: () => ({
+  args: { modelValue: true, label: 'Checked state' },
+  render: (args) => ({
     components: { Checkbox },
-    setup: () => ({ value: ref(true) }),
-    template: '<Checkbox v-model="value" label="Checked" />',
+    setup: () => ({ args }),
+    template: '<Checkbox v-bind="args" />',
   }),
 }
 
@@ -64,7 +71,7 @@ export const Indeterminate: Story = {
     },
     template: `
       <div class="flex flex-col gap-2">
-        <Checkbox :model-value="parent" label="Select all" @update:model-value="toggleParent" />
+        <Checkbox :model-value="parent" label="Select all items" @update:model-value="toggleParent" />
         <div class="ml-6 flex flex-col gap-2">
           <Checkbox
             v-for="(val, i) in children"
@@ -130,9 +137,9 @@ export const AllSizes: Story = {
     }),
     template: `
       <div class="flex flex-col gap-3">
-        <Checkbox v-model="sm" size="sm" label="Small" description="Small checkbox description" />
-        <Checkbox v-model="md" size="md" label="Medium" description="Medium checkbox description" />
-        <Checkbox v-model="lg" size="lg" label="Large" description="Large checkbox description" />
+        <Checkbox v-model="sm" size="sm" label="Small size" description="Used for dense lists" />
+        <Checkbox v-model="md" size="md" label="Medium size" description="Standard component size" />
+        <Checkbox v-model="lg" size="lg" label="Large size" description="For spacious landing pages" />
       </div>
     `,
   }),
@@ -156,8 +163,8 @@ export const CheckboxGroup: Story = {
       return { selected, options, toggle }
     },
     template: `
-      <fieldset class="flex flex-col gap-3">
-        <legend class="text-body font-medium text-[--color-text-heading] mb-2">Notification preferences</legend>
+      <fieldset class="flex flex-col gap-3 p-4 border border-neutral-200 rounded-lg max-w-sm">
+        <legend class="text-sm font-medium text-neutral-900 mb-2">Notification preferences</legend>
         <Checkbox
           v-for="opt in options"
           :key="opt.value"

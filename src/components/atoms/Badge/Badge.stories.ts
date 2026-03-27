@@ -25,10 +25,24 @@ export default meta
 type Story = StoryObj<typeof Badge>
 
 export const Default: Story = {
-  render: (args) => ({
+  args: {
+    variant: 'primary',
+    size: 'md',
+    badgeStyle: 'subtle',
+    dot: false,
+    removable: false,
+    text: 'Badge',
+  },
+  argTypes: {
+    text: { control: 'text' },
+  },
+  parameters: {
+    layout: 'centered',
+  },
+  render: (args: any) => ({
     components: { Badge },
     setup: () => ({ args }),
-    template: '<Badge v-bind="args">Badge</Badge>',
+    template: '<Badge v-bind="args">{{ args.text }}</Badge>',
   }),
 }
 

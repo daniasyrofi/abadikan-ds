@@ -13,6 +13,7 @@ const meta: Meta<typeof Button> = {
     disabled:  { control: 'boolean' },
     loading:   { control: 'boolean' },
     fullWidth: { control: 'boolean' },
+    text:      { control: 'text' },
   },
   args: {
     variant:   'default',
@@ -26,10 +27,19 @@ export default meta
 type Story = StoryObj<typeof Button>
 
 export const Default: Story = {
-  render: (args) => ({
+  args: {
+    variant:   'default',
+    size:      'md',
+    disabled:  false,
+    loading:   false,
+    fullWidth: false,
+    text:      'Button',
+  },
+  parameters: { layout: 'centered' },
+  render: (args: any) => ({
     components: { Button },
     setup: () => ({ args }),
-    template: '<Button v-bind="args">Button</Button>',
+    template: '<Button v-bind="args">{{ args.text }}</Button>',
   }),
 }
 

@@ -34,55 +34,91 @@ function handleChange() {
 
 // Size maps
 const outerSizeClass: Record<RadioSize, string> = {
-  sm: 'size-3.5',
-  md: 'size-4',
-  lg: 'size-5',
+  sm: 'size-4',    // 16px
+  md: 'size-5',    // 20px
+  lg: 'size-6',    // 24px
 }
 
 const innerSizeClass: Record<RadioSize, string> = {
-  sm: 'size-1.5',
-  md: 'size-2',
-  lg: 'size-2.5',
+  sm: 'size-2',
+  md: 'size-2.5',
+  lg: 'size-3',
 }
 
 const labelTextClass: Record<RadioSize, string> = {
-  sm: 'text-sm',
-  md: 'text-sm',
-  lg: 'text-base',
+  sm: 'text-xs',   // 12px
+  md: 'text-sm',   // 14px
+  lg: 'text-base', // 16px
 }
 
 const descTextClass: Record<RadioSize, string> = {
-  sm: 'text-xs',
-  md: 'text-sm',
+  sm: 'text-[11px]',
+  md: 'text-xs',
   lg: 'text-sm',
 }
+
+// Math for baseline alignment: (BoxHeight - LineHeight) / 2
+// Assumes text uses leading-none (LineHeight = FontSize)
+const offsetClass: Record<RadioSize, string> = {
+  sm: 'mt-[2px]',  // (16 - 12)/2 = 2px
+  md: 'mt-[3px]',  // (20 - 14)/2 = 3px
+  lg: 'mt-[4px]',  // (24 - 16)/2 = 4px
+}
+
+const outerStyle = computed(() => {
+  const borderColor = isChecked.value
+    ? hasError.value
+      ? 'var(--color-danger)'
+      : 'var(--color-primary)'
+    : hasError.value
+      ? 'var(--color-danger)'
+      : 'var(--color-border-strong)'
+
+  return {
+    borderColor,
+    backgroundColor: 'var(--color-surface)',
+  }
+})
 
 const outerClasses = computed(() =>
   cn(
     'shrink-0 inline-flex items-center justify-center rounded-full',
-    'border transition-all duration-[--duration-normal] ease-[--ease-default]',
+    'border-2 transition-all duration-150 ease-out',
     outerSizeClass[props.size],
-    isChecked.value
-      ? hasError.value
-        ? 'border-[--color-danger] bg-[--color-surface]'
-        : 'border-[--color-primary] bg-[--color-surface]'
-      : hasError.value
-        ? 'border-[--color-danger] bg-[--color-surface]'
-        : 'border-[--color-border-strong] bg-[--color-surface]',
+    !isChecked.value && !hasError.value && !props.disabled && 'group-hover:[border-color:var(--color-neutral)]',
     props.disabled && 'opacity-50',
   )
 )
 
+const innerStyle = computed(() => {
+  if (!isChecked.value) return { backgroundColor: 'transparent' }
+  return {
+    backgroundColor: hasError.value
+      ? 'var(--color-danger)'
+      : 'var(--color-primary)',
+  }
+})
+
 const innerClasses = computed(() =>
   cn(
-    'rounded-full transition-all duration-[--duration-normal] ease-[--ease-default]',
+    'rounded-full transition-all duration-150 ease-out',
     innerSizeClass[props.size],
-    isChecked.value
-      ? hasError.value
-        ? 'bg-[--color-danger] scale-100'
-        : 'bg-[--color-primary] scale-100'
-      : 'scale-0 bg-transparent',
+    isChecked.value ? 'scale-100' : 'scale-0',
   )
+)
+
+const labelStyle = computed(() => ({
+  color: hasError.value
+    ? 'var(--color-danger)'
+    : 'var(--color-text-primary)',
+}))
+
+const descriptionStyle = { color: 'var(--color-text-secondary)' }
+
+const errorStyle = { color: 'var(--color-danger)' }
+
+const focusRingVar = computed(() =>
+  hasError.value ? 'var(--ring-danger)' : '0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-primary)'
 )
 </script>
 
@@ -90,8 +126,8 @@ const innerClasses = computed(() =>
   <div :class="cn('inline-flex flex-col gap-1', disabled && 'cursor-not-allowed')">
     <label
       :class="cn(
-        'inline-flex items-start gap-2',
-        disabled ? 'cursor-not-allowed' : 'cursor-pointer',
+        'relative flex items-start gap-2.5',
+        disabled ? 'cursor-not-allowed' : 'cursor-pointer group',
       )"
     >
       <!-- Hidden native input -->
@@ -109,30 +145,38 @@ const innerClasses = computed(() =>
       />
 
       <!-- Visual radio button -->
-      <span :class="outerClasses" aria-hidden="true">
-        <span :class="innerClasses" />
+      <span
+        :class="outerClasses"
+        :style="[
+          outerStyle,
+          { '--tw-ring-color': focusRingVar } as any,
+        ]"
+        aria-hidden="true"
+      >
+        <span :class="innerClasses" :style="innerStyle" />
       </span>
 
       <!-- Text content -->
       <span
         v-if="label || description"
-        class="flex flex-col gap-0.5 pt-px"
+        :class="cn('flex flex-col gap-1', offsetClass[size])"
       >
         <span
           v-if="label"
           :class="cn(
             labelTextClass[size],
-            'font-medium leading-snug',
-            hasError ? 'text-[--color-danger]' : 'text-[--color-text-primary]',
+            'font-medium leading-none transition-colors',
             disabled && 'opacity-50',
           )"
+          :style="labelStyle"
         >
           {{ label }}
         </span>
         <span
           v-if="description && !error"
           :id="`${inputId}-desc`"
-          :class="cn(descTextClass[size], 'text-[--color-text-secondary]', disabled && 'opacity-50')"
+          :class="cn(descTextClass[size], disabled && 'opacity-50')"
+          :style="descriptionStyle"
         >
           {{ description }}
         </span>
@@ -143,9 +187,17 @@ const innerClasses = computed(() =>
     <p
       v-if="error"
       :id="`${inputId}-desc`"
-      class="text-sm text-[--color-danger] ml-6"
+      class="text-sm ml-7"
+      :style="errorStyle"
     >
       {{ error }}
     </p>
   </div>
 </template>
+
+<style scoped>
+.peer:focus-visible ~ span {
+  outline: none;
+  box-shadow: var(--tw-ring-color, 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-primary));
+}
+</style>

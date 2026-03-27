@@ -32,10 +32,17 @@ const emit = defineEmits<{ dismiss: [] }>()
 // ── Color maps ───────────────────────────────────────────────────────────────
 
 const variantClasses: Record<Variant, string> = {
-  info:    'bg-[--color-info-light] border-[--color-info] text-[--color-info]',
-  success: 'bg-[--color-success-light] border-[--color-success] text-[--color-success]',
-  warning: 'bg-[--color-warning-light] border-[--color-warning] text-[--color-warning]',
-  danger:  'bg-[--color-danger-light] border-[--color-danger] text-[--color-danger]',
+  info:    'bg-[--color-info-light]/80 border-[--color-info]/30 text-[--color-info]',
+  success: 'bg-[--color-success-light]/80 border-[--color-success]/30 text-[--color-success]',
+  warning: 'bg-[--color-warning-light]/80 border-[--color-warning]/30 text-[--color-warning]',
+  danger:  'bg-[--color-danger-light]/80 border-[--color-danger]/30 text-[--color-danger]',
+}
+
+const accentClasses: Record<Variant, string> = {
+  info:    'bg-[--color-info]',
+  success: 'bg-[--color-success]',
+  warning: 'bg-[--color-warning]',
+  danger:  'bg-[--color-danger]',
 }
 
 const titleColorClasses: Record<Variant, string> = {
@@ -88,7 +95,7 @@ const iconComponent = computed(() => defaultIconComponents[props.variant])
 
 const wrapperClasses = computed(() =>
   cn(
-    'relative flex w-full rounded-[--radius-md] border',
+    'relative flex w-full rounded-[--radius-md] border overflow-hidden',
     paddingClasses[props.size],
     variantClasses[props.variant],
   )
@@ -97,10 +104,16 @@ const wrapperClasses = computed(() =>
 
 <template>
   <div :class="wrapperClasses" role="alert">
+    <!-- Left accent bar -->
+    <span
+      :class="cn('absolute left-0 inset-y-0 w-1 rounded-l-[--radius-md]', accentClasses[variant])"
+      aria-hidden="true"
+    />
+
     <!-- Icon area -->
     <span
       v-if="icon || $slots.icon"
-      class="shrink-0 flex items-start mt-px"
+      class="shrink-0 flex items-start mt-px pl-1"
     >
       <slot name="icon">
         <component :is="iconComponent" :size="iconSizePx[size]" aria-hidden="true" />

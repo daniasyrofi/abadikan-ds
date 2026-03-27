@@ -63,12 +63,12 @@ function handleClear() {
   emit('clear')
 }
 
-// ── Size maps ──────────────────────────────────────────────────────────────
+// ── Design System Metrics ──
 
 const heightClass: Record<InputSize, string> = {
-  sm: 'h-8',
-  md: 'h-9',
-  lg: 'h-10',
+  sm: 'min-h-8',
+  md: 'min-h-10', // 40px comfortable
+  lg: 'min-h-12', // 48px accessible
 }
 
 const textSizeClass: Record<InputSize, string> = {
@@ -77,10 +77,28 @@ const textSizeClass: Record<InputSize, string> = {
   lg: 'text-base',
 }
 
-const paddingXClass: Record<InputSize, string> = {
-  sm: 'px-2.5',
-  md: 'px-3',
-  lg: 'px-3.5',
+const pxClasses: Record<InputSize, string> = {
+  sm: 'px-3',
+  md: 'px-4',
+  lg: 'px-5',
+}
+
+const plClasses: Record<InputSize, string> = {
+  sm: 'pl-3',
+  md: 'pl-3.5',
+  lg: 'pl-4',
+}
+
+const prClasses: Record<InputSize, string> = {
+  sm: 'pr-3',
+  md: 'pr-3.5',
+  lg: 'pr-4',
+}
+
+const pyClasses: Record<InputSize, string> = {
+  sm: 'py-1.5',
+  md: 'py-2',
+  lg: 'py-2.5',
 }
 
 const iconSizePx: Record<InputSize, number> = {
@@ -89,104 +107,72 @@ const iconSizePx: Record<InputSize, number> = {
   lg: 18,
 }
 
-const addonPaddingClass: Record<InputSize, string> = {
-  sm: 'px-2',
-  md: 'px-2.5',
-  lg: 'px-3',
-}
-
-// ── Computed styles ───────────────────────────────────────────────────────
-
+// Wrapper controls the background, border, and focus rings.
+// We use a flex container so prefix/suffix panels can stretch fully to the top and bottom.
 const wrapperClasses = computed(() =>
   cn(
-    'relative flex items-center w-full',
-    'rounded-[--radius-md] border bg-[--color-surface]',
-    'transition-colors duration-[--duration-normal] ease-[--ease-default]',
-    'focus-within:outline-2 focus-within:outline-offset-0 focus-within:outline-[--color-primary]',
-    hasError.value
-      ? 'border-[--color-danger] focus-within:outline-[--color-danger]'
-      : 'border-[--color-border] hover:border-[--color-border-strong]',
-    props.disabled && 'opacity-50 cursor-not-allowed bg-[--color-bg-subtle]',
-    props.readonly && 'bg-[--color-bg-subtle]',
-  )
-)
-
-const inputClasses = computed(() =>
-  cn(
-    'flex-1 min-w-0 bg-transparent outline-none',
-    'text-[--color-text-primary] placeholder:text-[--color-text-tertiary]',
-    textSizeClass[props.size],
-    // Horizontal padding: only add if no prefix/suffix slot
-    '$slots.prefix' ? 'pl-0' : paddingXClass[props.size],
-    '$slots.suffix' ? 'pr-0' : paddingXClass[props.size],
+    'ds-input-wrapper',
+    'relative flex items-center w-full transition-all duration-200 ease-out',
+    'rounded-[var(--radius-lg)] border outline-none',
     heightClass[props.size],
-    props.disabled && 'cursor-not-allowed',
-    props.readonly && 'cursor-default',
-  )
-)
-
-const addonClasses = computed(() =>
-  cn(
-    'shrink-0 inline-flex items-center self-stretch',
-    'text-[--color-text-secondary] select-none',
-    textSizeClass[props.size],
-    addonPaddingClass[props.size],
-  )
-)
-
-const iconSlotClasses = computed(() =>
-  cn(
-    'shrink-0 inline-flex items-center self-stretch',
-    'text-[--color-text-tertiary]',
-    props.size === 'sm' ? 'px-2' : 'px-2.5',
-  )
-)
-
-const actionBtnClasses = computed(() =>
-  cn(
-    'shrink-0 inline-flex items-center justify-center self-stretch',
-    'text-[--color-text-tertiary] hover:text-[--color-text-primary]',
-    'transition-colors duration-[--duration-normal]',
-    'cursor-pointer focus-visible:outline-2 focus-visible:outline-[--color-primary] rounded-sm',
-    props.size === 'sm' ? 'px-1.5' : 'px-2',
+    hasError.value && 'ds-input-wrapper--error',
+    props.disabled && 'ds-input-wrapper--disabled cursor-not-allowed',
+    props.readonly && 'ds-input-wrapper--readonly',
   )
 )
 </script>
 
 <template>
-  <div class="flex flex-col gap-1 w-full">
+  <div class="flex flex-col gap-1.5 w-full text-left">
     <!-- Label -->
     <label
       v-if="label"
       :for="inputId"
       :class="cn(
-        'text-sm font-medium text-[--color-text-primary]',
+        'text-sm font-medium select-none flex items-center',
         disabled && 'opacity-50',
       )"
+      :style="{ color: 'var(--color-text-heading)' }"
     >
       {{ label }}
-      <span v-if="required" class="text-[--color-danger] ml-0.5" aria-hidden="true">*</span>
+      <span
+        v-if="required"
+        class="ml-1 font-bold inline-block"
+        :style="{ color: 'var(--color-danger)' }"
+        aria-hidden="true"
+      >*</span>
     </label>
 
-    <!-- Input wrapper -->
+    <!-- Interactive Input Container -->
     <div :class="wrapperClasses">
-      <!-- Prefix text (e.g. "$") -->
-      <span
+
+      <!-- Prefix Area (Background filled block e.g. "https://") -->
+      <div
         v-if="$slots.prefix"
-        :class="cn(addonClasses, 'border-r border-[--color-border] text-[--color-text-secondary]')"
+        :class="cn(
+          'flex items-center self-stretch text-sm font-medium select-none whitespace-nowrap',
+          pxClasses[size]
+        )"
+        :style="{
+          borderRight: '1px solid var(--color-border)',
+          backgroundColor: 'var(--color-bg-subtle)',
+          color: 'var(--color-text-secondary)',
+          borderRadius: 'var(--radius-lg) 0 0 var(--radius-lg)',
+        }"
       >
         <slot name="prefix" />
-      </span>
+      </div>
 
-      <!-- Leading icon -->
-      <span
+      <!-- Leading Icon (Inside the input area) -->
+      <div
         v-if="$slots.leading"
-        :class="cn(iconSlotClasses, !$slots.prefix && 'pl-2.5 pr-0')"
+        :class="cn('flex items-center shrink-0 select-none', plClasses[size])"
+        :style="{ color: 'var(--color-text-tertiary)' }"
       >
         <slot name="leading" />
-      </span>
+      </div>
 
-      <!-- The actual input -->
+      <!-- Native Input -->
       <input
         :id="inputId"
         :type="effectiveType"
@@ -201,14 +187,12 @@ const actionBtnClasses = computed(() =>
         :aria-invalid="hasError || undefined"
         :aria-describedby="helperText || error ? `${inputId}-hint` : undefined"
         :class="cn(
-          'flex-1 min-w-0 bg-transparent outline-none h-full',
+          'ds-input-native',
+          'flex-1 w-full bg-transparent outline-none focus-visible:outline-none h-full min-w-0 border-none focus:ring-0 focus-visible:ring-0',
           textSizeClass[size],
-          heightClass[size],
-          // Left padding when no prefix/leading
-          !$slots.prefix && !$slots.leading ? paddingXClass[size] : 'pl-2',
-          // Right padding when no suffix/trailing/clear/password
-          !$slots.suffix && !$slots.trailing && !showClear && !isPassword ? paddingXClass[size] : 'pr-1.5',
-          'text-[--color-text-primary] placeholder:text-[--color-text-tertiary]',
+          pyClasses[size],
+          !$slots.prefix && !$slots.leading ? plClasses[size] : 'pl-2',
+          !$slots.suffix && !$slots.trailing && !showClear && !isPassword ? prClasses[size] : '',
           disabled && 'cursor-not-allowed',
           readonly && 'cursor-default',
         )"
@@ -216,76 +200,170 @@ const actionBtnClasses = computed(() =>
         @input="handleInput"
       />
 
-      <!-- Clear button -->
-      <button
-        v-if="showClear && !$slots.trailing && !isPassword"
-        type="button"
-        :class="actionBtnClasses"
-        aria-label="Clear"
-        @click="handleClear"
-      >
-        <RiCloseLine :size="iconSizePx[size]" />
-      </button>
+      <!-- Right Side Controls (Clear, Password Toggle, Trailing, Suffix) -->
+      <div class="flex items-center self-stretch shrink-0">
 
-      <!-- Password visibility toggle -->
-      <button
-        v-if="isPassword"
-        type="button"
-        :class="actionBtnClasses"
-        :aria-label="showPassword ? 'Hide password' : 'Show password'"
-        @click="showPassword = !showPassword"
-      >
-        <RiEyeOffLine v-if="showPassword" :size="iconSizePx[size]" />
-        <RiEyeLine    v-else              :size="iconSizePx[size]" />
-      </button>
+        <!-- Clear Button -->
+        <button
+          v-if="showClear"
+          type="button"
+          aria-label="Clear input"
+          @click="handleClear"
+          class="ds-input-action-btn flex items-center justify-center p-1.5 mx-0.5 rounded-md transition-colors outline-none"
+        >
+          <RiCloseLine :size="iconSizePx[size]" />
+        </button>
 
-      <!-- Trailing slot (icon/button) -->
-      <span
-        v-if="$slots.trailing"
-        :class="cn(iconSlotClasses, 'pr-2.5 pl-0')"
-      >
-        <slot name="trailing" />
-      </span>
+        <!-- Password Visibility Toggle -->
+        <button
+          v-if="isPassword"
+          type="button"
+          :aria-label="showPassword ? 'Hide password' : 'Show password'"
+          @click="showPassword = !showPassword"
+          class="ds-input-action-btn flex items-center justify-center p-1.5 mx-0.5 rounded-md transition-colors outline-none"
+        >
+          <RiEyeOffLine v-if="showPassword" :size="iconSizePx[size]" />
+          <RiEyeLine v-else :size="iconSizePx[size]" />
+        </button>
 
-      <!-- Suffix text (e.g. ".com") -->
-      <span
-        v-if="$slots.suffix"
-        :class="cn(addonClasses, 'border-l border-[--color-border]')"
-      >
-        <slot name="suffix" />
-      </span>
+        <!-- Trailing Icon -->
+        <div
+          v-if="$slots.trailing"
+          :class="cn('flex items-center pl-2 select-none', prClasses[size])"
+          :style="{ color: 'var(--color-text-tertiary)' }"
+        >
+          <slot name="trailing" />
+        </div>
+
+        <!-- Suffix Area (Background filled block e.g. ".com") -->
+        <div
+          v-if="$slots.suffix"
+          :class="cn(
+            'flex items-center self-stretch text-sm font-medium select-none whitespace-nowrap',
+            pxClasses[size]
+          )"
+          :style="{
+            borderLeft: '1px solid var(--color-border)',
+            backgroundColor: 'var(--color-bg-subtle)',
+            color: 'var(--color-text-secondary)',
+            borderRadius: '0 var(--radius-lg) var(--radius-lg) 0',
+          }"
+        >
+          <slot name="suffix" />
+        </div>
+      </div>
     </div>
 
-    <!-- Bottom row: helper/error + counter -->
+    <!-- Feedback Area (Helper text, Error, Counter) -->
     <div
       v-if="helperText || error || (counter && maxlength)"
-      class="flex items-start justify-between gap-2"
+      class="flex items-start justify-between gap-4 mt-1"
     >
-      <!-- Helper text or error -->
+      <!-- Message -->
       <p
-        v-if="helperText || error"
+        v-if="error"
         :id="`${inputId}-hint`"
-        :class="cn(
-          'text-sm',
-          hasError ? 'text-[--color-danger]' : 'text-[--color-text-secondary]',
-        )"
+        class="text-[13px] leading-snug font-medium animate-in fade-in slide-in-from-top-1"
+        :style="{ color: 'var(--color-danger)' }"
       >
-        {{ error ?? helperText }}
+        {{ error }}
       </p>
-      <span v-else />
+      <p
+        v-else-if="helperText"
+        :id="`${inputId}-hint`"
+        class="text-[13px] leading-snug"
+        :style="{ color: 'var(--color-text-secondary)' }"
+      >
+        {{ helperText }}
+      </p>
+      <span v-else></span>
 
-      <!-- Character counter -->
+      <!-- Counter -->
       <span
         v-if="counter && maxlength"
         :class="cn(
-          'text-xs shrink-0 tabular-nums',
-          charCount >= maxlength
-            ? 'text-[--color-danger]'
-            : 'text-[--color-text-tertiary]',
+          'text-[13px] font-medium shrink-0 tabular-nums',
         )"
+        :style="{ color: charCount >= maxlength ? 'var(--color-danger)' : 'var(--color-text-tertiary)' }"
       >
         {{ charCount }}/{{ maxlength }}
       </span>
     </div>
   </div>
 </template>
+
+<style scoped>
+/* ── Wrapper base ── */
+.ds-input-wrapper {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+}
+
+.ds-input-wrapper:hover:not(.ds-input-wrapper--disabled):not(.ds-input-wrapper--readonly):not(:focus-within) {
+  border-color: var(--color-border-strong);
+}
+
+.ds-input-wrapper:focus-within:not(.ds-input-wrapper--error) {
+  border-color: var(--color-text-primary);
+  box-shadow: 0 0 0 1px var(--color-text-primary);
+}
+
+/* ── Error state ── */
+.ds-input-wrapper--error {
+  border-color: var(--color-danger);
+}
+
+.ds-input-wrapper--error:focus-within {
+  box-shadow: 0 0 0 1px var(--color-danger);
+}
+
+/* ── Disabled state ── */
+.ds-input-wrapper--disabled {
+  opacity: 0.5;
+  background-color: var(--color-bg-subtle);
+}
+
+/* ── Readonly state ── */
+.ds-input-wrapper--readonly {
+  background-color: var(--color-bg-subtle);
+}
+
+/* ── Native input ── */
+.ds-input-native {
+  color: var(--color-text-primary);
+}
+
+.ds-input-native::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.ds-input-native:focus,
+.ds-input-native:focus-visible,
+.ds-input-native:focus-within {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+  --tw-ring-shadow: none !important;
+  --tw-ring-color: transparent !important;
+}
+
+.ds-input-wrapper--disabled .ds-input-native {
+  color: var(--color-text-disabled);
+}
+
+/* ── Action buttons (clear, password toggle) ── */
+.ds-input-action-btn {
+  color: var(--color-text-tertiary);
+}
+
+.ds-input-action-btn:hover {
+  color: var(--color-text-primary);
+  background-color: var(--color-neutral-light);
+}
+
+.ds-input-action-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 1px var(--color-secondary);
+  border-radius: var(--radius-sm);
+}
+</style>

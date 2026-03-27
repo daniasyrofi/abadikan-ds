@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { ref } from 'vue'
+
+import { ref, watch } from 'vue'
 import Toggle from './Toggle.vue'
 
 const meta: Meta<typeof Toggle> = {
@@ -23,10 +24,12 @@ export default meta
 type Story = StoryObj<typeof Toggle>
 
 export const Default: Story = {
-  render: (args) => ({
+  parameters: { layout: 'centered' },
+  render: (args: any) => ({
     components: { Toggle },
     setup() {
       const value = ref(args.modelValue ?? false)
+      watch(() => args.modelValue, (val) => { value.value = val })
       return { args, value }
     },
     template: '<Toggle v-bind="args" v-model="value" />',
@@ -34,10 +37,11 @@ export const Default: Story = {
 }
 
 export const Checked: Story = {
-  render: () => ({
+  args: { modelValue: true, label: 'Checked' },
+  render: (args) => ({
     components: { Toggle },
-    setup: () => ({ value: ref(true) }),
-    template: '<Toggle v-model="value" />',
+    setup: () => ({ args }),
+    template: '<Toggle v-bind="args" />',
   }),
 }
 
@@ -56,16 +60,11 @@ export const Disabled: Story = {
 export const WithLabel: Story = {
   render: () => ({
     components: { Toggle },
-    setup: () => ({
-      v1: ref(false),
-      v2: ref(true),
-      v3: ref(false),
-    }),
     template: `
       <div class="flex flex-col gap-4">
-        <Toggle v-model="v1" label="Notifications" label-position="right" />
-        <Toggle v-model="v2" label="Dark mode" label-position="right" />
-        <Toggle v-model="v3" label="Auto-save" label-position="left" />
+        <Toggle :model-value="false" label="Notifications" label-position="right" />
+        <Toggle :model-value="true" label="Dark mode" label-position="right" />
+        <Toggle :model-value="false" label="Auto-save" label-position="left" />
       </div>
     `,
   }),
@@ -74,40 +73,11 @@ export const WithLabel: Story = {
 export const AllSizes: Story = {
   render: () => ({
     components: { Toggle },
-    setup: () => ({
-      sm: ref(true),
-      md: ref(true),
-      lg: ref(true),
-    }),
     template: `
       <div class="flex flex-col gap-4">
-        <Toggle v-model="sm" size="sm" label="Small" />
-        <Toggle v-model="md" size="md" label="Medium" />
-        <Toggle v-model="lg" size="lg" label="Large" />
-      </div>
-    `,
-  }),
-}
-
-export const Interactive: Story = {
-  render: () => ({
-    components: { Toggle },
-    setup() {
-      const features = ref({
-        notifications: true,
-        darkMode: false,
-        autoSave: true,
-        analytics: false,
-      })
-      return { features }
-    },
-    template: `
-      <div class="flex flex-col gap-3 p-4 rounded-[--radius-lg] border border-[--color-border] max-w-xs">
-        <p class="text-h4 text-[--color-text-heading]">Settings</p>
-        <div v-for="(val, key) in features" :key="key" class="flex items-center justify-between py-1">
-          <span class="text-body text-[--color-text-primary] capitalize">{{ key.replace(/([A-Z])/g, ' $1') }}</span>
-          <Toggle v-model="features[key]" />
-        </div>
+        <Toggle :model-value="true" size="sm" label="Small" />
+        <Toggle :model-value="true" size="md" label="Medium" />
+        <Toggle :model-value="true" size="lg" label="Large" />
       </div>
     `,
   }),
