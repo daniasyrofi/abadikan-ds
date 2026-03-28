@@ -21,7 +21,7 @@ const classes = computed(() => {
     return cn(
       base,
       isVertical ? 'flex-col' : 'flex-row',
-      'gap-1 p-1 bg-[--color-neutral-light]/80 rounded-[--radius-2xl]',
+      'gap-1 p-1 ds-tabs-list--pill',
     )
   }
 
@@ -29,7 +29,7 @@ const classes = computed(() => {
     return cn(
       base,
       isVertical ? 'flex-col' : 'flex-row',
-      'gap-0 ring-1 ring-inset ring-[--color-border]/60 rounded-[--radius-xl] bg-[--color-surface] shadow-[--shadow-sm] overflow-hidden',
+      'gap-0 overflow-hidden ds-tabs-list--boxed',
     )
   }
 
@@ -46,3 +46,15 @@ const classes = computed(() => {
     <slot />
   </div>
 </template>
+
+<style scoped>
+.ds-tabs-list--pill {
+  background-color: var(--color-neutral-light);
+  border-radius: var(--radius-2xl);
+}
+.ds-tabs-list--boxed {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm), inset 0 0 0 1px var(--color-border);
+}
+</style>

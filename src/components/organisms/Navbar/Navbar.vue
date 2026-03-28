@@ -31,7 +31,7 @@ const classes = computed(() =>
     variantClasses[props.variant],
     props.variant === 'default' && props.border && 'border-b border-[--color-border]',
     props.sticky && 'sticky top-0 z-40',
-    props.sticky && props.variant === 'default' && 'shadow-[--shadow-sm]',
+    props.sticky && props.variant === 'default' && 'ds-navbar--sticky-shadow',
   )
 )
 </script>
@@ -61,3 +61,9 @@ const classes = computed(() =>
     </div>
   </header>
 </template>
+
+<style scoped>
+.ds-navbar--sticky-shadow {
+  box-shadow: var(--shadow-sm);
+}
+</style>

@@ -140,9 +140,7 @@ const overlayClasses = computed(() =>
 
 const panelClasses = computed(() =>
   cn(
-    'relative w-full bg-[--color-surface]',
-    'rounded-[--radius-2xl]',
-    'shadow-[--shadow-2xl] ring-1 ring-inset ring-[--color-border]/60',
+    'ds-modal-panel relative w-full',
     'flex flex-col',
     sizeMap[props.size],
     props.scrollBehavior === 'outside'
@@ -252,3 +250,12 @@ const panelClasses = computed(() =>
     </Transition>
   </Teleport>
 </template>
+
+<style scoped>
+.ds-modal-panel {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-2xl), inset 0 0 0 1px var(--color-border);
+  overflow: hidden;
+}
+</style>

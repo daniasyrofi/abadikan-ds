@@ -147,10 +147,7 @@ onBeforeUnmount(() => {
 
 const menuClasses = computed(() =>
   cn(
-    'absolute z-50 min-w-[10rem] py-1.5',
-    'bg-[--color-surface] ring-1 ring-inset ring-[--color-border]/60',
-    'rounded-[--radius-2xl] shadow-[--shadow-2xl]',
-    'overflow-hidden',
+    'ds-dropdown-menu absolute z-50 min-w-[10rem] py-1.5',
     placementClasses[props.placement],
   )
 )
@@ -194,8 +191,8 @@ const menuClasses = computed(() =>
             role="menuitem"
             :disabled="item.disabled"
             :class="cn(
-              'flex w-full items-center gap-2.5 px-2.5 py-2 text-sm text-left',
-              'rounded-[--radius-md] mx-1',
+              'ds-dropdown-item flex w-full items-center gap-2.5 px-2.5 py-2 text-sm text-left',
+              'mx-1',
               'text-[--color-text-primary]',
               'transition-colors duration-[--duration-fast]',
               item.disabled
@@ -232,3 +229,15 @@ const menuClasses = computed(() =>
     </Transition>
   </div>
 </template>
+
+<style scoped>
+.ds-dropdown-menu {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-2xl), inset 0 0 0 1px var(--color-border);
+  overflow: hidden;
+}
+.ds-dropdown-item {
+  border-radius: var(--radius-md);
+}
+</style>

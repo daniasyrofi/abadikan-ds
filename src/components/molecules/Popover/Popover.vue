@@ -153,9 +153,7 @@ onBeforeUnmount(() => {
 
 const popoverClasses = computed(() =>
   cn(
-    'absolute z-50 p-4',
-    'bg-[--color-surface] ring-1 ring-inset ring-[--color-border]/60',
-    'rounded-[--radius-2xl] shadow-[--shadow-2xl]',
+    'ds-popover absolute z-50 p-4',
     placementClasses[props.placement],
   )
 )
@@ -200,3 +198,11 @@ const popoverClasses = computed(() =>
     </Transition>
   </div>
 </template>
+
+<style scoped>
+.ds-popover {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-2xl), inset 0 0 0 1px var(--color-border);
+}
+</style>

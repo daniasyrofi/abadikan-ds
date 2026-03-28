@@ -185,13 +185,13 @@ function matchAccept(file: File, accept: string): boolean {
 
 const dropzoneClasses = computed(() =>
   cn(
-    'relative flex flex-col items-center justify-center gap-3',
-    'rounded-[--radius-2xl] border border-dashed p-10',
-    'cursor-pointer select-none ring-1 ring-inset ring-transparent',
+    'ds-dropzone relative flex flex-col items-center justify-center gap-3',
+    'border border-dashed p-10',
+    'cursor-pointer select-none',
     'transition-all duration-[--duration-normal] ease-[--ease-default]',
     isDragOver.value
-      ? 'border-[--color-primary] ring-[--color-primary]/20 bg-[--color-primary-light]/50 scale-[1.01]'
-      : 'border-[--color-border]/60 bg-[--color-surface] hover:border-[--color-border] hover:bg-[--color-neutral-light]/30 shadow-[--shadow-sm] hover:shadow-[--shadow-md]',
+      ? 'ds-dropzone--active border-[--color-primary] scale-[1.01]'
+      : 'ds-dropzone--idle',
     props.disabled && 'opacity-50 pointer-events-none cursor-not-allowed',
   )
 )
@@ -216,7 +216,7 @@ const dropzoneClasses = computed(() =>
         :class="cn(
           'flex items-center justify-center w-12 h-12 rounded-full',
           'transition-colors duration-[--duration-normal]',
-          isDragOver ? 'bg-[--color-primary]/15' : 'bg-[--color-neutral-light]',
+          isDragOver ? 'ds-upload-icon-bg--active' : 'ds-upload-icon-bg',
         )"
       >
         <RiUploadCloud2Line
@@ -256,7 +256,7 @@ const dropzoneClasses = computed(() =>
       <div
         v-for="(file, index) in selectedFiles"
         :key="fileKey(file)"
-        class="group relative rounded-[--radius-md] border border-[--color-border] overflow-hidden bg-[--color-bg-subtle]"
+        class="ds-file-preview group relative border border-[--color-border] overflow-hidden bg-[--color-bg-subtle]"
       >
         <!-- Image preview -->
         <img
@@ -295,3 +295,31 @@ const dropzoneClasses = computed(() =>
     </div>
   </div>
 </template>
+
+<style scoped>
+.ds-dropzone {
+  border-radius: var(--radius-2xl);
+}
+.ds-file-preview {
+  border-radius: var(--radius-md);
+}
+.ds-upload-icon-bg {
+  background-color: var(--color-neutral-light);
+}
+.ds-upload-icon-bg--active {
+  background-color: color-mix(in oklch, var(--color-primary) 15%, transparent);
+}
+.ds-dropzone--idle {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+.ds-dropzone--idle:hover {
+  border-color: var(--color-border-strong);
+  background-color: var(--color-neutral-light);
+  box-shadow: var(--shadow-md);
+}
+.ds-dropzone--active {
+  background-color: var(--color-primary-light);
+}
+</style>

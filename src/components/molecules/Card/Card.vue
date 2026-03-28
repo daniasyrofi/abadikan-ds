@@ -27,11 +27,11 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{ click: [e: MouseEvent] }>()
 
 const variantClasses: Record<Variant, string> = {
-  default:  'bg-[--color-surface] shadow-[--shadow-md] ring-1 ring-inset ring-[--color-border]/60 [border-top-color:oklch(1_0_0/0.85)]',
-  outlined: 'bg-[--color-surface] ring-1 ring-inset ring-[--color-border]/60',
-  elevated: 'bg-[--color-surface] shadow-[--shadow-2xl] ring-1 ring-inset ring-[--color-border]/60 [border-top-color:oklch(1_0_0/0.85)]',
+  default:  'bg-[--color-surface] ds-card--default',
+  outlined: 'bg-[--color-surface] ds-card--outlined',
+  elevated: 'bg-[--color-surface] ds-card--elevated',
   flat:     'bg-[--color-surface]',
-  glass:    'ring-1 ring-inset ring-[--glass-border] shadow-[--shadow-xl] [background:var(--color-surface-glass)] [backdrop-filter:var(--glass-blur)]',
+  glass:    'ds-card--glass',
 }
 
 const paddingClasses: Record<Padding, string> = {
@@ -42,10 +42,10 @@ const paddingClasses: Record<Padding, string> = {
 }
 
 const radiusClasses: Record<Radius, string> = {
-  sm: 'rounded-[--radius-md]',
-  md: 'rounded-[--radius-lg]',
-  lg: 'rounded-[--radius-xl]',
-  xl: 'rounded-[--radius-2xl]',
+  sm: 'ds-card--radius-sm',
+  md: 'ds-card--radius-md',
+  lg: 'ds-card--radius-lg',
+  xl: 'ds-card--radius-xl',
 }
 
 const bodyPaddingClasses: Record<Padding, string> = {
@@ -63,12 +63,12 @@ const classes = computed(() =>
     props.variant === 'glass' && '[background:var(--color-surface-glass)] [backdrop-filter:var(--glass-blur)]',
     radiusClasses[props.radius],
     !hasStructuredSlots.value && paddingClasses[props.padding],
-    props.hoverable && 'hover:shadow-[--shadow-xl] hover:-translate-y-1.5 cursor-default',
+    props.hoverable && 'ds-card--hoverable hover:-translate-y-1.5 cursor-default',
     props.clickable && [
-      'cursor-pointer',
-      'hover:shadow-[--shadow-xl] hover:-translate-y-1.5',
+      'ds-card--clickable cursor-pointer',
+      'hover:-translate-y-1.5',
       'active:scale-[0.99] active:translate-y-0',
-      'focus-visible:outline-none focus-visible:shadow-[--ring-primary]',
+      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--color-primary]',
     ],
   )
 )
@@ -144,3 +144,34 @@ const hasStructuredSlots = computed(() =>
     </div>
   </component>
 </template>
+
+<style scoped>
+/* ── Radius ── */
+.ds-card--radius-sm { border-radius: var(--radius-md); }
+.ds-card--radius-md { border-radius: var(--radius-lg); }
+.ds-card--radius-lg { border-radius: var(--radius-xl); }
+.ds-card--radius-xl { border-radius: var(--radius-2xl); }
+
+/* ── Variants ── */
+.ds-card--default {
+  box-shadow: var(--shadow-md), inset 0 0 0 1px var(--color-border);
+}
+.ds-card--outlined {
+  box-shadow: inset 0 0 0 1px var(--color-border);
+}
+.ds-card--elevated {
+  box-shadow: var(--shadow-2xl), inset 0 0 0 1px var(--color-border);
+}
+.ds-card--glass {
+  background: var(--color-surface-glass, rgba(255,255,255,0.7));
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-xl), inset 0 0 0 1px var(--color-border);
+}
+.ds-card--hoverable:hover,
+.ds-card--clickable:hover {
+  box-shadow: var(--shadow-xl), inset 0 0 0 1px var(--color-border);
+}
+.ds-card--clickable:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-primary), inset 0 0 0 1px var(--color-border);
+}
+</style>

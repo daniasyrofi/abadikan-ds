@@ -44,7 +44,7 @@ const classes = computed(() => {
       sizePadding.line[size],
       active
         ? 'text-[--color-text-primary] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[3px] after:bg-[--color-text-primary] after:rounded-t-full'
-        : 'text-[--color-text-secondary] hover:text-[--color-text-primary] hover:bg-[--color-neutral-light] rounded-t-[--radius-md]',
+        : 'text-[--color-text-secondary] hover:text-[--color-text-primary] hover:bg-[--color-neutral-light] rounded-t-lg',
     )
   }
 
@@ -54,7 +54,7 @@ const classes = computed(() => {
       sizePadding.pill[size],
       'rounded-xl',
       active
-        ? 'bg-[--color-surface] text-[--color-text-primary] shadow-sm ring-1 ring-inset ring-[--color-border]/40'
+        ? 'ds-tab-trigger--pill-active bg-[--color-surface] text-[--color-text-primary]'
         : 'text-[--color-text-secondary] hover:text-[--color-text-primary]',
     )
   }
@@ -63,10 +63,10 @@ const classes = computed(() => {
     return cn(
       ...base,
       sizePadding.boxed[size],
-      'border-r border-[--color-border]/60 last:border-r-0',
+      'ds-tab-trigger--boxed-separator last:border-r-0',
       active
-        ? 'bg-[--color-neutral-light]/50 text-[--color-text-primary] font-medium shadow-inner'
-        : 'bg-transparent text-[--color-text-secondary] hover:text-[--color-text-primary] hover:bg-[--color-neutral-light]/30',
+        ? 'ds-tab-trigger--boxed-active text-[--color-text-primary] font-medium'
+        : 'bg-transparent text-[--color-text-secondary] hover:text-[--color-text-primary] ds-tab-trigger--boxed-hover',
     )
   }
 
@@ -131,3 +131,19 @@ function handleKeydown(e: KeyboardEvent) {
     <slot />
   </button>
 </template>
+
+<style scoped>
+.ds-tab-trigger--pill-active {
+  box-shadow: 0 1px 3px oklch(0.20 0 0 / 0.08), inset 0 0 0 1px var(--color-border);
+}
+.ds-tab-trigger--boxed-separator {
+  border-right: 1px solid var(--color-border);
+}
+.ds-tab-trigger--boxed-active {
+  background-color: var(--color-neutral-light);
+  box-shadow: inset 0 1px 3px oklch(0.20 0 0 / 0.06);
+}
+.ds-tab-trigger--boxed-hover:hover {
+  background-color: color-mix(in oklch, var(--color-neutral-light) 50%, transparent);
+}
+</style>

@@ -108,7 +108,7 @@ const alignClass: Record<string, string> = {
 <template>
   <div
     :class="cn(
-      'relative w-full rounded-[--radius-lg] border border-[--color-border] overflow-hidden',
+      'ds-table-root relative w-full border border-[--color-border] overflow-hidden',
       'bg-[--color-surface]',
     )"
   >
@@ -116,8 +116,7 @@ const alignClass: Record<string, string> = {
     <div
       v-if="loading"
       :class="cn(
-        'absolute inset-0 z-20 flex items-center justify-center',
-        'bg-[--color-surface]/80 backdrop-blur-[1px]',
+        'ds-table-loading absolute inset-0 z-20 flex items-center justify-center',
       )"
     >
       <Spinner size="lg" label="Loading table data" />
@@ -259,3 +258,13 @@ const alignClass: Record<string, string> = {
     </div>
   </div>
 </template>
+
+<style scoped>
+.ds-table-root {
+  border-radius: var(--radius-lg);
+}
+.ds-table-loading {
+  background-color: color-mix(in oklch, var(--color-surface) 80%, transparent);
+  backdrop-filter: blur(1px);
+}
+</style>

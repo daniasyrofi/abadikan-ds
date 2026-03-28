@@ -32,9 +32,9 @@ const canSubmit = computed(() => props.modelValue.trim().length > 0 && !props.lo
 
 const containerClass = computed(() =>
   cn(
-    'bg-[--color-surface] border border-[--color-border] rounded-[--radius-xl]',
+    'ds-chat-input border border-[--color-border]',
     'transition-colors duration-[--duration-normal] ease-[--ease-default]',
-    'focus-within:border-[--color-border-strong] focus-within:shadow-[--shadow-sm]',
+    'focus-within:border-[--color-border-strong]',
     props.disabled && 'opacity-50 pointer-events-none',
   )
 )
@@ -105,7 +105,7 @@ onMounted(() => {
             type="button"
             :disabled="!canSubmit"
             :class="cn(
-              'flex items-center justify-center size-8 rounded-[--radius-lg]',
+              'ds-chat-send flex items-center justify-center size-8',
               'transition-all duration-[--duration-fast] ease-[--ease-default]',
               'cursor-pointer',
               canSubmit
@@ -123,3 +123,16 @@ onMounted(() => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.ds-chat-input {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-xl);
+}
+.ds-chat-input:focus-within {
+  box-shadow: var(--shadow-sm);
+}
+.ds-chat-send {
+  border-radius: var(--radius-lg);
+}
+</style>

@@ -259,12 +259,7 @@ const triggerClasses = computed(() =>
   )
 )
 
-const dayCellBase = [
-  'inline-flex items-center justify-center',
-  'h-8 w-8 text-sm',
-  'cursor-pointer select-none',
-  'transition-colors duration-[--duration-fast] ease-[--ease-default]',
-]
+
 </script>
 
 <template>
@@ -308,33 +303,33 @@ const dayCellBase = [
 
     <!-- Calendar dropdown -->
     <Transition
-      enter-active-class="transition duration-[--duration-normal] ease-[--ease-default]"
-      enter-from-class="opacity-0 translate-y-1"
-      enter-to-class="opacity-100 translate-y-0"
-      leave-active-class="transition duration-[--duration-fast] ease-[--ease-default]"
-      leave-from-class="opacity-100 translate-y-0"
-      leave-to-class="opacity-0 translate-y-1"
+      enter-active-class="ds-cal-enter-active"
+      enter-from-class="ds-cal-enter-from"
+      enter-to-class="ds-cal-enter-to"
+      leave-active-class="ds-cal-leave-active"
+      leave-from-class="ds-cal-leave-to"
+      leave-to-class="ds-cal-leave-from"
     >
       <div
         v-if="isOpen"
-        class="absolute z-50 top-full mt-1.5 left-0 rounded-[--radius-2xl] ring-1 ring-inset ring-[--color-border]/60 bg-[--color-surface] shadow-[--shadow-2xl] p-3 w-[308px]"
+        class="ds-calendar-popup"
       >
         <!-- Month/Year header -->
-        <div class="flex items-center justify-between mb-3 px-1">
+        <div class="flex items-center justify-between mb-3">
           <button
             type="button"
-            class="inline-flex items-center justify-center h-7 w-7 rounded-full text-[--color-text-secondary] hover:bg-[--color-neutral-light] hover:text-[--color-text-primary] cursor-pointer transition-colors duration-[--duration-fast]"
+            class="ds-cal-nav-btn"
             aria-label="Previous month"
             @click="prevMonth"
           >
             <RiArrowLeftSLine :size="'16'" />
           </button>
-          <span class="text-sm font-semibold text-[--color-text-primary] tracking-tight">
+          <span class="text-sm font-semibold tracking-tight ds-cal-month-label">
             {{ monthYearLabel }}
           </span>
           <button
             type="button"
-            class="inline-flex items-center justify-center h-7 w-7 rounded-full text-[--color-text-secondary] hover:bg-[--color-neutral-light] hover:text-[--color-text-primary] cursor-pointer transition-colors duration-[--duration-fast]"
+            class="ds-cal-nav-btn"
             aria-label="Next month"
             @click="nextMonth"
           >
@@ -347,7 +342,7 @@ const dayCellBase = [
           <span
             v-for="day in DAYS"
             :key="day"
-            class="text-center text-xs font-medium text-[--color-text-tertiary] h-8 flex items-center justify-center"
+            class="ds-cal-day-header"
           >
             {{ day }}
           </span>
@@ -360,19 +355,14 @@ const dayCellBase = [
             :key="i"
             type="button"
             :disabled="cell.isDisabled"
-            :class="cn(
-              ...dayCellBase,
-              'rounded-full',
-              cell.isSelected
-                ? 'bg-[--color-primary] text-[--color-text-inverse] font-medium shadow-sm'
-                : cell.isToday
-                  ? 'ring-1.5 ring-[--color-primary] text-[--color-primary] font-medium hover:bg-[--color-primary-light]'
-                  : cell.isCurrentMonth
-                    ? 'text-[--color-text-primary] hover:bg-[--color-neutral-light]'
-                    : 'text-[--color-text-muted] hover:bg-[--color-neutral-light]',
-              cell.isDisabled && 'opacity-30 pointer-events-none cursor-not-allowed',
-            )"
-            :aria-label="`${cell.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`"
+            :class="[
+              'ds-cal-day',
+              cell.isSelected  && 'ds-cal-day--selected',
+              cell.isToday && !cell.isSelected && 'ds-cal-day--today',
+              !cell.isCurrentMonth && !cell.isSelected && 'ds-cal-day--outside',
+              cell.isDisabled  && 'ds-cal-day--disabled',
+            ]"
+            :aria-label="cell.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })"
             :aria-selected="cell.isSelected || undefined"
             @click="selectDate(cell)"
           >
@@ -424,5 +414,116 @@ const dayCellBase = [
 
 .ds-datepicker-trigger-text--placeholder {
   color: var(--color-text-tertiary);
+}
+
+/* ── Calendar popup ── */
+.ds-calendar-popup {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 50;
+  width: 308px;
+  padding: 16px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow:
+    0 10px 15px oklch(0.20 0 0 / 0.07),
+    0 4px 6px oklch(0.20 0 0 / 0.04);
+}
+
+/* ── Nav buttons (prev/next month) ── */
+.ds-cal-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.ds-cal-nav-btn:hover {
+  background-color: var(--color-neutral-light);
+  color: var(--color-text-primary);
+}
+
+/* ── Month/year label ── */
+.ds-cal-month-label {
+  color: var(--color-text-primary);
+}
+
+/* ── Day-of-week header ── */
+.ds-cal-day-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+}
+
+/* ── Day cells ── */
+.ds-cal-day {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+  font-size: 0.875rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  color: var(--color-text-primary);
+  transition: background-color 100ms ease, color 100ms ease;
+}
+
+.ds-cal-day:hover:not(:disabled):not(.ds-cal-day--selected) {
+  background-color: var(--color-neutral-light);
+}
+
+.ds-cal-day--today {
+  color: var(--color-primary);
+  font-weight: 600;
+  outline: 1.5px solid var(--color-primary);
+  outline-offset: -1.5px;
+}
+
+.ds-cal-day--selected {
+  background-color: var(--color-neutral);
+  color: var(--color-text-inverse);
+  font-weight: 600;
+}
+
+.ds-cal-day--outside {
+  color: var(--color-text-tertiary);
+  opacity: 0.5;
+}
+
+.ds-cal-day--disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ── Transitions ── */
+.ds-cal-enter-active,
+.ds-cal-leave-active {
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+
+.ds-cal-enter-from {
+  opacity: 0;
+  transform: translateY(-6px) scale(0.98);
+}
+
+.ds-cal-enter-to {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.ds-cal-leave-to {
+  opacity: 0;
+  transform: translateY(-6px) scale(0.98);
 }
 </style>

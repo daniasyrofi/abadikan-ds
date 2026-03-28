@@ -34,8 +34,9 @@ const btnSize: Record<string, string> = {
 <template>
   <div
     :class="cn(
+      'ds-lang-toggle',
       'inline-flex items-center',
-      'rounded-full ring-1 ring-inset ring-[--color-border]/60 bg-[--color-neutral-light]/80 shadow-[--shadow-sm]',
+      'rounded-full',
       wrapperSize[props.size],
     )"
     role="radiogroup"
@@ -55,8 +56,8 @@ const btnSize: Record<string, string> = {
         'focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[--color-primary]',
         btnSize[props.size],
         locale === loc
-          ? 'bg-[--color-surface] text-[--color-text-primary] shadow-sm ring-1 ring-inset ring-[--color-border]/40'
-          : 'text-[--color-text-secondary] hover:text-[--color-text-primary] hover:bg-[--color-neutral-light]/50',
+          ? 'ds-lang-btn--active bg-[--color-surface] text-[--color-text-primary]'
+          : 'text-[--color-text-secondary] hover:text-[--color-text-primary] hover:bg-[--color-neutral-light]',
       )"
       @click="setLocale(loc)"
     >
@@ -64,3 +65,13 @@ const btnSize: Record<string, string> = {
     </button>
   </div>
 </template>
+
+<style scoped>
+.ds-lang-toggle {
+  background-color: var(--color-neutral-light);
+  box-shadow: var(--shadow-sm), inset 0 0 0 1px var(--color-border);
+}
+.ds-lang-btn--active {
+  box-shadow: 0 1px 2px oklch(0.20 0 0 / 0.06), inset 0 0 0 1px var(--color-border);
+}
+</style>

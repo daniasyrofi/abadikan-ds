@@ -59,14 +59,12 @@ const bubbleClass = computed(() =>
     isUser.value
       ? [
           'bg-[--color-neutral] text-[--color-text-inverse]',
-          'rounded-[--radius-2xl] rounded-br-[--radius-xs]',
-          'shadow-[--shadow-sm,--shadow-highlight]',
+          'ds-bubble ds-bubble--user',
         ]
       : [
           'bg-[--color-surface] border border-[--color-border]',
           'text-[--color-text-primary]',
-          'rounded-[--radius-2xl] rounded-bl-[--radius-xs]',
-          'shadow-[--shadow-xs]',
+          'ds-bubble ds-bubble--assistant',
         ],
     props.status === 'sending' && 'opacity-60',
     props.status === 'error' && 'shadow-[0_0_0_1px_var(--color-danger)]',
@@ -107,7 +105,7 @@ function handleRetry() {
       >
         <button
           type="button"
-          class="flex items-center justify-center size-7 rounded-[--radius-md] bg-[--color-surface] border border-[--color-border] text-[--color-text-secondary] hover:text-[--color-text-primary] hover:bg-[--color-neutral-light] shadow-[--shadow-sm] transition-colors duration-[--duration-fast] ease-[--ease-default] cursor-pointer"
+          class="ds-bubble-copy-btn flex items-center justify-center size-7 bg-[--color-surface] border border-[--color-border] text-[--color-text-secondary] hover:text-[--color-text-primary] hover:bg-[--color-neutral-light] transition-colors duration-[--duration-fast] ease-[--ease-default] cursor-pointer"
           aria-label="Copy message"
           @click="handleCopy"
         >
@@ -155,3 +153,21 @@ function handleRetry() {
     <span>{{ formattedTime }}</span>
   </div>
 </template>
+
+<style scoped>
+.ds-bubble {
+  border-radius: var(--radius-2xl);
+}
+.ds-bubble--user {
+  border-bottom-right-radius: var(--radius-xs);
+  box-shadow: var(--shadow-sm), var(--shadow-highlight);
+}
+.ds-bubble--assistant {
+  border-bottom-left-radius: var(--radius-xs);
+  box-shadow: var(--shadow-xs);
+}
+.ds-bubble-copy-btn {
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+</style>

@@ -139,7 +139,7 @@ function hasActiveChild(item: SidebarItem): boolean {
           <button
             type="button"
             :class="cn(
-              'relative flex items-center w-full gap-3 rounded-[--radius-md] text-sm',
+              'relative flex items-center w-full gap-3 ds-sidebar-item text-sm',
               'transition-all duration-[--duration-fast] ease-[--ease-default]',
               'cursor-pointer select-none overflow-hidden',
               isCollapsed ? 'justify-center px-0 py-2' : 'px-3 py-2',
@@ -198,7 +198,7 @@ function hasActiveChild(item: SidebarItem): boolean {
               <button
                 type="button"
                 :class="cn(
-                  'flex items-center w-full gap-3 rounded-[--radius-md] text-sm',
+                  'flex items-center w-full gap-3 ds-sidebar-item text-sm',
                   'transition-colors duration-[--duration-fast] ease-[--ease-default]',
                   'cursor-pointer select-none',
                   'pl-10 pr-3 py-1.5',
@@ -265,3 +265,9 @@ function hasActiveChild(item: SidebarItem): boolean {
     </div>
   </aside>
 </template>
+
+<style scoped>
+.ds-sidebar-item {
+  border-radius: var(--radius-md);
+}
+</style>

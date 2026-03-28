@@ -188,16 +188,14 @@ const triggerClasses = computed(() =>
 
 const dropdownClasses = computed(() =>
   cn(
-    'absolute z-50 left-0 right-0 top-full mt-1.5',
-    'rounded-[--radius-2xl] ring-1 ring-inset ring-[--color-border]/60 bg-[--color-surface]',
-    'shadow-[--shadow-2xl] overflow-hidden',
+    'ds-select-dropdown absolute z-50 left-0 right-0 top-full mt-1.5',
   )
 )
 
 const optionClasses = (opt: Option) =>
   cn(
-    'flex items-center gap-2 w-full text-left',
-    'cursor-pointer select-none rounded-[--radius-md] mx-1',
+    'ds-select-option flex items-center gap-2 w-full text-left',
+    'cursor-pointer select-none mx-1',
     textSizeClass[props.size],
     props.size === 'sm' ? 'px-2 py-1.5' : 'px-2.5 py-2',
     'transition-colors duration-[--duration-fast]',
@@ -409,5 +407,16 @@ const optionClasses = (opt: Option) =>
 
 .ds-select-trigger-text--placeholder {
   color: var(--color-text-tertiary);
+}
+
+/* ── Dropdown ── */
+.ds-select-dropdown {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-2xl), inset 0 0 0 1px var(--color-border);
+  overflow: hidden;
+}
+.ds-select-option {
+  border-radius: var(--radius-md);
 }
 </style>

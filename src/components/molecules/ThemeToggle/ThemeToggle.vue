@@ -30,11 +30,10 @@ const iconSize: Record<string, number> = {
   <button
     type="button"
     :class="cn(
+      'ds-theme-toggle',
       'inline-flex items-center justify-center rounded-full',
-      'ring-1 ring-inset ring-[--color-border]/60 bg-[--color-surface]',
+      'bg-[--color-surface]',
       'text-[--color-text-secondary] hover:text-[--color-text-primary]',
-      'hover:bg-[--color-neutral-light]/50 hover:shadow-[--shadow-md]',
-      'shadow-[--shadow-sm]',
       'transition-all duration-[--duration-normal] ease-[--ease-default]',
       'cursor-pointer',
       'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[--color-primary]',
@@ -51,6 +50,14 @@ const iconSize: Record<string, number> = {
 </template>
 
 <style scoped>
+.ds-theme-toggle {
+  box-shadow: var(--shadow-sm), inset 0 0 0 1px var(--color-border);
+}
+.ds-theme-toggle:hover {
+  background-color: var(--color-neutral-light);
+  box-shadow: var(--shadow-md), inset 0 0 0 1px var(--color-border);
+}
+
 .theme-icon-enter-active,
 .theme-icon-leave-active {
   transition: all var(--duration-normal) var(--ease-default);
