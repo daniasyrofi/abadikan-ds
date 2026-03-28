@@ -19,11 +19,11 @@
     --s-border-strong: oklch(0.82 0.010 80); /* Neutral 300 */
     --s-text:          oklch(0.20 0.010 80); /* Neutral 900 */
     --s-text-sec:      oklch(0.55 0.010 80); /* Neutral 600 */
-    --s-hover:         oklch(0.95 0.008 80); /* Neutral 100 */
-    --s-active:        oklch(0.90 0.010 80); /* Neutral 200 */
+    --s-hover:         oklch(0.96 0.02 350); /* Pink hover light */
+    --s-active:        oklch(0.92 0.04 350); /* Pink active light */
     --s-icon-bg:       oklch(0.95 0.008 80); /* Neutral 100 */
     --s-line:          oklch(0.90 0.010 80);
-    --s-line-on:       oklch(0.20 0.010 80);
+    --s-line-on:       oklch(0.60 0.18 350); /* Pink Base for active line */
     /* ── Brand Abadikan (Primary = Secondary/Pink) ── */
     --s-brand:         oklch(0.60 0.18 350); /* Pink Base */
     --s-brand-bg:      oklch(0.92 0.04 350); /* Pink Light */
@@ -35,11 +35,11 @@
     --s-border-strong: oklch(0.35 0.010 80); /* Border strong dark */
     --s-text:          oklch(0.96 0.005 80); /* Heading dark */
     --s-text-sec:      oklch(0.55 0.005 80); /* Text muted dark */
-    --s-hover:         oklch(0.20 0.008 80); /* Surface dark */
-    --s-active:        oklch(0.25 0.008 80); /* Surface raised dark */
+    --s-hover:         oklch(0.22 0.04 349.38); /* Pink hover dark */
+    --s-active:        oklch(0.28 0.08 349.38); /* Pink active dark */
     --s-icon-bg:       oklch(0.20 0.008 80);
     --s-line:          oklch(0.30 0.010 80);
-    --s-line-on:       oklch(0.90 0.005 80);
+    --s-line-on:       oklch(0.68 0.16 350); /* Pink Lightish for active line */
     /* ── Brand Abadikan (Primary = Secondary/Pink) ── */
     --s-brand:         oklch(0.68 0.16 350); /* Pink Lightish (for dark bg) */
     --s-brand-bg:      oklch(0.28 0.08 349.38); /* Pink Darkish */
@@ -428,6 +428,31 @@
     border: none !important;
   }
 
+  /* ══ INTERACTIVE ICON BOXES (Pink when active/hovered) ══ */
+  /* Background box layer */
+  [data-nodetype="component"][data-selected="true"] > button > div,
+  [data-nodetype="component"] > button:hover > div,
+  [data-nodetype="group"][data-selected="true"] > button > div,
+  [data-nodetype="group"] > button:hover > div {
+    background: var(--s-brand-bg) !important;
+    border-radius: 6px !important;
+  }
+  /* Icon mask layer */
+  [data-nodetype="component"][data-selected="true"] > button > div::after,
+  [data-nodetype="component"] > button:hover > div::after,
+  [data-nodetype="group"][data-selected="true"] > button > div::after,
+  [data-nodetype="group"] > button:hover > div::after {
+    background-color: var(--s-brand) !important;
+  }
+  
+  /* Welcome custom icon overrides */
+  [data-item-id="welcome"][data-selected="true"] > button::before,
+  [data-item-id="welcome"] > button:hover::before {
+    box-shadow: inset 0 0 0 100px var(--s-brand-bg) !important;
+    background-color: var(--s-brand) !important; 
+  }
+
+
   /* Hide ALL sub-items under Welcome (stories/docs) */
   [data-item-id="welcome"] ~ [data-nodetype="story"],
   [data-item-id="welcome"] ~ [data-nodetype="document"],
@@ -798,6 +823,22 @@
   label:has(input[role="switch"]) input:not(:checked) ~ span:nth-of-type(1) { color: var(--s-bg) !important; }
   label:has(input[role="switch"]) input:checked ~ span:nth-of-type(2) { color: var(--s-bg) !important; }
 
+  /* Tab Badges Blanket Selectors (Controls, Accessibility, dll) */
+  [role="tablist"] button > div:nth-child(2),
+  [role="tablist"] button > div > div:nth-child(n+2),
+  [role="tablist"] button > span:nth-child(2),
+  [role="tablist"] button > div > span:nth-child(n+2),
+  [id^="tabbutton-"] > div:nth-child(2),
+  [id^="tabbutton-"] > span:nth-child(2),
+  [id^="tabbutton-"] > div > div:nth-child(n+2),
+  [id^="tabbutton-"] > div > span:nth-child(n+2),
+  .tabbutton > *:nth-child(2),
+  button[role="tab"] > div:nth-child(2),
+  button[role="tab"] > div:last-child:not(:first-child) {
+    background: var(--s-brand-bg) !important;
+    color: var(--s-brand) !important;
+  }
+
   /* ══ TOOLBAR ══ */
   [role="toolbar"], #storybook-toolbar {
     background: var(--s-bg) !important;
@@ -870,6 +911,18 @@
     const observer = new MutationObserver(() => {
       syncTheme();
       
+      // Explicitly hunt for numeric badges in tabs to color them pink if CSS misses them
+      document.querySelectorAll('button[role="tab"] *, [role="tablist"] button *').forEach(child => {
+        if (!child.dataset.styledBadge) {
+          const text = child.textContent.trim();
+          if (text && /^\d+$/.test(text) && child.children.length === 0) {
+            child.dataset.styledBadge = "true";
+            child.style.setProperty('background', 'var(--s-brand-bg)', 'important');
+            child.style.setProperty('color', 'var(--s-brand)', 'important');
+          }
+        }
+      });
+
       // Also intercept the logo to always point to Welcome
       const homeLink = document.querySelector('.sidebar-header a[title="home"]');
       if (homeLink && !homeLink.dataset.fixedHref) {
