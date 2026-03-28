@@ -13,28 +13,36 @@
   /* ── Tokens ── */
   :root {
     --sx: 16px; 
-    --s-bg:            oklch(1 0 0);
-    --s-border:        oklch(0.94 0.005 80);
-    --s-border-strong: oklch(0.88 0.010 80);
-    --s-text:          oklch(0.20 0.010 80);
-    --s-text-sec:      oklch(0.55 0.010 80);
-    --s-hover:         oklch(0.97 0.005 80);
-    --s-active:        oklch(0.93 0.008 80);
-    --s-icon-bg:       oklch(0.95 0.005 80);
-    --s-line:          oklch(0.88 0.010 80);
-    --s-line-on:       oklch(0.25 0.010 80);
+    /* ── Light Mode: Neutral Putih ── */
+    --s-bg:            oklch(0.98 0.005 80); /* Neutral 50 (App bg) */
+    --s-border:        oklch(0.90 0.010 80); /* Neutral 200 */
+    --s-border-strong: oklch(0.82 0.010 80); /* Neutral 300 */
+    --s-text:          oklch(0.20 0.010 80); /* Neutral 900 */
+    --s-text-sec:      oklch(0.55 0.010 80); /* Neutral 600 */
+    --s-hover:         oklch(0.95 0.008 80); /* Neutral 100 */
+    --s-active:        oklch(0.90 0.010 80); /* Neutral 200 */
+    --s-icon-bg:       oklch(0.95 0.008 80); /* Neutral 100 */
+    --s-line:          oklch(0.90 0.010 80);
+    --s-line-on:       oklch(0.20 0.010 80);
+    /* ── Brand Abadikan (Primary = Secondary/Pink) ── */
+    --s-brand:         oklch(0.60 0.18 350); /* Pink Base */
+    --s-brand-bg:      oklch(0.92 0.04 350); /* Pink Light */
   }
   [data-theme='dark'] {
-    --s-bg:            oklch(0.18 0.008 80);
-    --s-border:        oklch(0.24 0.010 80);
-    --s-border-strong: oklch(0.32 0.010 80);
-    --s-text:          oklch(0.96 0.005 80);
-    --s-text-sec:      oklch(0.65 0.005 80);
-    --s-hover:         oklch(0.22 0.008 80);
-    --s-active:        oklch(0.26 0.010 80);
-    --s-icon-bg:       oklch(0.24 0.010 80);
-    --s-line:          oklch(0.28 0.010 80);
+    /* ── Dark Mode: Neutral Hitam ── */
+    --s-bg:            oklch(0.15 0.005 80); /* Body bg dark */
+    --s-border:        oklch(0.25 0.010 80); /* Border sublte dark */
+    --s-border-strong: oklch(0.35 0.010 80); /* Border strong dark */
+    --s-text:          oklch(0.96 0.005 80); /* Heading dark */
+    --s-text-sec:      oklch(0.55 0.005 80); /* Text muted dark */
+    --s-hover:         oklch(0.20 0.008 80); /* Surface dark */
+    --s-active:        oklch(0.25 0.008 80); /* Surface raised dark */
+    --s-icon-bg:       oklch(0.20 0.008 80);
+    --s-line:          oklch(0.30 0.010 80);
     --s-line-on:       oklch(0.90 0.005 80);
+    /* ── Brand Abadikan (Primary = Secondary/Pink) ── */
+    --s-brand:         oklch(0.68 0.16 350); /* Pink Lightish (for dark bg) */
+    --s-brand-bg:      oklch(0.28 0.08 349.38); /* Pink Darkish */
   }
 
   /* ══ MANAGER LAYOUT FIXES (Gap etc) ══ */
@@ -42,6 +50,15 @@
     background: var(--s-bg) !important; 
     margin: 0 !important; 
     padding: 0 !important; 
+  }
+
+  /* ══ TOOLBAR LOCALE DROPDOWN ══ */
+  /* Active / selected item — scoped only to popper portal to avoid breaking search results hover */
+  div[data-popper-placement] [role="option"][aria-selected="true"],
+  div[data-popper-placement] [role="option"][aria-selected="true"] > div {
+    border-radius: 6px !important;
+    background: var(--s-brand-bg) !important;
+    color: var(--s-brand) !important;
   }
 
   /* Resizer line / Gap fix */
@@ -64,8 +81,8 @@
 
   /* ══ BRAND HEADER ══ */
   .sidebar-header {
-    padding: 14px var(--sx) !important;
-    border-bottom: 1px solid var(--s-border) !important;
+    padding: 6px var(--sx) !important;
+    border-bottom: none !important;
     display: flex !important;
     align-items: center !important;
     gap: 0 !important;
@@ -120,7 +137,7 @@
 
   /* ══ SEARCH ══ */
   .sidebar-container form {
-    padding: 10px 0 !important;
+    padding: 6px 0 !important;
     margin: 0 !important;
     border-bottom: 1px solid var(--s-border) !important;
     background: var(--s-bg) !important;
@@ -268,7 +285,7 @@
   .search-field button[aria-label="Tag filters"] svg { width: 14px !important; height: 14px !important; }
 
   /* ══ SEARCH RESULTS — align with search bar ══ */
-  [role="listbox"],
+  .sidebar-container [role="listbox"],
   .sidebar-container form + div,
   .sidebar-container form ~ div:not(.sidebar-header) {
     padding-left: var(--sx) !important;
@@ -682,6 +699,7 @@
     display: flex !important;
     align-items: center !important;
     margin-left: 28px !important;
+    margin-right: 8px !important;
     padding: 4px 10px !important;
     min-height: 28px !important;
     border-radius: 6px !important;
@@ -786,7 +804,6 @@
     border-bottom: 1px solid var(--s-border) !important;
   }
   [role="tab"][aria-selected="true"] {
-    box-shadow: 0 -2px 0 0 var(--s-text) inset !important;
     color: var(--s-text) !important;
   }
 

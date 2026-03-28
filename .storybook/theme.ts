@@ -5,10 +5,12 @@ export const lightTheme = create({
   brandTitle: 'Abadikan Design System',
   brandUrl: '/',
 
-  colorPrimary:   '#111111',
-  colorSecondary: '#111111',
+  /* Brand: Primary = Secondary (Pink Base) */
+  colorPrimary:   '#E53A71',
+  colorSecondary: '#E53A71',
 
-  appBg:          '#FAFAF8',
+  /* Neutral Backgrounds */
+  appBg:          '#FCFAF9',
   appContentBg:   '#FFFFFF',
   appPreviewBg:   '#FFFFFF',
   appBorderColor: '#EBE8E0',
@@ -17,25 +19,25 @@ export const lightTheme = create({
   fontBase:  '"Abadikan Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
   fontCode:  '"JetBrains Mono", "SF Mono", monospace',
 
-  textColor:       '#111111',
+  textColor:       '#2E3029',
   textInverseColor:'#FFFFFF',
-  textMutedColor:  '#666666',
+  textMutedColor:  '#808578',
 
-  barTextColor:    '#666666',
-  barSelectedColor:'#111111',
-  barHoverColor:   '#111111',
+  barTextColor:    '#808578',
+  barSelectedColor:'#E53A71',
+  barHoverColor:   '#E53A71',
   barBg:           '#FFFFFF',
 
   inputBg:         '#FFFFFF',
-  inputBorder:     '#E5E3DB',
-  inputTextColor:  '#111111',
+  inputBorder:     '#EBE8E0',
+  inputTextColor:  '#2E3029',
   inputBorderRadius: 6,
 
-  booleanBg:          '#EDECEA',
-  booleanSelectedBg:  '#3A3936',
+  booleanBg:          '#EBE8E0',
+  booleanSelectedBg:  '#E53A71',
 
-  buttonBg:           '#F5F5F3',
-  buttonBorder:       '#E8E8E4',
+  buttonBg:           '#FCFAF9',
+  buttonBorder:       '#EBE8E0',
 })
 
 export const darkTheme = create({
@@ -43,35 +45,37 @@ export const darkTheme = create({
   brandTitle: 'Abadikan Design System',
   brandUrl: '/',
 
-  colorPrimary:   '#E8957A',
-  colorSecondary: '#E8957A',
+  /* Brand: Primary = Secondary (Pink Lightish) */
+  colorPrimary:   '#FF7396',
+  colorSecondary: '#FF7396',
 
-  appBg:            '#151513',
+  /* Neutral Backgrounds */
+  appBg:            '#22231F',
   appContentBg:     '#1C1C1A',
   appPreviewBg:     '#1C1C1A',
-  appBorderColor:   '#2E2E2A',
+  appBorderColor:   '#3A3C34',
   appBorderRadius:  8,
 
   fontBase:  '"Abadikan Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
   fontCode:  '"JetBrains Mono", "SF Mono", monospace',
 
-  textColor:        '#E5E3DB',
-  textInverseColor: '#151513',
-  textMutedColor:   '#8A887F',
+  textColor:        '#F2F2F2',
+  textInverseColor: '#22231F',
+  textMutedColor:   '#8F9489',
 
-  barTextColor:     '#8A887F',
-  barSelectedColor: '#E5E3DB',
-  barHoverColor:    '#E5E3DB',
+  barTextColor:     '#8F9489',
+  barSelectedColor: '#FF7396',
+  barHoverColor:    '#FF7396',
   barBg:            '#1C1C1A',
 
-  inputBg:            '#232320',
-  inputBorder:        '#2E2E2A',
-  inputTextColor:     '#E5E3DB',
+  inputBg:            '#22231F',
+  inputBorder:        '#3A3C34',
+  inputTextColor:     '#F2F2F2',
   inputBorderRadius:  6,
 
-  booleanBg:          '#2E2E2A',
-  booleanSelectedBg:  '#E8957A',
+  booleanBg:          '#3A3C34',
+  booleanSelectedBg:  '#FF7396',
 
-  buttonBg:           '#232320',
-  buttonBorder:       '#2E2E2A',
+  buttonBg:           '#22231F',
+  buttonBorder:       '#3A3C34',
 })
