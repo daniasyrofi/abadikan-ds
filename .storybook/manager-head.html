@@ -120,23 +120,27 @@
 
   /* ══ SEARCH ══ */
   .sidebar-container form {
-    padding: 12px var(--sx) !important;
+    padding: 10px 0 !important;
     margin: 0 !important;
     border-bottom: 1px solid var(--s-border) !important;
     background: var(--s-bg) !important;
+    box-sizing: border-box !important;
   }
   .search-field {
-    margin: 0 !important;
-    width: 100% !important;
+    width: calc(100% - 2 * var(--sx)) !important;
+    margin: 0 var(--sx) !important;
+    box-sizing: border-box !important;
     background: var(--s-bg) !important;
     border: 1px solid var(--s-border) !important;
     border-radius: 10px !important;
     display: flex !important;
     align-items: center !important;
-    padding: 0 10px !important;
-    height: 36px !important;
-    gap: 8px !important;
+    padding: 4px !important;
+    height: auto !important;
+    min-height: unset !important;
+    gap: 6px !important;
     transition: border-color 0.15s, box-shadow 0.15s !important;
+    overflow: hidden !important;
   }
   .search-field:focus-within {
     border-color: var(--s-border-strong) !important;
@@ -167,11 +171,11 @@
     font-size: 12.5px !important;
     color: var(--s-text) !important;
     padding: 0 !important;
-    height: 100% !important;
+    line-height: 1.4 !important;
   }
   .search-field input::placeholder { color: var(--s-text-sec) !important; opacity: 0.7 !important; }
 
-  /* "/" shortcut — hide ⌘K, show "/" instead */
+  /* "/" shortcut — hide ⌘K, show "/" instead. Hide when input has value (filled state) */
   .search-field code,
   .search-field code span {
     font-size: 0 !important;
@@ -184,14 +188,73 @@
     color: var(--s-text-sec) !important;
     opacity: 0.55 !important;
   }
+  /* Hide the "/" hint when the search has content */
+  .search-field:has(input:not(:placeholder-shown)) code::after {
+    display: none !important;
+  }
 
-  /* Filter button — refined background */
+  /* Wrapper div containing clear + filter buttons */
   .search-field > div:last-child {
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    background: none !important;
+  }
+
+  .sidebar-container label { display: none !important; }
+
+  /* Search filled: hide the / shortcut, show clear; fix border highlight */
+  .search-field:focus-within,
+  .search-field:has(input:not(:placeholder-shown)) {
+    border-color: var(--s-border-strong) !important;
+    box-shadow: 0 0 0 2px oklch(0.93 0.008 80 / 0.5) !important;
+    outline: none !important;
+  }
+  [data-theme='dark'] .search-field:focus-within,
+  [data-theme='dark'] .search-field:has(input:not(:placeholder-shown)) {
+    box-shadow: 0 0 0 2px oklch(0.26 0.010 80 / 0.6) !important;
+  }
+  /* Kill ANY native focus/outline styles inside search field */
+  .search-field *,
+  .search-field *:focus,
+  .search-field *:focus-within,
+  .search-field input,
+  .search-field input:focus,
+  .search-field input:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  /* Clear (X) button */
+  .search-field button[aria-label="Clear search"] {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 50% !important;
+    color: var(--s-text-sec) !important;
+    cursor: pointer !important;
+    opacity: 0.6 !important;
+    transition: opacity 0.15s !important;
+  }
+  .search-field button[aria-label="Clear search"]:hover { opacity: 1 !important; }
+  .search-field button[aria-label="Clear search"] svg { width: 14px !important; height: 14px !important; }
+
+  /* Filter (Tag filters) button */
+  .search-field button[aria-label="Tag filters"] {
     flex-shrink: 0 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     background: var(--s-icon-bg) !important;
+    border: none !important;
+    padding: 0 !important;
     width: 28px !important;
     height: 28px !important;
     border-radius: 7px !important;
@@ -199,13 +262,19 @@
     cursor: pointer !important;
     opacity: 0.7 !important;
     transition: opacity 0.15s, transform 0.1s !important;
-    margin-right: -2px !important;
   }
-  .search-field > div:last-child:hover { opacity: 1 !important; transform: scale(1.02); }
-  .search-field > div:last-child:active { transform: scale(0.96); }
-  .search-field > div:last-child svg { width: 14px !important; height: 14px !important; }
+  .search-field button[aria-label="Tag filters"]:hover { opacity: 1 !important; transform: scale(1.02) !important; }
+  .search-field button[aria-label="Tag filters"]:active { transform: scale(0.96) !important; }
+  .search-field button[aria-label="Tag filters"] svg { width: 14px !important; height: 14px !important; }
 
-  .sidebar-container label { display: none !important; }
+  /* ══ SEARCH RESULTS — align with search bar ══ */
+  [role="listbox"],
+  .sidebar-container form + div,
+  .sidebar-container form ~ div:not(.sidebar-header) {
+    padding-left: var(--sx) !important;
+    padding-right: var(--sx) !important;
+    box-sizing: border-box !important;
+  }
 
   /* ══ HIDE CLUTTER ══ */
   .sidebar-header + div, .css-13yxcra,
@@ -331,62 +400,80 @@
 
 
 
-  /* ══ TOP-LEVEL WELCOME LINK (Covers both Folder and Hoisted Story) ══ */
-  [data-item-id="welcome"],
-  [data-item-id="welcome--welcome"] {
+  /* ══ WELCOME — styled as flat component row, no sub-items ══ */
+
+  /* Wrapper: same margin/radius as component rows */
+  [data-item-id="welcome"] {
     margin: 2px 8px !important;
-    padding-left: 0 !important;
     border-radius: 10px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
   }
-  
-  [data-item-id="welcome"] > button,
-  [data-item-id="welcome--welcome"] > button,
-  [data-item-id="welcome--welcome"] {
+
+  /* Hide ALL sub-items under Welcome (stories/docs) */
+  [data-item-id="welcome"] ~ [data-nodetype="story"],
+  [data-item-id="welcome"] ~ [data-nodetype="document"],
+  [data-nodetype="story"][data-parent-id="welcome"],
+  [data-nodetype="story"][data-parent-id="welcome--welcome"],
+  [data-nodetype="document"][data-parent-id="welcome"],
+  [data-nodetype="document"][data-parent-id="welcome--welcome"],
+  [data-item-id="welcome--default"],
+  [data-item-id="welcome--welcome"][data-nodetype="story"],
+  [data-item-id="welcome--welcome"][data-nodetype="document"] {
+    display: none !important;
+  }
+
+  /* Button: identical to [data-nodetype="component"] > button */
+  [data-item-id="welcome"] > button {
     display: flex !important;
     align-items: center !important;
-    margin-left: 0 !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+    width: 100% !important;
     padding: 5px 8px !important;
     min-height: 34px !important;
     border-radius: 10px !important;
+    font-family: 'AbadikanSans', sans-serif !important;
     font-size: 13px !important;
     font-weight: 500 !important;
     color: var(--s-text) !important;
-    background: transparent !important;
-    text-decoration: none !important;
+    letter-spacing: -0.01em !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    text-align: left !important;
   }
-  [data-item-id="welcome"][data-selected="true"] > button,
-  [data-item-id="welcome--welcome"][data-selected="true"],
-  [data-item-id="welcome--welcome"][data-highlighted="true"] {
+  [data-item-id="welcome"] > button:hover { background: var(--s-hover) !important; }
+  [data-item-id="welcome"][data-selected="true"] > button {
     background: var(--s-active) !important;
     font-weight: 600 !important;
   }
 
-
-  /* Apply the custom Home icon to the Welcome parent button or story link */
-  [data-item-id="welcome"] > button::before,
-  [data-item-id="welcome--welcome"]::before {
-    content: '';
-    display: inline-block;
-    width: 28px;
-    height: 28px;
-    margin-right: 10px;
-    border-radius: 6px;
-    background-color: var(--s-text-sec);
-    flex-shrink: 0;
-    mask-size: 14px;
-    mask-repeat: no-repeat;
-    mask-position: center;
-    -webkit-mask-size: 14px;
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-position: center;
+  /* Icon box via ::before — home icon on icon-bg, identical to component rows */
+  [data-item-id="welcome"] > button::before {
+    content: '' !important;
+    display: inline-flex !important;
+    flex-shrink: 0 !important;
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 6px !important;
+    background-color: var(--s-text-sec) !important;
+    mask-size: 14px !important;
+    mask-repeat: no-repeat !important;
+    mask-position: center !important;
+    -webkit-mask-size: 14px !important;
+    -webkit-mask-repeat: no-repeat !important;
+    -webkit-mask-position: center !important;
     mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M19 21H5a2 2 0 0 1-2-2V9.414a1 1 0 0 1 .293-.707l7-7a1 1 0 0 1 1.414 0l7 7a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2zm-2-2V9.586l-5-5-5 5V19h10z'/></svg>") !important;
     -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M19 21H5a2 2 0 0 1-2-2V9.414a1 1 0 0 1 .293-.707l7-7a1 1 0 0 1 1.414 0l7 7a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2zm-2-2V9.586l-5-5-5 5V19h10z'/></svg>") !important;
+    box-shadow: inset 0 0 0 100px var(--s-icon-bg) !important;
   }
 
-  
-  /* Hide Storybook's native SVG icons and chevrons inside the Welcome button */
+  /* Hide SB's native SVG, chevron, and child-icon-div inside Welcome button */
   [data-item-id="welcome"] > button > svg,
-  [data-item-id="welcome"] > button > span:not([class*="Label"]):not(:last-child) {
+  [data-item-id="welcome"] > button > span:not(:last-of-type),
+  [data-item-id="welcome"] > button > div {
     display: none !important;
   }
 
@@ -567,23 +654,12 @@
     background: transparent !important;
     box-shadow: none !important;
   }
-  /* Remove ANY pseudo element from a link if it's not the Welcome page */
+  /* Remove ANY pseudo element from story/document links */
   [data-nodetype="story"] a::before,
   [data-nodetype="document"] a::before,
   [data-nodetype="story"] a::after,
   [data-nodetype="document"] a::after {
     display: none !important;
-  }
-  
-  /* Welcome item overrides the rule above because it's targeted more specifically */
-  [data-item-id*="welcome"] a::before {
-    display: inline-block !important;
-    content: '' !important;
-  }
-
-  /* Hide Welcome's child item (Default) so you just click the parent Welcome */
-  [data-item-id="welcome--default"] {
-    padding-left: 0 !important;
   }
 
   /* Vertical bar */
@@ -615,6 +691,17 @@
     color: var(--s-text) !important;
     text-decoration: none !important;
     transition: background 0.1s !important;
+  }
+  /* Welcome anchor override — reset sidebar-item a defaults and apply component row style */
+  .sidebar-item a[data-item-id="welcome--welcome"] {
+    margin-left: 0 !important;
+    padding: 5px 8px !important;
+    min-height: 34px !important;
+    border-radius: 10px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    gap: 10px !important;
+    width: 100% !important;
   }
   /* Hide all generic SB containers for stories/docs */
   .sidebar-item a > div, 
@@ -776,26 +863,35 @@
         });
       }
 
-      // Intercept clicks on the Welcome folder button to act as a direct link
-      const welcomeBtn = document.querySelector('[data-item-id="welcome"] > button');
-      if (welcomeBtn && !welcomeBtn.dataset.clickIntercepted) {
-        welcomeBtn.dataset.clickIntercepted = "true";
-        welcomeBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          window.location.assign("/?path=/story/welcome--welcome");
+      // Style the filter button (Tag filters) — CSS alone can't override SB's dynamic CSS
+      const filterBtn = document.querySelector('.search-field button[aria-label="Tag filters"]');
+      if (filterBtn && !filterBtn.dataset.styledByAbadikan) {
+        filterBtn.dataset.styledByAbadikan = "true";
+        const isDarkNow = document.documentElement.getAttribute('data-theme') === 'dark';
+        const iconBg = isDarkNow ? 'oklch(0.24 0.010 80)' : 'oklch(0.95 0.005 80)';
+        Object.assign(filterBtn.style, {
+          background: iconBg,
+          width: '28px',
+          height: '28px',
+          borderRadius: '7px',
+          border: 'none',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexShrink: '0',
+          opacity: '0.7',
+          cursor: 'pointer',
+          transition: 'opacity 0.15s, transform 0.1s',
+          padding: '0',
         });
-      }
-
-      // Keep Welcome "selected" if on it
-      const welcomeNode = document.querySelector('[data-item-id="welcome"]');
-      if (welcomeNode) {
-        const isWelcomeActive = window.location.search.includes('welcome') || window.location.search === "" || window.location.search === "?path=/";
-        if (isWelcomeActive && welcomeNode.dataset.selected !== "true") {
-          welcomeNode.dataset.selected = "true";
-        } else if (!isWelcomeActive && welcomeNode.dataset.selected === "true") {
-          welcomeNode.dataset.selected = "false";
-        }
+        filterBtn.addEventListener('mouseenter', () => { filterBtn.style.opacity = '1'; });
+        filterBtn.addEventListener('mouseleave', () => { filterBtn.style.opacity = '0.7'; });
+        filterBtn.addEventListener('mousedown', () => { filterBtn.style.transform = 'scale(0.96)'; });
+        filterBtn.addEventListener('mouseup', () => { filterBtn.style.transform = 'scale(1)'; });
+      } else if (filterBtn && filterBtn.dataset.styledByAbadikan) {
+        // Update bg color for theme changes
+        const isDarkNow = document.documentElement.getAttribute('data-theme') === 'dark';
+        filterBtn.style.background = isDarkNow ? 'oklch(0.24 0.010 80)' : 'oklch(0.95 0.005 80)';
       }
     });
 
