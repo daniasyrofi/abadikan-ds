@@ -216,6 +216,7 @@
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
+    flex-direction: row-reverse !important; /* Put Chevron on the right, Text on the left */
     padding: 0 !important;
     background: none !important;
     border: none !important;
@@ -227,37 +228,7 @@
     letter-spacing: 0.08em !important;
     color: var(--s-text-sec) !important;
   }
-  /* Header Icons */
-  .sidebar-subheading > button:first-child::before {
-    content: '';
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    margin-right: 8px;
-    background-color: var(--s-text-sec);
-    mask-size: contain;
-    mask-repeat: no-repeat;
-    mask-position: center;
-    -webkit-mask-size: contain;
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-  }
-  /* Atoms -> shapes */
-  .sidebar-subheading[id*="atoms"] > button:first-child::before {
-    mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M5 8a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm14 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6zM5 22a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm10-18h6v6h-6V4z'/></svg>") !important;
-    -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M5 8a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm14 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6zM5 22a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm10-18h6v6h-6V4z'/></svg>") !important;
-  }
-  /* Molecules -> bubbles */
-  .sidebar-subheading[id*="molecules"] > button:first-child::before {
-    mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M10 3h4a8 8 0 0 1 0 16v3.5c-5-2-12-5-12-11.5a8 8 0 0 1 8-8zm2 14h2a6 6 0 0 0 0-12h-4a6 6 0 0 0-6 6c0 3.61 2.462 5.966 8 8.48V17z'/></svg>") !important;
-    -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M10 3h4a8 8 0 0 1 0 16v3.5c-5-2-12-5-12-11.5a8 8 0 0 1 8-8zm2 14h2a6 6 0 0 0 0-12h-4a6 6 0 0 0-6 6c0 3.61 2.462 5.966 8 8.48V17z'/></svg>") !important;
-  }
-  /* Organisms -> stack */
-  .sidebar-subheading[id*="organisms"] > button:first-child::before {
-    mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M3 3h18a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm0 8h8a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1zm12 0h6a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-6a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1zm1 2v6h4v-6h-4zm-12 0v6h6v-6H4zM4 5v2h16V5H4z'/></svg>") !important;
-    -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M3 3h18a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm0 8h8a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1zm12 0h6a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-6a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1zm1 2v6h4v-6h-4zm-12 0v6h6v-6H4zM4 5v2h16V5H4z'/></svg>") !important;
-  }
-
+  
   .sidebar-subheading-action { display: none !important; }
 
   /* ══ COMPONENT ROWS (Level 2) ══ */
@@ -341,35 +312,48 @@
     -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M19 21H5a2 2 0 0 1-2-2V9.414a1 1 0 0 1 .293-.707l7-7a1 1 0 0 1 1.414 0l7 7a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2zm-2-2V9.586l-5-5-5 5V19h10z'/></svg>") !important;
   }
 
-  /* Make document items look like component nodes with icon box */
-  [data-nodetype="document"] a::before {
+  /* ══ ATOMS ICONS ══ */
+  [data-item-id="welcome"] > button {
+    display: none !important;
+  }
+  
+  [data-item-id="welcome"],
+  [data-item-id="welcome--default"] {
+    margin: 2px 8px !important;
+    padding-left: 0 !important;
+    border-radius: 10px !important;
+  }
+  [data-item-id="welcome"]::before,
+  [data-item-id="welcome--default"]::before {
+    display: none !important;
+  }
+  [data-item-id="welcome"] a,
+  [data-item-id="welcome--default"] a {
+    margin-left: 0 !important;
+    padding: 5px 8px !important;
+    min-height: 34px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+  }
+  [data-item-id="welcome"] a::before,
+  [data-item-id="welcome--default"] a::before {
     content: '';
     display: inline-block;
     width: 28px;
     height: 28px;
     margin-right: 10px;
     border-radius: 6px;
-    background: var(--s-icon-bg);
+    background-color: var(--s-text-sec);
     flex-shrink: 0;
-    position: relative;
-    /* Mask logic inside */
-    background-image: none !important;
     mask-size: 14px;
     mask-repeat: no-repeat;
     mask-position: center;
     -webkit-mask-size: 14px;
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
-    background-color: var(--s-text-sec);
-  }
-
-  [data-item-id="welcome--docs"] a::before,
-  [data-item-id="welcome"] a::before {
     mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M19 21H5a2 2 0 0 1-2-2V9.414a1 1 0 0 1 .293-.707l7-7a1 1 0 0 1 1.414 0l7 7a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2zm-2-2V9.586l-5-5-5 5V19h10z'/></svg>") !important;
     -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M19 21H5a2 2 0 0 1-2-2V9.414a1 1 0 0 1 .293-.707l7-7a1 1 0 0 1 1.414 0l7 7a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2zm-2-2V9.586l-5-5-5 5V19h10z'/></svg>") !important;
   }
-
-  /* ══ ATOMS ICONS ══ */
   /* Avatar → person */
   #atoms-avatar > div::after {
     mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M20 22h-2v-2a3 3 0 0 0-3-3H9a3 3 0 0 0-3 3v2H4v-2a5 5 0 0 1 5-5h6a5 5 0 0 1 5 5v2zm-8-9a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8z'/></svg>") !important;
@@ -547,6 +531,25 @@
     background: transparent !important;
     box-shadow: none !important;
   }
+  /* Remove ANY pseudo element from a link if it's not the Welcome page */
+  [data-nodetype="story"] a::before,
+  [data-nodetype="document"] a::before,
+  [data-nodetype="story"] a::after,
+  [data-nodetype="document"] a::after {
+    display: none !important;
+  }
+  
+  /* Welcome item overrides the rule above because it's targeted more specifically */
+  [data-item-id*="welcome"] a::before {
+    display: inline-block !important;
+    content: '' !important;
+  }
+
+  /* Hide Welcome's child item (Default) so you just click the parent Welcome */
+  [data-item-id="welcome--default"] {
+    padding-left: 0 !important;
+  }
+
   /* Vertical bar */
   [data-nodetype="story"]::before,
   [data-nodetype="document"]::before {
@@ -577,8 +580,12 @@
     text-decoration: none !important;
     transition: background 0.1s !important;
   }
-  .sidebar-item a > div:first-child,
-  .sidebar-item a > svg:first-child { display: none !important; }
+  /* Hide all generic SB containers for stories/docs */
+  .sidebar-item a > div, 
+  .sidebar-item a > svg, 
+  .sidebar-item a > span:not([class*="Label"]):not(:last-child) { 
+    display: none !important; 
+  }
   [data-nodetype="document"] a { color: var(--s-text-sec) !important; }
   [data-nodetype="story"]:not([data-selected="true"]):hover a,
   [data-nodetype="document"]:not([data-selected="true"]):hover a { background: var(--s-hover) !important; }
@@ -712,9 +719,28 @@
           syncTheme();
         }
       });
+      
+      // Also intercept the logo to always point to Welcome
+      const homeLink = document.querySelector('.sidebar-header a[title="home"]');
+      if (homeLink && !homeLink.dataset.fixedHref) {
+        homeLink.dataset.fixedHref = "true";
+        homeLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.location.assign("/?path=/story/welcome--default");
+        });
+      }
     });
 
-    observer.observe(document.documentElement, { attributes: true });
+    observer.observe(document.body, { 
+      attributes: true, 
+      childList: true, 
+      subtree: true 
+    });
+    
+    // Force redirect to Welcome page on initial empty load
+    if (window.location.search === "" || window.location.search === "?path=/") {
+      window.location.replace("/?path=/story/welcome--default");
+    }
     
     // Poll because Storybook manager-api storage update is sometimes silent
     setInterval(syncTheme, 1000);

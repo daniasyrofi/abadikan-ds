@@ -120,6 +120,24 @@ const id: MessageSchema = {
     success:   'Berhasil',
     failed:    'Gagal',
   },
+  welcome: {
+    welcome_title: `Selamat Datang di Abadikan Design System`,
+    welcome_subtitle: `Abadikan Design System adalah kumpulan komponen UI (User Interface), token desain, dan panduan gaya yang dirancang khusus untuk menciptakan pengalaman pengguna yang konsisten, modern, dan premium di seluruh produk digital Abadikan.`,
+    welcome_tech: `Kami menggunakan **Vue 3** dengan komposisi API, dipadukan dengan **Tailwind CSS v4** untuk styling yang cepat dan responsif.`,
+    visual_title: `Sistem Visual & Tema`,
+    visual_desc: `Dibangun dengan prinsip <i>glassmorphism</i>, bayangan berlapis (layered shadows), dan animasi mikro (micro-animations) yang halus. Sistem ini mendukung transisi <i>Light Mode</i> dan <i>Dark Mode</i> secara mulus. Akses seluruh token desain (warna, spasi, tipografi) dari file <code>globals.css</code>.`,
+    i18n_title: `Lokalisasi (Multi-bahasa)`,
+    i18n_desc: `Dukungan penuh untuk berbagai bahasa (Bahasa Indonesia, English, dan Mandarin) ditenagai oleh <code>vue-i18n</code>. Anda dapat mengubah preferensi bahasa melalui ikon globe di menu toolbar atas Storybook ini untuk melihat perubahan teks dokumentasi secara real-time.`,
+    guide_title: `Panduan Penggunaan`,
+    atomic_title: `Atomic Design`,
+    atomic_desc: `Struktur direktori kami mengikuti metodologi <i>Atomic Design</i>. Anda dapat mencari komponen mulai dari elemen terkecil seperti <b>Atoms</b> (Button, Avatar), gabungannya di <b>Molecules</b> (Alert, Card), hingga struktur kompleks di <b>Organisms</b>.`,
+    controls_title: `Panel Kontrol`,
+    controls_desc: `Setiap komponen dilengkapi dengan panel <b>Controls</b> (di tab bawah kanvas). Gunakan panel tersebut untuk berinteraksi dan mengubah props, varian warna, serta ukuran komponen secara interaktif.`,
+    theme_title: `Tema Gelap & Terang`,
+    theme_desc: `Gunakan tombol ikon Matahari/Bulan pada toolbar Storybook di bagian atas untuk menguji bagaimana komponen bereaksi dan merender warna khusus dark mode dan efek visualnya (seperti inversi shadow).`,
+    a11y_title: `Aksesibilitas (a11y)`,
+    a11y_desc: `Seluruh komponen dirancang dengan mempertimbangkan aksesibilitas, dari navigasi keyboard hingga kontras warna. Selalu perhatikan ukuran spacing 4px standar yang telah kami tetapkan (secara global default).`
+  },
 }
 
 export default id

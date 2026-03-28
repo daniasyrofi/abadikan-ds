@@ -120,6 +120,24 @@ const zh: MessageSchema = {
     success:   '成功',
     failed:    '失败',
   },
+  welcome: {
+    welcome_title: `欢迎来到 Abadikan 设计系统`,
+    welcome_subtitle: `Abadikan 设计系统是一个全面的 UI 组件、设计令牌和样式指南集合，专门为在所有 Abadikan 数字产品中创建一致、现代和高级的用户体验而设计。`,
+    welcome_tech: `我们使用带有组合 API 的 **Vue 3**，搭配 **Tailwind CSS v4** 进行快速和响应式的样式设计。`,
+    visual_title: `视觉系统与主题`,
+    visual_desc: `以<i>拟态玻璃 (glassmorphism)</i>、分层阴影和微妙的微动画原则构建。该系统无缝支持<i>浅色模式</i>和<i>深色模式</i>之间的过渡。可从 <code>globals.css</code> 文件中访问所有设计令牌(颜色、间距、排版)。`,
+    i18n_title: `本地化 (i18n)`,
+    i18n_desc: `由 <code>vue-i18n</code> 提供对多种语言（印尼语、英语和中文）的全面支持。您可以通过顶部工具栏中的地球图标更改语言首选项，以便实时查看组件的翻译更新。`,
+    guide_title: `使用指南`,
+    atomic_title: `原子设计 (Atomic Design)`,
+    atomic_desc: `我们的目录结构遵循<i>原子设计</i>方法论。您可以从最小的元素如<b>原子</b> (按钮，头像)开始探索，它们在<b>分子</b> (警报，卡片)中组合，直至包含复杂的<b>生物</b>。`,
+    controls_title: `控制面板 (Controls)`,
+    controls_desc: `每个组件都带有一个 <b>Controls</b>(控件) 面板(在画布空间下方的选项卡中)。使用它可以交互式调整属性、颜色变量和大小，以查看组件的反应。`,
+    theme_title: `浅色和深色主题`,
+    theme_desc: `使用顶部工具栏中的太阳/月亮图标切换功能，测试组件在不同的配色方案和视觉效果（如反相阴影）中是如何渲染的。`,
+    a11y_title: `无障碍访问 (a11y)`,
+    a11y_desc: `在设计所有组件时都考虑了无障碍访问，从键盘导航到颜色对比度均包含在内。全局默认布局严格遵循 4px 基准间距系统。`
+  },
 }
 
 export default zh

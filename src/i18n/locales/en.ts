@@ -120,6 +120,24 @@ const en: MessageSchema = {
     success:   'Success',
     failed:    'Failed',
   },
+  welcome: {
+    welcome_title: `Welcome to Abadikan Design System`,
+    welcome_subtitle: `Abadikan Design System is a comprehensive collection of UI components, design tokens, and style guidelines specifically crafted to create consistent, modern, and premium user experiences across all Abadikan digital products.`,
+    welcome_tech: `We use **Vue 3** with the Composition API, paired with **Tailwind CSS v4** for rapid and responsive styling.`,
+    visual_title: `Visual System & Theming`,
+    visual_desc: `Built with the principles of <i>glassmorphism</i>, layered shadows, and subtle micro-animations. This system seamlessly supports transitions between <i>Light Mode</i> and <i>Dark Mode</i>. Access all design tokens (colors, spacing, typography) from the <code>globals.css</code> file.`,
+    i18n_title: `Localization (i18n)`,
+    i18n_desc: `Full support for multiple languages (Bahasa Indonesia, English, and Mandarin) powered by <code>vue-i18n</code>. You can change your language preferences via the globe icon in the top toolbar to see component translations update in real-time.`,
+    guide_title: `Usage Guide`,
+    atomic_title: `Atomic Design`,
+    atomic_desc: `Our directory structure follows the <i>Atomic Design</i> methodology. You can explore components starting from the smallest elements like <b>Atoms</b> (Button, Avatar), their combinations in <b>Molecules</b> (Alert, Card), up to complex <b>Organisms</b>.`,
+    controls_title: `Controls Panel`,
+    controls_desc: `Every component comes with a <b>Controls</b> panel (in the tab below the canvas space). Use it to interactively tweak props, color variants, and sizing to see how the component reacts.`,
+    theme_title: `Light & Dark Themes`,
+    theme_desc: `Use the Sun/Moon icon toggle on the top toolbar to test how components render in different color schemes and visual effects (such as shadow inversion).`,
+    a11y_title: `Accessibility (a11y)`,
+    a11y_desc: `All components are designed with accessibility in mind, from keyboard navigation to color contrast ratios. The global default layout strictly adheres to a systematic 4px spacing scale.`
+  },
 }
 
 export default en
