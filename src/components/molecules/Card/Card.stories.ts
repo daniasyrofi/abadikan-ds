@@ -6,7 +6,6 @@ import {
   RiCalendarEventLine, RiUserSmileLine, RiPieChartLine,
   RiSettings4Line, RiMessage2Line, RiNotificationLine,
   RiCheckLine, RiArrowRightSLine, RiAddLine,
-  RiTrendingUpLine,
 } from '@remixicon/vue'
 
 // ── Canvas ──────────────────────────────────────────────────────────────────────
@@ -86,7 +85,7 @@ type Story = StoryObj<typeof Card>
 // ══════════════════════════════════════════════════════════════════════════════
 export const Default: Story = {
   render: (args) => ({
-    components: { Card, IconBox, Pill, RiMailSendLine, RiTrendingUpLine },
+    components: { Card, IconBox, Pill, RiMailSendLine },
     setup: () => ({ args }),
     template: `
       <Card v-bind="args" style="width:300px">
