@@ -2,12 +2,14 @@
 import { computed, useId } from 'vue'
 import { cn } from '@/lib/utils'
 
-type RadioSize = 'sm' | 'md' | 'lg'
+type RadioSize  = 'sm' | 'md' | 'lg'
+type RadioColor = 'primary' | 'secondary' | 'neutral' | 'danger'
 
 interface Props {
   modelValue:   string | number
   value:        string | number
   size?:        RadioSize
+  color?:       RadioColor
   disabled?:    boolean
   label?:       string
   description?: string
@@ -17,6 +19,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   size:     'md',
+  color:    'primary',
   disabled: false,
 })
 
@@ -66,10 +69,12 @@ const offsetClass: Record<RadioSize, string> = {
 }
 
 const outerStyle = computed(() => {
+  const colorVar = `var(--color-${props.color})`
+
   const borderColor = isChecked.value
     ? hasError.value
       ? 'var(--color-danger)'
-      : 'var(--color-primary)'
+      : colorVar
     : hasError.value
       ? 'var(--color-danger)'
       : 'var(--color-border-strong)'
@@ -92,10 +97,11 @@ const outerClasses = computed(() =>
 
 const innerStyle = computed(() => {
   if (!isChecked.value) return { backgroundColor: 'transparent' }
+  const colorVar = `var(--color-${props.color})`
   return {
     backgroundColor: hasError.value
       ? 'var(--color-danger)'
-      : 'var(--color-primary)',
+      : colorVar,
   }
 })
 
@@ -118,7 +124,7 @@ const descriptionStyle = { color: 'var(--color-text-secondary)' }
 const errorStyle = { color: 'var(--color-danger)' }
 
 const focusRingVar = computed(() =>
-  hasError.value ? 'var(--ring-danger)' : '0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-primary)'
+  hasError.value ? 'var(--ring-danger)' : `0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-${props.color})`
 )
 </script>
 

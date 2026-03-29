@@ -45,50 +45,57 @@ const baseClasses = [
   'active:scale-[0.97]',
 ]
 
-const variants: Record<Variant, string> = {
-  default: [
-    'ds-btn--default',
-    'bg-[var(--color-neutral)] text-[var(--color-text-inverse)]',
-    'border border-[var(--color-neutral)]',
-    'hover:bg-[var(--color-neutral-hover)] hover:border-[var(--color-neutral-hover)]',
-  ].join(' '),
-  primary: [
-    'ds-btn--primary',
-    'bg-[var(--color-primary)] text-[var(--color-text-inverse)]',
-    'border border-[var(--color-primary)]',
-    'hover:bg-[var(--color-primary-hover)] hover:border-[var(--color-primary-hover)]',
-  ].join(' '),
-  secondary: [
-    'ds-btn--secondary',
-    'bg-[var(--color-secondary)] text-[var(--color-text-inverse)]',
-    'border border-[var(--color-secondary)]',
-    'hover:bg-[var(--color-secondary-hover)] hover:border-[var(--color-secondary-hover)]',
-  ].join(' '),
-  outline: [
-    'ds-btn--outline',
-    'bg-[var(--color-surface)] text-[var(--color-text-primary)]',
-    'border border-[var(--color-border)]',
-    'hover:bg-[var(--color-bg-subtle)] hover:border-[var(--color-border-strong)]',
-  ].join(' '),
-  ghost: [
-    'ds-btn--ghost',
-    'bg-transparent text-[var(--color-text-secondary)]',
-    'border border-transparent',
-    'hover:bg-[var(--color-neutral-light)] hover:text-[var(--color-text-heading)]',
-  ].join(' '),
-  danger: [
-    'ds-btn--danger',
-    'bg-[var(--color-danger)] text-[var(--color-primary-text)]',
-    'border border-[var(--color-danger)]',
-    'hover:bg-[var(--color-danger-hover)] hover:border-[var(--color-danger-hover)]',
-  ].join(' '),
-  link: [
-    'ds-btn--link',
-    'bg-transparent text-[var(--color-secondary)]',
-    'border-none',
-    'underline-offset-4 hover:underline',
-    'p-0! h-auto!',
-  ].join(' '),
+const variantTokens: Record<Variant, any> = {
+  default: {
+    bg: 'var(--color-neutral)',
+    text: 'var(--color-text-inverse)',
+    border: 'var(--color-neutral)',
+    hoverBg: 'var(--color-neutral-hover)',
+    hoverBorder: 'var(--color-neutral-hover)',
+  },
+  primary: {
+    bg: 'var(--color-primary)',
+    text: 'var(--color-text-inverse)',
+    border: 'var(--color-primary)',
+    hoverBg: 'var(--color-primary-hover)',
+    hoverBorder: 'var(--color-primary-hover)',
+  },
+  secondary: {
+    bg: 'var(--color-secondary)',
+    text: 'var(--color-text-inverse)',
+    border: 'var(--color-secondary)',
+    hoverBg: 'var(--color-secondary-hover)',
+    hoverBorder: 'var(--color-secondary-hover)',
+  },
+  outline: {
+    bg: 'var(--color-surface)',
+    text: 'var(--color-text-primary)',
+    border: 'var(--color-border)',
+    hoverBg: 'var(--color-bg-subtle)',
+    hoverBorder: 'var(--color-border-strong)',
+  },
+  ghost: {
+    bg: 'transparent',
+    text: 'var(--color-text-secondary)',
+    border: 'transparent',
+    hoverBg: 'var(--color-neutral-light)',
+    hoverBorder: 'transparent',
+    hoverText: 'var(--color-text-heading)',
+  },
+  danger: {
+    bg: 'var(--color-danger)',
+    text: 'var(--color-text-inverse)',
+    border: 'var(--color-danger)',
+    hoverBg: 'var(--color-danger-hover)',
+    hoverBorder: 'var(--color-danger-hover)',
+  },
+  link: {
+    bg: 'transparent',
+    text: 'var(--color-secondary)',
+    border: 'transparent',
+    hoverBg: 'transparent',
+    hoverBorder: 'transparent',
+  },
 }
 
 const sizes: Record<Size, string> = {
@@ -115,20 +122,37 @@ const spinnerSizes: Record<Size, 'xs' | 'sm' | 'md'> = {
   xl: 'md',
 }
 
-const classes = computed(() =>
-  cn(
+const classes = computed(() => {
+  const baseAndSize = cn(
     ...baseClasses,
-    variants[props.variant],
     props.iconOnly ? iconSizes[props.size] : sizes[props.size],
     props.fullWidth && 'w-full',
+    props.variant === 'link' ? 'p-0! h-auto!' : '',
+    'ds-btn--variant', // Add the stable logic class
+    props.variant === 'danger' ? 'ds-btn--is-danger' : '',
+    props.variant === 'link' ? 'ds-btn--is-link' : ''
   )
-)
+  return baseAndSize
+})
+
+const variantStyleVars = computed(() => {
+  const t = variantTokens[props.variant]
+  return {
+    '--btn-bg': t.bg,
+    '--btn-text': t.text,
+    '--btn-border': t.border,
+    '--btn-hover-bg': t.hoverBg,
+    '--btn-hover-border': t.hoverBorder,
+    '--btn-hover-text': t.hoverText || t.text,
+  }
+})
 </script>
 
 <template>
   <component
     :is="tag"
     :class="classes"
+    :style="variantStyleVars"
     :disabled="disabled || loading || undefined"
     :href="href"
     :type="tag === 'button' ? type : undefined"
@@ -162,31 +186,23 @@ const classes = computed(() =>
   </component>
 </template>
 
-<style scoped>
-/* Shadow and focus ring styles using CSS custom properties.
-   Tailwind arbitrary values handle colors/radius; these handle
-   box-shadow which doesn't have clean Tailwind token mapping. */
-
-.ds-btn--default,
-.ds-btn--primary,
-.ds-btn--secondary,
-.ds-btn--outline,
-.ds-btn--danger {
-  box-shadow: var(--shadow-sm);
+<style>
+/* Core Variant logic driven by variables */
+.ds-btn--variant {
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+  border: 1px solid var(--btn-border);
 }
 
-.ds-btn--default:hover,
-.ds-btn--primary:hover,
-.ds-btn--secondary:hover,
-.ds-btn--outline:hover,
-.ds-btn--danger:hover {
-  box-shadow: var(--shadow-md);
+.ds-btn--variant:hover:not(:disabled) {
+  background-color: var(--btn-hover-bg);
+  border-color: var(--btn-hover-border);
+  color: var(--btn-hover-text);
 }
 
-/* Ghost and link get no shadow */
-.ds-btn--ghost,
-.ds-btn--link {
-  box-shadow: none;
+.ds-btn--is-link:hover:not(:disabled) {
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 /* Focus rings using secondary (pink) for all except danger */
@@ -194,7 +210,7 @@ const classes = computed(() =>
   box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-primary);
 }
 
-.ds-btn--danger:focus-visible {
+.ds-btn--is-danger:focus-visible {
   box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-danger);
 }
 </style>

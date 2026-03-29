@@ -3,10 +3,12 @@ import { computed, useId } from 'vue'
 import { cn } from '@/lib/utils'
 
 type Size = 'sm' | 'md' | 'lg'
+type ToggleColor = 'primary' | 'secondary' | 'neutral' | 'danger'
 
 interface Props {
   modelValue?: boolean
   size?:       Size
+  color?:      ToggleColor
   disabled?:   boolean
   label?:      string
 }
@@ -14,6 +16,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   modelValue: false,
   size:       'md',
+  color:      'primary',
   disabled:   false,
 })
 
@@ -70,9 +73,10 @@ const trackClasses = computed(() =>
 
 const trackStyle = computed(() => ({
   backgroundColor: props.modelValue
-    ? 'var(--color-primary)'
+    ? `var(--color-${props.color})`
     : 'var(--color-border-strong)',
   borderRadius: 'var(--radius-full)',
+  '--focus-ring-color': `var(--color-${props.color})`,
 }))
 
 const thumbClasses = computed(() =>
@@ -138,6 +142,6 @@ const thumbStyle = {
 
 <style scoped>
 .ds-toggle-track:focus-visible {
-  box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--focus-ring-color, var(--color-primary));
 }
 </style>

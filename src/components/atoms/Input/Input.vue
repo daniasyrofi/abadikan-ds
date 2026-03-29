@@ -1,4 +1,6 @@
 <script setup lang="ts">
+defineOptions({ inheritAttrs: false })
+
 import { computed, useId, ref } from 'vue'
 import { cn } from '@/lib/utils'
 import { RiCloseLine, RiEyeLine, RiEyeOffLine } from '@remixicon/vue'
@@ -101,10 +103,10 @@ const pyClasses: Record<InputSize, string> = {
   lg: 'py-2.5',
 }
 
-const iconSizePx: Record<InputSize, number> = {
-  sm: 14,
-  md: 16,
-  lg: 18,
+const iconSizePx: Record<InputSize, string> = {
+  sm: '14',
+  md: '16',
+  lg: '18',
 }
 
 // Wrapper controls the background, border, and focus rings.
@@ -112,8 +114,8 @@ const iconSizePx: Record<InputSize, number> = {
 const wrapperClasses = computed(() =>
   cn(
     'ds-input-wrapper',
-    'relative flex items-center w-full transition-all duration-200 ease-out',
-    'rounded-[var(--radius-lg)] border outline-none',
+    'relative flex items-center w-full transition-colors duration-200 ease-out',
+    'rounded-[var(--radius-lg)] border outline-none overflow-hidden',
     heightClass[props.size],
     hasError.value && 'ds-input-wrapper--error',
     props.disabled && 'ds-input-wrapper--disabled cursor-not-allowed',
@@ -182,8 +184,6 @@ const wrapperClasses = computed(() =>
         :readonly="readonly"
         :required="required"
         :maxlength="maxlength"
-        :name="$attrs.name as string"
-        :autocomplete="$attrs.autocomplete as string"
         :aria-invalid="hasError || undefined"
         :aria-describedby="helperText || error ? `${inputId}-hint` : undefined"
         :class="cn(
@@ -196,7 +196,7 @@ const wrapperClasses = computed(() =>
           disabled && 'cursor-not-allowed',
           readonly && 'cursor-default',
         )"
-        v-bind="{ ...$attrs, name: undefined, autocomplete: undefined }"
+        v-bind="$attrs"
         @input="handleInput"
       />
 
@@ -345,6 +345,17 @@ const wrapperClasses = computed(() =>
   border-color: transparent !important;
   --tw-ring-shadow: none !important;
   --tw-ring-color: transparent !important;
+}
+
+/* ── Webkit Autofill Override ── */
+.ds-input-native:-webkit-autofill,
+.ds-input-native:-webkit-autofill:hover, 
+.ds-input-native:-webkit-autofill:focus, 
+.ds-input-native:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px var(--color-surface) inset !important;
+  -webkit-text-fill-color: var(--color-text-primary) !important;
+  border-radius: inherit;
+  background-clip: padding-box;
 }
 
 .ds-input-wrapper--disabled .ds-input-native {

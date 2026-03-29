@@ -104,12 +104,12 @@ export const SettingsPanel: Story = {
           <p style="font-size:14px;font-weight:600;color:var(--color-text-heading);">Preferences</p>
         </div>
         <div style="display:flex;flex-direction:column;">
-          <div v-for="[key, label, desc] in [
+          <div v-for="([key, label, desc], index) in [
             ['notifications', 'Push notifications',   'Get notified about activity'],
             ['emails',        'Email updates',         'Weekly digest emails'],
             ['analytics',     'Usage analytics',       'Help improve the product'],
             ['twoFactor',     'Two-factor auth',       'Extra login security'],
-          ]" :key="key" style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--color-border);">
+          ]" :key="key" :style="{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'12px 16px', borderBottom: index < 3 ? '1px solid var(--color-border)' : 'none' }">
             <div>
               <p style="font-size:14px;font-weight:500;color:var(--color-text-primary);">{{ label }}</p>
               <p style="font-size:12px;color:var(--color-text-secondary);margin-top:2px;">{{ desc }}</p>
@@ -131,6 +131,24 @@ export const WithLabel: Story = {
       <div style="display:flex;flex-direction:column;gap:12px;">
         <Toggle v-model="active" label="Receive notifications" />
         <p style="font-size:13px;color:var(--color-text-secondary);">Status: {{ active ? 'Enabled ✓' : 'Disabled' }}</p>
+      </div>
+    `,
+  }),
+}
+
+export const AllColors: Story = {
+  name: 'All Colors',
+  render: () => ({
+    components: { Toggle },
+    setup: () => ({
+      val: ref(true),
+    }),
+    template: `
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <Toggle v-model="val" color="primary" label="Primary (Brand Pink)" />
+        <Toggle v-model="val" color="secondary" label="Secondary" />
+        <Toggle v-model="val" color="neutral" label="Neutral (Black)" />
+        <Toggle v-model="val" color="danger" label="Danger (Red)" />
       </div>
     `,
   }),

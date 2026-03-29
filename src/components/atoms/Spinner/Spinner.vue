@@ -3,15 +3,17 @@ import { computed } from 'vue'
 import { cn } from '@/lib/utils'
 
 type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+type SpinnerColor = 'primary' | 'secondary' | 'neutral' | 'danger' | (string & {})
 
 interface Props {
   size?:  Size
-  color?: string
+  color?: SpinnerColor
   label?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   size:  'md',
+  color: 'primary',
   label: 'Loading',
 })
 
@@ -26,12 +28,19 @@ const sizeClasses: Record<Size, string> = {
 const classes = computed(() =>
   cn('shrink-0 animate-spin', sizeClasses[props.size])
 )
+const computedColor = computed(() => {
+  if (!props.color) return undefined
+  if (['primary', 'secondary', 'neutral', 'danger'].includes(props.color)) {
+    return { color: `var(--color-${props.color})` }
+  }
+  return { color: props.color }
+})
 </script>
 
 <template>
   <svg
     :class="classes"
-    :style="color ? { color } : undefined"
+    :style="computedColor"
     viewBox="0 0 24 24"
     fill="none"
     role="status"

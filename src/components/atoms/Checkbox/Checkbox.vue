@@ -4,11 +4,13 @@ import { cn } from '@/lib/utils'
 import { RiCheckLine, RiSubtractLine } from '@remixicon/vue'
 
 type CheckboxSize  = 'sm' | 'md' | 'lg'
+type CheckboxColor = 'primary' | 'secondary' | 'neutral' | 'danger'
 type CheckboxValue = boolean | 'indeterminate'
 
 interface Props {
   modelValue:   CheckboxValue
   size?:        CheckboxSize
+  color?:       CheckboxColor
   disabled?:    boolean
   label?:       string
   description?: string
@@ -19,6 +21,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   size:     'md',
+  color:    'primary',
   disabled: false,
 })
 
@@ -46,10 +49,10 @@ const boxSizeClass: Record<CheckboxSize, string> = {
   lg: 'size-6',    // 24px
 }
 
-const iconSizePx: Record<CheckboxSize, number> = {
-  sm: 12,
-  md: 14,
-  lg: 16,
+const iconSizePx: Record<CheckboxSize, string> = {
+  sm: '12',
+  md: '14',
+  lg: '16',
 }
 
 const labelTextClass: Record<CheckboxSize, string> = {
@@ -74,8 +77,8 @@ const offsetClass: Record<CheckboxSize, string> = {
 
 const boxClasses = computed(() =>
   cn(
-    'checkbox-box shrink-0 inline-flex items-center justify-center',
-    'border-2 transition-all duration-150 ease-out',
+    'checkbox-box relative shrink-0 inline-flex items-center justify-center',
+    'border-2 transition-colors duration-200 ease-out',
     boxSizeClass[props.size],
     props.disabled && 'opacity-50 cursor-not-allowed',
   )
@@ -86,14 +89,16 @@ const boxStyle = computed(() => {
     borderRadius: 'var(--radius-sm)',
   }
 
+  const colorVar = `var(--color-${props.color})`
+
   if (isActive.value) {
     if (hasError.value) {
       styles.backgroundColor = 'var(--color-danger)'
       styles.borderColor = 'var(--color-danger)'
     } else {
-      styles.backgroundColor = 'var(--color-primary)'
-      styles.borderColor = 'var(--color-primary)'
-      styles.transform = 'scale(1.05)'
+      styles.backgroundColor = colorVar
+      styles.borderColor = colorVar
+      // Scaling caused sub-pixel jitter in the adjacent label text during transitions!
     }
   } else {
     if (hasError.value) {
@@ -109,7 +114,7 @@ const boxStyle = computed(() => {
 })
 
 const focusRingVar = computed(() =>
-  hasError.value ? 'var(--ring-danger)' : '0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-primary)'
+  hasError.value ? 'var(--ring-danger)' : `0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-${props.color})`
 )
 </script>
 
@@ -140,21 +145,26 @@ const focusRingVar = computed(() =>
         @change="handleChange"
       />
 
-      <!-- Visual box -->
+      <!-- Visual box with Absolute SVG Icons to prevent sub-pixel layout shifts -->
       <span
         :class="boxClasses"
         :style="[boxStyle, { '--focus-ring': focusRingVar }]"
         aria-hidden="true"
       >
         <RiCheckLine
-          v-if="isChecked"
           :size="iconSizePx[size]"
-          class="stroke-[0.5]"
+          :class="cn(
+            'stroke-[0.5] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ease-out',
+            isChecked ? 'opacity-100 scale-100' : 'opacity-0 scale-50 pointer-events-none'
+          )"
           :style="{ color: 'var(--color-text-inverse)' }"
         />
         <RiSubtractLine
-          v-else-if="isIndeterminate"
           :size="iconSizePx[size]"
+          :class="cn(
+            'absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ease-out',
+            isIndeterminate ? 'opacity-100 scale-100' : 'opacity-0 scale-50 pointer-events-none'
+          )"
           :style="{ color: 'var(--color-text-inverse)' }"
         />
       </span>

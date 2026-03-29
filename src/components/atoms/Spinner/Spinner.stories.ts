@@ -48,12 +48,11 @@ export const ColorVariants: Story = {
     template: `
       <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
         <div v-for="[color, label] in [
-          ['var(--color-primary)',   'primary'],
-          ['var(--color-success)',   'success'],
-          ['var(--color-warning)',   'warning'],
-          ['var(--color-danger)',    'danger'],
-          ['var(--color-info)',      'info'],
-          ['var(--color-text-secondary)', 'muted'],
+          ['primary',   'Primary (Brand)'],
+          ['secondary', 'Secondary (Accent)'],
+          ['neutral',   'Neutral (Black)'],
+          ['danger',    'Danger (Red)'],
+          ['#8b5cf6',   'Custom Hex (Purple)'],
         ]" :key="label" style="display:flex;flex-direction:column;align-items:center;gap:8px;">
           <Spinner size="md" :color="color" />
           <span style="font-size:11px;color:var(--color-text-tertiary);">{{ label }}</span>

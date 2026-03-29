@@ -183,3 +183,21 @@ export const CheckboxGroup: Story = {
     `,
   }),
 }
+
+export const AllColors: Story = {
+  name: 'All Colors',
+  render: () => ({
+    components: { Checkbox },
+    setup: () => ({
+      val: ref(true),
+    }),
+    template: `
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <Checkbox v-model="val" color="primary" label="Primary (Brand Pink)" />
+        <Checkbox v-model="val" color="secondary" label="Secondary" />
+        <Checkbox v-model="val" color="neutral" label="Neutral (Black)" />
+        <Checkbox v-model="val" color="danger" label="Danger (Red)" />
+      </div>
+    `,
+  }),
+}

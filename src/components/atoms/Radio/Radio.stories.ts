@@ -177,3 +177,21 @@ export const PaymentMethod: Story = {
     `,
   }),
 }
+
+export const AllColors: Story = {
+  name: 'All Colors',
+  render: () => ({
+    components: { Radio },
+    setup: () => ({
+      val: ref('a'),
+    }),
+    template: `
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <Radio v-model="val" value="a" color="primary" label="Primary (Brand Pink)" />
+        <Radio v-model="val" value="b" color="secondary" label="Secondary" />
+        <Radio v-model="val" value="c" color="neutral" label="Neutral (Black)" />
+        <Radio v-model="val" value="d" color="danger" label="Danger (Red)" />
+      </div>
+    `,
+  }),
+}
