@@ -1,6 +1,149 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import DatePicker from './DatePicker.vue'
+import { getI18nLocale, resolveLocale, type SupportedLocale } from '@/i18n'
+
+type Locale = SupportedLocale
+
+type Copy = {
+  storyNames: {
+    default: string
+    withLabel: string
+    minMaxDate: string
+    disabled: string
+    withError: string
+    allSizes: string
+  }
+  defaultPlaceholder: string
+  valueLabel: string
+  nullValue: string
+  withLabel: {
+    label: string
+    placeholder: string
+  }
+  minMax: {
+    label: string
+    helper: string
+  }
+  disabled: {
+    label: string
+  }
+  withError: {
+    label: string
+    error: string
+  }
+  allSizes: {
+    sm: string
+    md: string
+    lg: string
+  }
+}
+
+const copyMap: Record<Locale, Copy> = {
+  en: {
+    storyNames: {
+      default: 'Default',
+      withLabel: 'With Label',
+      minMaxDate: 'Min / Max Date',
+      disabled: 'Disabled',
+      withError: 'With Error',
+      allSizes: 'All Sizes',
+    },
+    defaultPlaceholder: 'Select date',
+    valueLabel: 'Value',
+    nullValue: 'none',
+    withLabel: {
+      label: 'Date of birth',
+      placeholder: 'DD/MM/YYYY',
+    },
+    minMax: {
+      label: 'Appointment date',
+      helper: 'Only dates in the current month are selectable.',
+    },
+    disabled: {
+      label: 'Start date',
+    },
+    withError: {
+      label: 'Due date',
+      error: 'Please select a valid date.',
+    },
+    allSizes: {
+      sm: 'Small',
+      md: 'Medium',
+      lg: 'Large',
+    },
+  },
+  id: {
+    storyNames: {
+      default: 'Bawaan',
+      withLabel: 'Dengan Label',
+      minMaxDate: 'Tanggal Min / Maks',
+      disabled: 'Nonaktif',
+      withError: 'Dengan Error',
+      allSizes: 'Semua Ukuran',
+    },
+    defaultPlaceholder: 'Pilih tanggal',
+    valueLabel: 'Nilai',
+    nullValue: 'tidak ada',
+    withLabel: {
+      label: 'Tanggal lahir',
+      placeholder: 'DD/MM/YYYY',
+    },
+    minMax: {
+      label: 'Tanggal janji',
+      helper: 'Hanya tanggal pada bulan ini yang dapat dipilih.',
+    },
+    disabled: {
+      label: 'Tanggal mulai',
+    },
+    withError: {
+      label: 'Tanggal jatuh tempo',
+      error: 'Silakan pilih tanggal yang valid.',
+    },
+    allSizes: {
+      sm: 'Kecil',
+      md: 'Sedang',
+      lg: 'Besar',
+    },
+  },
+  zh: {
+    storyNames: {
+      default: '默认',
+      withLabel: '带标签',
+      minMaxDate: '最小 / 最大日期',
+      disabled: '禁用',
+      withError: '带错误',
+      allSizes: '所有尺寸',
+    },
+    defaultPlaceholder: '选择日期',
+    valueLabel: '值',
+    nullValue: '无',
+    withLabel: {
+      label: '出生日期',
+      placeholder: 'DD/MM/YYYY',
+    },
+    minMax: {
+      label: '预约日期',
+      helper: '仅可选择当月日期。',
+    },
+    disabled: {
+      label: '开始日期',
+    },
+    withError: {
+      label: '截止日期',
+      error: '请选择有效日期。',
+    },
+    allSizes: {
+      sm: '小',
+      md: '中',
+      lg: '大',
+    },
+  },
+}
+
+const getLocale = (): Locale => resolveLocale(getI18nLocale())
+const useCopy = () => computed(() => copyMap[getLocale()])
+const getStoryName = (key: keyof Copy['storyNames']) => copyMap[getLocale()].storyNames[key]
 
 // ── Canvas decorator ──────────────────────────────────────────────────────────
 const canvas = () => ({
@@ -51,39 +194,46 @@ export default meta
 type Story = StoryObj<typeof DatePicker>
 
 export const Default: Story = {
+  get name() {
+    return getStoryName('default')
+  },
   render: (args) => ({
     components: { DatePicker },
     setup() {
       const date = ref<string | null>(null)
-      return { date, args }
+      return { date, args, copy: useCopy() }
     },
     template: `
       <div style="max-width:320px;">
-        <DatePicker v-bind="args" v-model="date" />
-        <p style="font-size:12px;color:var(--color-text-tertiary);margin-top:8px;">Value: {{ date ?? 'null' }}</p>
+        <DatePicker v-bind="args" v-model="date" :placeholder="copy.defaultPlaceholder" />
+        <p style="font-size:12px;color:var(--color-text-tertiary);margin-top:8px;">{{ copy.valueLabel }}: {{ date ?? copy.nullValue }}</p>
       </div>
     `,
   }),
 }
 
 export const WithLabel: Story = {
-  name: 'With Label',
+  get name() {
+    return getStoryName('withLabel')
+  },
   render: () => ({
     components: { DatePicker },
     setup() {
       const date = ref<string | null>(null)
-      return { date }
+      return { date, copy: useCopy() }
     },
     template: `
       <div style="max-width:320px;">
-        <DatePicker v-model="date" label="Date of birth" placeholder="DD/MM/YYYY" />
+        <DatePicker v-model="date" :label="copy.withLabel.label" :placeholder="copy.withLabel.placeholder" />
       </div>
     `,
   }),
 }
 
 export const MinMaxDate: Story = {
-  name: 'Min / Max Date',
+  get name() {
+    return getStoryName('minMaxDate')
+  },
   render: () => ({
     components: { DatePicker },
     setup() {
@@ -93,18 +243,18 @@ export const MinMaxDate: Story = {
         .toISOString().split('T')[0]
       const maxDate = new Date(today.getFullYear(), today.getMonth() + 1, 0)
         .toISOString().split('T')[0]
-      return { date, minDate, maxDate }
+      return { date, minDate, maxDate, copy: useCopy() }
     },
     template: `
       <div style="max-width:320px;">
         <DatePicker
           v-model="date"
-          label="Appointment date"
+          :label="copy.minMax.label"
           :min-date="minDate"
           :max-date="maxDate"
         />
         <p style="font-size:12px;color:var(--color-text-tertiary);margin-top:8px;">
-          Only dates in the current month are selectable.
+          {{ copy.minMax.helper }}
         </p>
       </div>
     `,
@@ -112,34 +262,39 @@ export const MinMaxDate: Story = {
 }
 
 export const Disabled: Story = {
+  get name() {
+    return getStoryName('disabled')
+  },
   render: () => ({
     components: { DatePicker },
     setup() {
       const date = ref('2026-03-15')
-      return { date }
+      return { date, copy: useCopy() }
     },
     template: `
       <div style="max-width:320px;">
-        <DatePicker v-model="date" label="Start date" disabled />
+        <DatePicker v-model="date" :label="copy.disabled.label" disabled />
       </div>
     `,
   }),
 }
 
 export const WithError: Story = {
-  name: 'With Error',
+  get name() {
+    return getStoryName('withError')
+  },
   render: () => ({
     components: { DatePicker },
     setup() {
       const date = ref<string | null>(null)
-      return { date }
+      return { date, copy: useCopy() }
     },
     template: `
       <div style="max-width:320px;">
         <DatePicker
           v-model="date"
-          label="Due date"
-          error="Please select a valid date."
+          :label="copy.withError.label"
+          :error="copy.withError.error"
         />
       </div>
     `,
@@ -147,20 +302,22 @@ export const WithError: Story = {
 }
 
 export const AllSizes: Story = {
-  name: 'All Sizes',
+  get name() {
+    return getStoryName('allSizes')
+  },
   render: () => ({
     components: { DatePicker },
     setup() {
       const sm = ref<string | null>(null)
       const md = ref<string | null>(null)
       const lg = ref<string | null>(null)
-      return { sm, md, lg }
+      return { sm, md, lg, copy: useCopy() }
     },
     template: `
       <div style="display:flex;flex-direction:column;gap:16px;max-width:320px;">
-        <DatePicker v-model="sm" size="sm" label="Small" />
-        <DatePicker v-model="md" size="md" label="Medium" />
-        <DatePicker v-model="lg" size="lg" label="Large" />
+        <DatePicker v-model="sm" size="sm" :label="copy.allSizes.sm" />
+        <DatePicker v-model="md" size="md" :label="copy.allSizes.md" />
+        <DatePicker v-model="lg" size="lg" :label="copy.allSizes.lg" />
       </div>
     `,
   }),

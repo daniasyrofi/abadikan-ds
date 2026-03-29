@@ -1,5 +1,95 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
+import { computed } from 'vue'
 import ProgressBar from './ProgressBar.vue'
+import { getI18nLocale, resolveLocale, type SupportedLocale } from '@/i18n'
+
+type Locale = SupportedLocale
+
+type Copy = {
+  storyNames: {
+    default: string
+    allVariants: string
+    sizes: string
+    indeterminate: string
+  }
+  defaultLabel: string
+  variants: Record<'primary' | 'success' | 'warning' | 'danger' | 'info', string>
+  sizes: Record<'sm' | 'md' | 'lg', string>
+  loading: string
+}
+
+const copyMap: Record<Locale, Copy> = {
+  en: {
+    storyNames: {
+      default: 'Default',
+      allVariants: 'All Variants',
+      sizes: 'Sizes',
+      indeterminate: 'Indeterminate',
+    },
+    defaultLabel: 'Upload progress',
+    variants: {
+      primary: 'Primary',
+      success: 'Success',
+      warning: 'Warning',
+      danger: 'Danger',
+      info: 'Info',
+    },
+    sizes: {
+      sm: 'Small',
+      md: 'Medium',
+      lg: 'Large',
+    },
+    loading: 'Loading...',
+  },
+  id: {
+    storyNames: {
+      default: 'Bawaan',
+      allVariants: 'Semua Varian',
+      sizes: 'Ukuran',
+      indeterminate: 'Tidak Pasti',
+    },
+    defaultLabel: 'Progres unggah',
+    variants: {
+      primary: 'Utama',
+      success: 'Berhasil',
+      warning: 'Peringatan',
+      danger: 'Bahaya',
+      info: 'Info',
+    },
+    sizes: {
+      sm: 'Kecil',
+      md: 'Sedang',
+      lg: 'Besar',
+    },
+    loading: 'Memuat...',
+  },
+  zh: {
+    storyNames: {
+      default: '默认',
+      allVariants: '所有变体',
+      sizes: '尺寸',
+      indeterminate: '不确定',
+    },
+    defaultLabel: '上传进度',
+    variants: {
+      primary: '主色',
+      success: '成功',
+      warning: '警告',
+      danger: '危险',
+      info: '信息',
+    },
+    sizes: {
+      sm: '小',
+      md: '中',
+      lg: '大',
+    },
+    loading: '加载中...',
+  },
+}
+
+const getLocale = (): Locale => resolveLocale(getI18nLocale())
+const useCopy = () => computed(() => copyMap[getLocale()])
+const getStoryName = (key: keyof Copy['storyNames']) => copyMap[getLocale()].storyNames[key]
 
 const canvas = () => ({
   template: `
@@ -38,44 +128,72 @@ export default meta
 type Story = StoryObj<typeof ProgressBar>
 
 export const Default: Story = {
+  get name() {
+    return getStoryName('default')
+  },
   args: {
     value: 65,
-    label: 'Upload progress',
+    label: copyMap.en.defaultLabel,
     showValue: true,
   },
+  render: (args) => ({
+    components: { ProgressBar },
+    setup: () => ({ args, copy: useCopy() }),
+    template: '<ProgressBar v-bind="args" :label="copy.defaultLabel" />',
+  }),
 }
 
 export const AllVariants: Story = {
+  get name() {
+    return getStoryName('allVariants')
+  },
   render: () => ({
     components: { ProgressBar },
     template: `
       <div style="display:flex;flex-direction:column;gap:28px;width:100%;max-width:420px;">
-        <ProgressBar :value="75" variant="primary" label="Primary" show-value />
-        <ProgressBar :value="90" variant="success" label="Success" show-value />
-        <ProgressBar :value="45" variant="warning" label="Warning" show-value />
-        <ProgressBar :value="30" variant="danger"  label="Danger"  show-value />
-        <ProgressBar :value="60" variant="info"    label="Info"    show-value />
+        <ProgressBar :value="75" variant="primary" :label="copy.variants.primary" show-value />
+        <ProgressBar :value="90" variant="success" :label="copy.variants.success" show-value />
+        <ProgressBar :value="45" variant="warning" :label="copy.variants.warning" show-value />
+        <ProgressBar :value="30" variant="danger"  :label="copy.variants.danger"  show-value />
+        <ProgressBar :value="60" variant="info"    :label="copy.variants.info"    show-value />
       </div>
     `,
+    setup() {
+      return { copy: useCopy() }
+    },
   }),
 }
 
 export const Sizes: Story = {
+  get name() {
+    return getStoryName('sizes')
+  },
   render: () => ({
     components: { ProgressBar },
     template: `
       <div style="display:flex;flex-direction:column;gap:28px;width:100%;max-width:420px;">
-        <ProgressBar :value="55" size="sm" label="Small" show-value />
-        <ProgressBar :value="55" size="md" label="Medium" show-value />
-        <ProgressBar :value="55" size="lg" label="Large" show-value />
+        <ProgressBar :value="55" size="sm" :label="copy.sizes.sm" show-value />
+        <ProgressBar :value="55" size="md" :label="copy.sizes.md" show-value />
+        <ProgressBar :value="55" size="lg" :label="copy.sizes.lg" show-value />
       </div>
     `,
+    setup() {
+      return { copy: useCopy() }
+    },
   }),
 }
 
 export const Indeterminate: Story = {
+  get name() {
+    return getStoryName('indeterminate')
+  },
   args: {
     indeterminate: true,
-    label: 'Loading...',
+    label: copyMap.en.loading,
   },
+  render: (args) => ({
+    components: { ProgressBar },
+    setup: () => ({ args, copy: useCopy() }),
+    template: '<ProgressBar v-bind="args" :label="copy.loading" />',
+  }),
 }

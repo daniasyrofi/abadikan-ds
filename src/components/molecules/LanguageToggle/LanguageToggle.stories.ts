@@ -1,5 +1,73 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
+import { computed } from 'vue'
 import LanguageToggle from './LanguageToggle.vue'
+import { getI18nLocale, resolveLocale, type SupportedLocale } from '@/i18n'
+
+type Locale = SupportedLocale
+
+type Copy = {
+  storyNames: {
+    default: string
+    allSizes: string
+    inNavbar: string
+  }
+  labels: {
+    toggle: string
+    navbar: string
+    size: string
+    saveCancel: string
+  }
+  localeCode: string
+}
+
+const copyMap: Record<Locale, Copy> = {
+  en: {
+    storyNames: {
+      default: 'Default',
+      allSizes: 'All Sizes',
+      inNavbar: 'In Navbar',
+    },
+    labels: {
+      toggle: 'Language Toggle',
+      navbar: 'Navbar context',
+      size: 'Size',
+      saveCancel: 'Save / Cancel',
+    },
+    localeCode: 'EN',
+  },
+  id: {
+    storyNames: {
+      default: 'Bawaan',
+      allSizes: 'Semua Ukuran',
+      inNavbar: 'Di Navbar',
+    },
+    labels: {
+      toggle: 'Pengalih Bahasa',
+      navbar: 'Konteks navbar',
+      size: 'Ukuran',
+      saveCancel: 'Simpan / Batal',
+    },
+    localeCode: 'ID',
+  },
+  zh: {
+    storyNames: {
+      default: '默认',
+      allSizes: '所有尺寸',
+      inNavbar: '在导航栏中',
+    },
+    labels: {
+      toggle: '语言切换器',
+      navbar: '导航栏上下文',
+      size: '尺寸',
+      saveCancel: '保存 / 取消',
+    },
+    localeCode: 'ZH',
+  },
+}
+
+const getLocale = (): Locale => resolveLocale(getI18nLocale())
+const useCopy = () => computed(() => copyMap[getLocale()])
+const getStoryName = (key: keyof Copy['storyNames']) => copyMap[getLocale()].storyNames[key]
 
 // ── Canvas decorator ───────────────────────────────────────────────────────────
 const withCanvas = () => ({
@@ -11,9 +79,6 @@ const withCanvas = () => ({
       background-size:24px 24px;
     "><story /></div>`,
 })
-
-const label = (text: string) =>
-  `<p style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:8px;">${text}</p>`
 
 const meta: Meta<typeof LanguageToggle> = {
   title: 'Molecules/LanguageToggle',
@@ -31,13 +96,15 @@ type Story = StoryObj<typeof LanguageToggle>
 
 // ── Default ────────────────────────────────────────────────────────────────────
 export const Default: Story = {
-  name: 'Default',
+  get name() {
+    return getStoryName('default')
+  },
   render: (args) => ({
     components: { LanguageToggle },
-    setup: () => ({ args }),
+    setup: () => ({ args, copy: useCopy() }),
     template: `
       <div style="display:flex;flex-direction:column;gap:8px;align-items:center;">
-        ${label('Language Toggle')}
+        <p style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:8px;">{{ copy.labels.toggle }}</p>
         <LanguageToggle v-bind="args" />
       </div>
     `,
@@ -46,7 +113,9 @@ export const Default: Story = {
 
 // ── All Sizes ──────────────────────────────────────────────────────────────────
 export const AllSizes: Story = {
-  name: 'All Sizes',
+  get name() {
+    return getStoryName('allSizes')
+  },
   render: () => ({
     components: { LanguageToggle },
     template: `
@@ -70,12 +139,15 @@ export const AllSizes: Story = {
 
 // ── In Navbar ──────────────────────────────────────────────────────────────────
 export const InNavbar: Story = {
-  name: 'In Navbar',
+  get name() {
+    return getStoryName('inNavbar')
+  },
   render: () => ({
     components: { LanguageToggle },
+    setup: () => ({ copy: useCopy() }),
     template: `
       <div style="width:100%;max-width:600px;display:flex;flex-direction:column;gap:12px;">
-        ${label('Navbar context')}
+        <p style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:8px;">{{ copy.labels.navbar }}</p>
         <div style="
           display:flex;align-items:center;justify-content:space-between;
           padding:10px 20px;background:var(--color-surface);

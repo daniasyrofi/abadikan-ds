@@ -1,6 +1,23 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import Icon from './Icon.vue'
+import { getI18nLocale, resolveLocale, type SupportedLocale } from '@/i18n'
+
+type Locale = SupportedLocale
+
+type Copy = {
+  storyNames: {
+    default: string
+    allSizes: string
+    iconGrid: string
+    coloredIcons: string
+  }
+  sizeLabels: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', string>
+  titleLabels: {
+    copyToClipboard: string
+  }
+  colorLabels: Record<'danger' | 'success' | 'warning' | 'info' | 'primary' | 'muted', string>
+}
 
 const commonIcons = [
   'RiHomeLine', 'RiUser3Line', 'RiSettings3Line', 'RiSearchLine',
@@ -10,6 +27,91 @@ const commonIcons = [
   'RiEyeLine', 'RiEyeOffLine', 'RiInformationLine', 'RiAlertLine',
   'RiCalendarLine', 'RiPhoneLine', 'RiMapPinLine', 'RiGlobeLine',
 ]
+
+const copyMap: Record<Locale, Copy> = {
+  en: {
+    storyNames: {
+      default: 'Default',
+      allSizes: 'All Sizes',
+      iconGrid: 'Icon Grid',
+      coloredIcons: 'Colored Icons',
+    },
+    sizeLabels: {
+      xs: 'Extra Small',
+      sm: 'Small',
+      md: 'Medium',
+      lg: 'Large',
+      xl: 'Extra Large',
+    },
+    titleLabels: {
+      copyToClipboard: 'Click to copy',
+    },
+    colorLabels: {
+      danger: 'Danger',
+      success: 'Success',
+      warning: 'Warning',
+      info: 'Info',
+      primary: 'Primary',
+      muted: 'Muted',
+    },
+  },
+  id: {
+    storyNames: {
+      default: 'Bawaan',
+      allSizes: 'Semua Ukuran',
+      iconGrid: 'Kisi Ikon',
+      coloredIcons: 'Ikon Berwarna',
+    },
+    sizeLabels: {
+      xs: 'Ekstra Kecil',
+      sm: 'Kecil',
+      md: 'Sedang',
+      lg: 'Besar',
+      xl: 'Ekstra Besar',
+    },
+    titleLabels: {
+      copyToClipboard: 'Klik untuk menyalin',
+    },
+    colorLabels: {
+      danger: 'Bahaya',
+      success: 'Berhasil',
+      warning: 'Peringatan',
+      info: 'Info',
+      primary: 'Utama',
+      muted: 'Pudar',
+    },
+  },
+  zh: {
+    storyNames: {
+      default: '默认',
+      allSizes: '全部尺寸',
+      iconGrid: '图标网格',
+      coloredIcons: '彩色图标',
+    },
+    sizeLabels: {
+      xs: '超小',
+      sm: '小',
+      md: '中',
+      lg: '大',
+      xl: '超大',
+    },
+    titleLabels: {
+      copyToClipboard: '点击复制',
+    },
+    colorLabels: {
+      danger: '危险',
+      success: '成功',
+      warning: '警告',
+      info: '信息',
+      primary: '主要',
+      muted: '弱化',
+    },
+  },
+}
+
+const getLocale = (): Locale => resolveLocale(getI18nLocale())
+const useCopy = () => computed(() => copyMap[getLocale()])
+const getStoryName = (key: keyof Copy['storyNames']) => copyMap[getLocale()].storyNames[key]
 
 const meta: Meta<typeof Icon> = {
   title: 'Atoms/Icon',
@@ -30,6 +132,9 @@ export default meta
 type Story = StoryObj<typeof Icon>
 
 export const Default: Story = {
+  get name() {
+    return getStoryName('default')
+  },
   render: (args) => ({
     components: { Icon },
     setup: () => ({ args }),
@@ -38,14 +143,17 @@ export const Default: Story = {
 }
 
 export const AllSizes: Story = {
-  name: 'All Sizes',
+  get name() {
+    return getStoryName('allSizes')
+  },
   render: () => ({
     components: { Icon },
+    setup: () => ({ copy: useCopy() }),
     template: `
       <div style="display:flex;align-items:flex-end;gap:20px;">
         <div v-for="s in ['xs','sm','md','lg','xl']" :key="s" style="display:flex;flex-direction:column;align-items:center;gap:8px;">
           <Icon name="RiHomeLine" :size="s" />
-          <span style="font-size:11px;color:var(--color-text-tertiary);">{{ s }}</span>
+          <span style="font-size:11px;color:var(--color-text-tertiary);">{{ copy.sizeLabels[s] }}</span>
         </div>
       </div>
     `,
@@ -53,17 +161,20 @@ export const AllSizes: Story = {
 }
 
 export const IconGrid: Story = {
-  name: 'Icon Grid',
+  get name() {
+    return getStoryName('iconGrid')
+  },
   render: () => ({
     components: { Icon },
     setup() {
+      const copy = useCopy()
       const copied = ref<string | null>(null)
       function copyName(name: string) {
         navigator.clipboard?.writeText(name)
         copied.value = name
         setTimeout(() => { copied.value = null }, 1500)
       }
-      return { icons: commonIcons, copied, copyName }
+      return { copy, icons: commonIcons, copied, copyName }
     },
     template: `
       <div style="display:flex;flex-wrap:wrap;gap:8px;max-width:480px;">
@@ -72,7 +183,7 @@ export const IconGrid: Story = {
           :key="icon"
           style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 8px;border-radius:var(--radius-md);border:1px solid var(--color-border);background:var(--color-surface);min-width:80px;cursor:pointer;transition:background 150ms;"
           :style="{ background: copied === icon ? 'var(--color-primary-light)' : 'var(--color-surface)' }"
-          :title="'Click to copy: ' + icon"
+          :title="copy.titleLabels.copyToClipboard + ': ' + icon"
           @click="copyName(icon)"
         >
           <Icon :name="icon" size="md" />
@@ -84,18 +195,21 @@ export const IconGrid: Story = {
 }
 
 export const ColoredIcons: Story = {
-  name: 'Colored Icons',
+  get name() {
+    return getStoryName('coloredIcons')
+  },
   render: () => ({
     components: { Icon },
+    setup: () => ({ copy: useCopy() }),
     template: `
       <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
         <div v-for="[name, color, label] in [
-          ['RiHeartLine', 'var(--color-danger)', 'danger'],
-          ['RiCheckLine', 'var(--color-success)', 'success'],
-          ['RiAlertLine', 'var(--color-warning)', 'warning'],
-          ['RiInformationLine', 'var(--color-info)', 'info'],
-          ['RiStarLine', 'var(--color-primary)', 'primary'],
-          ['RiSettings3Line', 'var(--color-text-secondary)', 'muted'],
+          ['RiHeartLine', 'var(--color-danger)', copy.colorLabels.danger],
+          ['RiCheckLine', 'var(--color-success)', copy.colorLabels.success],
+          ['RiAlertLine', 'var(--color-warning)', copy.colorLabels.warning],
+          ['RiInformationLine', 'var(--color-info)', copy.colorLabels.info],
+          ['RiStarLine', 'var(--color-primary)', copy.colorLabels.primary],
+          ['RiSettings3Line', 'var(--color-text-secondary)', copy.colorLabels.muted],
         ]" :key="name" style="display:flex;flex-direction:column;align-items:center;gap:6px;">
           <Icon :name="name" size="lg" :color="color" />
           <span style="font-size:10px;color:var(--color-text-tertiary);">{{ label }}</span>

@@ -1,5 +1,85 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
+import { computed } from 'vue'
 import ThemeToggle from './ThemeToggle.vue'
+import { getI18nLocale, resolveLocale, type SupportedLocale } from '@/i18n'
+
+type Locale = SupportedLocale
+
+type Copy = {
+  storyNames: {
+    default: string
+    allSizes: string
+    inNavbar: string
+    withLanguageToggle: string
+  }
+  labels: {
+    toggle: string
+    navbar: string
+    context: string
+    saveLanguage: string
+    combined: string
+    code: string
+  }
+  description: string
+}
+
+const copyMap: Record<Locale, Copy> = {
+  en: {
+    storyNames: {
+      default: 'Default',
+      allSizes: 'All Sizes',
+      inNavbar: 'In Navbar',
+      withLanguageToggle: 'With Language Toggle',
+    },
+    labels: {
+      toggle: 'Theme Toggle',
+      navbar: 'Navbar context',
+      context: 'Undangan.id',
+      saveLanguage: 'Toggle saves preferences to localStorage and applies data-theme to <html>',
+      combined: 'Combined controls',
+      code: 'EN',
+    },
+    description: 'Toggle saves preferences to localStorage and applies data-theme to <html>',
+  },
+  id: {
+    storyNames: {
+      default: 'Bawaan',
+      allSizes: 'Semua Ukuran',
+      inNavbar: 'Di Navbar',
+      withLanguageToggle: 'Dengan Pengalih Bahasa',
+    },
+    labels: {
+      toggle: 'Pengalih Tema',
+      navbar: 'Konteks navbar',
+      context: 'Undangan.id',
+      saveLanguage: 'Toggle menyimpan preferensi ke localStorage dan menerapkan data-theme ke <html>',
+      combined: 'Kontrol gabungan',
+      code: 'ID',
+    },
+    description: 'Toggle menyimpan preferensi ke localStorage dan menerapkan data-theme ke <html>',
+  },
+  zh: {
+    storyNames: {
+      default: '默认',
+      allSizes: '所有尺寸',
+      inNavbar: '在导航栏中',
+      withLanguageToggle: '带语言切换器',
+    },
+    labels: {
+      toggle: '主题切换器',
+      navbar: '导航栏上下文',
+      context: 'Undangan.id',
+      saveLanguage: '切换会将偏好保存到 localStorage，并将 data-theme 应用到 <html>',
+      combined: '组合控制',
+      code: 'ZH',
+    },
+    description: '切换会将偏好保存到 localStorage，并将 data-theme 应用到 <html>',
+  },
+}
+
+const getLocale = (): Locale => resolveLocale(getI18nLocale())
+const useCopy = () => computed(() => copyMap[getLocale()])
+const getStoryName = (key: keyof Copy['storyNames']) => copyMap[getLocale()].storyNames[key]
 
 // ── Canvas decorator ───────────────────────────────────────────────────────────
 const withCanvas = () => ({
@@ -11,9 +91,6 @@ const withCanvas = () => ({
       background-size:24px 24px;
     "><story /></div>`,
 })
-
-const label = (text: string) =>
-  `<p style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:8px;">${text}</p>`
 
 const meta: Meta<typeof ThemeToggle> = {
   title: 'Molecules/ThemeToggle',
@@ -31,13 +108,15 @@ type Story = StoryObj<typeof ThemeToggle>
 
 // ── Default ────────────────────────────────────────────────────────────────────
 export const Default: Story = {
-  name: 'Default',
+  get name() {
+    return getStoryName('default')
+  },
   render: (args) => ({
     components: { ThemeToggle },
-    setup: () => ({ args }),
+    setup: () => ({ args, copy: useCopy() }),
     template: `
       <div style="display:flex;flex-direction:column;gap:8px;align-items:center;">
-        ${label('Theme Toggle')}
+        <p style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:8px;">{{ copy.labels.toggle }}</p>
         <ThemeToggle v-bind="args" />
       </div>
     `,
@@ -46,9 +125,12 @@ export const Default: Story = {
 
 // ── All Sizes ──────────────────────────────────────────────────────────────────
 export const AllSizes: Story = {
-  name: 'All Sizes',
+  get name() {
+    return getStoryName('allSizes')
+  },
   render: () => ({
     components: { ThemeToggle },
+    setup: () => ({ copy: useCopy() }),
     template: `
       <div style="display:flex;flex-direction:column;gap:16px;align-items:flex-start;">
         <div style="display:flex;align-items:center;gap:14px;">
@@ -70,24 +152,27 @@ export const AllSizes: Story = {
 
 // ── In Navbar ──────────────────────────────────────────────────────────────────
 export const InNavbar: Story = {
-  name: 'In Navbar',
+  get name() {
+    return getStoryName('inNavbar')
+  },
   render: () => ({
     components: { ThemeToggle },
+    setup: () => ({ copy: useCopy() }),
     template: `
       <div style="width:100%;max-width:600px;display:flex;flex-direction:column;gap:12px;">
-        ${label('Navbar context')}
+        <p style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:8px;">{{ copy.labels.navbar }}</p>
         <div style="
           display:flex;align-items:center;justify-content:space-between;
           padding:10px 20px;background:var(--color-surface);
           border:1px solid var(--color-border);border-radius:var(--radius-xl);
         ">
-          <span style="font-size:15px;font-weight:700;color:var(--color-text-heading);">Undangan.id</span>
+          <span style="font-size:15px;font-weight:700;color:var(--color-text-heading);">{{ copy.labels.context }}</span>
           <div style="display:flex;align-items:center;gap:8px;">
             <ThemeToggle />
           </div>
         </div>
         <p style="font-size:12px;color:var(--color-text-tertiary);text-align:center;">
-          Toggle menyimpan preferensi ke localStorage dan menerapkan data-theme ke &lt;html&gt;
+          {{ copy.description }}
         </p>
       </div>
     `,
@@ -96,22 +181,25 @@ export const InNavbar: Story = {
 
 // ── With Language Toggle ───────────────────────────────────────────────────────
 export const WithLanguageToggle: Story = {
-  name: 'With Language Toggle',
+  get name() {
+    return getStoryName('withLanguageToggle')
+  },
   render: () => ({
     components: { ThemeToggle },
+    setup: () => ({ copy: useCopy() }),
     template: `
       <div style="width:100%;max-width:600px;display:flex;flex-direction:column;gap:12px;">
-        ${label('Combined controls')}
+        <p style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:8px;">{{ copy.labels.combined }}</p>
         <div style="
           display:flex;align-items:center;justify-content:space-between;
           padding:10px 20px;background:var(--color-surface);
           border:1px solid var(--color-border);border-radius:var(--radius-xl);
         ">
-          <span style="font-size:15px;font-weight:700;color:var(--color-text-heading);">Undangan.id</span>
+          <span style="font-size:15px;font-weight:700;color:var(--color-text-heading);">{{ copy.labels.context }}</span>
           <div style="display:flex;align-items:center;gap:6px;">
             <ThemeToggle size="sm" />
             <div style="width:1px;height:16px;background:var(--color-border);"></div>
-            <span style="font-size:12px;font-weight:600;color:var(--color-text-secondary);">ID</span>
+            <span style="font-size:12px;font-weight:600;color:var(--color-text-secondary);">{{ copy.labels.code }}</span>
           </div>
         </div>
       </div>

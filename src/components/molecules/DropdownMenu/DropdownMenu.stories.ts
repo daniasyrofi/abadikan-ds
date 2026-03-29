@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
+import { computed } from 'vue'
 import {
   RiEditLine,
   RiDeleteBinLine,
@@ -10,6 +11,204 @@ import {
 } from '@remixicon/vue'
 import DropdownMenu from './DropdownMenu.vue'
 import Button from '@/components/atoms/Button/Button.vue'
+import { getI18nLocale, resolveLocale, type SupportedLocale } from '@/i18n'
+
+type Locale = SupportedLocale
+
+type Copy = {
+  storyNames: {
+    default: string
+    withIcons: string
+    withShortcuts: string
+    withSeparators: string
+  }
+  default: {
+    trigger: string
+    items: Array<{ label: string }>
+  }
+  withIcons: {
+    trigger: string
+    items: Array<{ label: string; icon?: unknown; separator?: boolean }>
+  }
+  withShortcuts: {
+    trigger: string
+    items: Array<{ label: string; shortcut?: string; separator?: boolean }>
+  }
+  withSeparators: {
+    trigger: string
+    ariaLabel: string
+    items: Array<{ label: string; separator?: boolean }>
+  }
+}
+
+const copyMap: Record<Locale, Copy> = {
+  en: {
+    storyNames: {
+      default: 'Default',
+      withIcons: 'With Icons',
+      withShortcuts: 'With Shortcuts',
+      withSeparators: 'With Separators',
+    },
+    default: {
+      trigger: 'Open Menu',
+      items: [
+        { label: 'Edit' },
+        { label: 'Duplicate' },
+        { label: 'Archive' },
+        { label: 'Delete' },
+      ],
+    },
+    withIcons: {
+      trigger: 'Actions',
+      items: [
+        { label: 'Edit', icon: RiEditLine },
+        { label: 'Duplicate', icon: RiFileCopyLine },
+        { label: 'Share', icon: RiShareLine },
+        { label: 'Download', icon: RiDownloadLine },
+        { separator: true, label: '' },
+        { label: 'Delete', icon: RiDeleteBinLine },
+      ],
+    },
+    withShortcuts: {
+      trigger: 'Edit',
+      items: [
+        { label: 'Undo', shortcut: '⌘Z' },
+        { label: 'Redo', shortcut: '⇧⌘Z' },
+        { separator: true, label: '' },
+        { label: 'Cut', shortcut: '⌘X' },
+        { label: 'Copy', shortcut: '⌘C' },
+        { label: 'Paste', shortcut: '⌘V' },
+        { separator: true, label: '' },
+        { label: 'Select All', shortcut: '⌘A' },
+      ],
+    },
+    withSeparators: {
+      trigger: 'More options',
+      ariaLabel: 'More options',
+      items: [
+        { label: 'View profile' },
+        { label: 'Settings' },
+        { separator: true, label: '' },
+        { label: 'Help & Support' },
+        { label: 'Keyboard shortcuts' },
+        { separator: true, label: '' },
+        { label: 'Sign out' },
+      ],
+    },
+  },
+  id: {
+    storyNames: {
+      default: 'Bawaan',
+      withIcons: 'Dengan Ikon',
+      withShortcuts: 'Dengan Pintasan',
+      withSeparators: 'Dengan Pemisah',
+    },
+    default: {
+      trigger: 'Buka Menu',
+      items: [
+        { label: 'Edit' },
+        { label: 'Duplikat' },
+        { label: 'Arsipkan' },
+        { label: 'Hapus' },
+      ],
+    },
+    withIcons: {
+      trigger: 'Aksi',
+      items: [
+        { label: 'Edit', icon: RiEditLine },
+        { label: 'Duplikat', icon: RiFileCopyLine },
+        { label: 'Bagikan', icon: RiShareLine },
+        { label: 'Unduh', icon: RiDownloadLine },
+        { separator: true, label: '' },
+        { label: 'Hapus', icon: RiDeleteBinLine },
+      ],
+    },
+    withShortcuts: {
+      trigger: 'Edit',
+      items: [
+        { label: 'Urungkan', shortcut: '⌘Z' },
+        { label: 'Ulangi', shortcut: '⇧⌘Z' },
+        { separator: true, label: '' },
+        { label: 'Potong', shortcut: '⌘X' },
+        { label: 'Salin', shortcut: '⌘C' },
+        { label: 'Tempel', shortcut: '⌘V' },
+        { separator: true, label: '' },
+        { label: 'Pilih Semua', shortcut: '⌘A' },
+      ],
+    },
+    withSeparators: {
+      trigger: 'Opsi lainnya',
+      ariaLabel: 'Opsi lainnya',
+      items: [
+        { label: 'Lihat profil' },
+        { label: 'Pengaturan' },
+        { separator: true, label: '' },
+        { label: 'Bantuan & Dukungan' },
+        { label: 'Pintasan keyboard' },
+        { separator: true, label: '' },
+        { label: 'Keluar' },
+      ],
+    },
+  },
+  zh: {
+    storyNames: {
+      default: '默认',
+      withIcons: '带图标',
+      withShortcuts: '带快捷键',
+      withSeparators: '带分隔线',
+    },
+    default: {
+      trigger: '打开菜单',
+      items: [
+        { label: '编辑' },
+        { label: '复制' },
+        { label: '归档' },
+        { label: '删除' },
+      ],
+    },
+    withIcons: {
+      trigger: '操作',
+      items: [
+        { label: '编辑', icon: RiEditLine },
+        { label: '复制', icon: RiFileCopyLine },
+        { label: '分享', icon: RiShareLine },
+        { label: '下载', icon: RiDownloadLine },
+        { separator: true, label: '' },
+        { label: '删除', icon: RiDeleteBinLine },
+      ],
+    },
+    withShortcuts: {
+      trigger: '编辑',
+      items: [
+        { label: '撤销', shortcut: '⌘Z' },
+        { label: '重做', shortcut: '⇧⌘Z' },
+        { separator: true, label: '' },
+        { label: '剪切', shortcut: '⌘X' },
+        { label: '复制', shortcut: '⌘C' },
+        { label: '粘贴', shortcut: '⌘V' },
+        { separator: true, label: '' },
+        { label: '全选', shortcut: '⌘A' },
+      ],
+    },
+    withSeparators: {
+      trigger: '更多选项',
+      ariaLabel: '更多选项',
+      items: [
+        { label: '查看个人资料' },
+        { label: '设置' },
+        { separator: true, label: '' },
+        { label: '帮助与支持' },
+        { label: '键盘快捷键' },
+        { separator: true, label: '' },
+        { label: '退出登录' },
+      ],
+    },
+  },
+}
+
+const getLocale = (): Locale => resolveLocale(getI18nLocale())
+const useCopy = () => computed(() => copyMap[getLocale()])
+const getStoryName = (key: keyof Copy['storyNames']) => copyMap[getLocale()].storyNames[key]
 
 // ── Canvas decorator ──────────────────────────────────────────────────────────
 const canvas = () => ({
@@ -48,22 +247,19 @@ export default meta
 type Story = StoryObj<typeof DropdownMenu>
 
 export const Default: Story = {
+  get name() {
+    return getStoryName('default')
+  },
   render: (args) => ({
     components: { DropdownMenu, Button },
     setup() {
-      const items = [
-        { label: 'Edit', action: () => console.log('Edit') },
-        { label: 'Duplicate', action: () => console.log('Duplicate') },
-        { label: 'Archive', action: () => console.log('Archive') },
-        { label: 'Delete', action: () => console.log('Delete') },
-      ]
-      return { args, items }
+      return { args, copy: useCopy() }
     },
     template: `
       <div style="padding:80px;">
-        <DropdownMenu v-bind="args" :items="items">
+        <DropdownMenu v-bind="args" :items="copy.default.items">
           <template #trigger>
-            <Button variant="secondary">Open Menu</Button>
+            <Button variant="secondary">{{ copy.default.trigger }}</Button>
           </template>
         </DropdownMenu>
       </div>
@@ -72,26 +268,20 @@ export const Default: Story = {
 }
 
 export const WithIcons: Story = {
-  name: 'With Icons',
+  get name() {
+    return getStoryName('withIcons')
+  },
   render: () => ({
     components: { DropdownMenu, Button, RiArrowDownSLine },
     setup() {
-      const items = [
-        { label: 'Edit', icon: RiEditLine, action: () => console.log('Edit') },
-        { label: 'Duplicate', icon: RiFileCopyLine, action: () => console.log('Duplicate') },
-        { label: 'Share', icon: RiShareLine, action: () => console.log('Share') },
-        { label: 'Download', icon: RiDownloadLine, action: () => console.log('Download') },
-        { separator: true, label: '' },
-        { label: 'Delete', icon: RiDeleteBinLine, action: () => console.log('Delete') },
-      ]
-      return { items }
+      return { copy: useCopy() }
     },
     template: `
       <div style="padding:80px;">
-        <DropdownMenu :items="items">
+        <DropdownMenu :items="copy.withIcons.items">
           <template #trigger>
             <Button>
-              Actions
+              {{ copy.withIcons.trigger }}
               <template #trailing><RiArrowDownSLine style="width:16px;height:16px;" /></template>
             </Button>
           </template>
@@ -102,27 +292,19 @@ export const WithIcons: Story = {
 }
 
 export const WithShortcuts: Story = {
-  name: 'With Shortcuts',
+  get name() {
+    return getStoryName('withShortcuts')
+  },
   render: () => ({
     components: { DropdownMenu, Button },
     setup() {
-      const items = [
-        { label: 'Undo', shortcut: '⌘Z', action: () => console.log('Undo') },
-        { label: 'Redo', shortcut: '⇧⌘Z', action: () => console.log('Redo') },
-        { separator: true, label: '' },
-        { label: 'Cut', shortcut: '⌘X', action: () => console.log('Cut') },
-        { label: 'Copy', shortcut: '⌘C', action: () => console.log('Copy') },
-        { label: 'Paste', shortcut: '⌘V', action: () => console.log('Paste') },
-        { separator: true, label: '' },
-        { label: 'Select All', shortcut: '⌘A', action: () => console.log('Select All') },
-      ]
-      return { items }
+      return { copy: useCopy() }
     },
     template: `
       <div style="padding:80px;">
-        <DropdownMenu :items="items" width="220px">
+        <DropdownMenu :items="copy.withShortcuts.items" width="220px">
           <template #trigger>
-            <Button variant="secondary">Edit</Button>
+            <Button variant="secondary">{{ copy.withShortcuts.trigger }}</Button>
           </template>
         </DropdownMenu>
       </div>
@@ -131,26 +313,19 @@ export const WithShortcuts: Story = {
 }
 
 export const WithSeparators: Story = {
-  name: 'With Separators',
+  get name() {
+    return getStoryName('withSeparators')
+  },
   render: () => ({
     components: { DropdownMenu, Button, RiMore2Fill },
     setup() {
-      const items = [
-        { label: 'View profile', action: () => console.log('View profile') },
-        { label: 'Settings', action: () => console.log('Settings') },
-        { separator: true, label: '' },
-        { label: 'Help & Support', action: () => console.log('Help') },
-        { label: 'Keyboard shortcuts', action: () => console.log('Shortcuts') },
-        { separator: true, label: '' },
-        { label: 'Sign out', action: () => console.log('Sign out') },
-      ]
-      return { items }
+      return { copy: useCopy() }
     },
     template: `
       <div style="padding:80px;">
-        <DropdownMenu :items="items" placement="bottom-end">
+        <DropdownMenu :items="copy.withSeparators.items" placement="bottom-end">
           <template #trigger>
-            <Button variant="ghost" size="sm" :iconOnly="true" aria-label="More options">
+            <Button variant="ghost" size="sm" :iconOnly="true" :aria-label="copy.withSeparators.ariaLabel">
               <template #icon><RiMore2Fill style="width:16px;height:16px;" /></template>
             </Button>
           </template>
