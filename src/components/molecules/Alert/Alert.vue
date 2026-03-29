@@ -1,13 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { cn } from '@/lib/utils'
-import {
-  RiInformationLine,
-  RiCheckboxCircleLine,
-  RiAlertLine,
-  RiErrorWarningLine,
-  RiCloseLine,
-} from '@remixicon/vue'
+import { Icons } from '@/lib/icons'
 import Button from '@/components/atoms/Button/Button.vue'
 
 type Variant = 'info' | 'success' | 'warning' | 'danger'
@@ -39,11 +33,11 @@ const colorMap: Record<Variant, { iconBg: string; iconColor: string }> = {
   danger:  { iconBg: 'var(--color-danger)',  iconColor: '#fff' },
 }
 
-const iconMap: Record<Variant, typeof RiInformationLine> = {
-  info:    RiInformationLine,
-  success: RiCheckboxCircleLine,
-  warning: RiAlertLine,
-  danger:  RiErrorWarningLine,
+const iconDataMap: Record<Variant, string> = {
+  info:    Icons.AlertInfo,
+  success: Icons.AlertSuccess,
+  warning: Icons.AlertWarning,
+  danger:  Icons.AlertDanger,
 }
 
 // ── Size scale ────────────────────────────────────────────────────────────────
@@ -80,7 +74,7 @@ const sizeScale: Record<Size, {
 
 const tokens  = computed(() => colorMap[props.variant])
 const s       = computed(() => sizeScale[props.size])
-const iconCmp = computed(() => iconMap[props.variant])
+const iconHtml = computed(() => iconDataMap[props.variant])
 </script>
 
 <template>
@@ -114,10 +108,14 @@ const iconCmp = computed(() => iconMap[props.variant])
       }"
     >
       <slot name="icon">
-        <component
-          :is="iconCmp"
-          :size="String(s.iconPx)"
-          :style="{ color: tokens.iconColor }"
+        <span
+          v-html="iconHtml"
+          :style="{
+            color: tokens.iconColor,
+            width: s.iconPx + 'px',
+            height: s.iconPx + 'px',
+            display: 'flex'
+          }"
           aria-hidden="true"
         />
       </slot>
@@ -165,7 +163,14 @@ const iconCmp = computed(() => iconMap[props.variant])
       @click="emit('dismiss')"
     >
       <template #icon>
-        <RiCloseLine :size="String(s.closeSize)" />
+        <span
+          v-html="Icons.Close"
+          :style="{
+            width: s.closeSize + 'px',
+            height: s.closeSize + 'px',
+            display: 'flex'
+          }"
+        />
       </template>
     </Button>
   </div>

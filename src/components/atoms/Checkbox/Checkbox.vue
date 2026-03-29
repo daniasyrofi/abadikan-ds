@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, useId } from 'vue'
 import { cn } from '@/lib/utils'
-import { RiCheckLine, RiSubtractLine } from '@remixicon/vue'
+import { Icons } from '@/lib/icons'
 
 type CheckboxSize  = 'sm' | 'md' | 'lg'
 type CheckboxColor = 'primary' | 'secondary' | 'neutral' | 'danger'
@@ -151,21 +151,33 @@ const focusRingVar = computed(() =>
         :style="[boxStyle, { '--focus-ring': focusRingVar }]"
         aria-hidden="true"
       >
-        <RiCheckLine
-          :size="iconSizePx[size]"
+        <span
+          v-if="isChecked"
           :class="cn(
-            'stroke-[0.5] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ease-out',
+            'absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ease-out',
             isChecked ? 'opacity-100 scale-100' : 'opacity-0 scale-50 pointer-events-none'
           )"
-          :style="{ color: 'var(--color-text-inverse)' }"
+          :style="{
+            color: 'var(--color-text-inverse)',
+            width: iconSizePx[size] + 'px',
+            height: iconSizePx[size] + 'px',
+            display: 'flex'
+          }"
+          v-html="Icons.Check"
         />
-        <RiSubtractLine
-          :size="iconSizePx[size]"
+        <span
+          v-if="isIndeterminate"
           :class="cn(
             'absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ease-out',
             isIndeterminate ? 'opacity-100 scale-100' : 'opacity-0 scale-50 pointer-events-none'
           )"
-          :style="{ color: 'var(--color-text-inverse)' }"
+          :style="{
+            color: 'var(--color-text-inverse)',
+            width: iconSizePx[size] + 'px',
+            height: iconSizePx[size] + 'px',
+            display: 'flex'
+          }"
+          v-html="Icons.Subtract"
         />
       </span>
 

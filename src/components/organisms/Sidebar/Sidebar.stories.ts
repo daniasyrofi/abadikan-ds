@@ -1,43 +1,33 @@
 import { ref } from 'vue'
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import {
-  RiDashboardLine,
-  RiInboxLine,
-  RiCalendarLine,
-  RiTeamLine,
-  RiSettingsLine,
-  RiFolderLine,
-  RiBarChartLine,
-  RiBookOpenLine,
-  RiMailLine,
-} from '@remixicon/vue'
+import { Icons } from '@/lib/icons'
 import Sidebar from './Sidebar.vue'
 import type { SidebarItem } from './Sidebar.vue'
 
 const basicItems: SidebarItem[] = [
-  { id: 'dashboard', label: 'Dashboard',    icon: RiDashboardLine },
-  { id: 'inbox',     label: 'Inbox',        icon: RiInboxLine },
-  { id: 'calendar',  label: 'Calendar',     icon: RiCalendarLine },
-  { id: 'team',      label: 'Team',         icon: RiTeamLine },
-  { id: 'settings',  label: 'Settings',     icon: RiSettingsLine },
+  { id: 'dashboard', label: 'Dashboard',    icon: Icons.Dashboard },
+  { id: 'inbox',     label: 'Inbox',        icon: Icons.Inbox },
+  { id: 'calendar',  label: 'Calendar',     icon: Icons.Calendar },
+  { id: 'team',      label: 'Team',         icon: Icons.Team },
+  { id: 'settings',  label: 'Settings',     icon: Icons.Settings },
 ]
 
 const badgeItems: SidebarItem[] = [
-  { id: 'dashboard', label: 'Dashboard',    icon: RiDashboardLine },
-  { id: 'inbox',     label: 'Inbox',        icon: RiInboxLine,    badge: 12 },
-  { id: 'calendar',  label: 'Calendar',     icon: RiCalendarLine, badge: 3 },
-  { id: 'team',      label: 'Team',         icon: RiTeamLine },
-  { id: 'mail',      label: 'Messages',     icon: RiMailLine,     badge: 'New' },
-  { id: 'settings',  label: 'Settings',     icon: RiSettingsLine },
+  { id: 'dashboard', label: 'Dashboard',    icon: Icons.Dashboard },
+  { id: 'inbox',     label: 'Inbox',        icon: Icons.Inbox,    badge: 12 },
+  { id: 'calendar',  label: 'Calendar',     icon: Icons.Calendar, badge: 3 },
+  { id: 'team',      label: 'Team',         icon: Icons.Team },
+  { id: 'mail',      label: 'Messages',     icon: Icons.Mail,     badge: 'New' },
+  { id: 'settings',  label: 'Settings',     icon: Icons.Settings },
 ]
 
 const childrenItems: SidebarItem[] = [
-  { id: 'dashboard', label: 'Dashboard',    icon: RiDashboardLine },
-  { id: 'inbox',     label: 'Inbox',        icon: RiInboxLine, badge: 5 },
+  { id: 'dashboard', label: 'Dashboard',    icon: Icons.Dashboard },
+  { id: 'inbox',     label: 'Inbox',        icon: Icons.Inbox, badge: 5 },
   {
     id: 'projects',
     label: 'Projects',
-    icon: RiFolderLine,
+    icon: Icons.Folder,
     children: [
       { id: 'proj-active',   label: 'Active' },
       { id: 'proj-archived', label: 'Archived' },
@@ -47,15 +37,15 @@ const childrenItems: SidebarItem[] = [
   {
     id: 'reports',
     label: 'Reports',
-    icon: RiBarChartLine,
+    icon: Icons.BarChart,
     children: [
       { id: 'rpt-weekly',  label: 'Weekly' },
       { id: 'rpt-monthly', label: 'Monthly' },
       { id: 'rpt-annual',  label: 'Annual' },
     ],
   },
-  { id: 'docs',     label: 'Documentation', icon: RiBookOpenLine },
-  { id: 'settings', label: 'Settings',      icon: RiSettingsLine },
+  { id: 'docs',     label: 'Documentation', icon: Icons.Book },
+  { id: 'settings', label: 'Settings',      icon: Icons.Settings },
 ]
 
 // ── Logo box helper (inline-styled to avoid broken Tailwind arbitrary values)

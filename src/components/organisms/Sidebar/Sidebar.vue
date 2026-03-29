@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { cn } from '@/lib/utils'
-import { RiArrowLeftSLine, RiArrowRightSLine, RiArrowDownSLine } from '@remixicon/vue'
+import { Icons } from '@/lib/icons'
 
 type Width          = 'narrow' | 'default' | 'wide'
 type CollapsedWidth = 'icon-only' | 'hidden'
@@ -150,12 +150,11 @@ function hasActiveChild(item: SidebarItem): boolean {
             :title="isCollapsed ? item.label : undefined"
             @click="handleItemClick(item)"
           >
-            <!-- Icon -->
-            <component
+            <span
               v-if="item.icon"
-              :is="item.icon"
-              class="size-5 shrink-0"
+              class="size-5 shrink-0 flex items-center justify-center transition-all duration-300"
               aria-hidden="true"
+              v-html="typeof item.icon === 'string' ? item.icon : ''"
             />
 
             <!-- Label -->
@@ -178,14 +177,14 @@ function hasActiveChild(item: SidebarItem): boolean {
               {{ item.badge }}
             </span>
 
-            <!-- Chevron for children -->
-            <RiArrowDownSLine
+            <span
               v-if="item.children?.length && !isCollapsed"
               :class="cn(
-                'size-4 shrink-0 transition-transform duration-[--duration-fast]',
+                'size-4 shrink-0 transition-transform duration-[--duration-fast] flex items-center justify-center',
                 isGroupExpanded(item.id) && 'rotate-180',
               )"
               aria-hidden="true"
+              v-html="Icons.ArrowDown"
             />
           </button>
 
@@ -208,11 +207,11 @@ function hasActiveChild(item: SidebarItem): boolean {
                 )"
                 @click="emit('itemClick', child)"
               >
-                <component
+                <span
                   v-if="child.icon"
-                  :is="child.icon"
-                  class="size-4 shrink-0"
+                  class="size-4 shrink-0 flex items-center justify-center transition-all duration-300 opacity-80"
                   aria-hidden="true"
+                  v-html="typeof child.icon === 'string' ? child.icon : ''"
                 />
                 <span class="flex-1 truncate text-left">{{ child.label }}</span>
                 <span
@@ -259,8 +258,16 @@ function hasActiveChild(item: SidebarItem): boolean {
         :aria-label="isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'"
         @click="toggleCollapse"
       >
-        <RiArrowLeftSLine  v-if="!isCollapsed" class="size-5" />
-        <RiArrowRightSLine v-else              class="size-5" />
+        <span
+          v-if="!isCollapsed"
+          class="size-5 flex items-center justify-center"
+          v-html="Icons.ArrowLeft"
+        />
+        <span
+          v-else
+          class="size-5 flex items-center justify-center"
+          v-html="Icons.ArrowRight"
+        />
       </button>
     </div>
   </aside>

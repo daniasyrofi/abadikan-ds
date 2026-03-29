@@ -5,7 +5,7 @@ const meta: Meta<typeof Divider> = {
   title: 'Atoms/Divider',
   component: Divider,
   tags: ['autodocs'],
-  parameters: { layout: 'centered' },
+  parameters: { layout: 'centered', icon: 'subtract' },
   argTypes: {
     orientation:   { control: 'select', options: ['horizontal', 'vertical'] },
     variant:       { control: 'select', options: ['solid', 'dashed', 'dotted'] },

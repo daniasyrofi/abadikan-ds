@@ -5,7 +5,7 @@ const meta: Meta<typeof Avatar> = {
   title: 'Atoms/Avatar',
   component: Avatar,
   tags: ['autodocs'],
-  parameters: { layout: 'centered' },
+  parameters: { layout: 'centered', icon: 'user' },
   argTypes: {
     size:         { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl', '2xl'] },
     shape:        { control: 'select', options: ['circle', 'rounded', 'square'] },

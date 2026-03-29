@@ -15,7 +15,7 @@ const meta: Meta<typeof Icon> = {
   title: 'Atoms/Icon',
   component: Icon,
   tags: ['autodocs'],
-  parameters: { layout: 'centered' },
+  parameters: { layout: 'centered', icon: 'component' },
   argTypes: {
     name:  { control: 'text' },
     size:  { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },

@@ -6,7 +6,7 @@ const meta: Meta<typeof Textarea> = {
   title: 'Atoms/Textarea',
   component: Textarea,
   tags: ['autodocs'],
-  parameters: { layout: 'centered' },
+  parameters: { layout: 'centered', icon: 'docList' },
   argTypes: {
     modelValue:  { control: 'text' },
     size:        { control: 'inline-radio', options: ['sm', 'md', 'lg'] },

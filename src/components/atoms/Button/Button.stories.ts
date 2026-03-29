@@ -9,7 +9,7 @@ const meta: Meta<typeof Button> = {
   title: 'Atoms/Button',
   component: Button,
   tags: ['autodocs'],
-  parameters: { layout: 'centered' },
+  parameters: { layout: 'centered', icon: 'button' },
   argTypes: {
     variant:   { control: 'select',  options: ['default', 'primary', 'secondary', 'outline', 'ghost', 'danger', 'link'] },
     size:      { control: 'select',  options: ['xs', 'sm', 'md', 'lg', 'xl'] },

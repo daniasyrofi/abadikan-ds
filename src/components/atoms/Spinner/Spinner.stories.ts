@@ -7,7 +7,7 @@ const meta: Meta<typeof Spinner> = {
   title: 'Atoms/Spinner',
   component: Spinner,
   tags: ['autodocs'],
-  parameters: { layout: 'centered' },
+  parameters: { layout: 'centered', icon: 'sync' },
   argTypes: {
     size:  { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
     color: { control: 'color' },

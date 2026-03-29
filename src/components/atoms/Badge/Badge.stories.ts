@@ -11,7 +11,7 @@ const meta: Meta<typeof Badge> = {
   title: 'Atoms/Badge',
   component: Badge,
   tags: ['autodocs'],
-  parameters: { layout: 'centered' },
+  parameters: { layout: 'centered', icon: 'bookmark' },
   argTypes: {
     variant:    { control: 'select',  options: [...variants] },
     size:       { control: 'select',  options: [...sizes] },

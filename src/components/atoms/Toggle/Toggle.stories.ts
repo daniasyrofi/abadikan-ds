@@ -6,7 +6,7 @@ const meta: Meta<typeof Toggle> = {
   title: 'Atoms/Toggle',
   component: Toggle,
   tags: ['autodocs'],
-  parameters: { layout: 'centered' },
+  parameters: { layout: 'centered', icon: 'switchAlt' },
   argTypes: {
     modelValue: { control: 'boolean' },
     size:       { control: 'select', options: ['sm', 'md', 'lg'] },

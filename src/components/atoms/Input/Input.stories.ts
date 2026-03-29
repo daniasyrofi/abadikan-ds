@@ -10,7 +10,7 @@ const meta: Meta<typeof Input> = {
   title: 'Atoms/Input',
   component: Input,
   tags: ['autodocs'],
-  parameters: { layout: 'centered' },
+  parameters: { layout: 'centered', icon: 'form' },
   argTypes: {
     modelValue:  { control: 'text' },
     type:        { control: 'select', options: ['text', 'email', 'password', 'number', 'tel', 'url', 'search'] },

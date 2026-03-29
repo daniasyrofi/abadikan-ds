@@ -6,7 +6,7 @@ const meta: Meta<typeof Radio> = {
   title: 'Atoms/Radio',
   component: Radio,
   tags: ['autodocs'],
-  parameters: { layout: 'centered' },
+  parameters: { layout: 'centered', icon: 'circleHollow' },
   argTypes: {
     size:     { control: 'select', options: ['sm', 'md', 'lg'] },
     disabled: { control: 'boolean' },

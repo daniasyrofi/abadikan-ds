@@ -6,7 +6,7 @@ const meta: Meta<typeof Checkbox> = {
   title: 'Atoms/Checkbox',
   component: Checkbox,
   tags: ['autodocs'],
-  parameters: { layout: 'centered' },
+  parameters: { layout: 'centered', icon: 'check' },
   argTypes: {
     size:        { control: 'select',  options: ['sm', 'md', 'lg'] },
     disabled:    { control: 'boolean' },
