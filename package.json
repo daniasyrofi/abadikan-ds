@@ -16,6 +16,7 @@
     "@remixicon/vue": "^4.9.0",
     "@tailwindcss/vite": "^4.2.2",
     "clsx": "^2.1.1",
+    "remixicon": "^4.9.1",
     "tailwindcss": "^4.2.2",
     "vue": "^3.5.30",
     "vue-i18n": "^9.14.5"
