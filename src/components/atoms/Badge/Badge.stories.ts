@@ -222,7 +222,7 @@ const copyMap: Record<Locale, Copy> = {
       typeLabels: {
         variant: 'Varian',
         size: 'Ukuran',
-        badgeStyle: 'GayaLencana',
+        badgeStyle: 'Gaya Lencana',
         boolean: 'boolean',
         event: 'event',
         slot: 'slot',

@@ -73,8 +73,8 @@ const localeText: Record<Locale, LocaleText> = {
     sizeSectionInitials: 'Initials',
     sizeSectionIcon: 'Icon',
     statusLabels: {
-      online: 'Online',
-      offline: 'Offline',
+      online: 'Daring',
+      offline: 'Luring',
       busy: 'Busy',
       away: 'Away',
     },
@@ -150,8 +150,8 @@ const localeText: Record<Locale, LocaleText> = {
     sizeSectionInitials: 'Inisial',
     sizeSectionIcon: 'Ikon',
     statusLabels: {
-      online: 'Online',
-      offline: 'Offline',
+      online: 'Daring',
+      offline: 'Luring',
       busy: 'Sibuk',
       away: 'Pergi',
     },
@@ -193,9 +193,9 @@ const localeText: Record<Locale, LocaleText> = {
         name: 'Nama untuk menghasilkan inisial',
       },
       typeLabels: {
-        size: 'UkuranAvatar',
-        shape: 'BentukAvatar',
-        status: 'StatusAvatar',
+        size: 'Ukuran Avatar',
+        shape: 'Bentuk Avatar',
+        status: 'Status Avatar',
         text: 'string',
       },
       sizeLabels: {
@@ -213,8 +213,8 @@ const localeText: Record<Locale, LocaleText> = {
       },
       statusLabels: {
         none: 'Tidak ada',
-        online: 'Online',
-        offline: 'Offline',
+        online: 'Daring',
+        offline: 'Luring',
         busy: 'Sibuk',
         away: 'Pergi',
       },
