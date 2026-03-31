@@ -243,15 +243,37 @@ export const Default: Story = {
     template: `
       <div>
         <Button @click="open = true">{{ copy.default.trigger }}</Button>
-        <Modal v-bind="args" v-model="open">
+        <Modal v-bind="args" v-model="open" size="md">
           <template #title>{{ copy.default.title }}</template>
           <template #description>{{ copy.default.description }}</template>
-          <p style="font-size:14px;color:var(--color-text-secondary);">
-            {{ copy.default.body }}
-          </p>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <label style="font-size:13px;font-weight:600;color:var(--color-text-primary);">Start by</label>
+              <div style="height:38px;border:1px solid var(--color-border);border-radius:10px;background:var(--color-surface);padding:0 12px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                <span style="font-size:14px;color:var(--color-text-primary);">Taking new captures</span>
+                <span style="font-size:12px;color:var(--color-text-tertiary);">▾</span>
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <label style="font-size:13px;font-weight:600;color:var(--color-text-primary);">App URL</label>
+              <div style="height:38px;border:1px solid var(--color-border);border-radius:10px;background:var(--color-surface);padding:0 12px;display:flex;align-items:center;">
+                <span style="font-size:14px;color:var(--color-text-primary);">https://mobbin.com/</span>
+              </div>
+            </div>
+
+            <div style="border:1px solid var(--color-border);border-radius:12px;padding:12px;background:var(--color-bg);">
+              <p style="font-size:14px;font-weight:600;color:var(--color-text-primary);margin:0 0 8px;">First time instructions</p>
+              <ol style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;">
+                <li style="font-size:13px;color:var(--color-text-secondary);line-height:1.4;">Open your app URL in a new tab.</li>
+                <li style="font-size:13px;color:var(--color-text-secondary);line-height:1.4;">Capture the key screens for this flow.</li>
+                <li style="font-size:13px;color:var(--color-text-secondary);line-height:1.4;">Click finish once done.</li>
+              </ol>
+            </div>
+          </div>
           <template #footer>
-            <Button variant="secondary" @click="open = false">{{ $t('common.cancel') }}</Button>
-            <Button @click="open = false">{{ $t('common.confirm') }}</Button>
+            <Button variant="ghost" @click="open = false">{{ $t('common.cancel') }}</Button>
+            <Button @click="open = false">Start capturing</Button>
           </template>
         </Modal>
       </div>
@@ -274,7 +296,7 @@ export const AllSizes: Story = {
         <Button
           v-for="size in ['sm', 'md', 'lg', 'xl', 'full']"
           :key="size"
-          variant="secondary"
+          variant="outline"
           @click="activeSize = size"
         >
           {{ copy.sizes.open }} {{ size.toUpperCase() }}
@@ -288,7 +310,7 @@ export const AllSizes: Story = {
         >
           <template #title>{{ size.toUpperCase() }} {{ copy.sizes.titleSuffix }}</template>
           <template #description>{{ copy.sizes.description.replace('{size}', size) }}</template>
-          <p style="font-size:14px;color:var(--color-text-secondary);">{{ copy.sizes.body.replace('{size}', size) }}</p>
+          <p style="font-size:14px;color:var(--color-text-secondary);margin:0;line-height:1.6;">{{ copy.sizes.body.replace('{size}', size) }}</p>
           <template #footer>
             <Button @click="activeSize = null">{{ $t('common.close') }}</Button>
           </template>
@@ -320,7 +342,7 @@ export const WithForm: Story = {
             <Textarea :label="copy.form.bio" :rows="3" modelValue="Product designer with 8 years of experience." />
           </form>
           <template #footer>
-            <Button variant="secondary" @click="open = false">{{ $t('common.cancel') }}</Button>
+            <Button variant="ghost" @click="open = false">{{ $t('common.cancel') }}</Button>
             <Button @click="open = false">{{ $t('common.save') }}</Button>
           </template>
         </Modal>
@@ -353,10 +375,10 @@ export const PreventClose: Story = {
               v-model="confirmed"
               style="margin-top:2px;accent-color:var(--color-danger);"
             />
-            <label for="confirm-check" style="font-size:14px;color:var(--color-text-secondary);">{{ copy.preventClose.checkbox }}</label>
+            <label for="confirm-check" style="font-size:14px;color:var(--color-text-secondary);line-height:1.5;">{{ copy.preventClose.checkbox }}</label>
           </div>
           <template #footer>
-            <Button variant="secondary" @click="open = false">{{ $t('common.cancel') }}</Button>
+            <Button variant="ghost" @click="open = false">{{ $t('common.cancel') }}</Button>
             <Button variant="danger" :disabled="!confirmed" @click="open = false">{{ $t('common.delete') }}</Button>
           </template>
         </Modal>
@@ -378,14 +400,14 @@ export const ScrollBehavior: Story = {
     },
     template: `
       <div style="display:flex;gap:12px;">
-        <Button variant="secondary" @click="insideOpen = true">{{ copy.scroll.inside }}</Button>
-        <Button variant="secondary" @click="outsideOpen = true">{{ copy.scroll.outside }}</Button>
+        <Button variant="outline" @click="insideOpen = true">{{ copy.scroll.inside }}</Button>
+        <Button variant="outline" @click="outsideOpen = true">{{ copy.scroll.outside }}</Button>
 
         <Modal v-model="insideOpen" scroll-behavior="inside">
           <template #title>{{ copy.scroll.insideTitle }}</template>
           <template #description>{{ copy.scroll.insideDescription }}</template>
           <div style="display:flex;flex-direction:column;gap:12px;">
-            <p v-for="i in 20" :key="i" style="font-size:14px;color:var(--color-text-secondary);">
+            <p v-for="i in 20" :key="i" style="font-size:14px;color:var(--color-text-secondary);margin:0;line-height:1.6;">
               Paragraph {{ i }} — Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
@@ -399,7 +421,7 @@ export const ScrollBehavior: Story = {
           <template #title>{{ copy.scroll.outsideTitle }}</template>
           <template #description>{{ copy.scroll.outsideDescription }}</template>
           <div style="display:flex;flex-direction:column;gap:12px;">
-            <p v-for="i in 20" :key="i" style="font-size:14px;color:var(--color-text-secondary);">
+            <p v-for="i in 20" :key="i" style="font-size:14px;color:var(--color-text-secondary);margin:0;line-height:1.6;">
               Paragraph {{ i }} — Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>

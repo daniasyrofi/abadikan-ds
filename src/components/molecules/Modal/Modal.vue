@@ -188,7 +188,7 @@ const panelClasses = computed(() =>
             <!-- Header -->
             <div
               v-if="$slots.header || $slots.title || closable"
-              class="flex items-start gap-4 px-6 pt-6 pb-4 relative"
+              class="flex items-start gap-4 px-6 pt-6 pb-3 relative border-b border-[--color-border]"
             >
               <slot name="header">
                 <div class="flex-1 min-w-0 flex flex-col gap-1">
@@ -230,8 +230,9 @@ const panelClasses = computed(() =>
             <!-- Body -->
             <div
               :class="cn(
-                'p-6 flex-1 min-h-0',
-                scrollBehavior === 'inside' && 'overflow-y-auto',
+                'px-6 pb-6',
+                ($slots.header || $slots.title || $slots.description) ? 'pt-3' : 'pt-6',
+                scrollBehavior === 'inside' && 'max-h-[60vh] overflow-y-auto',
               )"
             >
               <slot />
@@ -240,7 +241,7 @@ const panelClasses = computed(() =>
             <!-- Footer -->
             <div
               v-if="$slots.footer"
-              class="flex items-center justify-end gap-3 p-6 pt-0"
+              class="flex items-center justify-end gap-3 px-6 py-3 border-t border-[--color-border] bg-[--color-bg-subtle]"
             >
               <slot name="footer" />
             </div>

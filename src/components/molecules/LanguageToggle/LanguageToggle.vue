@@ -49,14 +49,13 @@ const btnSize: Record<string, string> = {
       role="radio"
       :aria-checked="locale === loc"
       :class="cn(
-        'inline-flex items-center justify-center rounded-full',
+        'ds-lang-btn inline-flex items-center justify-center rounded-full',
         'font-semibold uppercase tracking-wider',
-        'transition-all duration-[--duration-normal] ease-[--ease-out]',
         'cursor-pointer select-none',
         'focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[--color-primary]',
         btnSize[props.size],
         locale === loc
-          ? 'ds-lang-btn--active bg-[--color-surface] text-[--color-text-primary]'
+          ? 'ds-lang-btn--active'
           : 'text-[--color-text-secondary] hover:text-[--color-text-primary] hover:bg-[--color-neutral-light]',
       )"
       @click="setLocale(loc)"
@@ -70,8 +69,51 @@ const btnSize: Record<string, string> = {
 .ds-lang-toggle {
   background-color: var(--color-neutral-light);
   box-shadow: var(--shadow-sm), inset 0 0 0 1px var(--color-border);
+  position: relative;
+  isolation: isolate;
 }
 .ds-lang-btn--active {
-  box-shadow: 0 1px 2px oklch(0.20 0 0 / 0.06), inset 0 0 0 1px var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  box-shadow:
+    0 6px 12px -10px oklch(0.2 0 0 / 0.25),
+    0 1px 2px oklch(0.2 0 0 / 0.10),
+    inset 0 0 0 1px var(--color-border);
+  animation: ds-lang-activate 220ms var(--ease-out);
+}
+
+.ds-lang-btn {
+  position: relative;
+  z-index: 1;
+  will-change: background-color, color, box-shadow, filter;
+  transition:
+    background-color var(--duration-normal) var(--ease-out),
+    color var(--duration-normal) var(--ease-out),
+    box-shadow 220ms var(--ease-out),
+    filter 220ms var(--ease-out);
+}
+
+.ds-lang-btn:hover {
+  filter: saturate(1.03);
+}
+
+.ds-lang-btn:active {
+  filter: brightness(0.98);
+}
+
+@keyframes ds-lang-activate {
+  0% {
+    box-shadow:
+      0 0 0 0 oklch(0.2 0 0 / 0),
+      inset 0 0 0 1px var(--color-border);
+    filter: saturate(0.95);
+  }
+  100% {
+    box-shadow:
+      0 6px 12px -10px oklch(0.2 0 0 / 0.25),
+      0 1px 2px oklch(0.2 0 0 / 0.10),
+      inset 0 0 0 1px var(--color-border);
+    filter: saturate(1);
+  }
 }
 </style>
