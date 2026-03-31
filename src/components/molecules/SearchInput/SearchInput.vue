@@ -7,12 +7,19 @@ import Spinner from '@/components/atoms/Spinner/Spinner.vue'
 type SearchSize = 'sm' | 'md' | 'lg'
 
 interface Props {
+  /** The search query string. Supports v-model. */
   modelValue:  string
+  /** Visual size of the input. @default 'md' */
   size?:       SearchSize
+  /** Text displayed when input is empty. @default 'Search...' */
   placeholder?: string
+  /** Shows a loading spinner. @default false */
   loading?:    boolean
+  /** Shows a clear button when input is not empty. @default true */
   clearable?:  boolean
+  /** Delay in ms before emitting 'search' event after typing. @default 300 */
   debounce?:   number
+  /** Disables the input. @default false */
   disabled?:   boolean
 }
 

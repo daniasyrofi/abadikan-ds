@@ -4,7 +4,9 @@ import { cn } from '@/lib/utils'
 type Size = 'sm' | 'md' | 'lg'
 
 interface Props {
+  /** Visual size of all form elements in the group. @default 'md' */
   size?: Size
+  /** Sets error styling for the entire input group. @default false */
   error?: boolean
 }
 

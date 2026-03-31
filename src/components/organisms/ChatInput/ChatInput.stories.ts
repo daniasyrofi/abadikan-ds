@@ -180,6 +180,26 @@ const buildArgTypes = (locale: Locale): NonNullable<Meta<typeof ChatInput>['argT
   }
 }
 
+// ── Canvas decorator ──────────────────────────────────────────────────────────
+const canvas = () => ({
+  template: `
+    <div style="
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 48px 32px;
+      background-color: #eceae4;
+      background-image: radial-gradient(circle, rgba(0,0,0,0.11) 1px, transparent 1px);
+      background-size: 22px 22px;
+    ">
+      <div style="width:100%;max-width:580px;">
+        <story />
+      </div>
+    </div>
+  `,
+})
+
 const meta: Meta<typeof ChatInput> = {
   title: 'Organisms/ChatInput',
   component: ChatInput,
@@ -193,14 +213,9 @@ const meta: Meta<typeof ChatInput> = {
       }
       return story()
     },
-    () => ({
-      template: `
-        <div style="max-width:580px;margin:0 auto;padding:24px;">
-          <story />
-        </div>
-      `,
-    }),
+    canvas,
   ],
+  parameters: { layout: 'fullscreen' },
   argTypes: {
     ...buildArgTypes('en'),
   },

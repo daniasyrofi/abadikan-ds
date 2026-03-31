@@ -6,11 +6,17 @@ type Placement = 'top' | 'bottom' | 'left' | 'right'
 type Trigger   = 'hover' | 'click' | 'focus'
 
 interface Props {
+  /** Text content of the tooltip. Overridden by the 'content' slot. */
   content?:   string
+  /** Preferred placement of the tooltip relative to its trigger. @default 'top' */
   placement?: Placement
+  /** Interaction that triggers the tooltip to appear. @default 'hover' */
   trigger?:   Trigger
+  /** Delay in ms before the tooltip appears on hover. @default 200 */
   delay?:     number
+  /** Maximum CSS width before text wraps. @default '200px' */
   maxWidth?:  string
+  /** Shows a directional arrow pointing to the trigger. @default true */
   arrow?:     boolean
 }
 

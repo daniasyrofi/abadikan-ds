@@ -10,15 +10,25 @@ import {
 type Size = 'sm' | 'md' | 'lg'
 
 interface Props {
+  /** The selected date string in YYYY-MM-DD format. Supports v-model. */
   modelValue?: string | null
+  /** Selection mode (currently only 'single' is fully supported). @default 'single' */
   mode?: 'single' | 'range'
+  /** The minimum selectable date in YYYY-MM-DD format. */
   minDate?: string
+  /** The maximum selectable date in YYYY-MM-DD format. */
   maxDate?: string
+  /** Visual display format of the date. @default 'dd/MM/yyyy' */
   format?: string
+  /** Text to display when no date is selected. @default 'Select date' */
   placeholder?: string
+  /** Visual size of the input. @default 'md' */
   size?: Size
+  /** Label text displayed above the input. */
   label?: string
+  /** Error message displayed beneath the input. */
   error?: string
+  /** Disables the datepicker. @default false */
   disabled?: boolean
 }
 

@@ -6,12 +6,19 @@ import { RiAddLine, RiSubtractLine } from '@remixicon/vue'
 type Size = 'sm' | 'md' | 'lg'
 
 interface Props {
+  /** The current numeric value. Supports v-model. */
   modelValue: number
+  /** Minimum allowed value. @default 0 */
   min?: number
+  /** Maximum allowed value. @default Infinity */
   max?: number
+  /** Number to increment/decrement by. @default 1 */
   step?: number
+  /** Visual size of the input. @default 'md' */
   size?: Size
+  /** Disables the input and buttons. @default false */
   disabled?: boolean
+  /** Optional label text displayed above the input. */
   label?: string
 }
 

@@ -24,9 +24,13 @@ import { provide, ref, watch, computed } from 'vue'
 import { cn } from '@/lib/utils'
 
 interface Props {
+  /** The value of the currently active tab. Supports v-model. */
   modelValue:   string
+  /** Visual style variant. @default 'line' */
   variant?:     TabsVariant
+  /** Layout orientation of the tabs. @default 'horizontal' */
   orientation?: TabsOrientation
+  /** Visual size of the tab triggers. @default 'md' */
   size?:        TabsSize
 }
 

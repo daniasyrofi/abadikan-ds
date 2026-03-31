@@ -7,20 +7,32 @@ type Width          = 'narrow' | 'default' | 'wide'
 type CollapsedWidth = 'icon-only' | 'hidden'
 
 export interface SidebarItem {
+  /** Unique identifier for the item. */
   id:        string
+  /** Display label text. */
   label:     string
+  /** SVG string or icon component rendered beside the label. */
   icon?:     any
+  /** Route path for navigation. */
   route?:    string
+  /** Badge text or number displayed next to the label. */
   badge?:    string | number
+  /** Nested child items (renders as an expandable group). */
   children?: SidebarItem[]
 }
 
 interface Props {
+  /** Controls the collapsed state. Supports v-model. @default false */
   modelValue?:     boolean
+  /** Shows the collapse/expand toggle at the bottom of the sidebar. @default true */
   collapsible?:    boolean
+  /** Expanded width of the sidebar. @default 'default' */
   width?:          Width
+  /** Width when collapsed: icon-only strip or fully hidden. @default 'icon-only' */
   collapsedWidth?: CollapsedWidth
+  /** Array of navigation items to render. @default [] */
   items?:          SidebarItem[]
+  /** The `id` of the currently active navigation item. */
   activeId?:       string
 }
 

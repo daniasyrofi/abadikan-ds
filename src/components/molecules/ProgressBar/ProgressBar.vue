@@ -5,11 +5,17 @@ type Variant = 'primary' | 'success' | 'warning' | 'danger' | 'info'
 type Size = 'sm' | 'md' | 'lg'
 
 interface Props {
+  /** The current progress percentage (0-100). @default 0 */
   value?: number
+  /** Visual thickness of the progress bar. @default 'md' */
   size?: Size
+  /** Semantic color variant. @default 'primary' */
   variant?: Variant
+  /** Shows an animated indeterminate state instead of actual progress. @default false */
   indeterminate?: boolean
+  /** Text label displayed above the progress bar. */
   label?: string
+  /** Shows the numeric percentage alongside the label. @default false */
   showValue?: boolean
 }
 

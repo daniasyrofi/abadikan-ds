@@ -191,6 +191,13 @@ const meta: Meta<typeof NumberInput> = {
     disabled:   { control: 'boolean' },
     label:      { control: 'text' },
   },
+  args: {
+    modelValue: 1,
+    min:        0,
+    step:       1,
+    size:       'md',
+    disabled:   false,
+  },
 }
 export default meta
 type Story = StoryObj<typeof NumberInput>

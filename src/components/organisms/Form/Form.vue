@@ -6,7 +6,9 @@ type Layout = 'stack' | 'grid' | 'inline'
 type Gap    = 'sm' | 'md' | 'lg'
 
 interface Props {
+  /** Form layout arrangement: stack (vertical), grid (responsive 2-col), or inline (horizontal wrap). @default 'stack' */
   layout?: Layout
+  /** Spacing between form fields. @default 'md' */
   gap?:    Gap
 }
 

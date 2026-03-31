@@ -3,6 +3,10 @@ import { useI18n } from 'vue-i18n'
 import { cn } from '@/lib/utils'
 
 interface Props {
+  /**
+   * Size of the language toggle buttons.
+   * @default 'md'
+   */
   size?: 'sm' | 'md' | 'lg'
 }
 

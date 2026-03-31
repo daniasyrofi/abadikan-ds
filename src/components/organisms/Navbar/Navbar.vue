@@ -5,9 +5,13 @@ import { cn } from '@/lib/utils'
 type Variant = 'default' | 'transparent' | 'colored'
 
 interface Props {
+  /** Brand or page title shown in the start slot. */
   title?: string
+  /** Visual style variant of the navbar. @default 'default' */
   variant?: Variant
+  /** Pins the navbar to the top of its scroll container. @default false */
   sticky?: boolean
+  /** Shows a bottom border (only applies to the 'default' variant). @default true */
   border?: boolean
 }
 

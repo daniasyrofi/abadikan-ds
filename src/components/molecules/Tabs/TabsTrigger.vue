@@ -4,7 +4,9 @@ import { cn } from '@/lib/utils'
 import { TABS_KEY, type TabsContext } from './Tabs.vue'
 
 interface Props {
+  /** The unique value associating this trigger with its content panel. */
   value:     string
+  /** Disables the tab trigger. @default false */
   disabled?: boolean
 }
 

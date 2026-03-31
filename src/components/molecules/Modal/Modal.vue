@@ -8,11 +8,17 @@ type ModalSize       = 'sm' | 'md' | 'lg' | 'xl' | 'full'
 type ScrollBehavior  = 'inside' | 'outside'
 
 interface Props {
+  /** Controls the open/closed state of the modal. Supports v-model. */
   modelValue:      boolean
+  /** Visual size/max-width of the modal. @default 'md' */
   size?:           ModalSize
+  /** Disables the close button when false. @default true */
   closable?:       boolean
+  /** Closes the modal when clicking the backdrop overlay. @default true */
   closeOnOverlay?: boolean
+  /** Prevents closing the modal through any user action (escape, overlay, close button). @default false */
   preventClose?:   boolean
+  /** Determines if scrolling happens inside the modal panel or on the page body. @default 'inside' */
   scrollBehavior?: ScrollBehavior
 }
 

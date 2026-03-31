@@ -4,9 +4,13 @@ import { cn } from '@/lib/utils'
 import { RiArrowDownSLine } from '@remixicon/vue'
 
 interface Props {
+  /** The unique identifier for this item. */
   value: string
+  /** The main title displayed on the trigger. */
   title: string
+  /** Secondary text displayed below the title. */
   subtitle?: string
+  /** Disables the item, preventing it from being toggled. @default false */
   disabled?: boolean
 }
 

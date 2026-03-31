@@ -5,10 +5,15 @@ import { RiSendPlaneFill } from '@remixicon/vue'
 import { Spinner } from '@/components/atoms/Spinner'
 
 interface Props {
+  /** The current text content of the input. Supports v-model. @default '' */
   modelValue?: string
+  /** Placeholder text shown when the input is empty. @default 'Type a message...' */
   placeholder?: string
+  /** Disables editing and submission. @default false */
   disabled?: boolean
+  /** Maximum number of visible text rows before scrolling. @default 5 */
   maxRows?: number
+  /** Shows a loading spinner on the send button, preventing submission. @default false */
   loading?: boolean
 }
 

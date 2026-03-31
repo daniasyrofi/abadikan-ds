@@ -7,11 +7,17 @@ type Padding  = 'none' | 'sm' | 'md' | 'lg'
 type Radius   = 'sm' | 'md' | 'lg' | 'xl'
 
 interface Props {
+  /** Stylistic variant of the card. @default 'default' */
   variant?:   Variant
+  /** Internal padding layout. @default 'md' */
   padding?:   Padding
+  /** Border radius scale. @default 'lg' */
   radius?:    Radius
+  /** Adds subtle lift effect on hover without making it interactive. @default false */
   hoverable?: boolean
+  /** Makes the card fully interactive (button role, focusable, clickable). @default false */
   clickable?: boolean
+  /** HTML element to render the card as. @default 'div' */
   as?:        string
 }
 

@@ -6,14 +6,20 @@ import Avatar from '@/components/atoms/Avatar/Avatar.vue'
 type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 interface AvatarItem {
+  /** Image source URL. */
   src?: string
+  /** Name used for fallback initials and alt text. */
   name?: string
+  /** Alt text for the image. */
   alt?: string
 }
 
 interface Props {
+  /** Array of avatar data objects. */
   avatars: AvatarItem[]
+  /** Maximum number of avatars to display before showing an overflow count. @default 5 */
   max?: number
+  /** Visual size of the avatars. @default 'md' */
   size?: AvatarSize
 }
 

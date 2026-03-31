@@ -159,11 +159,22 @@ const meta: Meta<typeof SearchInput> = {
   decorators: [withCanvas],
   parameters: { layout: 'fullscreen' },
   argTypes: {
-    size:      { control: 'select', options: ['sm', 'md', 'lg'] },
-    loading:   { control: 'boolean' },
-    clearable: { control: 'boolean' },
-    disabled:  { control: 'boolean' },
-    debounce:  { control: 'number' },
+    modelValue:  { control: 'text' },
+    size:        { control: 'select', options: ['sm', 'md', 'lg'] },
+    placeholder: { control: 'text' },
+    loading:     { control: 'boolean' },
+    clearable:   { control: 'boolean' },
+    debounce:    { control: 'number' },
+    disabled:    { control: 'boolean' },
+  },
+  args: {
+    modelValue:  '',
+    size:        'md',
+    placeholder: 'Search...',
+    loading:     false,
+    clearable:   true,
+    debounce:    300,
+    disabled:    false,
   },
 }
 export default meta
@@ -315,7 +326,7 @@ export const InToolbar: Story = {
           border:1px solid var(--color-border);padding:48px;text-align:center;
         ">
           <p style="font-size:13px;color:var(--color-text-tertiary);">
-            {{ q ? copy.toolbar.searching + ' "' + q + '"…' : copy.toolbar.empty }}
+            {{ q ? copy.search.searching + ' "' + q + '"…' : copy.toolbar.empty }}
           </p>
         </div>
       </div>

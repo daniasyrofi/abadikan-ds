@@ -5,13 +5,18 @@ import { RiCheckLine } from '@remixicon/vue'
 type Variant = 'horizontal' | 'vertical'
 
 interface Step {
+  /** Primary title of the step. */
   title: string
+  /** Optional secondary description text. */
   description?: string
 }
 
 interface Props {
+  /** Array of step definitions. */
   steps: Step[]
+  /** The 0-based index of the currently active step. @default 0 */
   activeStep?: number
+  /** Visual layout direction of the stepper. @default 'horizontal' */
   variant?: Variant
 }
 

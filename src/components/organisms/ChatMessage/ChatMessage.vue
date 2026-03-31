@@ -8,13 +8,21 @@ type Role = 'user' | 'assistant'
 type Status = 'sending' | 'sent' | 'error'
 
 interface Props {
+  /** Whether this is a user or assistant message. */
   role: Role
+  /** The text content of the message. */
   content: string
+  /** Timestamp used to display the message time. */
   timestamp: Date
+  /** Delivery status of the message. @default 'sent' */
   status?: Status
+  /** URL for the sender's avatar image. */
   avatar?: string
+  /** Display name shown beneath the message bubble. */
   userName?: string
+  /** Shows the animated typing indicator instead of content. @default false */
   isTyping?: boolean
+  /** Shows a copy-to-clipboard action button on hover. @default false */
   actions?: boolean
 }
 

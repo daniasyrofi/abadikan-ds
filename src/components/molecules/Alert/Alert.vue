@@ -8,10 +8,15 @@ type Variant = 'info' | 'success' | 'warning' | 'danger'
 type Size    = 'sm' | 'md' | 'lg'
 
 interface Props {
+  /** The semantic variant/color scheme of the alert. @default 'info' */
   variant?:     Variant
+  /** Visual size of the alert elements. @default 'md' */
   size?:        Size
+  /** The prominent title text. */
   title?:       string
+  /** Shows the variant-specific icon. @default true */
   icon?:        boolean
+  /** Shows a close button to dismiss the alert. @default false */
   dismissible?: boolean
 }
 

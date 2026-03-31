@@ -15,16 +15,27 @@ interface Option {
 }
 
 interface Props {
+  /** The selected value or array of values. Supports v-model. */
   modelValue:  string | string[]
+  /** Array of option items to choose from. */
   options:     Option[]
+  /** Enables selecting multiple values. @default false */
   multiple?:   boolean
+  /** Visual size of the select trigger and dropdown items. @default 'md' */
   size?:       SelectSize
+  /** Label text displayed above the select. */
   label?:      string
+  /** Displayed when no value is selected. @default 'Select...' */
   placeholder?: string
+  /** Subtitle or hint text displayed below the element. */
   helperText?: string
+  /** Error message to display (also applies error styling). */
   error?:      string
+  /** Shows a search input inside the dropdown to filter options. @default false */
   searchable?: boolean
+  /** Shows a button to clear the current selection. @default false */
   clearable?:  boolean
+  /** Disables the select component. @default false */
   disabled?:   boolean
 }
 

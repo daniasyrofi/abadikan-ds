@@ -8,11 +8,17 @@ type Placement =
 type Trigger = 'click' | 'hover' | 'manual'
 
 interface Props {
+  /** Interaction that triggers the popover to open. @default 'click' */
   trigger?: Trigger
+  /** Preferred position relative to the trigger. @default 'bottom' */
   placement?: Placement
+  /** CSS width of the popover content. @default 'auto' */
   width?: 'auto' | string
+  /** Shows a directional arrow pointing to the trigger. @default true */
   arrow?: boolean
+  /** Closes the popover when clicking outside of it. @default true */
   closeOnClickOutside?: boolean
+  /** Manually control the open state (works with trigger="manual"). Supports v-model. */
   modelValue?: boolean
 }
 

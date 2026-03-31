@@ -5,18 +5,28 @@ import { cn } from '@/lib/utils'
 type Placement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end'
 
 export interface DropdownMenuItem {
+  /** Text label of the menu item. */
   label: string
+  /** Component or icon element to render on the left. */
   icon?: any
+  /** Shortcut text displayed on the right. */
   shortcut?: string
+  /** Disables the item. */
   disabled?: boolean
+  /** Renders a divider instead of an item. */
   separator?: boolean
+  /** Semantic context variant, e.g., 'danger' for destructive actions. */
   tone?: 'default' | 'danger'
+  /** Callback fired when the item is selected. */
   action?: () => void
 }
 
 interface Props {
+  /** Array of menu items or separators. */
   items: DropdownMenuItem[]
+  /** Preferred position relative to the trigger. @default 'bottom-start' */
   placement?: Placement
+  /** CSS width of the dropdown menu. @default 'auto' */
   width?: 'auto' | 'trigger' | string
 }
 
