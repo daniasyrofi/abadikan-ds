@@ -28,7 +28,13 @@ function handleToggle() {
 </script>
 
 <template>
-  <div class="ds-accordion-item" :class="{ 'ds-accordion-item--disabled': disabled }">
+  <div
+    class="ds-accordion-item"
+    :class="{
+      'ds-accordion-item--disabled': disabled,
+      'ds-accordion-item--open': open,
+    }"
+  >
     <!-- Trigger -->
     <button
       type="button"
@@ -80,7 +86,11 @@ function handleToggle() {
   border-top: 1px solid var(--color-border);
 }
 
-.ds-accordion-trigger:hover:not(:disabled) {
+.ds-accordion-item {
+  transition: background-color 200ms ease-out;
+}
+
+.ds-accordion-item:hover:not(.ds-accordion-item--disabled):not(.ds-accordion-item--open) {
   background-color: var(--color-bg-subtle);
 }
 

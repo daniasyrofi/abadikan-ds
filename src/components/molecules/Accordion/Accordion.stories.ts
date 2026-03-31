@@ -190,7 +190,7 @@ const getStoryName = (key: keyof Copy['storyNames']) => copyMap[getLocale()].sto
 
 const canvas = () => ({
   template: `
-    <div style="
+    <div class="accordion-story-shell" style="
       min-height: 100vh;
       display: flex;
       align-items: center;

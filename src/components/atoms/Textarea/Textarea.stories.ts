@@ -443,7 +443,7 @@ export const FormExample: Story = {
       <div style="display:flex;flex-direction:column;gap:14px;">
         <Textarea v-model="subject" :label="copy.labels.subject"            :placeholder="copy.labels.briefIssue" :rows="1" :auto-resize="true" required />
         <Textarea v-model="body"    :label="copy.labels.body"               :placeholder="copy.labels.whatHappened" :rows="4" :maxlength="500" counter required />
-        <Textarea v-model="steps"   :label="copy.labels.stepsToReproduce"   :placeholder="'1. ' + copy.labels.whatHappened + '&#10;2. ...&#10;3. ...'" :rows="3" :helper-text="copy.labels.optionalHelpful" />
+        <Textarea v-model="steps"   :label="copy.labels.stepsToReproduce"   :placeholder="'1. ' + copy.labels.whatHappened + '\\n2. ...\\n3. ...'" :rows="3" :helper-text="copy.labels.optionalHelpful" />
       </div>
     `,
   }),

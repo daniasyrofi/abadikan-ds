@@ -10,6 +10,7 @@ export interface DropdownMenuItem {
   shortcut?: string
   disabled?: boolean
   separator?: boolean
+  tone?: 'default' | 'danger'
   action?: () => void
 }
 
@@ -147,7 +148,7 @@ onBeforeUnmount(() => {
 
 const menuClasses = computed(() =>
   cn(
-    'ds-dropdown-menu absolute z-50 min-w-[10rem] py-1.5',
+    'ds-dropdown-menu absolute z-50 min-w-[10rem] p-1.5',
     placementClasses[props.placement],
   )
 )
@@ -180,7 +181,7 @@ const menuClasses = computed(() =>
           <!-- Separator -->
           <div
             v-if="item.separator"
-            class="my-1 h-px bg-[--color-border]"
+            class="ds-dropdown-separator my-1 mx-0.5"
             role="separator"
           />
 
@@ -191,14 +192,14 @@ const menuClasses = computed(() =>
             role="menuitem"
             :disabled="item.disabled"
             :class="cn(
-              'ds-dropdown-item flex w-full items-center gap-2.5 px-2.5 py-2 text-sm text-left',
-              'mx-1',
+              'ds-dropdown-item flex w-full items-center gap-2.5 px-2 py-2 text-sm text-left',
               'text-[--color-text-primary]',
               'transition-colors duration-[--duration-fast]',
               item.disabled
                 ? 'opacity-50 pointer-events-none cursor-default'
-                : 'hover:bg-[--color-neutral-light] cursor-pointer',
-              focusedIndex === index && !item.disabled && 'bg-[--color-neutral-light]',
+                : 'cursor-pointer',
+              item.tone === 'danger' && 'ds-dropdown-item--danger',
+              focusedIndex === index && !item.disabled && 'ds-dropdown-item--active',
             )"
             @click="selectItem(item)"
             @mouseenter="focusedIndex = index"
@@ -209,7 +210,10 @@ const menuClasses = computed(() =>
               v-if="item.icon"
               :is="item.icon"
               :size="16"
-              class="shrink-0 text-[--color-text-secondary]"
+              :class="cn(
+                'ds-dropdown-icon shrink-0 text-[--color-text-secondary]',
+                item.tone === 'danger' && 'ds-dropdown-icon--danger',
+              )"
               aria-hidden="true"
             />
 
@@ -219,7 +223,10 @@ const menuClasses = computed(() =>
             <!-- Shortcut -->
             <span
               v-if="item.shortcut"
-              class="ml-4 shrink-0 text-xs text-[--color-text-muted]"
+              :class="cn(
+                'ds-dropdown-shortcut ml-4 shrink-0 text-xs text-[--color-text-muted]',
+                item.tone === 'danger' && 'ds-dropdown-shortcut--danger',
+              )"
             >
               {{ item.shortcut }}
             </span>
@@ -233,11 +240,65 @@ const menuClasses = computed(() =>
 <style scoped>
 .ds-dropdown-menu {
   background-color: var(--color-surface);
-  border-radius: var(--radius-2xl);
-  box-shadow: var(--shadow-2xl), inset 0 0 0 1px var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl), inset 0 0 0 1px color-mix(in oklab, var(--color-border) 38%, var(--color-surface));
   overflow: hidden;
 }
 .ds-dropdown-item {
   border-radius: var(--radius-md);
+}
+
+.ds-dropdown-separator {
+  border-top: 1px solid color-mix(in oklab, var(--color-border) 40%, var(--color-surface));
+}
+
+.ds-dropdown-item:hover:not(:disabled),
+.ds-dropdown-item:focus-visible,
+.ds-dropdown-item:active,
+.ds-dropdown-item--active {
+  background: color-mix(in oklab, var(--color-text-primary) 10%, var(--color-surface));
+  color: var(--color-text-primary);
+  outline: none;
+}
+
+.ds-dropdown-item:hover:not(:disabled) .ds-dropdown-icon,
+.ds-dropdown-item:focus-visible .ds-dropdown-icon,
+.ds-dropdown-item:active .ds-dropdown-icon,
+.ds-dropdown-item--active .ds-dropdown-icon,
+.ds-dropdown-item:hover:not(:disabled) .ds-dropdown-shortcut,
+.ds-dropdown-item:focus-visible .ds-dropdown-shortcut,
+.ds-dropdown-item:active .ds-dropdown-shortcut,
+.ds-dropdown-item--active .ds-dropdown-shortcut {
+  color: var(--color-text-primary);
+}
+
+.ds-dropdown-item--danger {
+  color: var(--color-danger);
+}
+
+.ds-dropdown-item--danger .ds-dropdown-icon,
+.ds-dropdown-item--danger .ds-dropdown-shortcut,
+.ds-dropdown-icon--danger,
+.ds-dropdown-shortcut--danger {
+  color: var(--color-danger);
+}
+
+.ds-dropdown-item--danger:hover:not(:disabled),
+.ds-dropdown-item--danger:focus-visible,
+.ds-dropdown-item--danger:active,
+.ds-dropdown-item--danger.ds-dropdown-item--active {
+  background: color-mix(in oklab, var(--color-danger) 12%, var(--color-surface));
+  color: var(--color-danger-hover);
+}
+
+.ds-dropdown-item--danger:hover:not(:disabled) .ds-dropdown-icon,
+.ds-dropdown-item--danger:focus-visible .ds-dropdown-icon,
+.ds-dropdown-item--danger:active .ds-dropdown-icon,
+.ds-dropdown-item--danger.ds-dropdown-item--active .ds-dropdown-icon,
+.ds-dropdown-item--danger:hover:not(:disabled) .ds-dropdown-shortcut,
+.ds-dropdown-item--danger:focus-visible .ds-dropdown-shortcut,
+.ds-dropdown-item--danger:active .ds-dropdown-shortcut,
+.ds-dropdown-item--danger.ds-dropdown-item--active .ds-dropdown-shortcut {
+  color: var(--color-danger-hover);
 }
 </style>

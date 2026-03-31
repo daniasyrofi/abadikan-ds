@@ -275,6 +275,7 @@ const W = 'width:440px;max-width:100%;display:flex;flex-direction:column;gap:10p
 // Inline text-link style (no solid buttons — matches macOS notification)
 const lP = 'background:none;border:none;padding:0;cursor:pointer;font-size:13px;font-weight:600;color:var(--color-text-primary);letter-spacing:-0.01em;'
 const lM = 'background:none;border:none;padding:0;cursor:pointer;font-size:13px;font-weight:400;color:var(--color-text-tertiary);letter-spacing:-0.01em;'
+const lD = 'background:color-mix(in oklab, var(--color-danger) 10%, transparent);border:1px solid color-mix(in oklab, var(--color-danger) 35%, transparent);padding:4px 10px;border-radius:999px;cursor:pointer;font-size:13px;font-weight:600;color:var(--color-danger-hover) !important;letter-spacing:-0.01em;line-height:1.2;'
 
 // ── Default ───────────────────────────────────────────────────────────────────
 
@@ -398,10 +399,10 @@ export const WithoutTitle: Story = {
     setup: () => ({ copy: useCopy() }),
     template: `
       <div style="${W}">
-        <Alert variant="info">{{ copy.withoutTitle.info }}</Alert>
-        <Alert variant="success">{{ copy.withoutTitle.success }}</Alert>
-        <Alert variant="warning">{{ copy.withoutTitle.warning }}</Alert>
-        <Alert variant="danger">{{ copy.withoutTitle.danger }}</Alert>
+        <Alert variant="info" :title="copy.withoutTitle.info" />
+        <Alert variant="success" :title="copy.withoutTitle.success" />
+        <Alert variant="warning" :title="copy.withoutTitle.warning" />
+        <Alert variant="danger" :title="copy.withoutTitle.danger" />
       </div>
     `,
   }),
@@ -453,7 +454,7 @@ export const WithAction: Story = {
   },
   render: () => ({
     components: { Alert },
-    setup: () => ({ lP, lM, copy: useCopy() }),
+    setup: () => ({ lP, lM, lD, copy: useCopy() }),
     template: `
       <div style="${W}">
         <Alert variant="warning" :title="copy.withAction.warning.title">
@@ -467,7 +468,7 @@ export const WithAction: Story = {
           {{ copy.withAction.danger.body }}
           <template #action>
             <button :style="lM">{{ copy.withAction.danger.skip }}</button>
-            <button :style="lP">{{ copy.withAction.danger.send }}</button>
+            <button :style="lD">{{ copy.withAction.danger.send }}</button>
           </template>
         </Alert>
         <Alert variant="info" :title="copy.withAction.info.title">
