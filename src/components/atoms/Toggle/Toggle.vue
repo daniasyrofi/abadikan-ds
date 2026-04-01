@@ -10,6 +10,7 @@ interface Props {
   size?:       Size
   color?:      ToggleColor
   disabled?:   boolean
+  readonly?:   boolean
   label?:      string
 }
 
@@ -18,13 +19,14 @@ const props = withDefaults(defineProps<Props>(), {
   size:       'md',
   color:      'primary',
   disabled:   false,
+  readonly:   false,
 })
 
 const emit = defineEmits<{ 'update:modelValue': [value: boolean] }>()
 const inputId = useId()
 
 function toggle() {
-  if (!props.disabled) emit('update:modelValue', !props.modelValue)
+  if (!props.disabled && !props.readonly) emit('update:modelValue', !props.modelValue)
 }
 
 const trackClass: Record<Size, string> = {
@@ -67,6 +69,7 @@ const trackClasses = computed(() =>
     trackClass[props.size],
     'shadow-inner',
     props.disabled && 'opacity-50 cursor-not-allowed pointer-events-none',
+    props.readonly && 'cursor-default pointer-events-none',
     'active:scale-[0.96]',
   )
 )

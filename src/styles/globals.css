@@ -374,3 +374,22 @@ html {
   from { transform: translateY(-4px); opacity: 0; }
   to   { transform: translateY(0);    opacity: 1; }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   REDUCED MOTION — WCAG 2.1 AA (2.3.3)
+   Users who set prefers-reduced-motion get no animations/transitions.
+═══════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration:        0.01ms !important;
+    animation-iteration-count: 1      !important;
+    transition-duration:       0.01ms !important;
+    scroll-behavior:           auto   !important;
+  }
+
+  /* Skeleton shimmer: replace with static bg so it doesn't flash */
+  .skel {
+    animation: none;
+    background: var(--color-neutral-light);
+  }
+}
