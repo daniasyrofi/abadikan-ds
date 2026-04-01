@@ -111,8 +111,8 @@ const buildItems = (copy: {
 
 const localeText: Record<Locale, LocaleText> = {
   en: {
-    brand: 'Acme Inc',
-    footerEmail: 'john@acme.com',
+    brand: 'Abadikan',
+    footerEmail: 'john@abadikan.com',
     items: buildItems({
       dashboard: 'Dashboard',
       inbox: 'Inbox',
@@ -136,7 +136,7 @@ const localeText: Record<Locale, LocaleText> = {
       collapsed: 'Main content area. Click the arrow to expand the sidebar.',
       withBadges: 'Sidebar with badge counts on items.',
       withChildren: 'Sidebar with expandable child items. Click "Projects" or "Reports" to toggle.',
-      iconOnly: 'Icon-only collapsed mode. Hover over icons to see tooltips.',
+      iconOnly: 'Icon-only collapsed mode.',
     },
     storyNames: {
       default: 'Default',
@@ -164,8 +164,8 @@ const localeText: Record<Locale, LocaleText> = {
     },
   },
   id: {
-    brand: 'Acme Inc',
-    footerEmail: 'budi@contoh.com',
+    brand: 'Abadikan',
+    footerEmail: 'budi@abadikan.com',
     items: buildItems({
       dashboard: 'Dasbor',
       inbox: 'Kotak Masuk',
@@ -189,7 +189,7 @@ const localeText: Record<Locale, LocaleText> = {
       collapsed: 'Area konten utama. Klik panah untuk membuka sidebar.',
       withBadges: 'Sidebar dengan jumlah lencana pada item.',
       withChildren: 'Sidebar dengan item anak yang dapat dibuka. Klik "Proyek" atau "Laporan" untuk men-toggle.',
-      iconOnly: 'Mode tertutup hanya ikon. Arahkan kursor ke ikon untuk melihat tooltip.',
+      iconOnly: 'Mode tertutup hanya ikon.',
     },
     storyNames: {
       default: 'Bawaan',
@@ -217,8 +217,8 @@ const localeText: Record<Locale, LocaleText> = {
     },
   },
   zh: {
-    brand: 'Acme Inc',
-    footerEmail: 'wang@example.cn',
+    brand: 'Abadikan',
+    footerEmail: 'wang@abadikan.com',
     items: buildItems({
       dashboard: '仪表板',
       inbox: '收件箱',
@@ -242,7 +242,7 @@ const localeText: Record<Locale, LocaleText> = {
       collapsed: '主内容区域。点击箭头可展开侧边栏。',
       withBadges: '带有项目徽标计数的侧边栏。',
       withChildren: '带可展开子项的侧边栏。点击“项目”或“报告”切换。',
-      iconOnly: '仅图标的折叠模式。悬停图标可查看提示。',
+      iconOnly: '仅图标的折叠模式。',
     },
     storyNames: {
       default: '默认',
@@ -313,13 +313,11 @@ const buildArgTypes = (locale: Locale): NonNullable<Meta<typeof Sidebar>['argTyp
   }
 }
 
-// ── Logo box helper (inline-styled to avoid broken Tailwind arbitrary values)
+// ── Logo Helper ──────────────────────────────────────────────────────────────
 const logoBox = `
-  <div style="
-    width:32px;height:32px;border-radius:var(--radius-md);flex-shrink:0;
-    background:var(--color-primary);display:flex;align-items:center;
-    justify-content:center;font-size:12px;font-weight:700;color:white;
-  ">A</div>
+  <div style="width:28px;height:28px;border-radius:6px;background:var(--color-primary);display:flex;align-items:center;justify-content:center;color:white;flex-shrink:0;">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L22 20H2L12 2Z"/></svg>
+  </div>
 `
 
 const meta: Meta<typeof Sidebar> = {
@@ -337,11 +335,9 @@ const meta: Meta<typeof Sidebar> = {
     },
     () => ({
       template: `
-        <div style="
-          display:flex;height:520px;
-          border:1px solid var(--color-border);border-radius:var(--radius-lg);
-          overflow:hidden;
-        "><story /></div>
+        <div style="display:flex;height:600px;border:1px solid var(--color-border);border-radius:12px;overflow:hidden;background:var(--color-bg);width:100%;max-width:1000px;margin:0 auto;box-shadow:var(--shadow-sm);">
+          <story />
+        </div>
       `,
     }),
   ],
@@ -371,17 +367,15 @@ export const Default: Story = {
     template: `
       <Sidebar v-bind="args" v-model="collapsed" :items="copy.items.basic">
         <template #header="{ collapsed: c }">
-          <div style="display:flex;align-items:center;gap:8px;">
+          <div style="display:flex;align-items:center;gap:12px;padding:4px;">
             ${logoBox}
-            <span v-if="!c" style="
-              font-size:14px;font-weight:600;color:var(--color-text-heading);
-              overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-            ">{{ copy.brand }}</span>
+            <span v-if="!c" style="font-size:14px;font-weight:700;color:var(--color-text-primary);letter-spacing:-0.01em;">{{ copy.brand }}</span>
           </div>
         </template>
       </Sidebar>
-      <div style="flex:1;background:var(--color-bg);padding:24px;">
-        <p style="font-size:14px;color:var(--color-text-secondary);">{{ copy.content.default }}</p>
+      <div style="flex:1;padding:24px;border-radius:12px 0 0 0;background:var(--color-surface);border-left:1px solid var(--color-border);border-top:1px solid var(--color-border);margin-top:56px;display:flex;flex-direction:column;gap:16px;">
+        <h2 style="font-size:20px;font-weight:600;color:var(--color-text-heading);margin:0;">{{ copy.content.default }}</h2>
+        <p style="color:var(--color-text-secondary);font-size:14px;">Select an item in the sidebar to see its active state.</p>
       </div>
     `,
   }),
@@ -402,19 +396,14 @@ export const Collapsed: Story = {
     template: `
       <Sidebar v-bind="args" v-model="collapsed" :items="copy.items.basic">
         <template #header="{ collapsed: c }">
-          <div style="display:flex;align-items:center;gap:8px;">
+          <div style="display:flex;align-items:center;gap:12px;padding:4px;">
             ${logoBox}
-            <span v-if="!c" style="
-              font-size:14px;font-weight:600;color:var(--color-text-heading);
-              overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-            ">{{ copy.brand }}</span>
+            <span v-if="!c" style="font-size:14px;font-weight:700;color:var(--color-text-primary);letter-spacing:-0.01em;">{{ copy.brand }}</span>
           </div>
         </template>
       </Sidebar>
-      <div style="flex:1;background:var(--color-bg);padding:24px;">
-        <p style="font-size:14px;color:var(--color-text-secondary);">
-          {{ copy.content.collapsed }}
-        </p>
+      <div style="flex:1;padding:24px;border-radius:12px 0 0 0;background:var(--color-surface);border-left:1px solid var(--color-border);border-top:1px solid var(--color-border);margin-top:56px;display:flex;flex-direction:column;gap:16px;">
+        <h2 style="font-size:20px;font-weight:600;color:var(--color-text-heading);margin:0;">{{ copy.content.collapsed }}</h2>
       </div>
     `,
   }),
@@ -434,17 +423,14 @@ export const WithBadges: Story = {
     template: `
       <Sidebar v-bind="args" v-model="collapsed" :items="copy.items.badges" active-id="inbox">
         <template #header="{ collapsed: c }">
-          <div style="display:flex;align-items:center;gap:8px;">
+          <div style="display:flex;align-items:center;gap:12px;padding:4px;">
             ${logoBox}
-            <span v-if="!c" style="
-              font-size:14px;font-weight:600;color:var(--color-text-heading);
-              overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-            ">{{ copy.brand }}</span>
+            <span v-if="!c" style="font-size:14px;font-weight:700;color:var(--color-text-primary);letter-spacing:-0.01em;">{{ copy.brand }}</span>
           </div>
         </template>
       </Sidebar>
-      <div style="flex:1;background:var(--color-bg);padding:24px;">
-        <p style="font-size:14px;color:var(--color-text-secondary);">{{ copy.content.withBadges }}</p>
+      <div style="flex:1;padding:24px;border-radius:12px 0 0 0;background:var(--color-surface);border-left:1px solid var(--color-border);border-top:1px solid var(--color-border);margin-top:56px;display:flex;flex-direction:column;gap:16px;">
+        <h2 style="font-size:20px;font-weight:600;color:var(--color-text-heading);margin:0;">{{ copy.content.withBadges }}</h2>
       </div>
     `,
   }),
@@ -464,30 +450,20 @@ export const WithChildren: Story = {
     template: `
       <Sidebar v-bind="args" v-model="collapsed" :items="copy.items.children" active-id="proj-active">
         <template #header="{ collapsed: c }">
-          <div style="display:flex;align-items:center;gap:8px;">
+          <div style="display:flex;align-items:center;gap:12px;padding:4px;">
             ${logoBox}
-            <span v-if="!c" style="
-              font-size:14px;font-weight:600;color:var(--color-text-heading);
-              overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-            ">{{ copy.brand }}</span>
+            <span v-if="!c" style="font-size:14px;font-weight:700;color:var(--color-text-primary);letter-spacing:-0.01em;">{{ copy.brand }}</span>
           </div>
         </template>
         <template #footer="{ collapsed: c }">
-          <div style="display:flex;align-items:center;gap:8px;">
-            <div style="
-              width:32px;height:32px;border-radius:9999px;flex-shrink:0;
-              background:var(--color-neutral-light);display:flex;align-items:center;
-              justify-content:center;font-size:12px;font-weight:600;color:var(--color-text-primary);
-            ">JD</div>
-            <span v-if="!c" style="
-              font-size:13px;color:var(--color-text-secondary);
-              overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-            ">{{ copy.footerEmail }}</span>
+          <div style="display:flex;align-items:center;gap:12px;padding:4px 0;">
+            <div style="width:28px;height:28px;border-radius:50%;background:var(--color-neutral-light);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--color-text-primary);flex-shrink:0;">JD</div>
+            <span v-if="!c" style="font-size:13px;font-weight:500;color:var(--color-text-secondary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ copy.footerEmail }}</span>
           </div>
         </template>
       </Sidebar>
-      <div style="flex:1;background:var(--color-bg);padding:24px;">
-        <p style="font-size:14px;color:var(--color-text-secondary);">{{ copy.content.withChildren }}</p>
+      <div style="flex:1;padding:24px;border-radius:12px 0 0 0;background:var(--color-surface);border-left:1px solid var(--color-border);border-top:1px solid var(--color-border);margin-top:56px;display:flex;flex-direction:column;gap:16px;">
+        <h2 style="font-size:20px;font-weight:600;color:var(--color-text-heading);margin:0;">{{ copy.content.withChildren }}</h2>
       </div>
     `,
   }),
@@ -514,8 +490,8 @@ export const IconOnly: Story = {
           ${logoBox}
         </template>
       </Sidebar>
-      <div style="flex:1;background:var(--color-bg);padding:24px;">
-        <p style="font-size:14px;color:var(--color-text-secondary);">{{ copy.content.iconOnly }}</p>
+      <div style="flex:1;padding:24px;border-radius:12px 0 0 0;background:var(--color-surface);border-left:1px solid var(--color-border);border-top:1px solid var(--color-border);margin-top:56px;display:flex;flex-direction:column;gap:16px;">
+        <h2 style="font-size:20px;font-weight:600;color:var(--color-text-heading);margin:0;">{{ copy.content.iconOnly }}</h2>
       </div>
     `,
   }),
