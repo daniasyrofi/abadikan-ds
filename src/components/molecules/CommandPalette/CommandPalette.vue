@@ -217,7 +217,7 @@ function setActive(item: CommandItem) {
           aria-label="Command palette"
         >
           <!-- Search row -->
-          <div class="ds-cmd-search flex items-center gap-3 px-4 border-b border-[--color-border]">
+          <div class="ds-cmd-search flex items-center gap-3 px-4 ds-cmd-divider-b">
             <RiSearchLine
               :size="18"
               class="shrink-0 text-[--color-text-tertiary]"
@@ -249,7 +249,7 @@ function setActive(item: CommandItem) {
           <!-- Results list -->
           <div
             ref="listRef"
-            class="ds-cmd-list overflow-y-auto max-h-[400px] py-2"
+            class="ds-cmd-list overflow-y-auto max-h-[400px] p-2"
             role="listbox"
             aria-label="Search results"
           >
@@ -266,7 +266,7 @@ function setActive(item: CommandItem) {
               <!-- Group heading -->
               <div
                 v-if="group"
-                class="px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-[--color-text-tertiary] select-none"
+                class="px-2 py-1.5 text-xs font-semibold uppercase tracking-wider text-[--color-text-tertiary] select-none"
               >
                 {{ group }}
               </div>
@@ -283,11 +283,11 @@ function setActive(item: CommandItem) {
                 :data-active="isActive(item)"
                 :disabled="item.disabled || undefined"
                 :class="cn(
-                  'ds-cmd-item w-full flex items-center gap-3 px-3 py-2.5 text-left text-sm',
+                  'ds-cmd-item w-full flex items-center gap-3 px-2 py-2 text-left text-sm rounded-md',
                   'transition-colors duration-75',
                   isActive(item)
-                    ? 'ds-cmd-item--active bg-[--color-primary-light] text-[--color-primary]'
-                    : 'text-[--color-text-primary] hover:bg-[--color-neutral-light]',
+                    ? 'ds-cmd-item--active text-[--color-text-primary]'
+                    : 'text-[--color-text-primary]',
                   item.disabled && 'opacity-40 cursor-not-allowed',
                 )"
                 @click="selectItem(item)"
@@ -326,7 +326,7 @@ function setActive(item: CommandItem) {
           </div>
 
           <!-- Footer hint -->
-          <div class="ds-cmd-footer flex items-center gap-4 px-4 py-2.5 border-t border-[--color-border] text-xs text-[--color-text-tertiary] select-none">
+          <div class="ds-cmd-footer flex items-center gap-4 px-4 py-2.5 ds-cmd-divider-t text-xs text-[--color-text-secondary] select-none">
             <span><kbd class="ds-cmd-kbd px-1 py-0.5 rounded font-mono">↑↓</kbd> Navigate</span>
             <span><kbd class="ds-cmd-kbd px-1 py-0.5 rounded font-mono">↵</kbd> Select</span>
             <span><kbd class="ds-cmd-kbd px-1 py-0.5 rounded font-mono">Esc</kbd> Close</span>
@@ -345,11 +345,18 @@ function setActive(item: CommandItem) {
 
 .ds-cmd-panel {
   background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
   box-shadow:
-    0 24px 64px -16px oklch(0.2 0 0 / 0.3),
-    0 8px 24px oklch(0.2 0 0 / 0.12),
-    inset 0 1px 0 oklch(1 0 0 / 0.06);
+    0 0 0 1px oklch(0 0 0 / 0.06),
+    0 24px 64px -16px oklch(0.2 0 0 / 0.18),
+    0 8px 24px oklch(0.2 0 0 / 0.08);
+}
+
+.ds-cmd-divider-b {
+  border-bottom: 1px solid oklch(0 0 0 / 0.07);
+}
+
+.ds-cmd-divider-t {
+  border-top: 1px solid oklch(0 0 0 / 0.07);
 }
 
 .ds-cmd-search {
@@ -360,14 +367,29 @@ function setActive(item: CommandItem) {
   display: none;
 }
 
+.ds-cmd-input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.ds-cmd-input {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
 .ds-cmd-kbd {
-  background-color: var(--color-neutral-light);
+  background-color: oklch(0 0 0 / 0.06);
   color: var(--color-text-secondary);
-  border: 1px solid var(--color-border);
+  border: 1px solid oklch(0 0 0 / 0.1);
+}
+
+.ds-cmd-item:hover:not(:disabled),
+.ds-cmd-item--active {
+  background-color: oklch(0 0 0 / 0.05);
 }
 
 .ds-cmd-footer {
-  background-color: var(--color-surface-raised, var(--color-neutral-light));
+  background-color: oklch(0 0 0 / 0.04);
 }
 
 /* Transition */
