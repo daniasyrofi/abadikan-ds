@@ -1,3 +1,5 @@
+export { default as CommandPalette } from './CommandPalette/CommandPalette.vue'
+export type { CommandItem }          from './CommandPalette/CommandPalette.vue'
 export { default as Combobox }       from './Combobox/Combobox.vue'
 export type { ComboboxOption }       from './Combobox/Combobox.vue'
 export { default as Accordion }     from './Accordion/Accordion.vue'

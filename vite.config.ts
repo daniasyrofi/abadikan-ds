@@ -61,6 +61,18 @@ export default defineConfig(({ command }) => ({
           environment: 'happy-dom',
           globals:     true,
           setupFiles:  ['./src/test/setup.ts'],
+          coverage: {
+            provider:  'v8',
+            reporter:  ['text', 'lcov', 'html'],
+            thresholds: {
+              statements: 70,
+              branches:   65,
+              functions:  70,
+              lines:      70,
+            },
+            include: ['src/components/**/*.vue', 'src/composables/**/*.ts'],
+            exclude: ['src/**/*.stories.ts', 'src/test/**'],
+          },
         },
       },
       // ── Storybook interaction tests (Playwright, browser) ─────
