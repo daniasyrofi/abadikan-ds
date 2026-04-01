@@ -4,7 +4,17 @@ import { ref, provide, readonly } from 'vue'
 type AccordionType = 'single' | 'multiple'
 
 interface Props {
+  /**
+   * Type of the accordion.
+   * 'single' allows only one item open at a time.
+   * 'multiple' allows multiple items open at the same time.
+   * @default 'single'
+   */
   type?: AccordionType
+  /**
+   * The list of item IDs that are open by default.
+   * @default []
+   */
   defaultOpen?: string[]
 }
 

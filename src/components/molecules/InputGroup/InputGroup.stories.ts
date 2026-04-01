@@ -268,11 +268,10 @@ export const PromoCode: Story = {
     template: `
       <div style="width:100%;max-width:380px;">
         <p style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:6px;">{{ copy.promo.label }}</p>
-        <InputGroup>
+        <InputGroup :error="status === 'error'">
           <Input
             v-model="code"
             :placeholder="copy.promo.placeholder"
-            :error="status === 'error' ? ' ' : ''"
           />
           <Button @click="apply">{{ copy.promo.apply }}</Button>
         </InputGroup>

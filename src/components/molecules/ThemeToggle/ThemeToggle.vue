@@ -4,6 +4,7 @@ import { useTheme } from '@/composables/useTheme'
 import { RiSunLine, RiMoonLine } from '@remixicon/vue'
 
 interface Props {
+  /** Visual size of the toggle button. @default 'md' */
   size?: 'sm' | 'md' | 'lg'
 }
 

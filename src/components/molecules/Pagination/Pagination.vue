@@ -11,11 +11,17 @@ import {
 type Size = 'sm' | 'md' | 'lg'
 
 interface Props {
+  /** The currently active page number. Supports v-model. */
   modelValue: number
+  /** Total number of items across all pages. */
   total: number
+  /** Number of items per page. @default 10 */
   perPage?: number
+  /** Maximum number of page buttons to display before truncating with ellipsis. @default 5 */
   maxVisiblePages?: number
+  /** Shows buttons to jump to first and last pages. @default true */
   showFirstLast?: boolean
+  /** Visual size of the pagination buttons. @default 'md' */
   size?: Size
 }
 

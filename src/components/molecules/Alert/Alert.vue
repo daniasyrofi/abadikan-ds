@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, useSlots } from 'vue'
 import { cn } from '@/lib/utils'
 import { Icons } from '@/lib/icons'
 import Button from '@/components/atoms/Button/Button.vue'
@@ -8,10 +8,15 @@ type Variant = 'info' | 'success' | 'warning' | 'danger'
 type Size    = 'sm' | 'md' | 'lg'
 
 interface Props {
+  /** The semantic variant/color scheme of the alert. @default 'info' */
   variant?:     Variant
+  /** Visual size of the alert elements. @default 'md' */
   size?:        Size
+  /** The prominent title text. */
   title?:       string
+  /** Shows the variant-specific icon. @default true */
   icon?:        boolean
+  /** Shows a close button to dismiss the alert. @default false */
   dismissible?: boolean
 }
 
@@ -23,6 +28,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{ dismiss: [] }>()
+const slots = useSlots()
 
 // ── Variant — only squircle icon color changes ────────────────────────────────
 
@@ -75,6 +81,9 @@ const sizeScale: Record<Size, {
 const tokens  = computed(() => colorMap[props.variant])
 const s       = computed(() => sizeScale[props.size])
 const iconHtml = computed(() => iconDataMap[props.variant])
+const hasBody = computed(() => Boolean(slots.default))
+const hasAction = computed(() => Boolean(slots.action))
+const isHeadingOnly = computed(() => Boolean(props.title) && !hasBody.value && !hasAction.value)
 </script>
 
 <template>
@@ -85,7 +94,7 @@ const iconHtml = computed(() => iconDataMap[props.variant])
       padding:         s.p,
       gap:             s.gap,
       display:         'flex',
-      alignItems:      'flex-start',
+      alignItems:      isHeadingOnly ? 'center' : 'flex-start',
       borderRadius:    'var(--radius-2xl)',
       backgroundColor: 'var(--color-surface)',
       boxShadow:       'var(--shadow-xl), 0 0 0 1px color-mix(in oklch, var(--color-border) 80%, transparent)',
@@ -103,7 +112,7 @@ const iconHtml = computed(() => iconDataMap[props.variant])
         alignItems:      'center',
         justifyContent:  'center',
         backgroundColor: tokens.iconBg,
-        marginTop:       '1px',
+        marginTop:       isHeadingOnly ? '0' : '1px',
         flexShrink:      '0',
       }"
     >
@@ -122,7 +131,7 @@ const iconHtml = computed(() => iconDataMap[props.variant])
     </span>
 
     <!-- Content -->
-    <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;">
+    <div :style="{ flex: '1', minWidth: '0', display: 'flex', flexDirection: 'column', gap: isHeadingOnly ? '0' : '3px' }">
       <p
         v-if="title"
         :style="`${s.titleStyle} color: var(--color-text-primary); padding-right: ${dismissible ? '20px' : '0'};`"

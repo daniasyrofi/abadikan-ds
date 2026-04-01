@@ -3,6 +3,7 @@ import { inject, computed } from 'vue'
 import { TABS_KEY, type TabsContext } from './Tabs.vue'
 
 interface Props {
+  /** The unique value associating this content panel with its trigger. */
   value: string
 }
 

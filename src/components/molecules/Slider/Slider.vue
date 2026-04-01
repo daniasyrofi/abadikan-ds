@@ -5,13 +5,21 @@ import { cn } from '@/lib/utils'
 type Size = 'sm' | 'md' | 'lg'
 
 interface Props {
+  /** The current value of the slider. Supports v-model. */
   modelValue: number
+  /** Minimum allowed value. @default 0 */
   min?: number
+  /** Maximum allowed value. @default 100 */
   max?: number
+  /** Number to increment/decrement by. @default 1 */
   step?: number
+  /** Visual size of the slider track and thumb. @default 'md' */
   size?: Size
+  /** Disables interaction with the slider. @default false */
   disabled?: boolean
+  /** Text label displayed above the slider. */
   label?: string
+  /** Shows the current numeric value alongside the label. @default false */
   showValue?: boolean
 }
 

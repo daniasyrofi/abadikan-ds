@@ -13,10 +13,15 @@ import Button from '@/components/atoms/Button/Button.vue'
 type Variant = 'info' | 'success' | 'warning' | 'danger'
 
 interface Props {
+  /** Unique identifier for the toast (used for dismissal). */
   id: string
+  /** Semantic variant determining colors and icon. @default 'info' */
   variant?: Variant
+  /** The main prominent text of the toast. */
   title: string
+  /** Optional descriptive text beneath the title. */
   description?: string
+  /** Shows a close button to manually dismiss the toast. @default true */
   dismissible?: boolean
 }
 

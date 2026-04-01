@@ -2,16 +2,24 @@
 import { ref, watch, onBeforeUnmount } from 'vue'
 import { RiSearchLine } from '@remixicon/vue'
 import Input from '@/components/atoms/Input/Input.vue'
+import Spinner from '@/components/atoms/Spinner/Spinner.vue'
 
 type SearchSize = 'sm' | 'md' | 'lg'
 
 interface Props {
+  /** The search query string. Supports v-model. */
   modelValue:  string
+  /** Visual size of the input. @default 'md' */
   size?:       SearchSize
+  /** Text displayed when input is empty. @default 'Search...' */
   placeholder?: string
+  /** Shows a loading spinner. @default false */
   loading?:    boolean
+  /** Shows a clear button when input is not empty. @default true */
   clearable?:  boolean
+  /** Delay in ms before emitting 'search' event after typing. @default 300 */
   debounce?:   number
+  /** Disables the input. @default false */
   disabled?:   boolean
 }
 
@@ -63,12 +71,18 @@ const iconSizePx: Record<SearchSize, number> = {
   md: 16,
   lg: 18,
 }
+
+const spinnerSize: Record<SearchSize, 'xs' | 'sm'> = {
+  sm: 'xs',
+  md: 'sm',
+  lg: 'sm',
+}
 </script>
 
 <template>
   <Input
     :model-value="internalValue"
-    type="search"
+    type="text"
     :size="size"
     :placeholder="placeholder"
     :disabled="disabled"
@@ -80,19 +94,9 @@ const iconSizePx: Record<SearchSize, number> = {
     <template #leading>
       <RiSearchLine :size="String(iconSizePx[size])" />
     </template>
-    
-    <template #trailing v-if="loading">
-      <svg
-        class="shrink-0 animate-spin text-[--color-text-tertiary]"
-        :class="size === 'sm' ? 'size-3.5' : 'size-4'"
-        viewBox="0 0 24 24"
-        fill="none"
-        aria-label="Loading"
-        role="status"
-      >
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-      </svg>
+
+    <template v-if="loading" #trailing>
+      <Spinner :size="spinnerSize[size]" color="var(--color-text-tertiary)" />
     </template>
   </Input>
 </template>

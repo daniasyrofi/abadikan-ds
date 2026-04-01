@@ -8,11 +8,17 @@ type Placement =
 type Trigger = 'click' | 'hover' | 'manual'
 
 interface Props {
+  /** Interaction that triggers the popover to open. @default 'click' */
   trigger?: Trigger
+  /** Preferred position relative to the trigger. @default 'bottom' */
   placement?: Placement
+  /** CSS width of the popover content. @default 'auto' */
   width?: 'auto' | string
+  /** Shows a directional arrow pointing to the trigger. @default true */
   arrow?: boolean
+  /** Closes the popover when clicking outside of it. @default true */
   closeOnClickOutside?: boolean
+  /** Manually control the open state (works with trigger="manual"). Supports v-model. */
   modelValue?: boolean
 }
 
@@ -153,7 +159,7 @@ onBeforeUnmount(() => {
 
 const popoverClasses = computed(() =>
   cn(
-    'ds-popover absolute z-50 p-4',
+    'ds-popover absolute z-50 flex flex-col',
     placementClasses[props.placement],
   )
 )
@@ -186,7 +192,50 @@ const popoverClasses = computed(() =>
         :style="widthStyle"
         role="dialog"
       >
-        <slot />
+        <!-- Header -->
+        <div
+          v-if="$slots.header || $slots.title || $slots.description"
+          class="flex items-start gap-4 px-4 pt-4 pb-3 border-b shrink-0"
+          style="border-color: var(--color-border-subtle);"
+        >
+          <slot name="header">
+            <div class="flex-1 min-w-0 flex flex-col gap-1">
+              <h3
+                v-if="$slots.title"
+                class="text-sm font-semibold text-[--color-text-primary] leading-tight"
+              >
+                <slot name="title" />
+              </h3>
+              <p
+                v-if="$slots.description"
+                class="text-xs text-[--color-text-secondary]"
+              >
+                <slot name="description" />
+              </p>
+            </div>
+          </slot>
+        </div>
+
+        <!-- Body -->
+        <div
+          :class="cn(
+            'px-4',
+            ($slots.header || $slots.title || $slots.description) ? 'pt-3' : 'pt-4',
+            $slots.footer ? 'pb-4' : 'pb-4',
+            'flex-1 min-h-0 overflow-y-auto'
+          )"
+        >
+          <slot />
+        </div>
+
+        <!-- Footer -->
+        <div
+          v-if="$slots.footer"
+          class="flex items-center justify-end gap-2 px-4 py-3 border-t shrink-0"
+          style="border-color: var(--color-border-subtle); background-color: var(--color-neutral-light); border-bottom-left-radius: inherit; border-bottom-right-radius: inherit;"
+        >
+          <slot name="footer" />
+        </div>
 
         <!-- Arrow -->
         <span

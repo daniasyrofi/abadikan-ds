@@ -24,11 +24,11 @@ type Copy = {
   }
   default: {
     trigger: string
-    items: Array<{ label: string }>
+    items: Array<{ label: string; tone?: 'danger' }>
   }
   withIcons: {
     trigger: string
-    items: Array<{ label: string; icon?: unknown; separator?: boolean }>
+    items: Array<{ label: string; icon?: unknown; separator?: boolean; tone?: 'danger' }>
   }
   withShortcuts: {
     trigger: string
@@ -37,7 +37,7 @@ type Copy = {
   withSeparators: {
     trigger: string
     ariaLabel: string
-    items: Array<{ label: string; separator?: boolean }>
+    items: Array<{ label: string; separator?: boolean; tone?: 'danger' }>
   }
 }
 
@@ -55,7 +55,7 @@ const copyMap: Record<Locale, Copy> = {
         { label: 'Edit' },
         { label: 'Duplicate' },
         { label: 'Archive' },
-        { label: 'Delete' },
+        { label: 'Delete', tone: 'danger' },
       ],
     },
     withIcons: {
@@ -66,7 +66,7 @@ const copyMap: Record<Locale, Copy> = {
         { label: 'Share', icon: RiShareLine },
         { label: 'Download', icon: RiDownloadLine },
         { separator: true, label: '' },
-        { label: 'Delete', icon: RiDeleteBinLine },
+        { label: 'Delete', icon: RiDeleteBinLine, tone: 'danger' },
       ],
     },
     withShortcuts: {
@@ -92,7 +92,7 @@ const copyMap: Record<Locale, Copy> = {
         { label: 'Help & Support' },
         { label: 'Keyboard shortcuts' },
         { separator: true, label: '' },
-        { label: 'Sign out' },
+        { label: 'Sign out', tone: 'danger' },
       ],
     },
   },
@@ -109,7 +109,7 @@ const copyMap: Record<Locale, Copy> = {
         { label: 'Edit' },
         { label: 'Duplikat' },
         { label: 'Arsipkan' },
-        { label: 'Hapus' },
+        { label: 'Hapus', tone: 'danger' },
       ],
     },
     withIcons: {
@@ -120,7 +120,7 @@ const copyMap: Record<Locale, Copy> = {
         { label: 'Bagikan', icon: RiShareLine },
         { label: 'Unduh', icon: RiDownloadLine },
         { separator: true, label: '' },
-        { label: 'Hapus', icon: RiDeleteBinLine },
+        { label: 'Hapus', icon: RiDeleteBinLine, tone: 'danger' },
       ],
     },
     withShortcuts: {
@@ -146,7 +146,7 @@ const copyMap: Record<Locale, Copy> = {
         { label: 'Bantuan & Dukungan' },
         { label: 'Pintasan keyboard' },
         { separator: true, label: '' },
-        { label: 'Keluar' },
+        { label: 'Keluar', tone: 'danger' },
       ],
     },
   },
@@ -163,7 +163,7 @@ const copyMap: Record<Locale, Copy> = {
         { label: '编辑' },
         { label: '复制' },
         { label: '归档' },
-        { label: '删除' },
+        { label: '删除', tone: 'danger' },
       ],
     },
     withIcons: {
@@ -174,7 +174,7 @@ const copyMap: Record<Locale, Copy> = {
         { label: '分享', icon: RiShareLine },
         { label: '下载', icon: RiDownloadLine },
         { separator: true, label: '' },
-        { label: '删除', icon: RiDeleteBinLine },
+        { label: '删除', icon: RiDeleteBinLine, tone: 'danger' },
       ],
     },
     withShortcuts: {
@@ -200,7 +200,7 @@ const copyMap: Record<Locale, Copy> = {
         { label: '帮助与支持' },
         { label: '键盘快捷键' },
         { separator: true, label: '' },
-        { label: '退出登录' },
+        { label: '退出登录', tone: 'danger' },
       ],
     },
   },
@@ -213,7 +213,7 @@ const getStoryName = (key: keyof Copy['storyNames']) => copyMap[getLocale()].sto
 // ── Canvas decorator ──────────────────────────────────────────────────────────
 const canvas = () => ({
   template: `
-    <div style="
+    <div class="dropdown-story-shell" style="
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -257,7 +257,7 @@ export const Default: Story = {
     },
     template: `
       <div style="padding:80px;">
-        <DropdownMenu v-bind="args" :items="copy.default.items">
+        <DropdownMenu v-bind="args" :items="copy.default.items" width="220px">
           <template #trigger>
             <Button variant="secondary">{{ copy.default.trigger }}</Button>
           </template>
@@ -278,7 +278,7 @@ export const WithIcons: Story = {
     },
     template: `
       <div style="padding:80px;">
-        <DropdownMenu :items="copy.withIcons.items">
+        <DropdownMenu :items="copy.withIcons.items" width="228px">
           <template #trigger>
             <Button>
               {{ copy.withIcons.trigger }}
@@ -302,7 +302,7 @@ export const WithShortcuts: Story = {
     },
     template: `
       <div style="padding:80px;">
-        <DropdownMenu :items="copy.withShortcuts.items" width="220px">
+        <DropdownMenu :items="copy.withShortcuts.items" width="244px">
           <template #trigger>
             <Button variant="secondary">{{ copy.withShortcuts.trigger }}</Button>
           </template>
@@ -323,7 +323,7 @@ export const WithSeparators: Story = {
     },
     template: `
       <div style="padding:80px;">
-        <DropdownMenu :items="copy.withSeparators.items" placement="bottom-end">
+        <DropdownMenu :items="copy.withSeparators.items" placement="bottom-end" width="244px">
           <template #trigger>
             <Button variant="ghost" size="sm" :iconOnly="true" :aria-label="copy.withSeparators.ariaLabel">
               <template #icon><RiMore2Fill style="width:16px;height:16px;" /></template>

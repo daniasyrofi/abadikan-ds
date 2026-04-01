@@ -6,21 +6,34 @@ import Checkbox from '../../atoms/Checkbox/Checkbox.vue'
 import Spinner from '../../atoms/Spinner/Spinner.vue'
 
 interface Column {
+  /** Unique key mapping to a property in each data row. */
   key:       string
+  /** Display label for the column header. */
   label:     string
+  /** Enables click-to-sort on this column. @default false */
   sortable?: boolean
+  /** CSS width of the column (e.g. '120px', '20%'). */
   width?:    string
+  /** Text alignment within the column. @default 'left' */
   align?:    'left' | 'center' | 'right'
 }
 
 interface Props {
+  /** Array of column definitions. */
   columns:      Column[]
+  /** Array of row data objects. Each key should match a column key. */
   data:         Record<string, any>[]
+  /** Shows a loading overlay with a spinner. @default false */
   loading?:     boolean
+  /** Adds row selection checkboxes and a select-all header. @default false */
   selectable?:  boolean
+  /** Highlights rows on hover. @default true */
   hoverable?:   boolean
+  /** Applies alternating row background colors. @default false */
   striped?:     boolean
+  /** Keeps the table header fixed while the body scrolls. @default false */
   stickyHeader?: boolean
+  /** Text displayed when the data array is empty. @default 'No data' */
   emptyText?:   string
 }
 

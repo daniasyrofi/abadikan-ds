@@ -145,30 +145,11 @@ const getLocale = (): Locale => resolveLocale(getI18nLocale())
 const useCopy = () => computed(() => copyMap[getLocale()])
 const getStoryName = (key: keyof Copy['storyNames']) => copyMap[getLocale()].storyNames[key]
 
-// ── Canvas decorator ──────────────────────────────────────────────────────────
-const canvas = () => ({
-  template: `
-    <div style="
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 48px 32px;
-      background-color: #eceae4;
-      background-image: radial-gradient(circle, rgba(0,0,0,0.11) 1px, transparent 1px);
-      background-size: 22px 22px;
-    ">
-      <story />
-    </div>
-  `,
-})
-
 const meta: Meta<typeof DatePicker> = {
   title: 'Molecules/DatePicker',
   component: DatePicker,
   tags: ['autodocs'],
-  decorators: [canvas],
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: 'centered', icon: 'calendar' },
   argTypes: {
     modelValue:  { control: 'text' },
     mode:        { control: 'select', options: ['single', 'range'] },
@@ -176,7 +157,7 @@ const meta: Meta<typeof DatePicker> = {
     maxDate:     { control: 'text' },
     format:      { control: 'text' },
     placeholder: { control: 'text' },
-    size:        { control: 'select', options: ['sm', 'md', 'lg'] },
+    size:        { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
     label:       { control: 'text' },
     error:       { control: 'text' },
     disabled:    { control: 'boolean' },
@@ -189,6 +170,9 @@ const meta: Meta<typeof DatePicker> = {
     size: 'md',
     disabled: false,
   },
+  decorators: [
+    () => ({ template: '<div style="width:320px;"><story /></div>' }),
+  ],
 }
 export default meta
 type Story = StoryObj<typeof DatePicker>
@@ -204,10 +188,7 @@ export const Default: Story = {
       return { date, args, copy: useCopy() }
     },
     template: `
-      <div style="max-width:320px;">
-        <DatePicker v-bind="args" v-model="date" :placeholder="copy.defaultPlaceholder" />
-        <p style="font-size:12px;color:var(--color-text-tertiary);margin-top:8px;">{{ copy.valueLabel }}: {{ date ?? copy.nullValue }}</p>
-      </div>
+      <DatePicker v-bind="args" v-model="date" :placeholder="copy.defaultPlaceholder" />
     `,
   }),
 }
@@ -223,9 +204,7 @@ export const WithLabel: Story = {
       return { date, copy: useCopy() }
     },
     template: `
-      <div style="max-width:320px;">
-        <DatePicker v-model="date" :label="copy.withLabel.label" :placeholder="copy.withLabel.placeholder" />
-      </div>
+      <DatePicker v-model="date" :label="copy.withLabel.label" :placeholder="copy.withLabel.placeholder" />
     `,
   }),
 }
@@ -246,7 +225,7 @@ export const MinMaxDate: Story = {
       return { date, minDate, maxDate, copy: useCopy() }
     },
     template: `
-      <div style="max-width:320px;">
+      <div>
         <DatePicker
           v-model="date"
           :label="copy.minMax.label"
@@ -272,9 +251,7 @@ export const Disabled: Story = {
       return { date, copy: useCopy() }
     },
     template: `
-      <div style="max-width:320px;">
-        <DatePicker v-model="date" :label="copy.disabled.label" disabled />
-      </div>
+      <DatePicker v-model="date" :label="copy.disabled.label" disabled />
     `,
   }),
 }
@@ -290,13 +267,11 @@ export const WithError: Story = {
       return { date, copy: useCopy() }
     },
     template: `
-      <div style="max-width:320px;">
-        <DatePicker
-          v-model="date"
-          :label="copy.withError.label"
-          :error="copy.withError.error"
-        />
-      </div>
+      <DatePicker
+        v-model="date"
+        :label="copy.withError.label"
+        :error="copy.withError.error"
+      />
     `,
   }),
 }
@@ -314,7 +289,7 @@ export const AllSizes: Story = {
       return { sm, md, lg, copy: useCopy() }
     },
     template: `
-      <div style="display:flex;flex-direction:column;gap:16px;max-width:320px;">
+      <div style="display:flex;flex-direction:column;gap:16px;">
         <DatePicker v-model="sm" size="sm" :label="copy.allSizes.sm" />
         <DatePicker v-model="md" size="md" :label="copy.allSizes.md" />
         <DatePicker v-model="lg" size="lg" :label="copy.allSizes.lg" />

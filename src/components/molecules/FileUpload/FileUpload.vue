@@ -5,11 +5,17 @@ import { RiUploadCloud2Line, RiCloseLine } from '@remixicon/vue'
 import Button from '@/components/atoms/Button/Button.vue'
 
 interface Props {
+  /** Accepted file types, e.g., 'image/*, .pdf'. */
   accept?: string
+  /** Allows multiple file selection. @default false */
   multiple?: boolean
+  /** Maximum allowed file size in bytes. @default 5242880 (5MB) */
   maxSize?: number
+  /** Maximum number of files allowed (when multiple is true). @default 5 */
   maxFiles?: number
+  /** Disables the dropzone and file input. @default false */
   disabled?: boolean
+  /** Generates and shows image previews or file icons. @default true */
   previews?: boolean
 }
 

@@ -12,8 +12,11 @@ interface BreadcrumbItem {
 }
 
 interface Props {
+  /** Array of navigation items to display in the breadcrumb path */
   items: BreadcrumbItem[]
+  /** Character or icon to display between items. @default 'chevron' */
   separator?: Separator
+  /** Visual size scale. @default 'md' */
   size?: 'sm' | 'md' | 'lg'
 }
 

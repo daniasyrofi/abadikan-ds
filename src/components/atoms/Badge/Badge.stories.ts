@@ -590,7 +590,7 @@ export const FullMatrix: Story = {
           <p style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:10px;">{{ copy.styleLabels[s] }}</p>
           <div style="display:flex;flex-direction:column;gap:8px;">
             <div v-for="sz in sizes" :key="sz" style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">
-              <span style="font-size:11px;color:var(--color-text-tertiary);width:20px;">{{ copy.sizeLabels[sz] }}</span>
+              <span style="display:inline-flex;align-items:center;min-width:56px;white-space:nowrap;font-size:11px;color:var(--color-text-tertiary);flex-shrink:0;">{{ copy.sizeLabels[sz] }}</span>
               <Badge v-for="v in variants" :key="v" :variant="v" :badge-style="s" :size="sz">{{ copy.variantLabels[v] }}</Badge>
             </div>
           </div>
