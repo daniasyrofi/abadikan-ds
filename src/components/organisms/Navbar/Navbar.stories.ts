@@ -38,7 +38,7 @@ const megaIcons = {
 
 // ── Floating & Mega Menu Showcase ────────────────────────────────────────────
 export const FloatingMegaMenu: Story = {
-  name: 'Floating Pill & Mega Menu',
+  name: 'Navbar',
   args: {
     variant: 'transparent',
     sticky: true,
@@ -256,11 +256,11 @@ export const FloatingMegaMenu: Story = {
         </Navbar>
 
         <!-- Hero content -->
-        <div class="mt-20 px-8 text-center relative z-10">
-          <h1 class="text-[48px] md:text-[60px] font-[800] tracking-tight mb-5 leading-[1.15] max-w-4xl mx-auto text-white">
+        <div class="mt-20 px-8 text-center relative z-10" style="font-family: 'Abadikan Sans', sans-serif;">
+          <h1 class="text-[48px] md:text-[60px] font-[800] tracking-tight mb-5 leading-[1.15] max-w-4xl mx-auto text-white" style="font-family: 'Abadikan Sans', sans-serif;">
             Your wedding invite, but<br>make it an experience.
           </h1>
-          <p class="text-[17px] md:text-[19px] opacity-90 mb-10 max-w-2xl mx-auto font-[500] leading-relaxed text-white">
+          <p class="text-[17px] md:text-[19px] opacity-90 mb-10 max-w-2xl mx-auto font-[500] leading-relaxed text-white" style="font-family: 'Abadikan Sans', sans-serif;">
             Everything ready. You fill in your story, set up RSVP,<br>build your gift list, and share it. We are here if you need us.
           </p>
           <Button variant="default" size="lg" class="shadow-lg">Create your invitation</Button>
@@ -273,44 +273,5 @@ export const FloatingMegaMenu: Story = {
         <div class="h-[800px]"></div>
       </div>
     `,
-  }),
-}
-
-// ── Standard Navbar ──────────────────────────────────────────────────────────
-export const Basic: Story = {
-  name: 'Standard Navbar',
-  args: {
-    variant: 'default',
-  },
-  render: (args) => ({
-    components: { Navbar, Button },
-    setup() {
-      return { args }
-    },
-    template: `
-      <div style="border-radius:12px;overflow:hidden;border:1px solid var(--color-border);background:var(--color-surface); height:300px;">
-        <Navbar v-bind="args">
-          <template #start>
-            <div class="flex items-center gap-2 font-bold text-[18px]">
-              abadikan.id
-            </div>
-          </template>
-          <template #center>
-             <nav class="flex gap-6 text-[15px] font-[600] text-gray-600">
-                <a href="#" class="hover:text-black">Tema</a>
-                <a href="#" class="hover:text-black">Fitur</a>
-                <a href="#" class="hover:text-black">Tentang</a>
-                <a href="#" class="hover:text-black">Kontak</a>
-             </nav>
-          </template>
-          <template #end>
-             <div class="flex items-center gap-3">
-               <Button variant="outline" size="sm">Login</Button>
-               <Button variant="primary" size="sm">Daftar</Button>
-             </div>
-          </template>
-        </Navbar>
-      </div>
-    `
   }),
 }
