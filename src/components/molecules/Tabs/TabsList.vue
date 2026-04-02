@@ -12,8 +12,10 @@ const classes = computed(() => {
   if (ctx.variant === 'line') {
     return cn(
       base,
-      isVertical ? 'flex-col border-r border-[--color-border] pr-0' : 'flex-row border-b border-[--color-border]',
-      'gap-1',
+      isVertical
+        ? 'flex-col border-r border-[--color-border] pr-0'
+        : 'flex-row border-b border-[--color-border]',
+      'gap-1'
     )
   }
 
@@ -21,7 +23,7 @@ const classes = computed(() => {
     return cn(
       base,
       isVertical ? 'flex-col' : 'flex-row',
-      'gap-0.5 p-[3px] rounded-full ds-tabs-list--pill',
+      'gap-0.5 p-[3px] rounded-full ds-tabs-list--pill'
     )
   }
 
@@ -29,7 +31,7 @@ const classes = computed(() => {
     return cn(
       base,
       isVertical ? 'flex-col' : 'flex-row',
-      'gap-0 overflow-hidden ds-tabs-list--boxed',
+      'gap-0 overflow-hidden ds-tabs-list--boxed'
     )
   }
 
@@ -38,11 +40,7 @@ const classes = computed(() => {
 </script>
 
 <template>
-  <div
-    :class="classes"
-    role="tablist"
-    :aria-orientation="ctx.orientation"
-  >
+  <div :class="classes" role="tablist" :aria-orientation="ctx.orientation">
     <slot />
   </div>
 </template>
@@ -50,13 +48,17 @@ const classes = computed(() => {
 <style scoped>
 .ds-tabs-list--pill {
   background-color: var(--color-neutral-light);
-  box-shadow: var(--shadow-sm), inset 0 0 0 1px var(--color-border);
+  box-shadow:
+    var(--shadow-sm),
+    inset 0 0 0 1px var(--color-border);
   position: relative;
   isolation: isolate;
 }
 .ds-tabs-list--boxed {
   background-color: var(--color-surface);
   border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-sm), inset 0 0 0 1px var(--color-border);
+  box-shadow:
+    var(--shadow-sm),
+    inset 0 0 0 1px var(--color-border);
 }
 </style>

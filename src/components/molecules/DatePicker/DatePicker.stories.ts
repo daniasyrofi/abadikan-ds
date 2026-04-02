@@ -151,16 +151,16 @@ const meta: Meta<typeof DatePicker> = {
   tags: ['autodocs'],
   parameters: { layout: 'centered', icon: 'calendar' },
   argTypes: {
-    modelValue:  { control: 'text' },
-    mode:        { control: 'select', options: ['single', 'range'] },
-    minDate:     { control: 'text' },
-    maxDate:     { control: 'text' },
-    format:      { control: 'text' },
+    modelValue: { control: 'text' },
+    mode: { control: 'select', options: ['single', 'range'] },
+    minDate: { control: 'text' },
+    maxDate: { control: 'text' },
+    format: { control: 'text' },
     placeholder: { control: 'text' },
-    size:        { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
-    label:       { control: 'text' },
-    error:       { control: 'text' },
-    disabled:    { control: 'boolean' },
+    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    label: { control: 'text' },
+    error: { control: 'text' },
+    disabled: { control: 'boolean' },
   },
   args: {
     modelValue: null,
@@ -170,9 +170,7 @@ const meta: Meta<typeof DatePicker> = {
     size: 'md',
     disabled: false,
   },
-  decorators: [
-    () => ({ template: '<div style="width:320px;"><story /></div>' }),
-  ],
+  decorators: [() => ({ template: '<div style="width:320px;"><story /></div>' })],
 }
 export default meta
 type Story = StoryObj<typeof DatePicker>
@@ -218,10 +216,10 @@ export const MinMaxDate: Story = {
     setup() {
       const date = ref<string | null>(null)
       const today = new Date()
-      const minDate = new Date(today.getFullYear(), today.getMonth(), 1)
-        .toISOString().split('T')[0]
+      const minDate = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().split('T')[0]
       const maxDate = new Date(today.getFullYear(), today.getMonth() + 1, 0)
-        .toISOString().split('T')[0]
+        .toISOString()
+        .split('T')[0]
       return { date, minDate, maxDate, copy: useCopy() }
     },
     template: `

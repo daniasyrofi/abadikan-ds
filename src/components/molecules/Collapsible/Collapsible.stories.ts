@@ -43,9 +43,18 @@ export const FAQ: Story = {
     components: { Collapsible },
     setup: () => ({
       items: [
-        { q: 'How do I create an account?', a: 'Click the Sign Up button on the homepage and fill in your details.' },
-        { q: 'What payment methods do you accept?', a: 'We accept Visa, MasterCard, PayPal, and bank transfers.' },
-        { q: 'Can I cancel my subscription?', a: 'Yes, you can cancel anytime from your account settings.' },
+        {
+          q: 'How do I create an account?',
+          a: 'Click the Sign Up button on the homepage and fill in your details.',
+        },
+        {
+          q: 'What payment methods do you accept?',
+          a: 'We accept Visa, MasterCard, PayPal, and bank transfers.',
+        },
+        {
+          q: 'Can I cancel my subscription?',
+          a: 'Yes, you can cancel anytime from your account settings.',
+        },
       ],
     }),
     template: `

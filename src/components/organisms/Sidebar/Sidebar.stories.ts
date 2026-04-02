@@ -5,71 +5,122 @@ import { Icons } from '@/lib/icons'
 import SearchInput from '@/components/molecules/SearchInput/SearchInput.vue'
 
 // ── Navigation data ───────────────────────────────────────────────────────────
-interface NavChild { id: string; label: string }
-interface NavItem  { id: string; label: string; icon: string; children?: NavChild[] }
-interface NavSection { id: string; label: string; items: NavItem[] }
+interface NavChild {
+  id: string
+  label: string
+}
+interface NavItem {
+  id: string
+  label: string
+  icon: string
+  children?: NavChild[]
+}
+interface NavSection {
+  id: string
+  label: string
+  items: NavItem[]
+}
 
 const SECTIONS: NavSection[] = [
   {
-    id: 'panduan-dasar', label: 'Panduan Dasar',
+    id: 'panduan-dasar',
+    label: 'Panduan Dasar',
     items: [
-      { id: 'intro',      label: 'Intro',      icon: Icons.Book,  children: [
-        { id: 'intro-pengenalan', label: 'Pengenalan Platform' },
-        { id: 'intro-fitur',      label: 'Fitur Unggulan'      },
-        { id: 'intro-cara',       label: 'Cara Membaca'        },
-      ]},
-      { id: 'quickstart', label: 'Quickstart', icon: Icons.Check, children: [
-        { id: 'qs-akun',  label: 'Buat Akun Gratis'   },
-        { id: 'qs-undang', label: 'Undangan Pertama'  },
-        { id: 'qs-share', label: 'Bagikan Link'        },
-      ]},
+      {
+        id: 'intro',
+        label: 'Intro',
+        icon: Icons.Book,
+        children: [
+          { id: 'intro-pengenalan', label: 'Pengenalan Platform' },
+          { id: 'intro-fitur', label: 'Fitur Unggulan' },
+          { id: 'intro-cara', label: 'Cara Membaca' },
+        ],
+      },
+      {
+        id: 'quickstart',
+        label: 'Quickstart',
+        icon: Icons.Check,
+        children: [
+          { id: 'qs-akun', label: 'Buat Akun Gratis' },
+          { id: 'qs-undang', label: 'Undangan Pertama' },
+          { id: 'qs-share', label: 'Bagikan Link' },
+        ],
+      },
     ],
   },
   {
-    id: 'dashboard', label: 'Dashboard',
+    id: 'dashboard',
+    label: 'Dashboard',
     items: [
-      { id: 'dash-link',      label: 'Link Undangan',      icon: Icons.Breadcrumb  },
-      { id: 'dash-progress',  label: 'Progress Undangan',  icon: Icons.ProgressBar },
-      { id: 'dash-statistik', label: 'Statistik Undangan', icon: Icons.BarChart    },
-      { id: 'dash-tamu',      label: 'Statistik Tamu',     icon: Icons.Team        },
-      { id: 'dash-pesan',     label: 'Pesan Terbaru',      icon: Icons.Inbox       },
-      { id: 'dash-analytics', label: 'Analytics Overview', icon: Icons.BarChart    },
-      { id: 'dash-trends',    label: 'Trends Analytics',   icon: Icons.BarChart    },
+      { id: 'dash-link', label: 'Link Undangan', icon: Icons.Breadcrumb },
+      { id: 'dash-progress', label: 'Progress Undangan', icon: Icons.ProgressBar },
+      { id: 'dash-statistik', label: 'Statistik Undangan', icon: Icons.BarChart },
+      { id: 'dash-tamu', label: 'Statistik Tamu', icon: Icons.Team },
+      { id: 'dash-pesan', label: 'Pesan Terbaru', icon: Icons.Inbox },
+      { id: 'dash-analytics', label: 'Analytics Overview', icon: Icons.BarChart },
+      { id: 'dash-trends', label: 'Trends Analytics', icon: Icons.BarChart },
     ],
   },
   {
-    id: 'kustomisasi', label: 'Kustomisasi',
+    id: 'kustomisasi',
+    label: 'Kustomisasi',
     items: [
-      { id: 'edit-undangan', label: 'Edit Undangan', icon: Icons.Form, children: [
-        { id: 'edit-template',  label: 'Pilih Template'  },
-        { id: 'edit-konten',    label: 'Isi Konten'      },
-        { id: 'edit-galeri',    label: 'Galeri Foto'     },
-        { id: 'edit-countdown', label: 'Countdown Timer' },
-      ]},
-      { id: 'musik', label: 'Musik', icon: Icons.Slider, children: [
-        { id: 'musik-pilih',  label: 'Pilih Musik'         },
-        { id: 'musik-upload', label: 'Upload Musik Sendiri' },
-      ]},
+      {
+        id: 'edit-undangan',
+        label: 'Edit Undangan',
+        icon: Icons.Form,
+        children: [
+          { id: 'edit-template', label: 'Pilih Template' },
+          { id: 'edit-konten', label: 'Isi Konten' },
+          { id: 'edit-galeri', label: 'Galeri Foto' },
+          { id: 'edit-countdown', label: 'Countdown Timer' },
+        ],
+      },
+      {
+        id: 'musik',
+        label: 'Musik',
+        icon: Icons.Slider,
+        children: [
+          { id: 'musik-pilih', label: 'Pilih Musik' },
+          { id: 'musik-upload', label: 'Upload Musik Sendiri' },
+        ],
+      },
     ],
   },
   {
-    id: 'interaksi-tamu', label: 'Interaksi Tamu',
+    id: 'interaksi-tamu',
+    label: 'Interaksi Tamu',
     items: [
-      { id: 'rsvp-tamu', label: 'RSVP Tamu', icon: Icons.Mail, children: [
-        { id: 'rsvp-daftar',  label: 'Daftar Tamu'           },
-        { id: 'rsvp-konfirm', label: 'Konfirmasi Kehadiran'   },
-        { id: 'rsvp-export',  label: 'Export Data Tamu'       },
-      ]},
-      { id: 'kado', label: 'Kado', icon: Icons.Folder, children: [
-        { id: 'kado-rekening', label: 'Rekening Bank'    },
-        { id: 'kado-ewallet',  label: 'E-Wallet'         },
-        { id: 'kado-wishlist', label: 'Wishlist Registry' },
-      ]},
-      { id: 'digital-guestbook', label: 'Digital Guestbook', icon: Icons.ChatMessage, children: [
-        { id: 'gb-ucapan',   label: 'Ucapan & Doa'    },
-        { id: 'gb-moderasi', label: 'Moderasi Pesan'   },
-        { id: 'gb-export',   label: 'Export Buku Tamu' },
-      ]},
+      {
+        id: 'rsvp-tamu',
+        label: 'RSVP Tamu',
+        icon: Icons.Mail,
+        children: [
+          { id: 'rsvp-daftar', label: 'Daftar Tamu' },
+          { id: 'rsvp-konfirm', label: 'Konfirmasi Kehadiran' },
+          { id: 'rsvp-export', label: 'Export Data Tamu' },
+        ],
+      },
+      {
+        id: 'kado',
+        label: 'Kado',
+        icon: Icons.Folder,
+        children: [
+          { id: 'kado-rekening', label: 'Rekening Bank' },
+          { id: 'kado-ewallet', label: 'E-Wallet' },
+          { id: 'kado-wishlist', label: 'Wishlist Registry' },
+        ],
+      },
+      {
+        id: 'digital-guestbook',
+        label: 'Digital Guestbook',
+        icon: Icons.ChatMessage,
+        children: [
+          { id: 'gb-ucapan', label: 'Ucapan & Doa' },
+          { id: 'gb-moderasi', label: 'Moderasi Pesan' },
+          { id: 'gb-export', label: 'Export Buku Tamu' },
+        ],
+      },
     ],
   },
 ]
@@ -78,9 +129,9 @@ const SECTIONS: NavSection[] = [
 const DocsNav = defineComponent({ template: '<div />' })
 
 const meta: Meta = {
-  title:     'Organisms/Sidebar',
+  title: 'Organisms/Sidebar',
   component: DocsNav,
-  tags:      ['autodocs'],
+  tags: ['autodocs'],
   decorators: [
     () => ({
       template: `
@@ -102,22 +153,29 @@ export const Default: Story = {
   render: () => ({
     components: { SearchInput },
     setup() {
-      const { theme }  = useTheme()
-      const isDark     = computed(() => theme.value === 'dark')
+      const { theme } = useTheme()
+      const isDark = computed(() => theme.value === 'dark')
 
       // Logo colours
-      const logoBg    = computed(() => isDark.value ? '#ffffff'              : 'var(--color-primary)')
-      const logoFill  = computed(() => isDark.value ? 'var(--color-primary)' : '#ffffff')
-      const docsColor = computed(() => isDark.value ? '#ffffff'              : 'var(--color-text-heading)')
+      const logoBg = computed(() => (isDark.value ? '#ffffff' : 'var(--color-primary)'))
+      const logoFill = computed(() => (isDark.value ? 'var(--color-primary)' : '#ffffff'))
+      const docsColor = computed(() => (isDark.value ? '#ffffff' : 'var(--color-text-heading)'))
 
       // Sidebar open/close + hover-peek
-      const pinned  = ref(false)
+      const pinned = ref(false)
       const hovered = ref(false)
-      const open    = computed(() => !pinned.value || hovered.value)
+      const open = computed(() => !pinned.value || hovered.value)
 
-      function onEnter() { if (pinned.value) hovered.value = true  }
-      function onLeave() { hovered.value = false }
-      function toggle()  { pinned.value = !pinned.value; hovered.value = false }
+      function onEnter() {
+        if (pinned.value) hovered.value = true
+      }
+      function onLeave() {
+        hovered.value = false
+      }
+      function toggle() {
+        pinned.value = !pinned.value
+        hovered.value = false
+      }
 
       // Section collapse
       const collapsedSections = ref<Set<string>>(new Set())
@@ -129,20 +187,31 @@ export const Default: Story = {
 
       // Active item
       const activeParent = ref('intro')
-      const activeChild  = ref('intro-pengenalan')
+      const activeChild = ref('intro-pengenalan')
       function activateParent(item: NavItem) {
         activeParent.value = item.id
-        activeChild.value  = item.children?.[0]?.id ?? ''
+        activeChild.value = item.children?.[0]?.id ?? ''
       }
 
       const query = ref('')
 
       return {
-        isDark, logoBg, logoFill, docsColor,
-        pinned, open, onEnter, onLeave, toggle,
-        collapsedSections, toggleSection,
-        activeParent, activeChild, activateParent,
-        query, SECTIONS,
+        isDark,
+        logoBg,
+        logoFill,
+        docsColor,
+        pinned,
+        open,
+        onEnter,
+        onLeave,
+        toggle,
+        collapsedSections,
+        toggleSection,
+        activeParent,
+        activeChild,
+        activateParent,
+        query,
+        SECTIONS,
         Icons,
       }
     },

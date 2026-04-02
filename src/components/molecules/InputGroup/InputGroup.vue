@@ -17,13 +17,7 @@ withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <div
-    :class="cn(
-      'ds-input-group',
-      error && 'ds-input-group--error',
-      'flex items-stretch w-full',
-    )"
-  >
+  <div :class="cn('ds-input-group', error && 'ds-input-group--error', 'flex items-stretch w-full')">
     <slot />
   </div>
 </template>
@@ -35,7 +29,12 @@ withDefaults(defineProps<Props>(), {
 }
 
 /* Keep grouped focus/hover clean (no ring or darker outline leaking) */
-.ds-input-group :deep(.ds-input-wrapper:hover:not(.ds-input-wrapper--disabled):not(.ds-input-wrapper--readonly):not(:focus-within)),
+.ds-input-group
+  :deep(
+    .ds-input-wrapper:hover:not(.ds-input-wrapper--disabled):not(.ds-input-wrapper--readonly):not(
+        :focus-within
+      )
+  ),
 .ds-input-group :deep(.ds-input-wrapper:focus-within:not(.ds-input-wrapper--error)) {
   border-color: var(--color-border) !important;
 }
@@ -58,7 +57,12 @@ withDefaults(defineProps<Props>(), {
 
 /* Error mode for whole group: preserve shape, only switch input border color */
 .ds-input-group--error :deep(.ds-input-wrapper),
-.ds-input-group--error :deep(.ds-input-wrapper:hover:not(.ds-input-wrapper--disabled):not(.ds-input-wrapper--readonly):not(:focus-within)),
+.ds-input-group--error
+  :deep(
+    .ds-input-wrapper:hover:not(.ds-input-wrapper--disabled):not(.ds-input-wrapper--readonly):not(
+        :focus-within
+      )
+  ),
 .ds-input-group--error :deep(.ds-input-wrapper:focus-within) {
   border-color: var(--color-danger) !important;
   box-shadow: none !important;

@@ -25,7 +25,7 @@ describe('HoverCard', () => {
       slots: { trigger: '<button>x</button>', default: 'Card content' },
     })
     await wrapper.trigger('mouseenter')
-    await new Promise(r => setTimeout(r, 10))
+    await new Promise((r) => setTimeout(r, 10))
     await nextTick()
     const card = wrapper.find('[role="tooltip"]')
     expect(card.exists()).toBe(true)
@@ -46,9 +46,9 @@ describe('HoverCard', () => {
       slots: { trigger: '<button>x</button>', default: 'Card content' },
     })
     await wrapper.trigger('mouseenter')
-    await new Promise(r => setTimeout(r, 10))
+    await new Promise((r) => setTimeout(r, 10))
     await wrapper.trigger('mouseleave')
-    await new Promise(r => setTimeout(r, 50))
+    await new Promise((r) => setTimeout(r, 50))
     await nextTick()
     expect(wrapper.find('[role="tooltip"]').exists()).toBe(false)
   })
@@ -59,12 +59,12 @@ describe('HoverCard', () => {
       slots: { trigger: '<button>x</button>', default: 'Card content' },
     })
     await wrapper.trigger('mouseenter')
-    await new Promise(r => setTimeout(r, 10))
+    await new Promise((r) => setTimeout(r, 10))
     // Mouse onto card — should cancel the close timer
     const card = wrapper.find('[role="tooltip"]')
     if (card.exists()) {
       await card.trigger('mouseenter')
-      await new Promise(r => setTimeout(r, 50))
+      await new Promise((r) => setTimeout(r, 50))
       expect(wrapper.find('[role="tooltip"]').exists()).toBe(true)
     }
   })

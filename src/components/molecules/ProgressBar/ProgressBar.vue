@@ -42,33 +42,24 @@ const variantColor: Record<Variant, string> = {
   primary: 'var(--color-primary)',
   success: 'var(--color-success)',
   warning: 'var(--color-warning)',
-  danger:  'var(--color-danger)',
-  info:    'var(--color-info)',
+  danger: 'var(--color-danger)',
+  info: 'var(--color-info)',
 }
 
-const fillColor = computed(() =>
-  `var(--progress-fill, ${variantColor[props.variant]})`
-)
+const fillColor = computed(() => `var(--progress-fill, ${variantColor[props.variant]})`)
 </script>
 
 <template>
   <div class="flex flex-col gap-1.5 w-full">
     <!-- Label row -->
-    <div
-      v-if="label || showValue"
-      class="flex items-center justify-between"
-    >
-      <span
-        v-if="label"
-        class="text-sm font-medium"
-        style="color: var(--color-text-primary);"
-      >
+    <div v-if="label || showValue" class="flex items-center justify-between">
+      <span v-if="label" class="text-sm font-medium" style="color: var(--color-text-primary)">
         {{ label }}
       </span>
       <span
         v-if="showValue && !indeterminate"
         class="text-sm font-medium tabular-nums"
-        style="color: var(--color-text-secondary);"
+        style="color: var(--color-text-secondary)"
       >
         {{ clamped }}%
       </span>

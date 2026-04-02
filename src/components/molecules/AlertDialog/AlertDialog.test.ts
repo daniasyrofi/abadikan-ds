@@ -61,7 +61,7 @@ describe('AlertDialog', () => {
       attachTo: document.body,
     })
     const buttons = Array.from(document.body.querySelectorAll<HTMLElement>('button'))
-    const confirmBtn = buttons.find(b => b.textContent?.includes('Yes, delete'))
+    const confirmBtn = buttons.find((b) => b.textContent?.includes('Yes, delete'))
     await confirmBtn?.click()
     expect(wrapper.emitted('confirm')).toBeTruthy()
     wrapper.unmount()

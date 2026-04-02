@@ -216,11 +216,11 @@ export const CardSelector: Story = {
       const copy = useCopy()
       const active = ref<Locale>(getLocale())
 
-      const options = computed(() => ([
+      const options = computed(() => [
         { value: 'id' as Locale, code: 'ID', label: copy.value.labels.languageNames.id },
         { value: 'en' as Locale, code: 'EN', label: copy.value.labels.languageNames.en },
         { value: 'zh' as Locale, code: 'ZH', label: copy.value.labels.languageNames.zh },
-      ]))
+      ])
 
       const select = (value: Locale) => {
         active.value = value
@@ -235,15 +235,15 @@ export const CardSelector: Story = {
         gap: '8px',
         padding: '12px 10px 10px',
         borderRadius: '16px',
-        border: active.value === value
-          ? '2px solid var(--color-text-primary)'
-          : '1px solid var(--color-border)',
-        backgroundColor: active.value === value
-          ? 'var(--color-surface)'
-          : 'var(--color-bg)',
-        boxShadow: active.value === value
-          ? '0 10px 18px -14px oklch(0.2 0 0 / 0.4), 0 1px 2px oklch(0.2 0 0 / 0.1)'
-          : 'none',
+        border:
+          active.value === value
+            ? '2px solid var(--color-text-primary)'
+            : '1px solid var(--color-border)',
+        backgroundColor: active.value === value ? 'var(--color-surface)' : 'var(--color-bg)',
+        boxShadow:
+          active.value === value
+            ? '0 10px 18px -14px oklch(0.2 0 0 / 0.4), 0 1px 2px oklch(0.2 0 0 / 0.1)'
+            : 'none',
         transform: active.value === value ? 'translateY(-1px)' : 'translateY(0)',
         transition: 'all var(--duration-normal) var(--ease-out)',
         cursor: 'pointer',
@@ -327,11 +327,20 @@ export const Dropdown: Story = {
 
       const currentLabel = computed(() => copy.value.labels.languageNames[active.value])
 
-      const items = computed(() => ([
-        { label: `${active.value === 'id' ? '✓ ' : ''}${copy.value.labels.languageNames.id}`, action: () => setLocale('id') },
-        { label: `${active.value === 'en' ? '✓ ' : ''}${copy.value.labels.languageNames.en}`, action: () => setLocale('en') },
-        { label: `${active.value === 'zh' ? '✓ ' : ''}${copy.value.labels.languageNames.zh}`, action: () => setLocale('zh') },
-      ]))
+      const items = computed(() => [
+        {
+          label: `${active.value === 'id' ? '✓ ' : ''}${copy.value.labels.languageNames.id}`,
+          action: () => setLocale('id'),
+        },
+        {
+          label: `${active.value === 'en' ? '✓ ' : ''}${copy.value.labels.languageNames.en}`,
+          action: () => setLocale('en'),
+        },
+        {
+          label: `${active.value === 'zh' ? '✓ ' : ''}${copy.value.labels.languageNames.zh}`,
+          action: () => setLocale('zh'),
+        },
+      ])
 
       return { copy, items, currentLabel }
     },

@@ -36,21 +36,21 @@
 export interface ThemeTokens {
   // ── Brand colors ───────────────────────────────────────────────────────────
   /** Primary brand color. Any CSS color value (oklch recommended). */
-  primary?:        string
+  primary?: string
   /** Primary hover state. Defaults to a slightly darker primary. */
-  primaryHover?:   string
+  primaryHover?: string
   /** Primary light / tinted surface. Defaults to a very light primary. */
-  primaryLight?:   string
+  primaryLight?: string
 
   /** Secondary accent color. */
-  secondary?:      string
+  secondary?: string
   secondaryHover?: string
   secondaryLight?: string
 
   /** Semantic danger color override. */
-  danger?:         string
-  dangerHover?:    string
-  dangerLight?:    string
+  danger?: string
+  dangerHover?: string
+  dangerLight?: string
 
   // ── Radius preset ──────────────────────────────────────────────────────────
   /**
@@ -65,11 +65,11 @@ export interface ThemeTokens {
 
   // ── Typography ─────────────────────────────────────────────────────────────
   /** Override the UI font family. */
-  fontUi?:      string
+  fontUi?: string
   /** Override the display/heading font family. */
   fontDisplay?: string
   /** Override the monospace font family. */
-  fontMono?:    string
+  fontMono?: string
 
   // ── Raw overrides ──────────────────────────────────────────────────────────
   /**
@@ -79,39 +79,42 @@ export interface ThemeTokens {
   vars?: Record<string, string>
 }
 
-const RADIUS_PRESETS: Record<Exclude<ThemeTokens['radiusScale'], undefined>, Record<string, string>> = {
+const RADIUS_PRESETS: Record<
+  Exclude<ThemeTokens['radiusScale'], undefined>,
+  Record<string, string>
+> = {
   sharp: {
-    '--radius-xs':   '0px',
-    '--radius-sm':   '0px',
-    '--radius-md':   '0px',
-    '--radius-lg':   '0px',
-    '--radius-xl':   '0px',
-    '--radius-2xl':  '0px',
+    '--radius-xs': '0px',
+    '--radius-sm': '0px',
+    '--radius-md': '0px',
+    '--radius-lg': '0px',
+    '--radius-xl': '0px',
+    '--radius-2xl': '0px',
   },
-  default: {},  // no overrides — use globals.css values
+  default: {}, // no overrides — use globals.css values
   soft: {
-    '--radius-xs':   '3px',
-    '--radius-sm':   '6px',
-    '--radius-md':   '12px',
-    '--radius-lg':   '18px',
-    '--radius-xl':   '24px',
-    '--radius-2xl':  '30px',
+    '--radius-xs': '3px',
+    '--radius-sm': '6px',
+    '--radius-md': '12px',
+    '--radius-lg': '18px',
+    '--radius-xl': '24px',
+    '--radius-2xl': '30px',
   },
   round: {
-    '--radius-xs':   '6px',
-    '--radius-sm':   '10px',
-    '--radius-md':   '16px',
-    '--radius-lg':   '24px',
-    '--radius-xl':   '32px',
-    '--radius-2xl':  '40px',
+    '--radius-xs': '6px',
+    '--radius-sm': '10px',
+    '--radius-md': '16px',
+    '--radius-lg': '24px',
+    '--radius-xl': '32px',
+    '--radius-2xl': '40px',
   },
   pill: {
-    '--radius-xs':   '9999px',
-    '--radius-sm':   '9999px',
-    '--radius-md':   '9999px',
-    '--radius-lg':   '9999px',
-    '--radius-xl':   '9999px',
-    '--radius-2xl':  '9999px',
+    '--radius-xs': '9999px',
+    '--radius-sm': '9999px',
+    '--radius-md': '9999px',
+    '--radius-lg': '9999px',
+    '--radius-xl': '9999px',
+    '--radius-2xl': '9999px',
   },
 }
 
@@ -122,21 +125,21 @@ const RADIUS_PRESETS: Record<Exclude<ThemeTokens['radiusScale'], undefined>, Rec
 export function createTheme(tokens: ThemeTokens): Record<string, string> {
   const vars: Record<string, string> = {}
 
-  if (tokens.primary)      vars['--color-primary']       = tokens.primary
-  if (tokens.primaryHover) vars['--color-primary-hover']  = tokens.primaryHover
-  if (tokens.primaryLight) vars['--color-primary-light']  = tokens.primaryLight
+  if (tokens.primary) vars['--color-primary'] = tokens.primary
+  if (tokens.primaryHover) vars['--color-primary-hover'] = tokens.primaryHover
+  if (tokens.primaryLight) vars['--color-primary-light'] = tokens.primaryLight
 
-  if (tokens.secondary)      vars['--color-secondary']        = tokens.secondary
-  if (tokens.secondaryHover) vars['--color-secondary-hover']  = tokens.secondaryHover
-  if (tokens.secondaryLight) vars['--color-secondary-light']  = tokens.secondaryLight
+  if (tokens.secondary) vars['--color-secondary'] = tokens.secondary
+  if (tokens.secondaryHover) vars['--color-secondary-hover'] = tokens.secondaryHover
+  if (tokens.secondaryLight) vars['--color-secondary-light'] = tokens.secondaryLight
 
-  if (tokens.danger)      vars['--color-danger']        = tokens.danger
-  if (tokens.dangerHover) vars['--color-danger-hover']  = tokens.dangerHover
-  if (tokens.dangerLight) vars['--color-danger-light']  = tokens.dangerLight
+  if (tokens.danger) vars['--color-danger'] = tokens.danger
+  if (tokens.dangerHover) vars['--color-danger-hover'] = tokens.dangerHover
+  if (tokens.dangerLight) vars['--color-danger-light'] = tokens.dangerLight
 
-  if (tokens.fontUi)      vars['--font-ui']      = tokens.fontUi
+  if (tokens.fontUi) vars['--font-ui'] = tokens.fontUi
   if (tokens.fontDisplay) vars['--font-display'] = tokens.fontDisplay
-  if (tokens.fontMono)    vars['--font-mono']    = tokens.fontMono
+  if (tokens.fontMono) vars['--font-mono'] = tokens.fontMono
 
   if (tokens.radiusScale && tokens.radiusScale !== 'default') {
     Object.assign(vars, RADIUS_PRESETS[tokens.radiusScale])

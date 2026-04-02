@@ -91,32 +91,36 @@ const btnWidthClass: Record<Size, string> = {
       v-if="label"
       :for="inputId"
       :class="cn('text-sm font-medium select-none', disabled && 'opacity-50')"
-      style="color: var(--color-text-heading);"
+      style="color: var(--color-text-heading)"
     >
       {{ label }}
     </label>
 
     <div
-      :class="cn(
-        'ds-number-input',
-        'flex items-stretch rounded-[var(--radius-lg)] border overflow-hidden',
-        'transition-colors duration-200 ease-out',
-        heightClass[size],
-        disabled && 'ds-number-input--disabled',
-        readonly && 'ds-number-input--readonly',
-      )"
+      :class="
+        cn(
+          'ds-number-input',
+          'flex items-stretch rounded-[var(--radius-lg)] border overflow-hidden',
+          'transition-colors duration-200 ease-out',
+          heightClass[size],
+          disabled && 'ds-number-input--disabled',
+          readonly && 'ds-number-input--readonly'
+        )
+      "
     >
       <!-- Decrement -->
       <button
         type="button"
         :disabled="disabled || readonly || !canDecrement"
-        :class="cn(
-          'ds-number-btn ds-number-btn--left',
-          'shrink-0 flex items-center justify-center',
-          'transition-all duration-200 ease-out',
-          'active:scale-[0.97]',
-          btnWidthClass[size],
-        )"
+        :class="
+          cn(
+            'ds-number-btn ds-number-btn--left',
+            'shrink-0 flex items-center justify-center',
+            'transition-all duration-200 ease-out',
+            'active:scale-[0.97]',
+            btnWidthClass[size]
+          )
+        "
         aria-label="Decrease value"
         @click="decrement"
       >
@@ -133,12 +137,14 @@ const btnWidthClass: Record<Size, string> = {
         :step="step"
         :disabled="disabled"
         :readonly="readonly"
-        :class="cn(
-          'ds-number-input__value flex-1 min-w-0 text-center font-semibold bg-transparent outline-none border-none tabular-nums',
-          textClass[size],
-          disabled && 'cursor-not-allowed',
-          readonly && 'cursor-default select-none',
-        )"
+        :class="
+          cn(
+            'ds-number-input__value flex-1 min-w-0 text-center font-semibold bg-transparent outline-none border-none tabular-nums',
+            textClass[size],
+            disabled && 'cursor-not-allowed',
+            readonly && 'cursor-default select-none'
+          )
+        "
         @input="handleInput"
       />
 
@@ -146,13 +152,15 @@ const btnWidthClass: Record<Size, string> = {
       <button
         type="button"
         :disabled="disabled || readonly || !canIncrement"
-        :class="cn(
-          'ds-number-btn ds-number-btn--right',
-          'shrink-0 flex items-center justify-center',
-          'transition-all duration-200 ease-out',
-          'active:scale-[0.97]',
-          btnWidthClass[size],
-        )"
+        :class="
+          cn(
+            'ds-number-btn ds-number-btn--right',
+            'shrink-0 flex items-center justify-center',
+            'transition-all duration-200 ease-out',
+            'active:scale-[0.97]',
+            btnWidthClass[size]
+          )
+        "
         aria-label="Increase value"
         @click="increment"
       >
@@ -204,7 +212,7 @@ const btnWidthClass: Record<Size, string> = {
   margin: 0;
 }
 
-.ds-number-input__value[type="number"] {
+.ds-number-input__value[type='number'] {
   -moz-appearance: textfield;
 }
 
@@ -230,7 +238,6 @@ const btnWidthClass: Record<Size, string> = {
   opacity: 0.4;
   cursor: not-allowed;
 }
-
 
 /* Rounded corners matching the container radius */
 .ds-number-btn--left {

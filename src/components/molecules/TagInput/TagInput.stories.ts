@@ -7,11 +7,11 @@ const meta: Meta<typeof TagInput> = {
   component: TagInput,
   tags: ['autodocs'],
   argTypes: {
-    size:            { control: 'select', options: ['sm', 'md', 'lg'] },
-    maxTags:         { control: 'number' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    maxTags: { control: 'number' },
     allowDuplicates: { control: 'boolean' },
-    disabled:        { control: 'boolean' },
-    error:           { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    error: { control: 'boolean' },
   },
 }
 export default meta

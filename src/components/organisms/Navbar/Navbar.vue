@@ -20,10 +20,10 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  title:   '',
+  title: '',
   variant: 'default',
-  sticky:  false,
-  border:  true,
+  sticky: false,
+  border: true,
   floatingOnScroll: false,
 })
 
@@ -33,15 +33,18 @@ let observer: IntersectionObserver | null = null
 
 onMounted(() => {
   if (props.floatingOnScroll) {
-    observer = new IntersectionObserver(([entry]) => {
-      // Sentinel goes out of view => we have scrolled down
-      isScrolled.value = !entry.isIntersecting
-    }, {
-      root: props.scrollTarget ? document.querySelector(props.scrollTarget) : null,
-      threshold: 1.0,
-      rootMargin: '0px'
-    })
-    
+    observer = new IntersectionObserver(
+      ([entry]) => {
+        // Sentinel goes out of view => we have scrolled down
+        isScrolled.value = !entry.isIntersecting
+      },
+      {
+        root: props.scrollTarget ? document.querySelector(props.scrollTarget) : null,
+        threshold: 1.0,
+        rootMargin: '0px',
+      }
+    )
+
     if (sentinel.value) {
       observer.observe(sentinel.value)
     }
@@ -53,9 +56,9 @@ onUnmounted(() => {
 })
 
 const variantClasses: Record<Variant, string> = {
-  default:     'bg-[--color-surface] text-[--color-text-primary]',
+  default: 'bg-[--color-surface] text-[--color-text-primary]',
   transparent: 'bg-transparent text-[--color-text-primary]',
-  colored:     'bg-[--color-neutral] text-[--color-text-inverse] shadow-[--shadow-highlight]',
+  colored: 'bg-[--color-neutral] text-[--color-text-inverse] shadow-[--shadow-highlight]',
 }
 
 const isFloating = computed(() => props.floatingOnScroll && isScrolled.value)
@@ -77,15 +80,16 @@ const classes = computed(() =>
 </script>
 
 <template>
-  <div v-if="floatingOnScroll && sticky" ref="sentinel" class="w-full h-[1px] mt-[-1px] opacity-0 pointer-events-none absolute top-0"></div>
+  <div
+    v-if="floatingOnScroll && sticky"
+    ref="sentinel"
+    class="w-full h-[1px] mt-[-1px] opacity-0 pointer-events-none absolute top-0"
+  ></div>
   <header :class="classes" v-bind="$attrs">
     <!-- Start (left): logo / title -->
     <div class="flex items-center shrink-0">
       <slot name="start" :is-floating="isFloating">
-        <span
-          v-if="title"
-          class="text-base font-semibold leading-none select-none"
-        >
+        <span v-if="title" class="text-base font-semibold leading-none select-none">
           {{ title }}
         </span>
       </slot>

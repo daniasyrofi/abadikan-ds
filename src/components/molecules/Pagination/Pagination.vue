@@ -118,8 +118,12 @@ const iconSize: Record<Size, number> = {
 function ellipsisClasses() {
   return cn(
     'inline-flex items-center justify-center',
-    props.size === 'sm' ? 'w-7 h-7 text-xs' : props.size === 'md' ? 'w-8 h-8 text-sm' : 'w-9 h-9 text-sm',
-    'text-[--color-text-tertiary] select-none',
+    props.size === 'sm'
+      ? 'w-7 h-7 text-xs'
+      : props.size === 'md'
+        ? 'w-8 h-8 text-sm'
+        : 'w-9 h-9 text-sm',
+    'text-[--color-text-tertiary] select-none'
   )
 }
 </script>
@@ -157,9 +161,7 @@ function ellipsisClasses() {
 
     <!-- Page numbers -->
     <template v-for="page in visiblePages" :key="page">
-      <span v-if="typeof page === 'string'" :class="ellipsisClasses()">
-        &hellip;
-      </span>
+      <span v-if="typeof page === 'string'" :class="ellipsisClasses()"> &hellip; </span>
       <Button
         v-else
         :variant="page === modelValue ? 'secondary' : 'ghost'"

@@ -7,31 +7,31 @@ type TagInputSize = 'sm' | 'md' | 'lg'
 
 interface Props {
   /** Current array of tag strings. Supports v-model. */
-  modelValue?:      string[]
+  modelValue?: string[]
   /** Placeholder text shown when there are no tags. */
-  placeholder?:     string
+  placeholder?: string
   /** Maximum number of tags allowed. */
-  maxTags?:         number
+  maxTags?: number
   /** Allow duplicate tag values. @default false */
   allowDuplicates?: boolean
   /** Disables the input. @default false */
-  disabled?:        boolean
+  disabled?: boolean
   /** Shows error state. @default false */
-  error?:           boolean
+  error?: boolean
   /** Visual size. @default 'md' */
-  size?:            TagInputSize
+  size?: TagInputSize
   /** Keys that trigger tag creation. @default ['Enter', ','] */
-  delimiters?:      string[]
+  delimiters?: string[]
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  modelValue:      () => [],
-  placeholder:     'Add tag…',
+  modelValue: () => [],
+  placeholder: 'Add tag…',
   allowDuplicates: false,
-  disabled:        false,
-  error:           false,
-  size:            'md',
-  delimiters:      () => ['Enter', ','],
+  disabled: false,
+  error: false,
+  size: 'md',
+  delimiters: () => ['Enter', ','],
 })
 
 const emit = defineEmits<{
@@ -39,12 +39,15 @@ const emit = defineEmits<{
 }>()
 
 const inputText = ref('')
-const inputRef  = ref<HTMLInputElement | null>(null)
+const inputRef = ref<HTMLInputElement | null>(null)
 
 function addTag(raw: string) {
   const tag = raw.trim()
   if (!tag) return
-  if (!props.allowDuplicates && props.modelValue.includes(tag)) { inputText.value = ''; return }
+  if (!props.allowDuplicates && props.modelValue.includes(tag)) {
+    inputText.value = ''
+    return
+  }
   if (props.maxTags !== undefined && props.modelValue.length >= props.maxTags) return
   emit('update:modelValue', [...props.modelValue, tag])
   inputText.value = ''
@@ -82,18 +85,20 @@ const minHeightClass: Record<TagInputSize, string> = {
 
 <template>
   <div
-    :class="cn(
-      'flex flex-wrap items-center gap-1.5 px-3 py-1.5 rounded-[var(--radius-md)] transition-all cursor-text',
-      minHeightClass[size],
-      error
-        ? 'ring-2 ring-[--color-danger]'
-        : 'focus-within:ring-2 focus-within:ring-[--color-primary]',
-      disabled && 'opacity-50 pointer-events-none',
-    )"
+    :class="
+      cn(
+        'flex flex-wrap items-center gap-1.5 px-3 py-1.5 rounded-[var(--radius-md)] transition-all cursor-text',
+        minHeightClass[size],
+        error
+          ? 'ring-2 ring-[--color-danger]'
+          : 'focus-within:ring-2 focus-within:ring-[--color-primary]',
+        disabled && 'opacity-50 pointer-events-none'
+      )
+    "
     :style="{
       backgroundColor: 'var(--color-surface)',
-      border:          '1px solid var(--color-border)',
-      boxShadow:       'var(--shadow-xs)',
+      border: '1px solid var(--color-border)',
+      boxShadow: 'var(--shadow-xs)',
     }"
     @click="inputRef?.focus()"
   >
@@ -105,7 +110,7 @@ const minHeightClass: Record<TagInputSize, string> = {
       :class="textSizeClass[size]"
       :style="{
         backgroundColor: 'var(--color-primary-light)',
-        color:           'var(--color-primary)',
+        color: 'var(--color-primary)',
       }"
     >
       {{ tag }}

@@ -198,7 +198,7 @@ const dropzoneClasses = computed(() =>
     isDragOver.value
       ? 'ds-dropzone--active border-[--color-primary] scale-[1.01]'
       : 'ds-dropzone--idle',
-    props.disabled && 'opacity-50 pointer-events-none cursor-not-allowed',
+    props.disabled && 'opacity-50 pointer-events-none cursor-not-allowed'
   )
 )
 </script>
@@ -219,23 +219,28 @@ const dropzoneClasses = computed(() =>
       @drop="handleDrop"
     >
       <span
-        :class="cn(
-          'flex items-center justify-center w-12 h-12 rounded-full',
-          'transition-colors duration-[--duration-normal]',
-          isDragOver ? 'ds-upload-icon-bg--active' : 'ds-upload-icon-bg',
-        )"
+        :class="
+          cn(
+            'flex items-center justify-center w-12 h-12 rounded-full',
+            'transition-colors duration-[--duration-normal]',
+            isDragOver ? 'ds-upload-icon-bg--active' : 'ds-upload-icon-bg'
+          )
+        "
       >
         <RiUploadCloud2Line
           :size="'24'"
-          :class="cn(
-            'transition-colors duration-[--duration-normal]',
-            isDragOver ? 'text-[--color-primary]' : 'text-[--color-text-tertiary]',
-          )"
+          :class="
+            cn(
+              'transition-colors duration-[--duration-normal]',
+              isDragOver ? 'text-[--color-primary]' : 'text-[--color-text-tertiary]'
+            )
+          "
         />
       </span>
       <div class="text-center">
         <p class="text-sm font-semibold text-[--color-text-primary]">
-          Click to upload <span class="font-normal text-[--color-text-secondary]">or drag and drop</span>
+          Click to upload
+          <span class="font-normal text-[--color-text-secondary]">or drag and drop</span>
         </p>
         <p v-if="acceptHint" class="text-xs text-[--color-text-tertiary] mt-1">
           {{ acceptHint }}

@@ -4,46 +4,46 @@ import { RiCloseLine } from '@remixicon/vue'
 import Button from '@/components/atoms/Button/Button.vue'
 
 type DrawerPlacement = 'left' | 'right' | 'top' | 'bottom'
-type DrawerSize      = 'sm' | 'md' | 'lg' | 'xl' | 'full'
+type DrawerSize = 'sm' | 'md' | 'lg' | 'xl' | 'full'
 
 interface Props {
   /** Controls the open/closed state. Supports v-model. */
-  modelValue:      boolean
+  modelValue: boolean
   /** Side from which the drawer slides in. @default 'right' */
-  placement?:      DrawerPlacement
+  placement?: DrawerPlacement
   /** Width (left/right) or height (top/bottom) of the drawer. @default 'md' */
-  size?:           DrawerSize
+  size?: DrawerSize
   /** Shows the close button. @default true */
-  closable?:       boolean
+  closable?: boolean
   /** Closes the drawer when clicking the backdrop. @default true */
   closeOnOverlay?: boolean
   /** Prevents any user-initiated close. @default false */
-  preventClose?:   boolean
+  preventClose?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  placement:      'right',
-  size:           'md',
-  closable:       true,
+  placement: 'right',
+  size: 'md',
+  closable: true,
   closeOnOverlay: true,
-  preventClose:   false,
+  preventClose: false,
 })
 
 const emit = defineEmits<{
   'update:modelValue': [value: boolean]
 }>()
 
-const titleId    = useId()
-const panelRef   = ref<HTMLElement | null>(null)
+const titleId = useId()
+const panelRef = ref<HTMLElement | null>(null)
 let previousFocus: HTMLElement | null = null
 
 // ── Size maps ─────────────────────────────────────────────────────────────────
 
 const sideSize: Record<DrawerSize, string> = {
-  sm:   '320px',
-  md:   '400px',
-  lg:   '540px',
-  xl:   '720px',
+  sm: '320px',
+  md: '400px',
+  lg: '540px',
+  xl: '720px',
   full: '100%',
 }
 
@@ -57,9 +57,9 @@ const panelStyle = computed(() => {
 // ── Placement: enter/leave transition classes ─────────────────────────────────
 
 const translateFrom: Record<DrawerPlacement, string> = {
-  left:   '-translate-x-full',
-  right:  'translate-x-full',
-  top:    '-translate-y-full',
+  left: '-translate-x-full',
+  right: 'translate-x-full',
+  top: '-translate-y-full',
   bottom: 'translate-y-full',
 }
 
@@ -85,11 +85,17 @@ function handleKeydown(e: KeyboardEvent) {
     )
     if (!focusable.length) return
     const first = focusable[0]
-    const last  = focusable[focusable.length - 1]
+    const last = focusable[focusable.length - 1]
     if (e.shiftKey) {
-      if (document.activeElement === first) { e.preventDefault(); last.focus() }
+      if (document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      }
     } else {
-      if (document.activeElement === last)  { e.preventDefault(); first.focus() }
+      if (document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
     }
   }
 }
@@ -115,7 +121,7 @@ watch(
       nextTick(() => previousFocus?.focus())
     }
   },
-  { immediate: true },
+  { immediate: true }
 )
 
 onBeforeUnmount(() => {
@@ -126,9 +132,9 @@ onBeforeUnmount(() => {
 // ── Panel position classes ────────────────────────────────────────────────────
 
 const positionClass: Record<DrawerPlacement, string> = {
-  left:   'inset-y-0 left-0',
-  right:  'inset-y-0 right-0',
-  top:    'inset-x-0 top-0',
+  left: 'inset-y-0 left-0',
+  right: 'inset-y-0 right-0',
+  top: 'inset-x-0 top-0',
   bottom: 'inset-x-0 bottom-0',
 }
 </script>
@@ -173,13 +179,13 @@ const positionClass: Record<DrawerPlacement, string> = {
             <div
               v-if="$slots.title || closable"
               class="flex items-center justify-between shrink-0 px-5 py-4 border-b"
-              style="border-color: var(--color-border-subtle);"
+              style="border-color: var(--color-border-subtle)"
             >
               <h2
                 v-if="$slots.title"
                 :id="titleId"
                 class="text-base font-semibold"
-                style="color: var(--color-text-heading);"
+                style="color: var(--color-text-heading)"
               >
                 <slot name="title" />
               </h2>
@@ -211,7 +217,10 @@ const positionClass: Record<DrawerPlacement, string> = {
             <div
               v-if="$slots.footer"
               class="shrink-0 flex items-center justify-end gap-3 px-5 py-4 border-t"
-              style="border-color: var(--color-border-subtle); background-color: var(--color-neutral-light);"
+              style="
+                border-color: var(--color-border-subtle);
+                background-color: var(--color-neutral-light);
+              "
             >
               <slot name="footer" />
             </div>
@@ -225,6 +234,8 @@ const positionClass: Record<DrawerPlacement, string> = {
 <style scoped>
 .ds-drawer {
   background-color: var(--color-surface);
-  box-shadow: var(--shadow-2xl), inset 0 0 0 1px var(--color-border-subtle);
+  box-shadow:
+    var(--shadow-2xl),
+    inset 0 0 0 1px var(--color-border-subtle);
 }
 </style>

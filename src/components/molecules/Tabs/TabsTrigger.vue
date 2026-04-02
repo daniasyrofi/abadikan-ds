@@ -5,7 +5,7 @@ import { TABS_KEY, type TabsContext } from './Tabs.vue'
 
 interface Props {
   /** The unique value associating this trigger with its content panel. */
-  value:     string
+  value: string
   /** Disables the tab trigger. @default false */
   disabled?: boolean
 }
@@ -24,14 +24,14 @@ const isActive = computed(() => ctx.activeTab.value === props.value)
 // ── Size maps ─────────────────────────────────────────────────────────────────
 
 const sizePadding = {
-  line:  { sm: 'px-3 py-1.5 text-xs', md: 'px-4 py-2 text-sm',  lg: 'px-5 py-2.5 text-base' },
-  pill:  { sm: 'h-6 px-2.5 text-[10px]', md: 'h-7 px-3 text-xs', lg: 'h-8 px-3.5 text-xs' },
-  boxed: { sm: 'px-3 py-1.5 text-xs', md: 'px-4 py-2 text-sm',  lg: 'px-5 py-2.5 text-base' },
+  line: { sm: 'px-3 py-1.5 text-xs', md: 'px-4 py-2 text-sm', lg: 'px-5 py-2.5 text-base' },
+  pill: { sm: 'h-6 px-2.5 text-[10px]', md: 'h-7 px-3 text-xs', lg: 'h-8 px-3.5 text-xs' },
+  boxed: { sm: 'px-3 py-1.5 text-xs', md: 'px-4 py-2 text-sm', lg: 'px-5 py-2.5 text-base' },
 }
 
 const classes = computed(() => {
   const { variant, size } = ctx
-  const active  = isActive.value
+  const active = isActive.value
   const isVertical = ctx.orientation === 'vertical'
   const base = [
     'relative inline-flex items-center justify-center gap-1.5 whitespace-nowrap',
@@ -50,12 +50,12 @@ const classes = computed(() => {
             'text-[--color-text-primary] bg-[--color-surface] z-10',
             isVertical
               ? 'border border-[--color-border] border-r-[--color-surface] rounded-l-lg mr-[-1px] shadow-[-1px_1px_2px_oklch(0.20_0_0_/_0.04)]'
-              : 'border border-[--color-border] border-b-[--color-surface] rounded-t-lg mb-[-1px] shadow-[0_-1px_2px_oklch(0.20_0_0_/_0.04)]'
+              : 'border border-[--color-border] border-b-[--color-surface] rounded-t-lg mb-[-1px] shadow-[0_-1px_2px_oklch(0.20_0_0_/_0.04)]',
           ]
         : [
             'text-[--color-text-secondary] hover:text-[--color-text-primary] hover:bg-[--color-neutral-light]',
             'border border-transparent',
-            isVertical ? 'rounded-l-lg' : 'rounded-t-lg'
+            isVertical ? 'rounded-l-lg' : 'rounded-t-lg',
           ]
     )
   }
@@ -67,7 +67,7 @@ const classes = computed(() => {
       'rounded-full',
       active
         ? 'ds-tab-trigger--pill-active'
-        : 'text-[--color-text-secondary] hover:text-[--color-text-primary] hover:bg-[--color-neutral-light]',
+        : 'text-[--color-text-secondary] hover:text-[--color-text-primary] hover:bg-[--color-neutral-light]'
     )
   }
 
@@ -75,10 +75,12 @@ const classes = computed(() => {
     return cn(
       ...base,
       sizePadding.boxed[size],
-      isVertical ? 'border-b border-[--color-border] last:border-b-0' : 'border-r border-[--color-border] last:border-r-0',
+      isVertical
+        ? 'border-b border-[--color-border] last:border-b-0'
+        : 'border-r border-[--color-border] last:border-r-0',
       active
         ? 'ds-tab-trigger--boxed-active text-[--color-text-primary] font-medium'
-        : 'bg-transparent text-[--color-text-secondary] hover:text-[--color-text-primary] ds-tab-trigger--boxed-hover',
+        : 'bg-transparent text-[--color-text-secondary] hover:text-[--color-text-primary] ds-tab-trigger--boxed-hover'
     )
   }
 
@@ -87,11 +89,11 @@ const classes = computed(() => {
 
 function handleKeydown(e: KeyboardEvent) {
   if (props.disabled) return
-  const allTabs   = ctx.tabs.value
-  const current   = allTabs.indexOf(props.value)
+  const allTabs = ctx.tabs.value
+  const current = allTabs.indexOf(props.value)
   const isVertical = ctx.orientation === 'vertical'
 
-  const prevKey = isVertical ? 'ArrowUp'   : 'ArrowLeft'
+  const prevKey = isVertical ? 'ArrowUp' : 'ArrowLeft'
   const nextKey = isVertical ? 'ArrowDown' : 'ArrowRight'
 
   if (e.key === prevKey) {
@@ -100,16 +102,16 @@ function handleKeydown(e: KeyboardEvent) {
     ctx.selectTab(allTabs[prev])
     ;(e.target as HTMLElement)
       .closest('[role="tablist"]')
-      ?.querySelectorAll<HTMLElement>('[role="tab"]')[prev]
-      ?.focus()
+      ?.querySelectorAll<HTMLElement>('[role="tab"]')
+      [prev]?.focus()
   } else if (e.key === nextKey) {
     e.preventDefault()
     const next = (current + 1) % allTabs.length
     ctx.selectTab(allTabs[next])
     ;(e.target as HTMLElement)
       .closest('[role="tablist"]')
-      ?.querySelectorAll<HTMLElement>('[role="tab"]')[next]
-      ?.focus()
+      ?.querySelectorAll<HTMLElement>('[role="tab"]')
+      [next]?.focus()
   } else if (e.key === 'Home') {
     e.preventDefault()
     ctx.selectTab(allTabs[0])
@@ -122,8 +124,8 @@ function handleKeydown(e: KeyboardEvent) {
     ctx.selectTab(allTabs[allTabs.length - 1])
     ;(e.target as HTMLElement)
       .closest('[role="tablist"]')
-      ?.querySelectorAll<HTMLElement>('[role="tab"]')[allTabs.length - 1]
-      ?.focus()
+      ?.querySelectorAll<HTMLElement>('[role="tab"]')
+      [allTabs.length - 1]?.focus()
   }
 }
 </script>
@@ -150,7 +152,7 @@ function handleKeydown(e: KeyboardEvent) {
   color: var(--color-text-primary);
   box-shadow:
     0 6px 12px -10px oklch(0.2 0 0 / 0.25),
-    0 1px 2px oklch(0.2 0 0 / 0.10),
+    0 1px 2px oklch(0.2 0 0 / 0.1),
     inset 0 0 0 1px var(--color-border);
   animation: ds-tab-activate 220ms var(--ease-out);
 }
@@ -164,14 +166,14 @@ function handleKeydown(e: KeyboardEvent) {
   100% {
     box-shadow:
       0 6px 12px -10px oklch(0.2 0 0 / 0.25),
-      0 1px 2px oklch(0.2 0 0 / 0.10),
+      0 1px 2px oklch(0.2 0 0 / 0.1),
       inset 0 0 0 1px var(--color-border);
     filter: saturate(1);
   }
 }
 .ds-tab-trigger--boxed-active {
   background-color: var(--color-neutral-light);
-  box-shadow: inset 0 1px 3px oklch(0.20 0 0 / 0.06);
+  box-shadow: inset 0 1px 3px oklch(0.2 0 0 / 0.06);
 }
 .ds-tab-trigger--boxed-hover:hover {
   background-color: color-mix(in oklch, var(--color-neutral-light) 50%, transparent);

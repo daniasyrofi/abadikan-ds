@@ -44,9 +44,9 @@ const menuRef = ref<HTMLElement | null>(null)
 
 const placementClasses: Record<Placement, string> = {
   'bottom-start': 'top-full left-0 mt-1',
-  'bottom-end':   'top-full right-0 mt-1',
-  'top-start':    'bottom-full left-0 mb-1',
-  'top-end':      'bottom-full right-0 mb-1',
+  'bottom-end': 'top-full right-0 mt-1',
+  'top-start': 'bottom-full left-0 mb-1',
+  'top-end': 'bottom-full right-0 mb-1',
 }
 
 // ── Selectable items (skip separators and disabled) ─────────────────────
@@ -98,10 +98,7 @@ function selectItem(item: DropdownMenuItem) {
 
 function handleClickOutside(e: MouseEvent) {
   const el = e.target as HTMLElement
-  if (
-    !triggerRef.value?.contains(el) &&
-    !menuRef.value?.contains(el)
-  ) {
+  if (!triggerRef.value?.contains(el) && !menuRef.value?.contains(el)) {
     close()
   }
 }
@@ -157,10 +154,7 @@ onBeforeUnmount(() => {
 })
 
 const menuClasses = computed(() =>
-  cn(
-    'ds-dropdown-menu absolute z-50 min-w-[10rem] p-1.5',
-    placementClasses[props.placement],
-  )
+  cn('ds-dropdown-menu absolute z-50 min-w-[10rem] p-1.5', placementClasses[props.placement])
 )
 </script>
 
@@ -180,20 +174,10 @@ const menuClasses = computed(() =>
       leave-from-class="opacity-100 scale-100"
       leave-to-class="opacity-0 scale-95"
     >
-      <div
-        v-if="isOpen"
-        ref="menuRef"
-        :class="menuClasses"
-        :style="widthStyle"
-        role="menu"
-      >
+      <div v-if="isOpen" ref="menuRef" :class="menuClasses" :style="widthStyle" role="menu">
         <template v-for="(item, index) in items" :key="index">
           <!-- Separator -->
-          <div
-            v-if="item.separator"
-            class="ds-dropdown-separator my-1 mx-0.5"
-            role="separator"
-          />
+          <div v-if="item.separator" class="ds-dropdown-separator my-1 mx-0.5" role="separator" />
 
           <!-- Menu item -->
           <button
@@ -201,16 +185,16 @@ const menuClasses = computed(() =>
             type="button"
             role="menuitem"
             :disabled="item.disabled"
-            :class="cn(
-              'ds-dropdown-item flex w-full items-center gap-2.5 px-2 py-2 text-sm text-left',
-              'text-[--color-text-primary]',
-              'transition-colors duration-[--duration-fast]',
-              item.disabled
-                ? 'opacity-50 pointer-events-none cursor-default'
-                : 'cursor-pointer',
-              item.tone === 'danger' && 'ds-dropdown-item--danger',
-              focusedIndex === index && !item.disabled && 'ds-dropdown-item--active',
-            )"
+            :class="
+              cn(
+                'ds-dropdown-item flex w-full items-center gap-2.5 px-2 py-2 text-sm text-left',
+                'text-[--color-text-primary]',
+                'transition-colors duration-[--duration-fast]',
+                item.disabled ? 'opacity-50 pointer-events-none cursor-default' : 'cursor-pointer',
+                item.tone === 'danger' && 'ds-dropdown-item--danger',
+                focusedIndex === index && !item.disabled && 'ds-dropdown-item--active'
+              )
+            "
             @click="selectItem(item)"
             @mouseenter="focusedIndex = index"
             @mouseleave="focusedIndex = -1"
@@ -220,10 +204,12 @@ const menuClasses = computed(() =>
               v-if="item.icon"
               :is="item.icon"
               :size="16"
-              :class="cn(
-                'ds-dropdown-icon shrink-0 text-[--color-text-secondary]',
-                item.tone === 'danger' && 'ds-dropdown-icon--danger',
-              )"
+              :class="
+                cn(
+                  'ds-dropdown-icon shrink-0 text-[--color-text-secondary]',
+                  item.tone === 'danger' && 'ds-dropdown-icon--danger'
+                )
+              "
               aria-hidden="true"
             />
 
@@ -233,10 +219,12 @@ const menuClasses = computed(() =>
             <!-- Shortcut -->
             <span
               v-if="item.shortcut"
-              :class="cn(
-                'ds-dropdown-shortcut ml-4 shrink-0 text-xs text-[--color-text-muted]',
-                item.tone === 'danger' && 'ds-dropdown-shortcut--danger',
-              )"
+              :class="
+                cn(
+                  'ds-dropdown-shortcut ml-4 shrink-0 text-xs text-[--color-text-muted]',
+                  item.tone === 'danger' && 'ds-dropdown-shortcut--danger'
+                )
+              "
             >
               {{ item.shortcut }}
             </span>
@@ -251,7 +239,9 @@ const menuClasses = computed(() =>
 .ds-dropdown-menu {
   background-color: var(--color-surface);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-xl), inset 0 0 0 1px color-mix(in oklab, var(--color-border) 38%, var(--color-surface));
+  box-shadow:
+    var(--shadow-xl),
+    inset 0 0 0 1px color-mix(in oklab, var(--color-border) 38%, var(--color-surface));
   overflow: hidden;
 }
 .ds-dropdown-item {

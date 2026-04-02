@@ -6,9 +6,9 @@ import Spinner from '@/components/atoms/Spinner/Spinner.vue'
 
 export interface ComboboxOption {
   /** The value emitted on selection. */
-  value:     string
+  value: string
   /** The human-readable label shown in the list and trigger. */
-  label:     string
+  label: string
   /** Prevents the option from being selected. @default false */
   disabled?: boolean
 }
@@ -17,61 +17,61 @@ type Size = 'sm' | 'md' | 'lg'
 
 interface Props {
   /** The selected value. Use with v-model. */
-  modelValue:   string
+  modelValue: string
   /** The list of selectable options. */
-  options:      ComboboxOption[]
+  options: ComboboxOption[]
   /** Placeholder shown in the input when empty. @default 'Search...' */
   placeholder?: string
   /** Shows a × button to clear the selection. @default false */
-  clearable?:   boolean
+  clearable?: boolean
   /** Disables the combobox. @default false */
-  disabled?:    boolean
+  disabled?: boolean
   /** Shows a spinner (for async loading). @default false */
-  loading?:     boolean
+  loading?: boolean
   /** Visual size. @default 'md' */
-  size?:        Size
+  size?: Size
   /** Label rendered above the input. */
-  label?:       string
+  label?: string
   /** Helper text rendered below (hidden when error is set). */
-  helperText?:  string
+  helperText?: string
   /** Error message — applies error styling. */
-  error?:       string
+  error?: string
   /** Text shown when no options match the query. @default 'No results' */
-  emptyText?:   string
+  emptyText?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   placeholder: 'Search...',
-  clearable:   false,
-  disabled:    false,
-  loading:     false,
-  size:        'md',
-  emptyText:   'No results',
+  clearable: false,
+  disabled: false,
+  loading: false,
+  size: 'md',
+  emptyText: 'No results',
 })
 
 const emit = defineEmits<{
   'update:modelValue': [value: string]
   /** Fired on every keystroke — useful for async option fetching. */
-  'search':            [query: string]
+  search: [query: string]
 }>()
 
 // ── IDs ───────────────────────────────────────────────────────────────────────
 
-const inputId  = useId()
-const listId   = useId()
-const rootRef  = ref<HTMLElement | null>(null)
+const inputId = useId()
+const listId = useId()
+const rootRef = ref<HTMLElement | null>(null)
 const inputRef = ref<HTMLInputElement | null>(null)
-const listRef  = ref<HTMLElement | null>(null)
+const listRef = ref<HTMLElement | null>(null)
 
 // ── State ─────────────────────────────────────────────────────────────────────
 
-const isOpen    = ref(false)
-const query     = ref('')
+const isOpen = ref(false)
+const query = ref('')
 const activeIdx = ref(-1)
 
 // When value changes externally, sync the input to show the label
-const selectedLabel = computed(() =>
-  props.options.find(o => o.value === props.modelValue)?.label ?? ''
+const selectedLabel = computed(
+  () => props.options.find((o) => o.value === props.modelValue)?.label ?? ''
 )
 
 // When dropdown is closed the input shows the selected label
@@ -84,23 +84,27 @@ watch(isOpen, (open) => {
     query.value = ''
     nextTick(() => {
       // Highlight current selection in list
-      const selectedIdx = filtered.value.findIndex(o => o.value === props.modelValue)
+      const selectedIdx = filtered.value.findIndex((o) => o.value === props.modelValue)
       activeIdx.value = selectedIdx >= 0 ? selectedIdx : -1
     })
   }
 })
 
 // Keep input in sync with external modelValue changes (e.g. reset)
-watch(selectedLabel, (label) => {
-  if (!isOpen.value) query.value = label
-}, { immediate: true })
+watch(
+  selectedLabel,
+  (label) => {
+    if (!isOpen.value) query.value = label
+  },
+  { immediate: true }
+)
 
 // ── Filtering ─────────────────────────────────────────────────────────────────
 
 const filtered = computed(() => {
   const q = query.value.trim().toLowerCase()
   if (!q || !isOpen.value) return props.options
-  return props.options.filter(o => o.label.toLowerCase().includes(q))
+  return props.options.filter((o) => o.label.toLowerCase().includes(q))
 })
 
 // ── Interaction ───────────────────────────────────────────────────────────────
@@ -140,13 +144,19 @@ function handleKeydown(e: KeyboardEvent) {
   switch (e.key) {
     case 'ArrowDown':
       e.preventDefault()
-      if (!isOpen.value) { open(); return }
+      if (!isOpen.value) {
+        open()
+        return
+      }
       activeIdx.value = Math.min(activeIdx.value + 1, filtered.value.length - 1)
       scrollActiveIntoView()
       break
     case 'ArrowUp':
       e.preventDefault()
-      if (!isOpen.value) { open(); return }
+      if (!isOpen.value) {
+        open()
+        return
+      }
       activeIdx.value = Math.max(activeIdx.value - 1, 0)
       scrollActiveIntoView()
       break
@@ -186,19 +196,21 @@ function handleClickOutside(e: MouseEvent) {
   }
 }
 
-onMounted(()       => document.addEventListener('click', handleClickOutside, true))
+onMounted(() => document.addEventListener('click', handleClickOutside, true))
 onBeforeUnmount(() => document.removeEventListener('click', handleClickOutside, true))
 
 // ── Computed styles ───────────────────────────────────────────────────────────
 
-const hasError  = computed(() => !!props.error)
-const showClear = computed(() => props.clearable && !!props.modelValue && !props.disabled && !props.loading)
+const hasError = computed(() => !!props.error)
+const showClear = computed(
+  () => props.clearable && !!props.modelValue && !props.disabled && !props.loading
+)
 
-const heightClass  = computed(() => ({ sm: 'h-8',  md: 'h-10', lg: 'h-12' }[props.size]))
-const textClass    = computed(() => ({ sm: 'text-sm', md: 'text-sm', lg: 'text-base' }[props.size]))
-const paddingX     = computed(() => ({ sm: 'px-3', md: 'px-4', lg: 'px-5' }[props.size]))
-const iconSize     = computed(() => ({ sm: 14, md: 16, lg: 18 }[props.size]))
-const spinnerSize  = computed(() => ({ sm: 'xs', md: 'sm', lg: 'md' } as const)[props.size])
+const heightClass = computed(() => ({ sm: 'h-8', md: 'h-10', lg: 'h-12' })[props.size])
+const textClass = computed(() => ({ sm: 'text-sm', md: 'text-sm', lg: 'text-base' })[props.size])
+const paddingX = computed(() => ({ sm: 'px-3', md: 'px-4', lg: 'px-5' })[props.size])
+const iconSize = computed(() => ({ sm: 14, md: 16, lg: 18 })[props.size])
+const spinnerSize = computed(() => (({ sm: 'xs', md: 'sm', lg: 'md' }) as const)[props.size])
 
 const wrapperClasses = computed(() =>
   cn(
@@ -208,9 +220,9 @@ const wrapperClasses = computed(() =>
     'transition-colors duration-200 ease-out',
     heightClass.value,
     paddingX.value,
-    hasError.value  && 'ds-combobox-input--error',
-    isOpen.value    && !hasError.value && 'ds-combobox-input--open',
-    props.disabled  && 'ds-combobox-input--disabled cursor-not-allowed',
+    hasError.value && 'ds-combobox-input--error',
+    isOpen.value && !hasError.value && 'ds-combobox-input--open',
+    props.disabled && 'ds-combobox-input--disabled cursor-not-allowed'
   )
 )
 
@@ -221,13 +233,12 @@ const optionClass = (idx: number, option: ComboboxOption) =>
     'transition-colors duration-100 cursor-pointer select-none',
     option.disabled && 'opacity-40 cursor-not-allowed pointer-events-none',
     option.value === props.modelValue && 'ds-combobox-option--selected',
-    idx === activeIdx.value && 'ds-combobox-option--active',
+    idx === activeIdx.value && 'ds-combobox-option--active'
   )
 </script>
 
 <template>
   <div ref="rootRef" class="flex flex-col gap-1.5 w-full">
-
     <!-- Label -->
     <label
       v-if="label"
@@ -240,14 +251,13 @@ const optionClass = (idx: number, option: ComboboxOption) =>
 
     <!-- Trigger wrapper -->
     <div :class="wrapperClasses" @click="open">
-
       <!-- Text input -->
       <input
         :id="inputId"
         ref="inputRef"
         type="text"
         :value="query"
-        :placeholder="isOpen ? placeholder : (selectedLabel || placeholder)"
+        :placeholder="isOpen ? placeholder : selectedLabel || placeholder"
         :disabled="disabled || loading"
         class="ds-combobox-native flex-1 min-w-0 bg-transparent outline-none"
         :class="textClass"
@@ -276,19 +286,19 @@ const optionClass = (idx: number, option: ComboboxOption) =>
       </button>
 
       <!-- Loading spinner -->
-      <Spinner
-        v-if="loading"
-        :size="spinnerSize"
-        color="neutral"
-        class="shrink-0"
-      />
+      <Spinner v-if="loading" :size="spinnerSize" color="neutral" class="shrink-0" />
 
       <!-- Chevron (hidden when loading) -->
       <RiArrowDownSLine
         v-else
         :size="String(iconSize)"
-        :class="cn('shrink-0 transition-transform duration-200 pointer-events-none', isOpen && 'rotate-180')"
-        style="color: var(--color-text-tertiary);"
+        :class="
+          cn(
+            'shrink-0 transition-transform duration-200 pointer-events-none',
+            isOpen && 'rotate-180'
+          )
+        "
+        style="color: var(--color-text-tertiary)"
         aria-hidden="true"
       />
 
@@ -328,9 +338,16 @@ const optionClass = (idx: number, option: ComboboxOption) =>
               >
                 <!-- Check mark for selected -->
                 <span
-                  :style="{ width: '16px', minWidth: '16px', color: 'var(--color-primary)', marginRight: '8px', opacity: option.value === modelValue ? 1 : 0 }"
+                  :style="{
+                    width: '16px',
+                    minWidth: '16px',
+                    color: 'var(--color-primary)',
+                    marginRight: '8px',
+                    opacity: option.value === modelValue ? 1 : 0,
+                  }"
                   aria-hidden="true"
-                >✓</span>
+                  >✓</span
+                >
                 {{ option.label }}
               </button>
             </template>
@@ -339,7 +356,7 @@ const optionClass = (idx: number, option: ComboboxOption) =>
             <p
               v-else
               class="text-sm text-center py-4 px-3 select-none"
-              style="color: var(--color-text-tertiary);"
+              style="color: var(--color-text-tertiary)"
             >
               {{ emptyText }}
             </p>
@@ -356,7 +373,6 @@ const optionClass = (idx: number, option: ComboboxOption) =>
     >
       {{ error ?? helperText }}
     </p>
-
   </div>
 </template>
 
@@ -377,9 +393,16 @@ const optionClass = (idx: number, option: ComboboxOption) =>
   box-shadow: 0 0 0 1px var(--color-text-primary);
 }
 
-.ds-combobox-input--error        { border-color: var(--color-danger); }
-.ds-combobox-input--error.ds-combobox-input--open { box-shadow: 0 0 0 1px var(--color-danger); }
-.ds-combobox-input--disabled     { opacity: 0.5; background-color: var(--color-bg-subtle); }
+.ds-combobox-input--error {
+  border-color: var(--color-danger);
+}
+.ds-combobox-input--error.ds-combobox-input--open {
+  box-shadow: 0 0 0 1px var(--color-danger);
+}
+.ds-combobox-input--disabled {
+  opacity: 0.5;
+  background-color: var(--color-bg-subtle);
+}
 
 .ds-combobox-native {
   color: var(--color-text-primary);
@@ -388,16 +411,26 @@ const optionClass = (idx: number, option: ComboboxOption) =>
   color: var(--color-text-tertiary);
 }
 .ds-combobox-native:focus,
-.ds-combobox-native:focus-visible { outline: none; }
+.ds-combobox-native:focus-visible {
+  outline: none;
+}
 
-.ds-combobox-clear { color: var(--color-text-tertiary); }
-.ds-combobox-clear:hover { color: var(--color-text-primary); }
-.ds-combobox-clear:focus-visible { outline: none; }
+.ds-combobox-clear {
+  color: var(--color-text-tertiary);
+}
+.ds-combobox-clear:hover {
+  color: var(--color-text-primary);
+}
+.ds-combobox-clear:focus-visible {
+  outline: none;
+}
 
 .ds-combobox-dropdown {
   background-color: var(--color-surface);
   border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-2xl), inset 0 0 0 1px var(--color-border);
+  box-shadow:
+    var(--shadow-2xl),
+    inset 0 0 0 1px var(--color-border);
   overflow: hidden;
 }
 

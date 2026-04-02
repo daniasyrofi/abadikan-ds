@@ -7,32 +7,32 @@ type PinSize = 'sm' | 'md' | 'lg'
 
 interface Props {
   /** Current PIN value. Supports v-model. */
-  modelValue?:  string
+  modelValue?: string
   /** Number of digit inputs. @default 6 */
-  length?:      number
+  length?: number
   /** Character type allowed. @default 'number' */
-  type?:        PinType
+  type?: PinType
   /** Visual size. @default 'md' */
-  size?:        PinSize
+  size?: PinSize
   /** Hides characters (password-style). @default false */
-  masked?:      boolean
+  masked?: boolean
   /** Placeholder character shown in empty cells. @default '○' */
   placeholder?: string
   /** Disables all inputs. @default false */
-  disabled?:    boolean
+  disabled?: boolean
   /** Shows error state on all inputs. @default false */
-  error?:       boolean
+  error?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  modelValue:  '',
-  length:      6,
-  type:        'number',
-  size:        'md',
-  masked:      false,
+  modelValue: '',
+  length: 6,
+  type: 'number',
+  size: 'md',
+  masked: false,
   placeholder: '○',
-  disabled:    false,
-  error:       false,
+  disabled: false,
+  error: false,
 })
 
 const emit = defineEmits<{
@@ -42,13 +42,17 @@ const emit = defineEmits<{
 }>()
 
 const inputRefs = ref<HTMLInputElement[]>([])
-const digits    = ref<string[]>(Array(props.length).fill(''))
+const digits = ref<string[]>(Array(props.length).fill(''))
 
 // Sync external modelValue → digits
-watch(() => props.modelValue, (val) => {
-  const chars = (val ?? '').split('').slice(0, props.length)
-  digits.value = [...chars, ...Array(props.length - chars.length).fill('')]
-}, { immediate: true })
+watch(
+  () => props.modelValue,
+  (val) => {
+    const chars = (val ?? '').split('').slice(0, props.length)
+    digits.value = [...chars, ...Array(props.length - chars.length).fill('')]
+  },
+  { immediate: true }
+)
 
 function allowed(char: string): boolean {
   if (props.type === 'number') return /^\d$/.test(char)
@@ -65,7 +69,7 @@ function emit_update() {
 
 function onInput(idx: number, e: Event) {
   const input = e.target as HTMLInputElement
-  const raw   = input.value
+  const raw = input.value
 
   // Handle paste / multi-char
   const chars = raw.split('').filter(allowed)
@@ -92,7 +96,9 @@ function onInput(idx: number, e: Event) {
   }
 
   // Force Vue to update the input value
-  nextTick(() => { if (inputRefs.value[idx]) inputRefs.value[idx].value = digits.value[idx] })
+  nextTick(() => {
+    if (inputRefs.value[idx]) inputRefs.value[idx].value = digits.value[idx]
+  })
 }
 
 function onKeydown(idx: number, e: KeyboardEvent) {
@@ -104,12 +110,13 @@ function onKeydown(idx: number, e: KeyboardEvent) {
       nextTick(() => inputRefs.value[idx - 1]?.focus())
     }
     e.preventDefault()
-  } else if (e.key === 'ArrowLeft'  && idx > 0)               nextTick(() => inputRefs.value[idx - 1]?.focus())
-  else if   (e.key === 'ArrowRight' && idx < props.length - 1) nextTick(() => inputRefs.value[idx + 1]?.focus())
+  } else if (e.key === 'ArrowLeft' && idx > 0) nextTick(() => inputRefs.value[idx - 1]?.focus())
+  else if (e.key === 'ArrowRight' && idx < props.length - 1)
+    nextTick(() => inputRefs.value[idx + 1]?.focus())
 }
 
 function onFocus(e: FocusEvent) {
-  (e.target as HTMLInputElement).select()
+  ;(e.target as HTMLInputElement).select()
 }
 
 const sizeMap: Record<PinSize, string> = {
@@ -124,7 +131,11 @@ const sizeMap: Record<PinSize, string> = {
     <input
       v-for="(digit, idx) in digits"
       :key="idx"
-      :ref="el => { if (el) inputRefs[idx] = el as HTMLInputElement }"
+      :ref="
+        (el) => {
+          if (el) inputRefs[idx] = el as HTMLInputElement
+        }
+      "
       :value="digit"
       :type="masked ? 'password' : 'text'"
       inputmode="numeric"
@@ -132,19 +143,21 @@ const sizeMap: Record<PinSize, string> = {
       :placeholder="placeholder"
       :disabled="disabled"
       :aria-label="`Digit ${idx + 1} of ${length}`"
-      :class="cn(
-        'text-center font-mono font-semibold transition-all outline-none focus:ring-2',
-        sizeMap[size],
-        error
-          ? 'ring-2 ring-[--color-danger] border-transparent'
-          : 'border focus:ring-[--color-primary]',
-        disabled && 'opacity-40 cursor-not-allowed',
-      )"
+      :class="
+        cn(
+          'text-center font-mono font-semibold transition-all outline-none focus:ring-2',
+          sizeMap[size],
+          error
+            ? 'ring-2 ring-[--color-danger] border-transparent'
+            : 'border focus:ring-[--color-primary]',
+          disabled && 'opacity-40 cursor-not-allowed'
+        )
+      "
       :style="{
         backgroundColor: 'var(--color-surface)',
-        color:           'var(--color-text-primary)',
-        borderColor:     error ? undefined : 'var(--color-border)',
-        boxShadow:       'var(--shadow-xs)',
+        color: 'var(--color-text-primary)',
+        borderColor: error ? undefined : 'var(--color-border)',
+        boxShadow: 'var(--shadow-xs)',
       }"
       @input="onInput(idx, $event)"
       @keydown="onKeydown(idx, $event)"

@@ -30,9 +30,9 @@ const COUNTRIES: ComboboxOption[] = [
 ]
 
 const meta: Meta<typeof Combobox> = {
-  title:      'Molecules/Combobox',
-  component:  Combobox,
-  tags:       ['autodocs'],
+  title: 'Molecules/Combobox',
+  component: Combobox,
+  tags: ['autodocs'],
   decorators: [canvas],
   parameters: { layout: 'fullscreen' },
 }
@@ -107,7 +107,9 @@ export const WithError: Story = {
   name: 'With Error',
   render: () => ({
     components: { Combobox },
-    setup() { return { v: ref(''), options: COUNTRIES } },
+    setup() {
+      return { v: ref(''), options: COUNTRIES }
+    },
     template: `
       <div style="width: 320px;">
         <Combobox
@@ -126,7 +128,9 @@ export const Loading: Story = {
   name: 'Loading State',
   render: () => ({
     components: { Combobox },
-    setup() { return { v: ref(''), options: [] as ComboboxOption[] } },
+    setup() {
+      return { v: ref(''), options: [] as ComboboxOption[] }
+    },
     template: `
       <div style="width: 320px;">
         <Combobox
@@ -145,7 +149,9 @@ export const Disabled: Story = {
   name: 'Disabled',
   render: () => ({
     components: { Combobox },
-    setup() { return { v: ref('id'), options: COUNTRIES } },
+    setup() {
+      return { v: ref('id'), options: COUNTRIES }
+    },
     template: `
       <div style="width: 320px;">
         <Combobox
@@ -191,16 +197,14 @@ export const AsyncSearch: Story = {
   render: () => ({
     components: { Combobox },
     setup() {
-      const v       = ref('')
+      const v = ref('')
       const loading = ref(false)
       const options = ref<ComboboxOption[]>(COUNTRIES)
 
       function onSearch(q: string) {
         loading.value = true
         setTimeout(() => {
-          options.value = COUNTRIES.filter(c =>
-            c.label.toLowerCase().includes(q.toLowerCase())
-          )
+          options.value = COUNTRIES.filter((c) => c.label.toLowerCase().includes(q.toLowerCase()))
           loading.value = false
         }, 600)
       }

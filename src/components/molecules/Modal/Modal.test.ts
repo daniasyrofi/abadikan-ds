@@ -104,14 +104,14 @@ describe('Modal', () => {
   it('emits close on Escape key', async () => {
     const wrapper = mountModal({ modelValue: true })
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
-    await new Promise(r => setTimeout(r, 10))
+    await new Promise((r) => setTimeout(r, 10))
     expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([false])
   })
 
   it('does not emit close on Escape when preventClose=true', async () => {
     const wrapper = mountModal({ modelValue: true, preventClose: true })
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
-    await new Promise(r => setTimeout(r, 10))
+    await new Promise((r) => setTimeout(r, 10))
     expect(wrapper.emitted('update:modelValue')).toBeFalsy()
   })
 

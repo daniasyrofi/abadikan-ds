@@ -7,7 +7,7 @@ const meta: Meta<typeof Stat> = {
   tags: ['autodocs'],
   argTypes: {
     trend: { control: 'select', options: ['up', 'down', 'neutral'] },
-    size:  { control: 'select', options: ['sm', 'md', 'lg'] },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
   },
 }
 export default meta
@@ -16,12 +16,12 @@ type Story = StoryObj<typeof Stat>
 
 export const Default: Story = {
   args: {
-    label:       'Total Revenue',
-    value:       '$48,295',
-    delta:       '+12.5%',
-    trend:       'up',
+    label: 'Total Revenue',
+    value: '$48,295',
+    delta: '+12.5%',
+    trend: 'up',
     description: 'Compared to last month',
-    size:        'md',
+    size: 'md',
   },
 }
 

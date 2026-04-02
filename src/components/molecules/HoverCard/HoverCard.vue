@@ -8,48 +8,58 @@ interface Props {
   /** Which side the card opens on. @default 'bottom' */
   placement?: HoverCardPlacement
   /** Delay in ms before the card opens. @default 200 */
-  openDelay?:  number
+  openDelay?: number
   /** Delay in ms before the card closes. @default 100 */
   closeDelay?: number
   /** Width of the card. @default 'auto' */
-  width?:      string
+  width?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  placement:  'bottom',
-  openDelay:  200,
+  placement: 'bottom',
+  openDelay: 200,
   closeDelay: 100,
-  width:      'auto',
+  width: 'auto',
 })
 
 const isOpen = ref(false)
-let openTimer:  ReturnType<typeof setTimeout> | null = null
+let openTimer: ReturnType<typeof setTimeout> | null = null
 let closeTimer: ReturnType<typeof setTimeout> | null = null
 
 function open() {
-  if (closeTimer) { clearTimeout(closeTimer); closeTimer = null }
+  if (closeTimer) {
+    clearTimeout(closeTimer)
+    closeTimer = null
+  }
   if (isOpen.value) return
-  openTimer = setTimeout(() => { isOpen.value = true }, props.openDelay)
+  openTimer = setTimeout(() => {
+    isOpen.value = true
+  }, props.openDelay)
 }
 
 function close() {
-  if (openTimer) { clearTimeout(openTimer); openTimer = null }
-  closeTimer = setTimeout(() => { isOpen.value = false }, props.closeDelay)
+  if (openTimer) {
+    clearTimeout(openTimer)
+    openTimer = null
+  }
+  closeTimer = setTimeout(() => {
+    isOpen.value = false
+  }, props.closeDelay)
 }
 
 const placementClasses: Record<HoverCardPlacement, string> = {
   bottom: 'top-full left-1/2 -translate-x-1/2 mt-2',
-  top:    'bottom-full left-1/2 -translate-x-1/2 mb-2',
-  left:   'right-full top-1/2 -translate-y-1/2 mr-2',
-  right:  'left-full top-1/2 -translate-y-1/2 ml-2',
+  top: 'bottom-full left-1/2 -translate-x-1/2 mb-2',
+  left: 'right-full top-1/2 -translate-y-1/2 mr-2',
+  right: 'left-full top-1/2 -translate-y-1/2 ml-2',
 }
 
 const enterFromClass = computed(() => {
   const map: Record<HoverCardPlacement, string> = {
     bottom: 'opacity-0 translate-y-1',
-    top:    'opacity-0 -translate-y-1',
-    left:   'opacity-0 -translate-x-1',
-    right:  'opacity-0 translate-x-1',
+    top: 'opacity-0 -translate-y-1',
+    left: 'opacity-0 -translate-x-1',
+    right: 'opacity-0 translate-x-1',
   }
   return map[props.placement]
 })
@@ -77,10 +87,7 @@ const enterFromClass = computed(() => {
     >
       <div
         v-if="isOpen"
-        :class="cn(
-          'ds-hover-card absolute z-50',
-          placementClasses[placement],
-        )"
+        :class="cn('ds-hover-card absolute z-50', placementClasses[placement])"
         :style="{ width }"
         role="tooltip"
         @mouseenter="open"
@@ -95,9 +102,11 @@ const enterFromClass = computed(() => {
 <style scoped>
 .ds-hover-card {
   background-color: var(--color-surface);
-  border-radius:    var(--radius-xl);
-  box-shadow:       var(--shadow-lg), inset 0 0 0 1px var(--color-border-subtle);
-  padding:          var(--space-4);
-  min-width:        200px;
+  border-radius: var(--radius-xl);
+  box-shadow:
+    var(--shadow-lg),
+    inset 0 0 0 1px var(--color-border-subtle);
+  padding: var(--space-4);
+  min-width: 200px;
 }
 </style>

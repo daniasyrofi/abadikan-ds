@@ -1,67 +1,123 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref, computed } from 'vue'
 import { userEvent, within, expect } from 'storybook/test'
-import Table   from './Table.vue'
-import Badge   from '../../atoms/Badge/Badge.vue'
-import Avatar  from '../../atoms/Avatar/Avatar.vue'
+import Table from './Table.vue'
+import Badge from '../../atoms/Badge/Badge.vue'
+import Avatar from '../../atoms/Avatar/Avatar.vue'
 import SearchInput from '../../molecules/SearchInput/SearchInput.vue'
-import Tag     from '../../molecules/Tag/Tag.vue'
+import Tag from '../../molecules/Tag/Tag.vue'
 
 // ── Shared data ──────────────────────────────────────────────────────────────
 
 const COLUMNS = [
-  { key: 'name',       label: 'Name',        sortable: true  },
-  { key: 'company',    label: 'Company',      sortable: true  },
-  { key: 'status',     label: 'Status',       sortable: true  },
-  { key: 'role',       label: 'Role',         sortable: false },
-  { key: 'lastActive', label: 'Last Active',  sortable: true, align: 'right' as const },
+  { key: 'name', label: 'Name', sortable: true },
+  { key: 'company', label: 'Company', sortable: true },
+  { key: 'status', label: 'Status', sortable: true },
+  { key: 'role', label: 'Role', sortable: false },
+  { key: 'lastActive', label: 'Last Active', sortable: true, align: 'right' as const },
 ]
 
 const ROWS = [
-  { name: 'Olivia Martin',    email: 'olivia@acme.com',    company: 'Acme Inc.',      status: 'Active',   role: 'Admin',   lastActive: '2 min ago'  },
-  { name: 'James Chen',       email: 'james@vortex.io',    company: 'Vortex IO',      status: 'Active',   role: 'Member',  lastActive: '1 hr ago'   },
-  { name: 'Sophia Rodriguez', email: 'sophia@nova.co',     company: 'Nova Co.',       status: 'Inactive', role: 'Member',  lastActive: '3 days ago' },
-  { name: 'Liam Patel',       email: 'liam@brightlab.dev', company: 'BrightLab',      status: 'Active',   role: 'Editor',  lastActive: '5 min ago'  },
-  { name: 'Emma Wilson',      email: 'emma@mesh.xyz',      company: 'Mesh XYZ',       status: 'Pending',  role: 'Member',  lastActive: '2 days ago' },
-  { name: 'Noah Kim',         email: 'noah@stackflow.app', company: 'Stackflow',      status: 'Active',   role: 'Admin',   lastActive: 'just now'   },
-  { name: 'Ava Thompson',     email: 'ava@prismdata.io',   company: 'PrismData',      status: 'Inactive', role: 'Member',  lastActive: '1 week ago' },
-  { name: 'Mason Garcia',     email: 'mason@loopfx.com',   company: 'LoopFX',         status: 'Active',   role: 'Editor',  lastActive: '30 min ago' },
+  {
+    name: 'Olivia Martin',
+    email: 'olivia@acme.com',
+    company: 'Acme Inc.',
+    status: 'Active',
+    role: 'Admin',
+    lastActive: '2 min ago',
+  },
+  {
+    name: 'James Chen',
+    email: 'james@vortex.io',
+    company: 'Vortex IO',
+    status: 'Active',
+    role: 'Member',
+    lastActive: '1 hr ago',
+  },
+  {
+    name: 'Sophia Rodriguez',
+    email: 'sophia@nova.co',
+    company: 'Nova Co.',
+    status: 'Inactive',
+    role: 'Member',
+    lastActive: '3 days ago',
+  },
+  {
+    name: 'Liam Patel',
+    email: 'liam@brightlab.dev',
+    company: 'BrightLab',
+    status: 'Active',
+    role: 'Editor',
+    lastActive: '5 min ago',
+  },
+  {
+    name: 'Emma Wilson',
+    email: 'emma@mesh.xyz',
+    company: 'Mesh XYZ',
+    status: 'Pending',
+    role: 'Member',
+    lastActive: '2 days ago',
+  },
+  {
+    name: 'Noah Kim',
+    email: 'noah@stackflow.app',
+    company: 'Stackflow',
+    status: 'Active',
+    role: 'Admin',
+    lastActive: 'just now',
+  },
+  {
+    name: 'Ava Thompson',
+    email: 'ava@prismdata.io',
+    company: 'PrismData',
+    status: 'Inactive',
+    role: 'Member',
+    lastActive: '1 week ago',
+  },
+  {
+    name: 'Mason Garcia',
+    email: 'mason@loopfx.com',
+    company: 'LoopFX',
+    status: 'Active',
+    role: 'Editor',
+    lastActive: '30 min ago',
+  },
 ]
 
 const STATUS_VARIANT: Record<string, 'success' | 'warning' | 'danger'> = {
-  Active:   'success',
-  Pending:  'warning',
+  Active: 'success',
+  Pending: 'warning',
   Inactive: 'danger',
 }
 
 // ── Meta ─────────────────────────────────────────────────────────────────────
 
 const meta: Meta<typeof Table> = {
-  title:     'Organisms/Table',
+  title: 'Organisms/Table',
   component: Table,
-  tags:      ['autodocs'],
+  tags: ['autodocs'],
   parameters: { layout: 'padded' },
   argTypes: {
-    loading:      { control: 'boolean', description: 'Show loading overlay' },
-    selectable:   { control: 'boolean', description: 'Enable row checkboxes' },
-    hoverable:    { control: 'boolean', description: 'Highlight rows on hover' },
-    striped:      { control: 'boolean', description: 'Alternating row backgrounds' },
+    loading: { control: 'boolean', description: 'Show loading overlay' },
+    selectable: { control: 'boolean', description: 'Enable row checkboxes' },
+    hoverable: { control: 'boolean', description: 'Highlight rows on hover' },
+    striped: { control: 'boolean', description: 'Alternating row backgrounds' },
     stickyHeader: { control: 'boolean', description: 'Pin header while scrolling' },
-    filterBy:     { control: 'text',    description: 'Global filter string' },
-    virtual:      { control: 'boolean', description: 'Enable virtual scrolling' },
-    emptyText:    { control: 'text',    description: 'Empty-state message' },
+    filterBy: { control: 'text', description: 'Global filter string' },
+    virtual: { control: 'boolean', description: 'Enable virtual scrolling' },
+    emptyText: { control: 'text', description: 'Empty-state message' },
   },
   args: {
-    columns:   COLUMNS,
-    data:      ROWS,
-    loading:   false,
+    columns: COLUMNS,
+    data: ROWS,
+    loading: false,
     selectable: false,
-    hoverable:  true,
-    striped:    false,
+    hoverable: true,
+    striped: false,
     stickyHeader: false,
-    filterBy:   '',
-    virtual:    false,
-    emptyText:  'No results found',
+    filterBy: '',
+    virtual: false,
+    emptyText: 'No results found',
   },
 }
 export default meta
@@ -84,24 +140,32 @@ export const WithSearchAndFilter: Story = {
   render: () => ({
     components: { Table, SearchInput, Tag, Badge },
     setup() {
-      const query       = ref('')
+      const query = ref('')
       const activeFilter = ref<string | null>(null)
-      const statuses    = ['Active', 'Pending', 'Inactive'] as const
+      const statuses = ['Active', 'Pending', 'Inactive'] as const
 
-      const filterBy = computed(() =>
-        activeFilter.value ? activeFilter.value : query.value,
-      )
+      const filterBy = computed(() => (activeFilter.value ? activeFilter.value : query.value))
 
       function toggleFilter(status: string) {
         activeFilter.value = activeFilter.value === status ? null : status
-        query.value        = ''
+        query.value = ''
       }
       function clearAll() {
         activeFilter.value = null
-        query.value        = ''
+        query.value = ''
       }
 
-      return { query, activeFilter, statuses, filterBy, toggleFilter, clearAll, COLUMNS, ROWS, STATUS_VARIANT }
+      return {
+        query,
+        activeFilter,
+        statuses,
+        filterBy,
+        toggleFilter,
+        clearAll,
+        COLUMNS,
+        ROWS,
+        STATUS_VARIANT,
+      }
     },
     template: `
       <div style="display:flex;flex-direction:column;gap:12px;">
@@ -209,10 +273,10 @@ export const Selectable: Story = {
   name: 'Row Selection',
   args: { selectable: true },
   play: async ({ canvasElement }) => {
-    const canvas  = within(canvasElement)
-    const checks  = canvas.getAllByRole('checkbox')
+    const canvas = within(canvasElement)
+    const checks = canvas.getAllByRole('checkbox')
     const selectAll = checks[0]
-    const firstRow  = checks[1]
+    const firstRow = checks[1]
 
     // Select first row
     await userEvent.click(firstRow)
@@ -220,11 +284,11 @@ export const Selectable: Story = {
 
     // Select all
     await userEvent.click(selectAll)
-    checks.slice(1).forEach(c => expect(c).toBeChecked())
+    checks.slice(1).forEach((c) => expect(c).toBeChecked())
 
     // Deselect all
     await userEvent.click(selectAll)
-    checks.slice(1).forEach(c => expect(c).not.toBeChecked())
+    checks.slice(1).forEach((c) => expect(c).not.toBeChecked())
   },
 }
 
@@ -280,10 +344,10 @@ export const VirtualScroll: Story = {
     components: { Table },
     setup() {
       const bigData = Array.from({ length: 500 }, (_, i) => ({
-        name:       `User ${String(i + 1).padStart(3, '0')}`,
-        company:    ['Acme Inc.', 'Vortex IO', 'Nova Co.', 'BrightLab'][i % 4],
-        status:     ['Active', 'Pending', 'Inactive'][i % 3],
-        role:       ['Admin', 'Member', 'Editor'][i % 3],
+        name: `User ${String(i + 1).padStart(3, '0')}`,
+        company: ['Acme Inc.', 'Vortex IO', 'Nova Co.', 'BrightLab'][i % 4],
+        status: ['Active', 'Pending', 'Inactive'][i % 3],
+        role: ['Admin', 'Member', 'Editor'][i % 3],
         lastActive: `${(i % 59) + 1} min ago`,
       }))
       return { COLUMNS, bigData }
@@ -344,10 +408,10 @@ export const Empty: Story = {
 export const Playground: Story = {
   name: '⚙ Playground',
   args: {
-    selectable:   true,
-    striped:      false,
-    hoverable:    true,
+    selectable: true,
+    striped: false,
+    hoverable: true,
     stickyHeader: false,
-    filterBy:     '',
+    filterBy: '',
   },
 }

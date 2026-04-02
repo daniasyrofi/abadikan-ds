@@ -52,7 +52,8 @@ const copyMap: Record<Locale, Copy> = {
       toggle: 'Pengalih Tema',
       navbar: 'Konteks navbar',
       context: 'Undangan.id',
-      saveLanguage: 'Toggle menyimpan preferensi ke localStorage dan menerapkan data-theme ke <html>',
+      saveLanguage:
+        'Toggle menyimpan preferensi ke localStorage dan menerapkan data-theme ke <html>',
       combined: 'Kontrol gabungan',
       code: 'ID',
     },

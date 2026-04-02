@@ -34,39 +34,37 @@ function stepState(index: number): 'completed' | 'active' | 'upcoming' {
 
 <template>
   <div
-    :class="cn(
-      'flex w-full',
-      variant === 'vertical' ? 'flex-col gap-0' : 'flex-row items-start',
-    )"
+    :class="cn('flex w-full', variant === 'vertical' ? 'flex-col gap-0' : 'flex-row items-start')"
     role="list"
   >
     <template v-for="(step, index) in steps" :key="index">
       <div
-        :class="cn(
-          'flex',
-          variant === 'vertical' ? 'flex-row items-stretch gap-3' : 'flex-col items-center flex-1',
-        )"
+        :class="
+          cn(
+            'flex',
+            variant === 'vertical' ? 'flex-row items-stretch gap-3' : 'flex-col items-center flex-1'
+          )
+        "
         role="listitem"
       >
         <!-- Circle + connector (vertical layout) -->
-        <div
-          v-if="variant === 'vertical'"
-          class="flex flex-col items-center"
-        >
+        <div v-if="variant === 'vertical'" class="flex flex-col items-center">
           <!-- Step circle -->
           <div
-            :class="cn(
-              'ds-stepper-circle',
-              'relative z-10',
-              'flex items-center justify-center shrink-0',
-              'w-8 h-8 rounded-full text-sm font-semibold',
-              'transition-all duration-200 ease-out',
-              stepState(index) === 'completed' && 'ds-stepper-circle--completed',
-              stepState(index) === 'active' && 'ds-stepper-circle--active',
-              stepState(index) === 'upcoming' && 'ds-stepper-circle--upcoming',
-            )"
+            :class="
+              cn(
+                'ds-stepper-circle',
+                'relative z-10',
+                'flex items-center justify-center shrink-0',
+                'w-8 h-8 rounded-full text-sm font-semibold',
+                'transition-all duration-200 ease-out',
+                stepState(index) === 'completed' && 'ds-stepper-circle--completed',
+                stepState(index) === 'active' && 'ds-stepper-circle--active',
+                stepState(index) === 'upcoming' && 'ds-stepper-circle--upcoming'
+              )
+            "
           >
-            <RiCheckLine v-if="stepState(index) === 'completed'" :size="'16'" style="color: #fff;" />
+            <RiCheckLine v-if="stepState(index) === 'completed'" :size="'16'" style="color: #fff" />
             <span v-else>{{ index + 1 }}</span>
           </div>
           <!-- Vertical connector -->
@@ -78,59 +76,55 @@ function stepState(index: number): 'completed' | 'active' | 'upcoming' {
         </div>
 
         <!-- Circle + connector (horizontal layout) -->
-        <div
-          v-if="variant === 'horizontal'"
-          class="flex items-center w-full"
-        >
+        <div v-if="variant === 'horizontal'" class="flex items-center w-full">
           <div
             class="ds-stepper-connector flex-1 h-0.5"
             :class="[
               index === 0 ? 'opacity-0' : '',
-              index > 0 && stepState(index - 1) === 'completed' ? 'ds-stepper-connector--done' : ''
+              index > 0 && stepState(index - 1) === 'completed' ? 'ds-stepper-connector--done' : '',
             ]"
           />
           <div
-            :class="cn(
-              'ds-stepper-circle',
-              'relative z-10',
-              'flex items-center justify-center shrink-0',
-              'w-8 h-8 rounded-full text-sm font-semibold',
-              'transition-all duration-200 ease-out',
-              stepState(index) === 'completed' && 'ds-stepper-circle--completed',
-              stepState(index) === 'active' && 'ds-stepper-circle--active',
-              stepState(index) === 'upcoming' && 'ds-stepper-circle--upcoming',
-            )"
+            :class="
+              cn(
+                'ds-stepper-circle',
+                'relative z-10',
+                'flex items-center justify-center shrink-0',
+                'w-8 h-8 rounded-full text-sm font-semibold',
+                'transition-all duration-200 ease-out',
+                stepState(index) === 'completed' && 'ds-stepper-circle--completed',
+                stepState(index) === 'active' && 'ds-stepper-circle--active',
+                stepState(index) === 'upcoming' && 'ds-stepper-circle--upcoming'
+              )
+            "
           >
-            <RiCheckLine v-if="stepState(index) === 'completed'" :size="'16'" style="color: #fff;" />
+            <RiCheckLine v-if="stepState(index) === 'completed'" :size="'16'" style="color: #fff" />
             <span v-else>{{ index + 1 }}</span>
           </div>
           <div
             class="ds-stepper-connector flex-1 h-0.5"
             :class="[
               index === steps.length - 1 ? 'opacity-0' : '',
-              index < steps.length - 1 && stepState(index) === 'completed' ? 'ds-stepper-connector--done' : ''
+              index < steps.length - 1 && stepState(index) === 'completed'
+                ? 'ds-stepper-connector--done'
+                : '',
             ]"
           />
         </div>
 
         <!-- Content -->
-        <div
-          :class="cn(
-            variant === 'horizontal' ? 'text-center mt-2' : 'pb-6',
-          )"
-        >
+        <div :class="cn(variant === 'horizontal' ? 'text-center mt-2' : 'pb-6')">
           <p
-            :class="cn(
-              'text-sm font-semibold',
-              stepState(index) === 'upcoming' ? 'ds-stepper-text--muted' : 'ds-stepper-text',
-            )"
+            :class="
+              cn(
+                'text-sm font-semibold',
+                stepState(index) === 'upcoming' ? 'ds-stepper-text--muted' : 'ds-stepper-text'
+              )
+            "
           >
             {{ step.title }}
           </p>
-          <p
-            v-if="step.description"
-            class="ds-stepper-text--muted text-xs mt-0.5"
-          >
+          <p v-if="step.description" class="ds-stepper-text--muted text-xs mt-0.5">
             {{ step.description }}
           </p>
         </div>

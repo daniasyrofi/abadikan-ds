@@ -95,14 +95,14 @@ describe('Drawer', () => {
   it('emits close on Escape key', async () => {
     const wrapper = mount(Drawer, { props: { modelValue: true }, global })
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
-    await new Promise(r => setTimeout(r, 10))
+    await new Promise((r) => setTimeout(r, 10))
     expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([false])
   })
 
   it('does not emit on Escape when preventClose=true', async () => {
     const wrapper = mount(Drawer, { props: { modelValue: true, preventClose: true }, global })
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
-    await new Promise(r => setTimeout(r, 10))
+    await new Promise((r) => setTimeout(r, 10))
     expect(wrapper.emitted('update:modelValue')).toBeFalsy()
   })
 })

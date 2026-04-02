@@ -44,7 +44,7 @@ describe('Navbar', () => {
   })
 
   it('hides border when border=false', () => {
-    const withBorder    = mount(Navbar, { props: { variant: 'default', border: true } })
+    const withBorder = mount(Navbar, { props: { variant: 'default', border: true } })
     const withoutBorder = mount(Navbar, { props: { variant: 'default', border: false } })
     expect(withBorder.html()).not.toBe(withoutBorder.html())
   })

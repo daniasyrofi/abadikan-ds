@@ -19,7 +19,9 @@ describe('Pagination', () => {
 
   it('emits update:modelValue when page button is clicked', async () => {
     const wrapper = mount(Pagination, { props: base })
-    const pageButtons = wrapper.findAll('[aria-label]').filter(b => /^Page \d+$/.test(b.attributes('aria-label') ?? ''))
+    const pageButtons = wrapper
+      .findAll('[aria-label]')
+      .filter((b) => /^Page \d+$/.test(b.attributes('aria-label') ?? ''))
     if (pageButtons.length > 1) {
       await pageButtons[1].trigger('click')
       expect(wrapper.emitted('update:modelValue')).toBeTruthy()

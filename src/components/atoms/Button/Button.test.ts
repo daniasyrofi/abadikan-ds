@@ -115,7 +115,7 @@ describe('Button', () => {
     const wrapper = mount(Button, {
       props: { loading: true },
       slots: {
-        leading:  '<span data-testid="lead">★</span>',
+        leading: '<span data-testid="lead">★</span>',
         trailing: '<span data-testid="trail">→</span>',
       },
     })

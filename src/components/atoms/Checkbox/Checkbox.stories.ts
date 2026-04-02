@@ -234,17 +234,17 @@ const meta: Meta<typeof Checkbox> = {
   tags: ['autodocs'],
   parameters: { layout: 'centered', icon: 'check' },
   argTypes: {
-    size:        { control: 'select',  options: ['sm', 'md', 'lg'] },
-    disabled:    { control: 'boolean' },
-    label:       { control: 'text' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    disabled: { control: 'boolean' },
+    label: { control: 'text' },
     description: { control: 'text' },
-    error:       { control: 'text' },
+    error: { control: 'text' },
   },
   args: {
     modelValue: false,
-    size:       'md',
-    disabled:   false,
-    label:      '',
+    size: 'md',
+    disabled: false,
+    label: '',
   },
 }
 export default meta
@@ -263,7 +263,12 @@ export const Default: Story = {
         ...args,
         label: args.label || copy.value.labels.acceptTerms,
       }))
-      watch(() => args.modelValue, (val) => { value.value = val })
+      watch(
+        () => args.modelValue,
+        (val) => {
+          value.value = val
+        }
+      )
       return { resolvedArgs, value }
     },
     template: '<Checkbox v-bind="resolvedArgs" v-model="value" />',
@@ -304,7 +309,7 @@ export const Indeterminate: Story = {
 
       function updateChild(i: number, val: boolean) {
         children.value[i] = val
-        const all  = children.value.every(Boolean)
+        const all = children.value.every(Boolean)
         const none = children.value.every((v) => !v)
         parent.value = all ? true : none ? false : 'indeterminate'
       }
@@ -411,9 +416,21 @@ export const CheckboxGroup: Story = {
       const copy = useCopy()
       const selected = ref<string[]>(['email'])
       const options = computed(() => [
-        { value: 'email', label: copy.value.labels.email, description: copy.value.labels.receiveUpdatesViaEmail },
-        { value: 'sms',   label: copy.value.labels.sms,   description: copy.value.labels.receiveUpdatesViaText },
-        { value: 'push',  label: copy.value.labels.pushNotifications, description: copy.value.labels.receiveInAppNotifications },
+        {
+          value: 'email',
+          label: copy.value.labels.email,
+          description: copy.value.labels.receiveUpdatesViaEmail,
+        },
+        {
+          value: 'sms',
+          label: copy.value.labels.sms,
+          description: copy.value.labels.receiveUpdatesViaText,
+        },
+        {
+          value: 'push',
+          label: copy.value.labels.pushNotifications,
+          description: copy.value.labels.receiveInAppNotifications,
+        },
       ])
       function toggle(val: string) {
         const idx = selected.value.indexOf(val)

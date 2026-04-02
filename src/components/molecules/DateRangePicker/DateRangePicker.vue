@@ -1,44 +1,49 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, onBeforeUnmount, useId } from 'vue'
 import { cn } from '@/lib/utils'
-import { RiCalendarLine, RiArrowLeftSLine, RiArrowRightSLine, RiArrowRightLine } from '@remixicon/vue'
+import {
+  RiCalendarLine,
+  RiArrowLeftSLine,
+  RiArrowRightSLine,
+  RiArrowRightLine,
+} from '@remixicon/vue'
 
 export interface DateRange {
   /** ISO date string for range start (YYYY-MM-DD) or null. */
   start: string | null
   /** ISO date string for range end (YYYY-MM-DD) or null. */
-  end:   string | null
+  end: string | null
 }
 
 type Size = 'sm' | 'md' | 'lg'
 
 interface Props {
   /** The selected date range. Use with v-model. */
-  modelValue:       DateRange
+  modelValue: DateRange
   /** Minimum selectable date (YYYY-MM-DD). */
-  minDate?:         string
+  minDate?: string
   /** Maximum selectable date (YYYY-MM-DD). */
-  maxDate?:         string
+  maxDate?: string
   /** Placeholder shown when no start date selected. @default 'Start date' */
   startPlaceholder?: string
   /** Placeholder shown when no end date selected. @default 'End date' */
-  endPlaceholder?:   string
+  endPlaceholder?: string
   /** Visual size. @default 'md' */
-  size?:             Size
+  size?: Size
   /** Label above the trigger. */
-  label?:            string
+  label?: string
   /** Error message. */
-  error?:            string
+  error?: string
   /** Disables the picker. @default false */
-  disabled?:         boolean
+  disabled?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  modelValue:        () => ({ start: null, end: null }),
-  startPlaceholder:  'Start date',
-  endPlaceholder:    'End date',
-  size:              'md',
-  disabled:          false,
+  modelValue: () => ({ start: null, end: null }),
+  startPlaceholder: 'Start date',
+  endPlaceholder: 'End date',
+  size: 'md',
+  disabled: false,
 })
 
 const emit = defineEmits<{
@@ -47,16 +52,16 @@ const emit = defineEmits<{
 
 // ── State ─────────────────────────────────────────────────────────────────────
 
-const isOpen      = ref(false)
+const isOpen = ref(false)
 const containerRef = ref<HTMLElement | null>(null)
-const triggerId   = useId()
+const triggerId = useId()
 
 // Calendar shows two months: left and right
-const leftYear  = ref(new Date().getFullYear())
+const leftYear = ref(new Date().getFullYear())
 const leftMonth = ref(new Date().getMonth()) // 0-based
 
-const rightYear  = computed(() => leftMonth.value === 11 ? leftYear.value + 1 : leftYear.value)
-const rightMonth = computed(() => leftMonth.value === 11 ? 0 : leftMonth.value + 1)
+const rightYear = computed(() => (leftMonth.value === 11 ? leftYear.value + 1 : leftYear.value))
+const rightMonth = computed(() => (leftMonth.value === 11 ? 0 : leftMonth.value + 1))
 
 // Hover preview
 const hoverDate = ref<string | null>(null)
@@ -73,35 +78,45 @@ function toISO(d: Date): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 }
 
-const startDate  = computed(() => toDate(props.modelValue.start))
-const endDate    = computed(() => toDate(props.modelValue.end))
+const startDate = computed(() => toDate(props.modelValue.start))
+const endDate = computed(() => toDate(props.modelValue.end))
 const minDateObj = computed(() => toDate(props.minDate))
 const maxDateObj = computed(() => toDate(props.maxDate))
 
 const DAYS = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
 
 const MONTHS = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December',
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
 ]
 
-const today    = new Date()
+const today = new Date()
 const todayISO = toISO(today)
 
 // ── Calendar grid builder ─────────────────────────────────────────────────────
 
 interface CalCell {
   date: Date
-  iso:  string
-  day:  number
+  iso: string
+  day: number
   isCurrentMonth: boolean
-  isToday:        boolean
-  isDisabled:     boolean
-  isStart:        boolean
-  isEnd:          boolean
-  isInRange:      boolean
-  isRangeStart:   boolean  // leftmost visible range edge
-  isRangeEnd:     boolean  // rightmost visible range edge
+  isToday: boolean
+  isDisabled: boolean
+  isStart: boolean
+  isEnd: boolean
+  isInRange: boolean
+  isRangeStart: boolean // leftmost visible range edge
+  isRangeEnd: boolean // rightmost visible range edge
 }
 
 function buildGrid(year: number, month: number): CalCell[] {
@@ -110,7 +125,7 @@ function buildGrid(year: number, month: number): CalCell[] {
   if (startDow < 0) startDow = 6
 
   const prevMonth = new Date(year, month, 0)
-  const prevDays  = prevMonth.getDate()
+  const prevDays = prevMonth.getDate()
   const daysInMonth = new Date(year, month + 1, 0).getDate()
 
   const cells: CalCell[] = []
@@ -137,11 +152,11 @@ function makeCell(date: Date, isCurrentMonth: boolean): CalCell {
     (maxDateObj.value ? date > maxDateObj.value : false)
 
   const start = startDate.value
-  const end   = endDate.value
+  const end = endDate.value
   const hover = hoverDate.value ? toDate(hoverDate.value) : null
 
   const isStart = !!start && iso === toISO(start)
-  const isEnd   = !!end   && iso === toISO(end)
+  const isEnd = !!end && iso === toISO(end)
 
   // Range includes hover preview when only start is selected
   let isInRange = false
@@ -154,18 +169,21 @@ function makeCell(date: Date, isCurrentMonth: boolean): CalCell {
   }
 
   return {
-    date, iso, day: date.getDate(), isCurrentMonth,
+    date,
+    iso,
+    day: date.getDate(),
+    isCurrentMonth,
     isToday: iso === todayISO,
     isDisabled,
     isStart,
     isEnd,
     isInRange,
     isRangeStart: isStart || (isInRange && date.getDay() === 1),
-    isRangeEnd:   isEnd   || (isInRange && date.getDay() === 0),
+    isRangeEnd: isEnd || (isInRange && date.getDay() === 0),
   }
 }
 
-const leftGrid  = computed(() => buildGrid(leftYear.value, leftMonth.value))
+const leftGrid = computed(() => buildGrid(leftYear.value, leftMonth.value))
 const rightGrid = computed(() => buildGrid(rightYear.value, rightMonth.value))
 
 // ── Navigation ────────────────────────────────────────────────────────────────
@@ -194,7 +212,7 @@ function selectDate(cell: CalCell) {
   if (cell.isDisabled) return
 
   const start = props.modelValue.start
-  const end   = props.modelValue.end
+  const end = props.modelValue.end
 
   if (!start || (start && end)) {
     // No start yet, or full range already selected → reset to new start
@@ -224,7 +242,7 @@ function formatDate(iso: string | null): string {
 }
 
 const displayStart = computed(() => formatDate(props.modelValue.start))
-const displayEnd   = computed(() => formatDate(props.modelValue.end))
+const displayEnd = computed(() => formatDate(props.modelValue.end))
 
 const hasError = computed(() => !!props.error)
 
@@ -237,48 +255,51 @@ function handleClickOutside(e: MouseEvent) {
   }
 }
 
-onMounted(()       => document.addEventListener('mousedown', handleClickOutside))
+onMounted(() => document.addEventListener('mousedown', handleClickOutside))
 onBeforeUnmount(() => document.removeEventListener('mousedown', handleClickOutside))
 
 // Sync calendar view when modelValue changes externally
-watch(() => props.modelValue.start, (iso) => {
-  if (iso) {
-    const d = toDate(iso)
-    if (d) {
-      leftYear.value  = d.getFullYear()
-      leftMonth.value = d.getMonth()
+watch(
+  () => props.modelValue.start,
+  (iso) => {
+    if (iso) {
+      const d = toDate(iso)
+      if (d) {
+        leftYear.value = d.getFullYear()
+        leftMonth.value = d.getMonth()
+      }
     }
-  }
-}, { immediate: true })
+  },
+  { immediate: true }
+)
 
 // ── Styling ───────────────────────────────────────────────────────────────────
 
 const heightClass: Record<Size, string> = { sm: 'h-8', md: 'h-10', lg: 'h-12' }
-const textClass:   Record<Size, string> = { sm: 'text-sm', md: 'text-sm', lg: 'text-base' }
-const paddingX:    Record<Size, string> = { sm: 'px-3', md: 'px-4', lg: 'px-5' }
+const textClass: Record<Size, string> = { sm: 'text-sm', md: 'text-sm', lg: 'text-base' }
+const paddingX: Record<Size, string> = { sm: 'px-3', md: 'px-4', lg: 'px-5' }
 
 function cellClass(cell: CalCell) {
   return cn(
     'ds-drp-cell',
-    cell.isStart     && 'ds-drp-cell--start',
-    cell.isEnd       && 'ds-drp-cell--end',
-    cell.isInRange   && 'ds-drp-cell--in-range',
+    cell.isStart && 'ds-drp-cell--start',
+    cell.isEnd && 'ds-drp-cell--end',
+    cell.isInRange && 'ds-drp-cell--in-range',
     cell.isToday && !cell.isStart && !cell.isEnd && 'ds-drp-cell--today',
     !cell.isCurrentMonth && !cell.isStart && !cell.isEnd && 'ds-drp-cell--outside',
-    cell.isDisabled  && 'ds-drp-cell--disabled',
+    cell.isDisabled && 'ds-drp-cell--disabled'
   )
 }
 </script>
 
 <template>
   <div ref="containerRef" class="relative flex flex-col gap-1.5 w-full">
-
     <!-- Label -->
     <label
       v-if="label"
       :for="triggerId"
       :class="cn('text-sm font-medium select-none', disabled && 'opacity-50')"
-      style="color: var(--color-text-heading);"
+      style="color: var(--color-text-heading)"
     >
       {{ label }}
     </label>
@@ -287,19 +308,21 @@ function cellClass(cell: CalCell) {
     <button
       :id="triggerId"
       type="button"
-      :class="cn(
-        'ds-drp-trigger',
-        'flex items-center w-full gap-2',
-        'rounded-[var(--radius-lg)] border outline-none',
-        'transition-colors duration-200 ease-out select-none',
-        !disabled && 'cursor-pointer',
-        heightClass[size],
-        paddingX[size],
-        textClass[size],
-        hasError && 'ds-drp-trigger--error',
-        isOpen   && 'ds-drp-trigger--open',
-        disabled && 'ds-drp-trigger--disabled cursor-not-allowed',
-      )"
+      :class="
+        cn(
+          'ds-drp-trigger',
+          'flex items-center w-full gap-2',
+          'rounded-[var(--radius-lg)] border outline-none',
+          'transition-colors duration-200 ease-out select-none',
+          !disabled && 'cursor-pointer',
+          heightClass[size],
+          paddingX[size],
+          textClass[size],
+          hasError && 'ds-drp-trigger--error',
+          isOpen && 'ds-drp-trigger--open',
+          disabled && 'ds-drp-trigger--disabled cursor-not-allowed'
+        )
+      "
       :disabled="disabled"
       :aria-expanded="isOpen"
       :aria-haspopup="'dialog'"
@@ -308,12 +331,18 @@ function cellClass(cell: CalCell) {
       <!-- Start date -->
       <span
         class="flex-1 text-left truncate"
-        :style="{ color: displayStart ? 'var(--color-text-primary)' : 'var(--color-text-tertiary)' }"
+        :style="{
+          color: displayStart ? 'var(--color-text-primary)' : 'var(--color-text-tertiary)',
+        }"
       >
         {{ displayStart || startPlaceholder }}
       </span>
 
-      <RiArrowRightLine size="14" style="color: var(--color-text-tertiary); flex-shrink: 0;" aria-hidden="true" />
+      <RiArrowRightLine
+        size="14"
+        style="color: var(--color-text-tertiary); flex-shrink: 0"
+        aria-hidden="true"
+      />
 
       <!-- End date -->
       <span
@@ -325,13 +354,13 @@ function cellClass(cell: CalCell) {
 
       <RiCalendarLine
         :size="size === 'lg' ? '18' : '16'"
-        style="color: var(--color-text-tertiary); flex-shrink: 0;"
+        style="color: var(--color-text-tertiary); flex-shrink: 0"
         aria-hidden="true"
       />
     </button>
 
     <!-- Error -->
-    <p v-if="error" class="text-[13px]" style="color: var(--color-danger);">{{ error }}</p>
+    <p v-if="error" class="text-[13px]" style="color: var(--color-danger)">{{ error }}</p>
 
     <!-- Calendar popup -->
     <Transition
@@ -351,17 +380,22 @@ function cellClass(cell: CalCell) {
       >
         <!-- Header: left month -->
         <div class="ds-drp-panels">
-
           <!-- LEFT PANEL -->
           <div class="ds-drp-panel">
             <div class="flex items-center justify-between mb-3">
-              <button type="button" class="ds-cal-nav-btn" aria-label="Previous month" @click="prevMonth">
+              <button
+                type="button"
+                class="ds-cal-nav-btn"
+                aria-label="Previous month"
+                @click="prevMonth"
+              >
                 <RiArrowLeftSLine size="16" />
               </button>
-              <span class="text-sm font-semibold" style="color: var(--color-text-primary);">
+              <span class="text-sm font-semibold" style="color: var(--color-text-primary)">
                 {{ MONTHS[leftMonth] }} {{ leftYear }}
               </span>
-              <div class="w-7" /> <!-- spacer (right nav is on right panel) -->
+              <div class="w-7" />
+              <!-- spacer (right nav is on right panel) -->
             </div>
 
             <!-- Day headers -->
@@ -377,7 +411,13 @@ function cellClass(cell: CalCell) {
                 type="button"
                 :class="cellClass(cell)"
                 :disabled="cell.isDisabled"
-                :aria-label="cell.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })"
+                :aria-label="
+                  cell.date.toLocaleDateString('en-US', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric',
+                  })
+                "
                 :aria-selected="cell.isStart || cell.isEnd || cell.isInRange || undefined"
                 @click="selectDate(cell)"
                 @mouseenter="hoverDate = cell.iso"
@@ -394,11 +434,17 @@ function cellClass(cell: CalCell) {
           <!-- RIGHT PANEL -->
           <div class="ds-drp-panel">
             <div class="flex items-center justify-between mb-3">
-              <div class="w-7" /> <!-- spacer -->
-              <span class="text-sm font-semibold" style="color: var(--color-text-primary);">
+              <div class="w-7" />
+              <!-- spacer -->
+              <span class="text-sm font-semibold" style="color: var(--color-text-primary)">
                 {{ MONTHS[rightMonth] }} {{ rightYear }}
               </span>
-              <button type="button" class="ds-cal-nav-btn" aria-label="Next month" @click="nextMonth">
+              <button
+                type="button"
+                class="ds-cal-nav-btn"
+                aria-label="Next month"
+                @click="nextMonth"
+              >
                 <RiArrowRightSLine size="16" />
               </button>
             </div>
@@ -416,7 +462,13 @@ function cellClass(cell: CalCell) {
                 type="button"
                 :class="cellClass(cell)"
                 :disabled="cell.isDisabled"
-                :aria-label="cell.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })"
+                :aria-label="
+                  cell.date.toLocaleDateString('en-US', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric',
+                  })
+                "
                 :aria-selected="cell.isStart || cell.isEnd || cell.isInRange || undefined"
                 @click="selectDate(cell)"
                 @mouseenter="hoverDate = cell.iso"
@@ -430,14 +482,23 @@ function cellClass(cell: CalCell) {
 
         <!-- Footer actions -->
         <div class="ds-drp-footer">
-          <span class="text-xs" style="color: var(--color-text-tertiary);">
-            {{ modelValue.start && !modelValue.end ? 'Now select an end date' : modelValue.start && modelValue.end ? `${displayStart} → ${displayEnd}` : 'Select a start date' }}
+          <span class="text-xs" style="color: var(--color-text-tertiary)">
+            {{
+              modelValue.start && !modelValue.end
+                ? 'Now select an end date'
+                : modelValue.start && modelValue.end
+                  ? `${displayStart} → ${displayEnd}`
+                  : 'Select a start date'
+            }}
           </span>
           <button
             type="button"
             class="ds-drp-clear-btn text-xs"
             :disabled="!modelValue.start && !modelValue.end"
-            @click="emit('update:modelValue', { start: null, end: null }); isOpen = false"
+            @click="
+              emit('update:modelValue', { start: null, end: null })
+              isOpen = false
+            "
           >
             Clear
           </button>
@@ -460,8 +521,13 @@ function cellClass(cell: CalCell) {
   border-color: var(--color-text-primary);
   box-shadow: 0 0 0 1px var(--color-text-primary);
 }
-.ds-drp-trigger--error        { border-color: var(--color-danger); }
-.ds-drp-trigger--disabled     { opacity: 0.5; background-color: var(--color-bg-subtle); }
+.ds-drp-trigger--error {
+  border-color: var(--color-danger);
+}
+.ds-drp-trigger--disabled {
+  opacity: 0.5;
+  background-color: var(--color-bg-subtle);
+}
 
 /* ── Popup ── */
 .ds-drp-popup {
@@ -473,7 +539,9 @@ function cellClass(cell: CalCell) {
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-xl), 0 0 0 1px var(--color-border);
+  box-shadow:
+    var(--shadow-xl),
+    0 0 0 1px var(--color-border);
 }
 
 .ds-drp-panels {
@@ -531,7 +599,9 @@ function cellClass(cell: CalCell) {
   font-size: 0.8125rem;
   cursor: pointer;
   color: var(--color-text-primary);
-  transition: background-color 100ms ease, color 100ms ease;
+  transition:
+    background-color 100ms ease,
+    color 100ms ease;
   border-radius: var(--radius-md);
   z-index: 1;
 }

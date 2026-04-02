@@ -7,9 +7,9 @@ const meta: Meta<typeof Skeleton> = {
   tags: ['autodocs'],
   argTypes: {
     variant: { control: 'select', options: ['text', 'circular', 'rectangular', 'rounded'] },
-    width:   { control: 'text' },
-    height:  { control: 'text' },
-    lines:   { control: 'number' },
+    width: { control: 'text' },
+    height: { control: 'text' },
+    lines: { control: 'number' },
   },
 }
 export default meta

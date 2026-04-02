@@ -315,7 +315,8 @@ const localeText: Record<Locale, LocaleText> = {
 
 const getLocale = (): Locale => resolveLocale(getI18nLocale())
 const useCopy = () => computed(() => localeText[getLocale()])
-const getStoryName = (key: keyof LocaleText['storyNames']) => localeText[getLocale()].storyNames[key]
+const getStoryName = (key: keyof LocaleText['storyNames']) =>
+  localeText[getLocale()].storyNames[key]
 
 const buildArgTypes = (locale: Locale): NonNullable<Meta<typeof Form>['argTypes']> => {
   const copy = localeText[locale]
@@ -358,7 +359,7 @@ const meta: Meta<typeof Form> = {
   argTypes: buildArgTypes('en'),
   args: {
     layout: 'stack',
-    gap:    'md',
+    gap: 'md',
   },
 }
 export default meta
@@ -372,9 +373,9 @@ export const StackLayout: Story = {
     components: { Form, Input, Select, Textarea, Button },
     setup: () => {
       const copy = useCopy()
-      const name    = ref('')
-      const email   = ref('')
-      const role    = ref('')
+      const name = ref('')
+      const email = ref('')
+      const role = ref('')
       const message = ref('')
       return { copy, name, email, role, message }
     },
@@ -401,12 +402,12 @@ export const GridLayout: Story = {
     setup: () => {
       const copy = useCopy()
       const firstName = ref('')
-      const lastName  = ref('')
-      const email     = ref('')
-      const phone     = ref('')
-      const company   = ref('')
-      const title     = ref('')
-      const country   = ref('')
+      const lastName = ref('')
+      const email = ref('')
+      const phone = ref('')
+      const company = ref('')
+      const title = ref('')
+      const country = ref('')
       return { copy, firstName, lastName, email, phone, company, title, country }
     },
     template: `
@@ -436,7 +437,7 @@ export const InlineLayout: Story = {
     components: { Form, Input, Select, Button },
     setup: () => {
       const copy = useCopy()
-      const query  = ref('')
+      const query = ref('')
       const status = ref('')
       return { copy, query, status }
     },
@@ -462,9 +463,9 @@ export const WithValidation: Story = {
     components: { Form, Input, Select, Textarea, Button },
     setup: () => {
       const copy = useCopy()
-      const name    = ref('')
-      const email   = ref('invalid-email')
-      const role    = ref('')
+      const name = ref('')
+      const email = ref('invalid-email')
+      const role = ref('')
       const message = ref('')
       return { copy, name, email, role, message }
     },

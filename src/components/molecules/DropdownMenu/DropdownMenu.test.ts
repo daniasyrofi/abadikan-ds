@@ -22,18 +22,27 @@ describe('DropdownMenu', () => {
   })
 
   it('menu is closed by default', () => {
-    const wrapper = mount(DropdownMenu, { props: { items }, slots: { trigger: '<button>Open</button>' } })
+    const wrapper = mount(DropdownMenu, {
+      props: { items },
+      slots: { trigger: '<button>Open</button>' },
+    })
     expect(wrapper.find('[role="menu"]').exists()).toBe(false)
   })
 
   it('opens menu on trigger click', async () => {
-    const wrapper = mount(DropdownMenu, { props: { items }, slots: { trigger: '<button>Open</button>' } })
+    const wrapper = mount(DropdownMenu, {
+      props: { items },
+      slots: { trigger: '<button>Open</button>' },
+    })
     await wrapper.find('button').trigger('click')
     expect(wrapper.find('[role="menu"]').exists()).toBe(true)
   })
 
   it('renders menu items', async () => {
-    const wrapper = mount(DropdownMenu, { props: { items }, slots: { trigger: '<button>Open</button>' } })
+    const wrapper = mount(DropdownMenu, {
+      props: { items },
+      slots: { trigger: '<button>Open</button>' },
+    })
     await wrapper.find('button').trigger('click')
     const menuItems = wrapper.findAll('[role="menuitem"]')
     expect(menuItems.length).toBeGreaterThan(0)
@@ -52,7 +61,10 @@ describe('DropdownMenu', () => {
   })
 
   it('closes menu after item is clicked', async () => {
-    const wrapper = mount(DropdownMenu, { props: { items }, slots: { trigger: '<button>Open</button>' } })
+    const wrapper = mount(DropdownMenu, {
+      props: { items },
+      slots: { trigger: '<button>Open</button>' },
+    })
     await wrapper.find('button').trigger('click')
     await wrapper.find('[role="menuitem"]').trigger('click')
     expect(wrapper.find('[role="menu"]').exists()).toBe(false)
@@ -70,13 +82,19 @@ describe('DropdownMenu', () => {
   })
 
   it('renders separator when separator=true in items', async () => {
-    const wrapper = mount(DropdownMenu, { props: { items }, slots: { trigger: '<button>Open</button>' } })
+    const wrapper = mount(DropdownMenu, {
+      props: { items },
+      slots: { trigger: '<button>Open</button>' },
+    })
     await wrapper.find('button').trigger('click')
     expect(wrapper.find('[role="separator"]').exists()).toBe(true)
   })
 
   it('closes on Escape key (document capture listener)', async () => {
-    const wrapper = mount(DropdownMenu, { props: { items }, slots: { trigger: '<button>Open</button>' } })
+    const wrapper = mount(DropdownMenu, {
+      props: { items },
+      slots: { trigger: '<button>Open</button>' },
+    })
     await wrapper.find('button').trigger('click')
     expect(wrapper.find('[role="menu"]').exists()).toBe(true)
     // DropdownMenu listens on document with capture=true — dispatch there
@@ -86,7 +104,8 @@ describe('DropdownMenu', () => {
   })
 
   it.each(['bottom-start', 'bottom-end', 'top-start', 'top-end'] as const)(
-    'renders placement %s', (placement) => {
+    'renders placement %s',
+    (placement) => {
       const wrapper = mount(DropdownMenu, {
         props: { items: [{ label: 'A' }], placement },
         slots: { trigger: '<button>Open</button>' },
@@ -114,7 +133,10 @@ describe('DropdownMenu', () => {
   })
 
   it('closes when clicking outside (clickOutside listener)', async () => {
-    const wrapper = mount(DropdownMenu, { props: { items }, slots: { trigger: '<button>Open</button>' } })
+    const wrapper = mount(DropdownMenu, {
+      props: { items },
+      slots: { trigger: '<button>Open</button>' },
+    })
     await wrapper.find('button').trigger('click')
     expect(wrapper.find('[role="menu"]').exists()).toBe(true)
     // Click somewhere outside the component

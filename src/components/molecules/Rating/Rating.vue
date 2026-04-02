@@ -7,25 +7,25 @@ interface Props {
   /** Current rating value. Supports v-model. */
   modelValue?: number
   /** Maximum number of stars. @default 5 */
-  max?:        number
+  max?: number
   /** Visual size. @default 'md' */
-  size?:       RatingSize
+  size?: RatingSize
   /** Makes the rating read-only (no interaction). @default false */
-  readonly?:   boolean
+  readonly?: boolean
   /** Disables the rating. @default false */
-  disabled?:   boolean
+  disabled?: boolean
   /** Clicking an already-selected star resets to 0. @default true */
   allowClear?: boolean
   /** Accessible label for the group. */
-  label?:      string
+  label?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   modelValue: 0,
-  max:        5,
-  size:       'md',
-  readonly:   false,
-  disabled:   false,
+  max: 5,
+  size: 'md',
+  readonly: false,
+  disabled: false,
   allowClear: true,
 })
 
@@ -34,7 +34,7 @@ const emit = defineEmits<{
   change: [value: number]
 }>()
 
-const hovered     = ref<number | null>(null)
+const hovered = ref<number | null>(null)
 const displayValue = computed(() => hovered.value ?? props.modelValue)
 
 const starPx: Record<RatingSize, number> = { sm: 16, md: 20, lg: 28 }
@@ -63,8 +63,13 @@ function rate(star: number) {
       :aria-label="`${star} star${star !== 1 ? 's' : ''}`"
       :disabled="readonly || disabled"
       class="relative focus-visible:outline-2 focus-visible:outline-offset-1 rounded-sm transition-transform duration-[--duration-fast]"
-      :class="{ 'hover:scale-110 active:scale-95 cursor-pointer': !readonly && !disabled, 'cursor-default': readonly || disabled }"
-      :style="{ color: displayValue >= star ? 'var(--color-warning)' : 'var(--color-border-strong)' }"
+      :class="{
+        'hover:scale-110 active:scale-95 cursor-pointer': !readonly && !disabled,
+        'cursor-default': readonly || disabled,
+      }"
+      :style="{
+        color: displayValue >= star ? 'var(--color-warning)' : 'var(--color-border-strong)',
+      }"
       @click="rate(star)"
       @mouseenter="!readonly && !disabled && (hovered = star)"
       @mouseleave="hovered = null"
@@ -76,7 +81,9 @@ function rate(star: number) {
         fill="currentColor"
         aria-hidden="true"
       >
-        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+        <path
+          d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+        />
       </svg>
     </button>
   </div>

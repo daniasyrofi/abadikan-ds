@@ -5,25 +5,30 @@ import Accordion from './Accordion.vue'
 import AccordionItem from './AccordionItem.vue'
 
 // Helper: mount a full accordion with two items
-function mountAccordion(options: {
-  type?: 'single' | 'multiple'
-  defaultOpen?: string[]
-} = {}) {
-  return mount(defineComponent({
-    components: { Accordion, AccordionItem },
-    template: `
+function mountAccordion(
+  options: {
+    type?: 'single' | 'multiple'
+    defaultOpen?: string[]
+  } = {}
+) {
+  return mount(
+    defineComponent({
+      components: { Accordion, AccordionItem },
+      template: `
       <Accordion :type="type" :default-open="defaultOpen">
         <AccordionItem value="a" title="Item A">Content A</AccordionItem>
         <AccordionItem value="b" title="Item B">Content B</AccordionItem>
       </Accordion>
     `,
-    props: ['type', 'defaultOpen'],
-  }), {
-    props: {
-      type: options.type ?? 'single',
-      defaultOpen: options.defaultOpen ?? [],
-    },
-  })
+      props: ['type', 'defaultOpen'],
+    }),
+    {
+      props: {
+        type: options.type ?? 'single',
+        defaultOpen: options.defaultOpen ?? [],
+      },
+    }
+  )
 }
 
 describe('Accordion', () => {
@@ -88,14 +93,16 @@ describe('Accordion', () => {
   })
 
   it('disabled item does not toggle', async () => {
-    const wrapper = mount(defineComponent({
-      components: { Accordion, AccordionItem },
-      template: `
+    const wrapper = mount(
+      defineComponent({
+        components: { Accordion, AccordionItem },
+        template: `
         <Accordion>
           <AccordionItem value="a" title="Disabled" :disabled="true">Body</AccordionItem>
         </Accordion>
       `,
-    }))
+      })
+    )
     const btn = wrapper.find('button')
     expect(btn.attributes('disabled')).toBeDefined()
     // Clicking a disabled button should not change aria-expanded from false

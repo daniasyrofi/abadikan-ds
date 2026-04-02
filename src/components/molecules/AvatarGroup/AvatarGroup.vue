@@ -61,31 +61,29 @@ const overflowSizeClass: Record<AvatarSize, string> = {
     <div
       v-for="(avatar, index) in visible"
       :key="index"
-      :class="cn(
-        'relative shrink-0 rounded-full ring-[var(--color-surface)]',
-        ringClass[size],
-        index > 0 && overlapClass[size],
-      )"
+      :class="
+        cn(
+          'relative shrink-0 rounded-full ring-[var(--color-surface)]',
+          ringClass[size],
+          index > 0 && overlapClass[size]
+        )
+      "
       :style="{ zIndex: visible.length - index }"
     >
-      <Avatar
-        :src="avatar.src"
-        :name="avatar.name"
-        :alt="avatar.alt"
-        :size="size"
-        shape="circle"
-      />
+      <Avatar :src="avatar.src" :name="avatar.name" :alt="avatar.alt" :size="size" shape="circle" />
     </div>
 
     <!-- Overflow count badge -->
     <div
       v-if="overflow > 0"
-      :class="cn(
-        'relative shrink-0 rounded-full ring-[var(--color-surface)] inline-flex items-center justify-center font-semibold select-none',
-        ringClass[size],
-        overlapClass[size],
-        overflowSizeClass[size],
-      )"
+      :class="
+        cn(
+          'relative shrink-0 rounded-full ring-[var(--color-surface)] inline-flex items-center justify-center font-semibold select-none',
+          ringClass[size],
+          overlapClass[size],
+          overflowSizeClass[size]
+        )
+      "
       :style="{
         zIndex: 0,
         backgroundColor: 'var(--color-neutral-light)',

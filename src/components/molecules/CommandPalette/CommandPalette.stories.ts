@@ -53,14 +53,14 @@ export const Navigation: Story = {
     setup() {
       const open = ref(true)
       const items = [
-        { id: 'home',       label: 'Home',         group: 'Pages',    icon: RiHome2Line },
-        { id: 'dashboard',  label: 'Dashboard',    group: 'Pages',    icon: RiLayoutLine },
-        { id: 'reports',    label: 'Reports',      group: 'Pages',    icon: RiFileChartLine },
-        { id: 'campaigns',  label: 'Campaigns',    group: 'Pages',    icon: RiMailLine },
-        { id: 'audience',   label: 'Audience',     group: 'Pages',    icon: RiTeamLine },
-        { id: 'settings',   label: 'Settings',     group: 'Pages',    icon: RiSettings3Line },
-        { id: 'profile',    label: 'My Profile',   group: 'Account',  icon: RiUserLine },
-        { id: 'logout',     label: 'Log Out',      group: 'Account',  icon: RiLogoutBoxLine },
+        { id: 'home', label: 'Home', group: 'Pages', icon: RiHome2Line },
+        { id: 'dashboard', label: 'Dashboard', group: 'Pages', icon: RiLayoutLine },
+        { id: 'reports', label: 'Reports', group: 'Pages', icon: RiFileChartLine },
+        { id: 'campaigns', label: 'Campaigns', group: 'Pages', icon: RiMailLine },
+        { id: 'audience', label: 'Audience', group: 'Pages', icon: RiTeamLine },
+        { id: 'settings', label: 'Settings', group: 'Pages', icon: RiSettings3Line },
+        { id: 'profile', label: 'My Profile', group: 'Account', icon: RiUserLine },
+        { id: 'logout', label: 'Log Out', group: 'Account', icon: RiLogoutBoxLine },
       ]
       return { open, items }
     },
@@ -86,11 +86,11 @@ export const ContextualActions: Story = {
     setup() {
       const open = ref(true)
       const items = [
-        { id: 'backlog',     label: 'Backlog',     icon: RiIndeterminateCircleLine, shortcut: '⌘⌥1' },
-        { id: 'todo',        label: 'Todo',        icon: RiCheckboxCircleLine,      shortcut: '⌘⌥2' },
-        { id: 'in-progress', label: 'In Progress', icon: RiLoader2Line,             shortcut: '⌘⌥3' },
-        { id: 'done',        label: 'Done',        icon: RiCheckboxCircleLine,      shortcut: '⌘⌥4' },
-        { id: 'cancelled',   label: 'Cancelled',   icon: RiCloseCircleLine,         shortcut: '⌘⌥5' },
+        { id: 'backlog', label: 'Backlog', icon: RiIndeterminateCircleLine, shortcut: '⌘⌥1' },
+        { id: 'todo', label: 'Todo', icon: RiCheckboxCircleLine, shortcut: '⌘⌥2' },
+        { id: 'in-progress', label: 'In Progress', icon: RiLoader2Line, shortcut: '⌘⌥3' },
+        { id: 'done', label: 'Done', icon: RiCheckboxCircleLine, shortcut: '⌘⌥4' },
+        { id: 'cancelled', label: 'Cancelled', icon: RiCloseCircleLine, shortcut: '⌘⌥5' },
       ]
       return { open, items }
     },
@@ -116,14 +116,20 @@ export const QuickOpen: Story = {
     setup() {
       const open = ref(true)
       const items = [
-        { id: 'admin-panel',    label: 'Admin Panel',     group: 'Apps',    icon: RiLayoutLine,   description: 'Retool App' },
-        { id: 'apps-page',     label: 'Apps',            group: 'Pages',   icon: RiFileLine },
-        { id: 'archive',       label: 'archive',         group: 'Folders', icon: RiFolderLine },
-        { id: 'basic-admin',   label: 'Basic Admin',     group: 'Modules', icon: RiCodeBoxLine },
-        { id: 'country-search',label: 'Country Search',  group: 'Queries', icon: RiSearchLine },
-        { id: 'data-editor',   label: 'Data Editor',     group: 'Pages',   icon: RiDatabase2Line },
-        { id: 'get-users',     label: 'getUsers',        group: 'Queries', icon: RiSearchLine },
-        { id: 'workflows',     label: 'Workflows',       group: 'Pages',   icon: RiGitBranchLine },
+        {
+          id: 'admin-panel',
+          label: 'Admin Panel',
+          group: 'Apps',
+          icon: RiLayoutLine,
+          description: 'Retool App',
+        },
+        { id: 'apps-page', label: 'Apps', group: 'Pages', icon: RiFileLine },
+        { id: 'archive', label: 'archive', group: 'Folders', icon: RiFolderLine },
+        { id: 'basic-admin', label: 'Basic Admin', group: 'Modules', icon: RiCodeBoxLine },
+        { id: 'country-search', label: 'Country Search', group: 'Queries', icon: RiSearchLine },
+        { id: 'data-editor', label: 'Data Editor', group: 'Pages', icon: RiDatabase2Line },
+        { id: 'get-users', label: 'getUsers', group: 'Queries', icon: RiSearchLine },
+        { id: 'workflows', label: 'Workflows', group: 'Pages', icon: RiGitBranchLine },
       ]
       return { open, items }
     },
@@ -149,15 +155,33 @@ export const FullFeatured: Story = {
     setup() {
       const open = ref(true)
       const items = [
-        { id: 'new-file',     label: 'New File',          group: 'File',    icon: RiFileLine,        shortcut: '⌘N' },
-        { id: 'open-file',    label: 'Open File…',        group: 'File',    icon: RiFolderLine,      shortcut: '⌘O' },
-        { id: 'settings',     label: 'Settings',          group: 'App',     icon: RiSettings3Line,   description: 'Preferences & configuration' },
-        { id: 'appearance',   label: 'Appearance',        group: 'App',     icon: RiPaletteLine,     description: 'Theme, fonts, colors' },
-        { id: 'keybindings',  label: 'Keyboard Shortcuts',group: 'App',     icon: RiKeyboardLine },
-        { id: 'profile',      label: 'My Profile',        group: 'Account', icon: RiUserLine },
-        { id: 'team',         label: 'Team Members',      group: 'Account', icon: RiTeamLine,        description: 'Manage your team' },
-        { id: 'logout',       label: 'Log Out',           group: 'Account', icon: RiLogoutBoxLine },
-        { id: 'help',         label: 'Help & Support',    group: 'Help',    icon: RiQuestionLine },
+        { id: 'new-file', label: 'New File', group: 'File', icon: RiFileLine, shortcut: '⌘N' },
+        { id: 'open-file', label: 'Open File…', group: 'File', icon: RiFolderLine, shortcut: '⌘O' },
+        {
+          id: 'settings',
+          label: 'Settings',
+          group: 'App',
+          icon: RiSettings3Line,
+          description: 'Preferences & configuration',
+        },
+        {
+          id: 'appearance',
+          label: 'Appearance',
+          group: 'App',
+          icon: RiPaletteLine,
+          description: 'Theme, fonts, colors',
+        },
+        { id: 'keybindings', label: 'Keyboard Shortcuts', group: 'App', icon: RiKeyboardLine },
+        { id: 'profile', label: 'My Profile', group: 'Account', icon: RiUserLine },
+        {
+          id: 'team',
+          label: 'Team Members',
+          group: 'Account',
+          icon: RiTeamLine,
+          description: 'Manage your team',
+        },
+        { id: 'logout', label: 'Log Out', group: 'Account', icon: RiLogoutBoxLine },
+        { id: 'help', label: 'Help & Support', group: 'Help', icon: RiQuestionLine },
       ]
       return { open, items }
     },
@@ -182,11 +206,11 @@ export const WithTrigger: Story = {
     setup() {
       const open = ref(false)
       const items = [
-        { id: 'home',      label: 'Home',       group: 'Pages',   icon: RiHome2Line },
-        { id: 'reports',   label: 'Reports',    group: 'Pages',   icon: RiFileChartLine },
-        { id: 'settings',  label: 'Settings',   group: 'Pages',   icon: RiSettings3Line },
-        { id: 'profile',   label: 'My Profile', group: 'Account', icon: RiUserLine },
-        { id: 'logout',    label: 'Log Out',    group: 'Account', icon: RiLogoutBoxLine },
+        { id: 'home', label: 'Home', group: 'Pages', icon: RiHome2Line },
+        { id: 'reports', label: 'Reports', group: 'Pages', icon: RiFileChartLine },
+        { id: 'settings', label: 'Settings', group: 'Pages', icon: RiSettings3Line },
+        { id: 'profile', label: 'My Profile', group: 'Account', icon: RiUserLine },
+        { id: 'logout', label: 'Log Out', group: 'Account', icon: RiLogoutBoxLine },
       ]
       return { open, items }
     },

@@ -7,19 +7,19 @@ type ToggleColor = 'primary' | 'secondary' | 'neutral' | 'danger'
 
 interface Props {
   modelValue?: boolean
-  size?:       Size
-  color?:      ToggleColor
-  disabled?:   boolean
-  readonly?:   boolean
-  label?:      string
+  size?: Size
+  color?: ToggleColor
+  disabled?: boolean
+  readonly?: boolean
+  label?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   modelValue: false,
-  size:       'md',
-  color:      'primary',
-  disabled:   false,
-  readonly:   false,
+  size: 'md',
+  color: 'primary',
+  disabled: false,
+  readonly: false,
 })
 
 const emit = defineEmits<{ 'update:modelValue': [value: boolean] }>()
@@ -31,9 +31,9 @@ function toggle() {
 }
 
 const trackClass: Record<Size, string> = {
-  sm: 'w-7 h-4',   // 16px high
-  md: 'w-9 h-5',   // 20px high
-  lg: 'w-11 h-6',  // 24px high
+  sm: 'w-7 h-4', // 16px high
+  md: 'w-9 h-5', // 20px high
+  lg: 'w-11 h-6', // 24px high
 }
 
 const thumbClass: Record<Size, string> = {
@@ -49,17 +49,17 @@ const thumbTranslate: Record<Size, { on: string; off: string }> = {
 }
 
 const labelTextClass: Record<Size, string> = {
-  sm: 'text-xs',   // 12px
-  md: 'text-sm',   // 14px
+  sm: 'text-xs', // 12px
+  md: 'text-sm', // 14px
   lg: 'text-base', // 16px
 }
 
 // Math for baseline alignment: (TrackHeight - LineHeight) / 2
 // Assumes text uses leading-none (LineHeight = FontSize)
 const offsetClass: Record<Size, string> = {
-  sm: 'mt-[2px]',  // (16 - 12)/2 = 2px
-  md: 'mt-[3px]',  // (20 - 14)/2 = 3px
-  lg: 'mt-[4px]',  // (24 - 16)/2 = 4px
+  sm: 'mt-[2px]', // (16 - 12)/2 = 2px
+  md: 'mt-[3px]', // (20 - 14)/2 = 3px
+  lg: 'mt-[4px]', // (24 - 16)/2 = 4px
 }
 
 const trackClasses = computed(() =>
@@ -71,7 +71,7 @@ const trackClasses = computed(() =>
     'shadow-inner',
     props.disabled && 'opacity-50 cursor-not-allowed pointer-events-none',
     props.readonly && 'cursor-default pointer-events-none',
-    'active:scale-[0.96]',
+    'active:scale-[0.96]'
   )
 )
 
@@ -91,9 +91,7 @@ const thumbClasses = computed(() =>
   cn(
     'transition-transform duration-200 ease-out',
     thumbClass[props.size],
-    props.modelValue
-      ? thumbTranslate[props.size].on
-      : thumbTranslate[props.size].off,
+    props.modelValue ? thumbTranslate[props.size].on : thumbTranslate[props.size].off
   )
 )
 
@@ -125,7 +123,7 @@ const thumbStyle = {
       role="switch"
       :aria-checked="modelValue"
       :aria-labelledby="label ? labelId : undefined"
-      :aria-label="!label ? (label || 'Toggle') : undefined"
+      :aria-label="!label ? label || 'Toggle' : undefined"
       :tabindex="disabled ? -1 : 0"
       @click="toggle"
       @keydown.space.prevent="toggle"
@@ -138,12 +136,14 @@ const thumbStyle = {
       v-if="label"
       :id="labelId"
       :for="inputId"
-      :class="cn(
-        labelTextClass[size],
-        offsetClass[size],
-        'font-medium leading-none select-none transition-colors',
-        disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
-      )"
+      :class="
+        cn(
+          labelTextClass[size],
+          offsetClass[size],
+          'font-medium leading-none select-none transition-colors',
+          disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+        )
+      "
       :style="{ color: 'var(--color-text-primary)' }"
     >
       {{ label }}
@@ -153,6 +153,8 @@ const thumbStyle = {
 
 <style scoped>
 .ds-toggle-track:focus-visible {
-  box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--focus-ring-color, var(--color-primary));
+  box-shadow:
+    0 0 0 2px var(--color-surface),
+    0 0 0 4px var(--focus-ring-color, var(--color-primary));
 }
 </style>

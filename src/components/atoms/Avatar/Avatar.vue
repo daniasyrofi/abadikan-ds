@@ -3,22 +3,22 @@ import { computed, ref, type Component } from 'vue'
 import * as RemixIcons from '@remixicon/vue'
 import { cn } from '@/lib/utils'
 
-type AvatarSize   = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
-type AvatarShape  = 'circle' | 'rounded' | 'square'
+type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
+type AvatarShape = 'circle' | 'rounded' | 'square'
 type AvatarStatus = 'online' | 'offline' | 'busy' | 'away' | null
 
 interface Props {
-  src?:          string
-  alt?:          string
-  name?:         string
-  size?:         AvatarSize
-  shape?:        AvatarShape
-  status?:       AvatarStatus
+  src?: string
+  alt?: string
+  name?: string
+  size?: AvatarSize
+  shape?: AvatarShape
+  status?: AvatarStatus
   fallbackIcon?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  size:  'md',
+  size: 'md',
   shape: 'circle',
 })
 
@@ -27,51 +27,51 @@ const imgError = ref(false)
 // ── Size classes ───────────────────────────────────────────────────────────
 
 const sizeClass: Record<AvatarSize, string> = {
-  xs:  'size-6',
-  sm:  'size-8',
-  md:  'size-10',
-  lg:  'size-12',
-  xl:  'size-14',
+  xs: 'size-6',
+  sm: 'size-8',
+  md: 'size-10',
+  lg: 'size-12',
+  xl: 'size-14',
   '2xl': 'size-16',
 }
 
 const textSizeClass: Record<AvatarSize, string> = {
-  xs:  'text-[10px] font-semibold leading-none',
-  sm:  'text-xs font-semibold leading-none',
-  md:  'text-sm font-semibold leading-none',
-  lg:  'text-base font-semibold leading-none',
-  xl:  'text-lg font-semibold leading-none',
+  xs: 'text-[10px] font-semibold leading-none',
+  sm: 'text-xs font-semibold leading-none',
+  md: 'text-sm font-semibold leading-none',
+  lg: 'text-base font-semibold leading-none',
+  xl: 'text-lg font-semibold leading-none',
   '2xl': 'text-xl font-semibold leading-none',
 }
 
 const iconSizePx: Record<AvatarSize, number> = {
-  xs:  12,
-  sm:  16,
-  md:  20,
-  lg:  24,
-  xl:  28,
+  xs: 12,
+  sm: 16,
+  md: 20,
+  lg: 24,
+  xl: 28,
   '2xl': 32,
 }
 
 const shapeClass: Record<AvatarShape, string> = {
-  circle:  'rounded-full',
+  circle: 'rounded-full',
   rounded: 'rounded-xl',
-  square:  'rounded-md',
+  square: 'rounded-md',
 }
 
 const statusSizeClass: Record<AvatarSize, string> = {
-  xs:  'size-1.5 ring-1',
-  sm:  'size-2 ring-[1.5px]',
-  md:  'size-2.5 ring-2',
-  lg:  'size-3 ring-2',
-  xl:  'size-3.5 ring-2',
+  xs: 'size-1.5 ring-1',
+  sm: 'size-2 ring-[1.5px]',
+  md: 'size-2.5 ring-2',
+  lg: 'size-3 ring-2',
+  xl: 'size-3.5 ring-2',
   '2xl': 'size-4 ring-[3px]',
 }
 
 const statusColors: Record<NonNullable<AvatarStatus>, string> = {
-  online:  'var(--color-success)',
-  busy:    'var(--color-danger)',
-  away:    'var(--color-warning)',
+  online: 'var(--color-success)',
+  busy: 'var(--color-danger)',
+  away: 'var(--color-warning)',
   offline: 'var(--color-text-tertiary)',
 }
 
@@ -121,9 +121,9 @@ const statusDotStyle = computed(() => {
 })
 
 // Show logic
-const showImage    = computed(() => !!props.src && !imgError.value)
+const showImage = computed(() => !!props.src && !imgError.value)
 const showInitials = computed(() => !showImage.value && !!initials.value)
-const showIcon     = computed(() => !showImage.value && !showInitials.value)
+const showIcon = computed(() => !showImage.value && !showInitials.value)
 
 const fallbackIconComponent = computed<Component | null>(() => {
   const iconName = props.fallbackIcon ?? 'RiUser3Line'
@@ -136,7 +136,7 @@ const containerClass = computed(() =>
     'relative inline-flex items-center justify-center shrink-0',
     'select-none',
     sizeClass[props.size],
-    shapeClass[props.shape],
+    shapeClass[props.shape]
   )
 )
 
@@ -159,11 +159,7 @@ const containerStyle = computed(() => {
     />
 
     <!-- Initials fallback -->
-    <span
-      v-else-if="showInitials"
-      :class="textSizeClass[size]"
-      aria-hidden="true"
-    >
+    <span v-else-if="showInitials" :class="textSizeClass[size]" aria-hidden="true">
       {{ initials }}
     </span>
 
@@ -179,10 +175,7 @@ const containerStyle = computed(() => {
     <span
       v-if="status"
       role="img"
-      :class="cn(
-        'absolute bottom-0 right-0 rounded-full',
-        statusSizeClass[size],
-      )"
+      :class="cn('absolute bottom-0 right-0 rounded-full', statusSizeClass[size])"
       :style="statusDotStyle"
       :aria-label="status"
     />

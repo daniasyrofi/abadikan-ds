@@ -9,50 +9,50 @@ type InputType = 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'sea
 type InputSize = 'sm' | 'md' | 'lg'
 
 interface Props {
-  modelValue:  string
-  type?:       InputType
-  size?:       InputSize
-  label?:      string
+  modelValue: string
+  type?: InputType
+  size?: InputSize
+  label?: string
   placeholder?: string
   helperText?: string
-  error?:      string
-  disabled?:   boolean
-  readonly?:   boolean
-  required?:   boolean
-  clearable?:  boolean
-  counter?:    boolean
-  maxlength?:  number
-  id?:         string
+  error?: string
+  disabled?: boolean
+  readonly?: boolean
+  required?: boolean
+  clearable?: boolean
+  counter?: boolean
+  maxlength?: number
+  id?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  type:     'text',
-  size:     'md',
+  type: 'text',
+  size: 'md',
   disabled: false,
   readonly: false,
   required: false,
   clearable: false,
-  counter:  false,
+  counter: false,
 })
 
 const emit = defineEmits<{
   'update:modelValue': [value: string]
-  'clear': []
+  clear: []
 }>()
 
-const autoId       = useId()
-const inputId      = computed(() => props.id ?? autoId)
+const autoId = useId()
+const inputId = computed(() => props.id ?? autoId)
 const showPassword = ref(false)
-const hasError     = computed(() => !!props.error)
-const charCount    = computed(() => props.modelValue?.length ?? 0)
-const isPassword   = computed(() => props.type === 'password')
+const hasError = computed(() => !!props.error)
+const charCount = computed(() => props.modelValue?.length ?? 0)
+const isPassword = computed(() => props.type === 'password')
 const effectiveType = computed(() => {
   if (isPassword.value) return showPassword.value ? 'text' : 'password'
   return props.type
 })
 
 const showClear = computed(
-  () => props.clearable && !!props.modelValue && !props.disabled && !props.readonly,
+  () => props.clearable && !!props.modelValue && !props.disabled && !props.readonly
 )
 
 function handleInput(e: Event) {
@@ -119,7 +119,7 @@ const wrapperClasses = computed(() =>
     heightClass[props.size],
     hasError.value && 'ds-input-wrapper--error',
     props.disabled && 'ds-input-wrapper--disabled cursor-not-allowed',
-    props.readonly && 'ds-input-wrapper--readonly',
+    props.readonly && 'ds-input-wrapper--readonly'
   )
 )
 </script>
@@ -130,10 +130,7 @@ const wrapperClasses = computed(() =>
     <label
       v-if="label"
       :for="inputId"
-      :class="cn(
-        'text-sm font-medium select-none flex items-center',
-        disabled && 'opacity-50',
-      )"
+      :class="cn('text-sm font-medium select-none flex items-center', disabled && 'opacity-50')"
       :style="{ color: 'var(--color-text-heading)' }"
     >
       {{ label }}
@@ -142,19 +139,21 @@ const wrapperClasses = computed(() =>
         class="ml-1 font-bold inline-block"
         :style="{ color: 'var(--color-danger)' }"
         aria-hidden="true"
-      >*</span>
+        >*</span
+      >
     </label>
 
     <!-- Interactive Input Container -->
     <div :class="wrapperClasses">
-
       <!-- Prefix Area (Background filled block e.g. "https://") -->
       <div
         v-if="$slots.prefix"
-        :class="cn(
-          'flex items-center self-stretch text-sm font-medium select-none whitespace-nowrap',
-          pxClasses[size]
-        )"
+        :class="
+          cn(
+            'flex items-center self-stretch text-sm font-medium select-none whitespace-nowrap',
+            pxClasses[size]
+          )
+        "
         :style="{
           borderRight: '1px solid var(--color-border)',
           backgroundColor: 'var(--color-bg-subtle)',
@@ -186,23 +185,24 @@ const wrapperClasses = computed(() =>
         :maxlength="maxlength"
         :aria-invalid="hasError || undefined"
         :aria-describedby="helperText || error ? `${inputId}-hint` : undefined"
-        :class="cn(
-          'ds-input-native',
-          'flex-1 w-full bg-transparent outline-none focus-visible:outline-none h-full min-w-0 border-none focus:ring-0 focus-visible:ring-0',
-          textSizeClass[size],
-          pyClasses[size],
-          !$slots.prefix && !$slots.leading ? plClasses[size] : 'pl-2',
-          !$slots.suffix && !$slots.trailing && !showClear && !isPassword ? prClasses[size] : '',
-          disabled && 'cursor-not-allowed',
-          readonly && 'cursor-default',
-        )"
+        :class="
+          cn(
+            'ds-input-native',
+            'flex-1 w-full bg-transparent outline-none focus-visible:outline-none h-full min-w-0 border-none focus:ring-0 focus-visible:ring-0',
+            textSizeClass[size],
+            pyClasses[size],
+            !$slots.prefix && !$slots.leading ? plClasses[size] : 'pl-2',
+            !$slots.suffix && !$slots.trailing && !showClear && !isPassword ? prClasses[size] : '',
+            disabled && 'cursor-not-allowed',
+            readonly && 'cursor-default'
+          )
+        "
         v-bind="$attrs"
         @input="handleInput"
       />
 
       <!-- Right Side Controls (Clear, Password Toggle, Trailing, Suffix) -->
       <div class="flex items-center self-stretch shrink-0">
-
         <!-- Clear Button -->
         <button
           v-if="showClear"
@@ -238,10 +238,12 @@ const wrapperClasses = computed(() =>
         <!-- Suffix Area (Background filled block e.g. ".com") -->
         <div
           v-if="$slots.suffix"
-          :class="cn(
-            'flex items-center self-stretch text-sm font-medium select-none whitespace-nowrap',
-            pxClasses[size]
-          )"
+          :class="
+            cn(
+              'flex items-center self-stretch text-sm font-medium select-none whitespace-nowrap',
+              pxClasses[size]
+            )
+          "
           :style="{
             borderLeft: '1px solid var(--color-border)',
             backgroundColor: 'var(--color-bg-subtle)',
@@ -281,10 +283,10 @@ const wrapperClasses = computed(() =>
       <!-- Counter -->
       <span
         v-if="counter && maxlength"
-        :class="cn(
-          'text-[13px] font-medium shrink-0 tabular-nums',
-        )"
-        :style="{ color: charCount >= maxlength ? 'var(--color-danger)' : 'var(--color-text-tertiary)' }"
+        :class="cn('text-[13px] font-medium shrink-0 tabular-nums')"
+        :style="{
+          color: charCount >= maxlength ? 'var(--color-danger)' : 'var(--color-text-tertiary)',
+        }"
       >
         {{ charCount }}/{{ maxlength }}
       </span>
@@ -311,7 +313,9 @@ const wrapperClasses = computed(() =>
   border-color: var(--input-border, var(--color-border));
 }
 
-.ds-input-wrapper:hover:not(.ds-input-wrapper--disabled):not(.ds-input-wrapper--readonly):not(:focus-within) {
+.ds-input-wrapper:hover:not(.ds-input-wrapper--disabled):not(.ds-input-wrapper--readonly):not(
+    :focus-within
+  ) {
   border-color: var(--color-border-strong);
 }
 
@@ -361,8 +365,8 @@ const wrapperClasses = computed(() =>
 
 /* ── Webkit Autofill Override ── */
 .ds-input-native:-webkit-autofill,
-.ds-input-native:-webkit-autofill:hover, 
-.ds-input-native:-webkit-autofill:focus, 
+.ds-input-native:-webkit-autofill:hover,
+.ds-input-native:-webkit-autofill:focus,
 .ds-input-native:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 1000px var(--color-surface) inset !important;
   -webkit-text-fill-color: var(--color-text-primary) !important;

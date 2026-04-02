@@ -11,7 +11,7 @@ describe('useToast', () => {
     const { toasts, toast } = useToast()
     const id = toast({ title: 'Hello' })
     expect(typeof id).toBe('string')
-    expect(toasts.value.some(t => t.id === id)).toBe(true)
+    expect(toasts.value.some((t) => t.id === id)).toBe(true)
   })
 
   it('stores the title', () => {
@@ -42,7 +42,7 @@ describe('useToast', () => {
     const { toasts, toast, dismiss } = useToast()
     const id = toast({ title: 'Bye' })
     dismiss(id)
-    expect(toasts.value.some(t => t.id === id)).toBe(false)
+    expect(toasts.value.some((t) => t.id === id)).toBe(false)
   })
 
   it('dismissAll removes all toasts', () => {

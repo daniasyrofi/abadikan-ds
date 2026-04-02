@@ -6,10 +6,10 @@ import CommandPalette from './CommandPalette.vue'
 const global = { stubs: { Teleport: true } }
 
 const items = [
-  { id: 'new-doc',  label: 'New Document',  group: 'File',     action: vi.fn() },
-  { id: 'open',     label: 'Open File',      group: 'File',     shortcut: '⌘O' },
-  { id: 'settings', label: 'Settings',       group: 'App',      description: 'App preferences' },
-  { id: 'logout',   label: 'Log Out',         group: 'App',      disabled: true },
+  { id: 'new-doc', label: 'New Document', group: 'File', action: vi.fn() },
+  { id: 'open', label: 'Open File', group: 'File', shortcut: '⌘O' },
+  { id: 'settings', label: 'Settings', group: 'App', description: 'App preferences' },
+  { id: 'logout', label: 'Log Out', group: 'App', disabled: true },
 ]
 
 describe('CommandPalette', () => {
@@ -36,7 +36,10 @@ describe('CommandPalette', () => {
   })
 
   it('shows placeholder text', () => {
-    const wrapper = mount(CommandPalette, { props: { modelValue: true, items, placeholder: 'Type a command' }, global })
+    const wrapper = mount(CommandPalette, {
+      props: { modelValue: true, items, placeholder: 'Type a command' },
+      global,
+    })
     expect(wrapper.find('input').attributes('placeholder')).toBe('Type a command')
   })
 
@@ -56,7 +59,10 @@ describe('CommandPalette', () => {
   })
 
   it('shows emptyText when no results', async () => {
-    const wrapper = mount(CommandPalette, { props: { modelValue: true, items, emptyText: 'Nothing found' }, global })
+    const wrapper = mount(CommandPalette, {
+      props: { modelValue: true, items, emptyText: 'Nothing found' },
+      global,
+    })
     await wrapper.find('input').setValue('zzzzz')
     await nextTick()
     expect(wrapper.text()).toContain('Nothing found')
@@ -111,7 +117,9 @@ describe('CommandPalette', () => {
 
   it('does not select disabled item', async () => {
     const wrapper = mount(CommandPalette, { props: { modelValue: true, items }, global })
-    const disabledOption = wrapper.findAll('[role="option"]').find(o => o.text().includes('Log Out'))
+    const disabledOption = wrapper
+      .findAll('[role="option"]')
+      .find((o) => o.text().includes('Log Out'))
     if (disabledOption) {
       await disabledOption.trigger('click')
       expect(wrapper.emitted('select')).toBeFalsy()

@@ -34,11 +34,11 @@ export const Default: Story = {
     `,
   }),
   args: {
-    title:        'Save changes?',
-    description:  'Your unsaved changes will be lost if you leave this page.',
+    title: 'Save changes?',
+    description: 'Your unsaved changes will be lost if you leave this page.',
     confirmLabel: 'Save',
-    cancelLabel:  'Discard',
-    variant:      'default',
+    cancelLabel: 'Discard',
+    variant: 'default',
   },
 }
 
@@ -56,10 +56,10 @@ export const Danger: Story = {
     `,
   }),
   args: {
-    title:        'Delete account?',
-    description:  'This action is permanent and cannot be undone. All your data will be erased.',
+    title: 'Delete account?',
+    description: 'This action is permanent and cannot be undone. All your data will be erased.',
     confirmLabel: 'Yes, delete forever',
-    cancelLabel:  'Keep account',
-    variant:      'danger',
+    cancelLabel: 'Keep account',
+    variant: 'danger',
   },
 }

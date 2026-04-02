@@ -22,7 +22,7 @@ const sizeClasses: Record<KbdSize, string> = {
 const classes = computed(() =>
   cn(
     'inline-flex items-center justify-center font-mono font-medium select-none whitespace-nowrap',
-    sizeClasses[props.size],
+    sizeClasses[props.size]
   )
 )
 </script>
@@ -32,9 +32,9 @@ const classes = computed(() =>
     :class="classes"
     :style="{
       backgroundColor: 'var(--color-neutral-light)',
-      color:           'var(--color-text-primary)',
-      border:          '1px solid var(--color-border-strong)',
-      boxShadow:       '0 1px 0 var(--color-border-strong)',
+      color: 'var(--color-text-primary)',
+      border: '1px solid var(--color-border-strong)',
+      boxShadow: '0 1px 0 var(--color-border-strong)',
     }"
   >
     <slot />

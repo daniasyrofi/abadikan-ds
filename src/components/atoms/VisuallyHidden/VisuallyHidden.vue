@@ -10,9 +10,7 @@ withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <span
-    :class="focusable ? 'focus:not-sr-only sr-only' : 'sr-only'"
-  >
+  <span :class="focusable ? 'focus:not-sr-only sr-only' : 'sr-only'">
     <!-- Visually hides content while keeping it accessible to screen readers.
          Use this instead of aria-label when you need to wrap arbitrary markup. -->
     <slot />

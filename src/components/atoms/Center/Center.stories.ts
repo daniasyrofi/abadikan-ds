@@ -7,8 +7,8 @@ const meta: Meta<typeof Center> = {
   tags: ['autodocs'],
   argTypes: {
     inline: { control: 'boolean' },
-    fill:   { control: 'boolean' },
-    as:     { control: 'text' },
+    fill: { control: 'boolean' },
+    as: { control: 'text' },
   },
 }
 export default meta

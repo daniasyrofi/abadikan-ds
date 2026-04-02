@@ -1,8 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { computed, ref, watch } from 'vue'
 import {
-  RiSearchLine, RiMailLine, RiLockLine, RiUser3Line,
-  RiPhoneLine, RiCalendarLine,
+  RiSearchLine,
+  RiMailLine,
+  RiLockLine,
+  RiUser3Line,
+  RiPhoneLine,
+  RiCalendarLine,
 } from '@remixicon/vue'
 import Input from './Input.vue'
 import { getI18nLocale, resolveLocale, type SupportedLocale } from '@/i18n'
@@ -295,26 +299,27 @@ const meta: Meta<typeof Input> = {
   tags: ['autodocs'],
   parameters: { layout: 'centered', icon: 'form' },
   argTypes: {
-    modelValue:  { control: 'text' },
-    type:        { control: 'select', options: ['text', 'email', 'password', 'number', 'tel', 'url', 'search'] },
-    size:        { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
-    label:       { control: 'text' },
+    modelValue: { control: 'text' },
+    type: {
+      control: 'select',
+      options: ['text', 'email', 'password', 'number', 'tel', 'url', 'search'],
+    },
+    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    label: { control: 'text' },
     placeholder: { control: 'text' },
-    helperText:  { control: 'text' },
-    error:       { control: 'text' },
-    disabled:    { control: 'boolean' },
-    readonly:    { control: 'boolean' },
-    required:    { control: 'boolean' },
-    clearable:   { control: 'boolean' },
+    helperText: { control: 'text' },
+    error: { control: 'text' },
+    disabled: { control: 'boolean' },
+    readonly: { control: 'boolean' },
+    required: { control: 'boolean' },
+    clearable: { control: 'boolean' },
   },
   args: {
     modelValue: '',
-    type:       'text',
-    size:       'md',
+    type: 'text',
+    size: 'md',
   },
-  decorators: [
-    () => ({ template: '<div style="width:320px;"><story /></div>' }),
-  ],
+  decorators: [() => ({ template: '<div style="width:320px;"><story /></div>' })],
 }
 export default meta
 type Story = StoryObj<typeof Input>
@@ -330,7 +335,8 @@ export const Default: Story = {
       const val = ref(args.modelValue ?? '')
       return { args, copy, val }
     },
-    template: '<Input v-bind="args" v-model="val" :label="copy.labels.label" :placeholder="copy.labels.placeholder" />',
+    template:
+      '<Input v-bind="args" v-model="val" :label="copy.labels.label" :placeholder="copy.labels.placeholder" />',
   }),
 }
 
@@ -348,12 +354,16 @@ export const States: Story = {
       const disabled = ref('')
       const readonly = ref('')
 
-      watch(copy, (current) => {
-        filled.value = current.labels.filledValue
-        error.value = current.labels.errorValue
-        disabled.value = current.labels.disabledValue
-        readonly.value = current.labels.readonlyValue
-      }, { immediate: true })
+      watch(
+        copy,
+        (current) => {
+          filled.value = current.labels.filledValue
+          error.value = current.labels.errorValue
+          disabled.value = current.labels.disabledValue
+          readonly.value = current.labels.readonlyValue
+        },
+        { immediate: true }
+      )
 
       return {
         copy,
@@ -384,7 +394,9 @@ export const AllSizes: Story = {
     components: { Input },
     setup: () => ({
       copy: useCopy(),
-      sm: ref(''), md: ref(''), lg: ref(''),
+      sm: ref(''),
+      md: ref(''),
+      lg: ref(''),
     }),
     template: `
       <div style="display:flex;flex-direction:column;gap:16px;">
@@ -405,8 +417,8 @@ export const WithIcons: Story = {
     setup: () => ({
       copy: useCopy(),
       search: ref(''),
-      email:  ref(''),
-      date:   ref(''),
+      email: ref(''),
+      date: ref(''),
     }),
     template: `
       <div style="display:flex;flex-direction:column;gap:16px;">
@@ -433,8 +445,8 @@ export const PrefixSuffix: Story = {
     setup: () => ({
       copy: useCopy(),
       website: ref(''),
-      domain:  ref(''),
-      price:   ref(''),
+      domain: ref(''),
+      price: ref(''),
     }),
     template: `
       <div style="display:flex;flex-direction:column;gap:16px;">
@@ -465,9 +477,13 @@ export const Features: Story = {
       const password = ref('supersecret')
       const counter = ref('')
 
-      watch(copy, (current) => {
-        clearable.value = current.labels.clearableValue
-      }, { immediate: true })
+      watch(
+        copy,
+        (current) => {
+          clearable.value = current.labels.clearableValue
+        },
+        { immediate: true }
+      )
 
       return { copy, clearable, password, counter }
     },
@@ -489,7 +505,7 @@ export const Required: Story = {
     components: { Input },
     setup: () => ({
       copy: useCopy(),
-      name:  ref(''),
+      name: ref(''),
       email: ref(''),
     }),
     template: `
@@ -505,18 +521,16 @@ export const FormExample: Story = {
   get name() {
     return getStoryName('formExample')
   },
-  decorators: [
-    () => ({ template: '<div style="width:360px;"><story /></div>' }),
-  ],
+  decorators: [() => ({ template: '<div style="width:360px;"><story /></div>' })],
   render: () => ({
     components: { Input, RiUser3Line, RiMailLine, RiLockLine, RiPhoneLine },
     setup: () => ({
       copy: useCopy(),
-      name:     ref(''),
-      email:    ref(''),
+      name: ref(''),
+      email: ref(''),
       password: ref(''),
-      phone:    ref(''),
-      website:  ref(''),
+      phone: ref(''),
+      website: ref(''),
     }),
     template: `
       <div style="display:flex;flex-direction:column;gap:14px;">

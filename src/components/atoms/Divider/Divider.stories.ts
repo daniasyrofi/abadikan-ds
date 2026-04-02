@@ -139,14 +139,14 @@ const meta: Meta<typeof Divider> = {
   tags: ['autodocs'],
   parameters: { layout: 'centered', icon: 'subtract' },
   argTypes: {
-    orientation:   { control: 'select', options: ['horizontal', 'vertical'] },
-    variant:       { control: 'select', options: ['solid', 'dashed', 'dotted'] },
-    label:         { control: 'text' },
+    orientation: { control: 'select', options: ['horizontal', 'vertical'] },
+    variant: { control: 'select', options: ['solid', 'dashed', 'dotted'] },
+    label: { control: 'text' },
     labelPosition: { control: 'select', options: ['start', 'center', 'end'] },
   },
   args: {
-    orientation:   'horizontal',
-    variant:       'solid',
+    orientation: 'horizontal',
+    variant: 'solid',
     labelPosition: 'center',
   },
 }

@@ -7,12 +7,15 @@ const meta: Meta<typeof Stack> = {
   tags: ['autodocs'],
   argTypes: {
     direction: { control: 'select', options: ['vertical', 'horizontal'] },
-    gap:       { control: 'number' },
-    align:     { control: 'select', options: ['start', 'center', 'end', 'stretch', 'baseline'] },
-    justify:   { control: 'select', options: ['start', 'center', 'end', 'between', 'around', 'evenly'] },
-    wrap:      { control: 'boolean' },
-    inline:    { control: 'boolean' },
-    as:        { control: 'text' },
+    gap: { control: 'number' },
+    align: { control: 'select', options: ['start', 'center', 'end', 'stretch', 'baseline'] },
+    justify: {
+      control: 'select',
+      options: ['start', 'center', 'end', 'between', 'around', 'evenly'],
+    },
+    wrap: { control: 'boolean' },
+    inline: { control: 'boolean' },
+    as: { control: 'text' },
   },
 }
 export default meta

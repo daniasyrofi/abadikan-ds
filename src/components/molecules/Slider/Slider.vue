@@ -106,13 +106,21 @@ const thumbPx: Record<Size, number> = {
 </script>
 
 <template>
-  <div :class="cn('flex flex-col gap-2 w-full select-none', disabled && 'opacity-50 pointer-events-none')">
+  <div
+    :class="
+      cn('flex flex-col gap-2 w-full select-none', disabled && 'opacity-50 pointer-events-none')
+    "
+  >
     <!-- Label row -->
     <div v-if="label || showValue" class="flex items-center justify-between">
-      <span v-if="label" class="text-sm font-medium" style="color: var(--color-text-primary);">
+      <span v-if="label" class="text-sm font-medium" style="color: var(--color-text-primary)">
         {{ label }}
       </span>
-      <span v-if="showValue" class="text-sm font-medium tabular-nums" style="color: var(--color-text-secondary);">
+      <span
+        v-if="showValue"
+        class="text-sm font-medium tabular-nums"
+        style="color: var(--color-text-secondary)"
+      >
         {{ modelValue }}
       </span>
     </div>
@@ -182,19 +190,25 @@ const thumbPx: Record<Size, number> = {
 .ds-slider-thumb {
   background-color: var(--color-surface);
   border: 2px solid var(--color-primary);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.06);
   cursor: grab;
 }
 
 .ds-slider-thumb:hover {
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.15),
+    0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .ds-slider-thumb:active {
   cursor: grabbing;
 }
 
-div[role="slider"]:focus-visible .ds-slider-thumb {
-  box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-primary);
+div[role='slider']:focus-visible .ds-slider-thumb {
+  box-shadow:
+    0 0 0 2px var(--color-surface),
+    0 0 0 4px var(--color-primary);
 }
 </style>

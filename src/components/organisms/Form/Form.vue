@@ -3,23 +3,23 @@ import { computed } from 'vue'
 import { cn } from '@/lib/utils'
 
 type Layout = 'stack' | 'grid' | 'inline'
-type Gap    = 'sm' | 'md' | 'lg'
+type Gap = 'sm' | 'md' | 'lg'
 
 interface Props {
   /** Form layout arrangement: stack (vertical), grid (responsive 2-col), or inline (horizontal wrap). @default 'stack' */
   layout?: Layout
   /** Spacing between form fields. @default 'md' */
-  gap?:    Gap
+  gap?: Gap
 }
 
 const props = withDefaults(defineProps<Props>(), {
   layout: 'stack',
-  gap:    'md',
+  gap: 'md',
 })
 
 const layoutClasses: Record<Layout, string> = {
-  stack:  'flex flex-col',
-  grid:   'grid grid-cols-1 md:grid-cols-2',
+  stack: 'flex flex-col',
+  grid: 'grid grid-cols-1 md:grid-cols-2',
   inline: 'flex flex-row flex-wrap items-end',
 }
 
@@ -29,12 +29,7 @@ const gapClasses: Record<Gap, string> = {
   lg: 'gap-6',
 }
 
-const classes = computed(() =>
-  cn(
-    layoutClasses[props.layout],
-    gapClasses[props.gap],
-  )
-)
+const classes = computed(() => cn(layoutClasses[props.layout], gapClasses[props.gap]))
 </script>
 
 <template>

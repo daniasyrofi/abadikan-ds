@@ -190,7 +190,9 @@ export const Default: Story = {
   },
   render: () => ({
     components: { InputGroup, Input, Button },
-    setup() { return { email: ref(''), copy: useCopy() } },
+    setup() {
+      return { email: ref(''), copy: useCopy() }
+    },
     template: `
       <div style="width:100%;max-width:480px;">
         <p style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:6px;">{{ copy.newsletter.label }}</p>
@@ -211,7 +213,9 @@ export const WithSearch: Story = {
   },
   render: () => ({
     components: { InputGroup, Input, Button },
-    setup() { return { q: ref(''), copy: useCopy() } },
+    setup() {
+      return { q: ref(''), copy: useCopy() }
+    },
     template: `
       <div style="width:100%;max-width:480px;">
         <p style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:6px;">{{ copy.search.label }}</p>
@@ -231,7 +235,9 @@ export const URLInput: Story = {
   },
   render: () => ({
     components: { InputGroup, Input, Button },
-    setup() { return { slug: ref(''), copy: useCopy() } },
+    setup() {
+      return { slug: ref(''), copy: useCopy() }
+    },
     template: `
       <div style="width:100%;max-width:480px;">
         <p style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:6px;">{{ copy.url.label }}</p>
@@ -258,8 +264,8 @@ export const PromoCode: Story = {
   render: () => ({
     components: { InputGroup, Input, Button },
     setup() {
-      const code   = ref('')
-      const status = ref<'idle'|'ok'|'error'>('idle')
+      const code = ref('')
+      const status = ref<'idle' | 'ok' | 'error'>('idle')
       function apply() {
         status.value = code.value.toUpperCase() === 'SAVE20' ? 'ok' : 'error'
       }

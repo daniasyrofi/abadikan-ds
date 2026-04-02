@@ -27,17 +27,17 @@ describe('SearchInput', () => {
   it('does not show clear button when empty', () => {
     const wrapper = mount(SearchInput, { props: { modelValue: '', clearable: true } })
     // clear button should not be visible when value is empty
-    const clearBtn = wrapper.findAll('button').find(b =>
-      (b.attributes('aria-label') ?? '').toLowerCase().includes('clear')
-    )
+    const clearBtn = wrapper
+      .findAll('button')
+      .find((b) => (b.attributes('aria-label') ?? '').toLowerCase().includes('clear'))
     expect(clearBtn).toBeUndefined()
   })
 
   it('emits clear event when clear button clicked', async () => {
     const wrapper = mount(SearchInput, { props: { modelValue: 'test', clearable: true } })
-    const clearBtn = wrapper.findAll('button').find(b =>
-      (b.attributes('aria-label') ?? '').toLowerCase().includes('clear')
-    )
+    const clearBtn = wrapper
+      .findAll('button')
+      .find((b) => (b.attributes('aria-label') ?? '').toLowerCase().includes('clear'))
     if (clearBtn) {
       await clearBtn.trigger('click')
       expect(wrapper.emitted('clear')).toBeTruthy()
@@ -62,7 +62,7 @@ describe('SearchInput', () => {
   it('emits search event after debounce', async () => {
     const wrapper = mount(SearchInput, { props: { modelValue: '', debounce: 0 } })
     await wrapper.find('input').setValue('query')
-    await new Promise(r => setTimeout(r, 10))
+    await new Promise((r) => setTimeout(r, 10))
     expect(wrapper.emitted('search')).toBeTruthy()
   })
 

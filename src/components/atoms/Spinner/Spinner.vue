@@ -6,13 +6,13 @@ type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 type SpinnerColor = 'primary' | 'secondary' | 'neutral' | 'danger' | (string & {})
 
 interface Props {
-  size?:  Size
+  size?: Size
   color?: SpinnerColor
   label?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  size:  'md',
+  size: 'md',
   color: 'primary',
   label: 'Loading',
 })
@@ -25,9 +25,7 @@ const sizeClasses: Record<Size, string> = {
   xl: 'size-8',
 }
 
-const classes = computed(() =>
-  cn('shrink-0 animate-spin', sizeClasses[props.size])
-)
+const classes = computed(() => cn('shrink-0 animate-spin', sizeClasses[props.size]))
 const computedColor = computed(() => {
   if (!props.color) return undefined
   if (['primary', 'secondary', 'neutral', 'danger'].includes(props.color)) {

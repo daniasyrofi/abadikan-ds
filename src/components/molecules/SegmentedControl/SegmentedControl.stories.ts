@@ -7,8 +7,8 @@ const meta: Meta<typeof SegmentedControl> = {
   component: SegmentedControl,
   tags: ['autodocs'],
   argTypes: {
-    size:      { control: 'select', options: ['sm', 'md', 'lg'] },
-    disabled:  { control: 'boolean' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    disabled: { control: 'boolean' },
     fullWidth: { control: 'boolean' },
   },
 }
@@ -24,8 +24,8 @@ export const Default: Story = {
   }),
   args: {
     options: [
-      { label: 'Day',   value: 'day' },
-      { label: 'Week',  value: 'week' },
+      { label: 'Day', value: 'day' },
+      { label: 'Week', value: 'week' },
       { label: 'Month', value: 'month' },
     ],
     size: 'md',
@@ -37,7 +37,11 @@ export const AllSizes: Story = {
     components: { SegmentedControl },
     setup: () => ({
       values: { sm: ref('b'), md: ref('b'), lg: ref('b') },
-      opts: [{ label: 'A', value: 'a' }, { label: 'B', value: 'b' }, { label: 'C', value: 'c' }],
+      opts: [
+        { label: 'A', value: 'a' },
+        { label: 'B', value: 'b' },
+        { label: 'C', value: 'c' },
+      ],
     }),
     template: `
       <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start;">

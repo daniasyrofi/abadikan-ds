@@ -3,8 +3,14 @@ import { ref, computed, watch, onBeforeUnmount, nextTick } from 'vue'
 import { cn } from '@/lib/utils'
 
 type Placement =
-  | 'top' | 'bottom' | 'left' | 'right'
-  | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end'
+  | 'top'
+  | 'bottom'
+  | 'left'
+  | 'right'
+  | 'top-start'
+  | 'top-end'
+  | 'bottom-start'
+  | 'bottom-end'
 type Trigger = 'click' | 'hover' | 'manual'
 
 interface Props {
@@ -23,10 +29,10 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  trigger:             'click',
-  placement:           'bottom',
-  width:               'auto',
-  arrow:               true,
+  trigger: 'click',
+  placement: 'bottom',
+  width: 'auto',
+  arrow: true,
   closeOnClickOutside: true,
 })
 
@@ -39,9 +45,12 @@ let showTimeout: ReturnType<typeof setTimeout> | null = null
 let hideTimeout: ReturnType<typeof setTimeout> | null = null
 
 // Sync with v-model for manual mode
-watch(() => props.modelValue, (v) => {
-  if (v !== undefined) isOpen.value = v
-})
+watch(
+  () => props.modelValue,
+  (v) => {
+    if (v !== undefined) isOpen.value = v
+  }
+)
 
 watch(isOpen, (v) => {
   emit('update:modelValue', v)
@@ -50,30 +59,32 @@ watch(isOpen, (v) => {
 // ── Placement classes ─────────────────────────────────────────────────────
 
 const placementClasses: Record<Placement, string> = {
-  top:            'bottom-full left-1/2 -translate-x-1/2 mb-2',
-  bottom:         'top-full left-1/2 -translate-x-1/2 mt-2',
-  left:           'right-full top-1/2 -translate-y-1/2 mr-2',
-  right:          'left-full top-1/2 -translate-y-1/2 ml-2',
-  'top-start':    'bottom-full left-0 mb-2',
-  'top-end':      'bottom-full right-0 mb-2',
+  top: 'bottom-full left-1/2 -translate-x-1/2 mb-2',
+  bottom: 'top-full left-1/2 -translate-x-1/2 mt-2',
+  left: 'right-full top-1/2 -translate-y-1/2 mr-2',
+  right: 'left-full top-1/2 -translate-y-1/2 ml-2',
+  'top-start': 'bottom-full left-0 mb-2',
+  'top-end': 'bottom-full right-0 mb-2',
   'bottom-start': 'top-full left-0 mt-2',
-  'bottom-end':   'top-full right-0 mt-2',
+  'bottom-end': 'top-full right-0 mt-2',
 }
 
 // ── Arrow classes ───────────────────────────────────────────────────────
 
 function getArrowSide(p: Placement): 'top' | 'bottom' | 'left' | 'right' {
-  if (p.startsWith('top'))    return 'top'
+  if (p.startsWith('top')) return 'top'
   if (p.startsWith('bottom')) return 'bottom'
-  if (p.startsWith('left'))   return 'left'
+  if (p.startsWith('left')) return 'left'
   return 'right'
 }
 
 const arrowSideClasses: Record<string, string> = {
-  top:    'top-full left-1/2 -translate-x-1/2 border-t-[--color-border] border-x-transparent border-b-transparent border-[6px]',
-  bottom: 'bottom-full left-1/2 -translate-x-1/2 border-b-[--color-border] border-x-transparent border-t-transparent border-[6px]',
-  left:   'left-full top-1/2 -translate-y-1/2 border-l-[--color-border] border-y-transparent border-r-transparent border-[6px]',
-  right:  'right-full top-1/2 -translate-y-1/2 border-r-[--color-border] border-y-transparent border-l-transparent border-[6px]',
+  top: 'top-full left-1/2 -translate-x-1/2 border-t-[--color-border] border-x-transparent border-b-transparent border-[6px]',
+  bottom:
+    'bottom-full left-1/2 -translate-x-1/2 border-b-[--color-border] border-x-transparent border-t-transparent border-[6px]',
+  left: 'left-full top-1/2 -translate-y-1/2 border-l-[--color-border] border-y-transparent border-r-transparent border-[6px]',
+  right:
+    'right-full top-1/2 -translate-y-1/2 border-r-[--color-border] border-y-transparent border-l-transparent border-[6px]',
 }
 
 const arrowClasses = computed(() => arrowSideClasses[getArrowSide(props.placement)])
@@ -111,13 +122,19 @@ function toggle() {
 
 function handleMouseenter() {
   if (props.trigger !== 'hover') return
-  if (hideTimeout) { clearTimeout(hideTimeout); hideTimeout = null }
+  if (hideTimeout) {
+    clearTimeout(hideTimeout)
+    hideTimeout = null
+  }
   showTimeout = setTimeout(() => open(), 150)
 }
 
 function handleMouseleave() {
   if (props.trigger !== 'hover') return
-  if (showTimeout) { clearTimeout(showTimeout); showTimeout = null }
+  if (showTimeout) {
+    clearTimeout(showTimeout)
+    showTimeout = null
+  }
   hideTimeout = setTimeout(() => close(), 200)
 }
 
@@ -158,10 +175,7 @@ onBeforeUnmount(() => {
 // ── Computed classes ────────────────────────────────────────────────────
 
 const popoverClasses = computed(() =>
-  cn(
-    'ds-popover absolute z-50 flex flex-col',
-    placementClasses[props.placement],
-  )
+  cn('ds-popover absolute z-50 flex flex-col', placementClasses[props.placement])
 )
 </script>
 
@@ -186,17 +200,12 @@ const popoverClasses = computed(() =>
       leave-from-class="opacity-100 scale-100"
       leave-to-class="opacity-0 scale-95"
     >
-      <div
-        v-if="isOpen"
-        :class="popoverClasses"
-        :style="widthStyle"
-        role="dialog"
-      >
+      <div v-if="isOpen" :class="popoverClasses" :style="widthStyle" role="dialog">
         <!-- Header -->
         <div
           v-if="$slots.header || $slots.title || $slots.description"
           class="flex items-start gap-4 px-4 pt-4 pb-3 border-b shrink-0"
-          style="border-color: var(--color-border-subtle);"
+          style="border-color: var(--color-border-subtle)"
         >
           <slot name="header">
             <div class="flex-1 min-w-0 flex flex-col gap-1">
@@ -206,10 +215,7 @@ const popoverClasses = computed(() =>
               >
                 <slot name="title" />
               </h3>
-              <p
-                v-if="$slots.description"
-                class="text-xs text-[--color-text-secondary]"
-              >
+              <p v-if="$slots.description" class="text-xs text-[--color-text-secondary]">
                 <slot name="description" />
               </p>
             </div>
@@ -218,12 +224,14 @@ const popoverClasses = computed(() =>
 
         <!-- Body -->
         <div
-          :class="cn(
-            'px-4',
-            ($slots.header || $slots.title || $slots.description) ? 'pt-3' : 'pt-4',
-            $slots.footer ? 'pb-4' : 'pb-4',
-            'flex-1 min-h-0 overflow-y-auto'
-          )"
+          :class="
+            cn(
+              'px-4',
+              $slots.header || $slots.title || $slots.description ? 'pt-3' : 'pt-4',
+              $slots.footer ? 'pb-4' : 'pb-4',
+              'flex-1 min-h-0 overflow-y-auto'
+            )
+          "
         >
           <slot />
         </div>
@@ -232,17 +240,18 @@ const popoverClasses = computed(() =>
         <div
           v-if="$slots.footer"
           class="flex items-center justify-end gap-2 px-4 py-3 border-t shrink-0"
-          style="border-color: var(--color-border-subtle); background-color: var(--color-neutral-light); border-bottom-left-radius: inherit; border-bottom-right-radius: inherit;"
+          style="
+            border-color: var(--color-border-subtle);
+            background-color: var(--color-neutral-light);
+            border-bottom-left-radius: inherit;
+            border-bottom-right-radius: inherit;
+          "
         >
           <slot name="footer" />
         </div>
 
         <!-- Arrow -->
-        <span
-          v-if="arrow"
-          :class="cn('absolute w-0 h-0', arrowClasses)"
-          aria-hidden="true"
-        />
+        <span v-if="arrow" :class="cn('absolute w-0 h-0', arrowClasses)" aria-hidden="true" />
       </div>
     </Transition>
   </div>
@@ -252,6 +261,8 @@ const popoverClasses = computed(() =>
 .ds-popover {
   background-color: var(--color-surface);
   border-radius: var(--radius-2xl);
-  box-shadow: var(--shadow-2xl), inset 0 0 0 1px var(--color-border);
+  box-shadow:
+    var(--shadow-2xl),
+    inset 0 0 0 1px var(--color-border);
 }
 </style>

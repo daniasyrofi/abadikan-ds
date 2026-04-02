@@ -6,10 +6,10 @@ const meta: Meta<typeof Container> = {
   component: Container,
   tags: ['autodocs'],
   argTypes: {
-    size:     { control: 'select', options: ['sm', 'md', 'lg', 'xl', '2xl', 'full'] },
-    padded:   { control: 'boolean' },
+    size: { control: 'select', options: ['sm', 'md', 'lg', 'xl', '2xl', 'full'] },
+    padded: { control: 'boolean' },
     centered: { control: 'boolean' },
-    as:       { control: 'text' },
+    as: { control: 'text' },
   },
 }
 export default meta

@@ -145,7 +145,14 @@ const localeText: Record<Locale, LocaleText> = {
   },
   id: {
     userAlt: 'Pengguna',
-    initialsNames: ['Budi Santoso', 'Siti Aminah', 'Andi Wijaya', 'Dewi Lestari', 'Rama', 'Rina Putri'],
+    initialsNames: [
+      'Budi Santoso',
+      'Siti Aminah',
+      'Andi Wijaya',
+      'Dewi Lestari',
+      'Rama',
+      'Rina Putri',
+    ],
     sizeSectionImage: 'Dengan gambar',
     sizeSectionInitials: 'Inisial',
     sizeSectionIcon: 'Ikon',
@@ -301,7 +308,8 @@ const localeText: Record<Locale, LocaleText> = {
 
 const getLocale = (): Locale => resolveLocale(getI18nLocale())
 const useLocaleText = () => computed(() => localeText[getLocale()])
-const getStoryName = (key: keyof LocaleText['storyNames']): string => localeText[getLocale()].storyNames[key]
+const getStoryName = (key: keyof LocaleText['storyNames']): string =>
+  localeText[getLocale()].storyNames[key]
 
 const buildArgTypes = (locale: Locale): NonNullable<Meta<typeof Avatar>['argTypes']> => {
   const copy = localeText[locale]

@@ -35,17 +35,20 @@ export default meta
 type Story = StoryObj
 
 // ── Layout constants ───────────────────────────────────────────────────────────
-const RED     = '#D0003E'
-const GRID    = 'display:grid;grid-template-columns:320px 1fr;min-height:100vh;width:100%;align-items:start;'
-const LEFT    = `background-color:${RED};display:flex;flex-direction:column;height:100vh;padding:32px 28px;position:sticky;top:0;overflow:hidden;box-sizing:border-box;`
-const DECOR   = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-44%);width:140%;pointer-events:none;z-index:1;'
-const TAGLINE = 'font-size:18px;font-weight:700;line-height:1.4;color:white;position:relative;z-index:2;margin:auto 0 0;text-align:center;padding-bottom:8px;'
-const RIGHT   = 'display:flex;align-items:center;justify-content:center;padding:56px 40px;background-color:var(--color-surface);min-height:100vh;box-sizing:border-box;'
-const FORM    = 'width:100%;max-width:400px;'
+const RED = '#D0003E'
+const GRID =
+  'display:grid;grid-template-columns:320px 1fr;min-height:100vh;width:100%;align-items:start;'
+const LEFT = `background-color:${RED};display:flex;flex-direction:column;height:100vh;padding:32px 28px;position:sticky;top:0;overflow:hidden;box-sizing:border-box;`
+const DECOR =
+  'position:absolute;top:50%;left:50%;transform:translate(-50%,-44%);width:140%;pointer-events:none;z-index:1;'
+const TAGLINE =
+  'font-size:18px;font-weight:700;line-height:1.4;color:white;position:relative;z-index:2;margin:auto 0 0;text-align:center;padding-bottom:8px;'
+const RIGHT =
+  'display:flex;align-items:center;justify-content:center;padding:56px 40px;background-color:var(--color-surface);min-height:100vh;box-sizing:border-box;'
+const FORM = 'width:100%;max-width:400px;'
 
 // ── Shared: Google SVG ─────────────────────────────────────────────────────────
 const GoogleSVG = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 01-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>`
-
 
 function leftPanel(tagline: string) {
   return `
@@ -68,9 +71,12 @@ export const Default: Story = {
   render: () => ({
     components: { Input, Button, Divider, Modal, RiCheckboxCircleFill },
     setup() {
-      const email = ref(''), password = ref('')
-      const emailErr = ref(''), passErr = ref('')
-      const loading = ref(false), showSuccess = ref(false)
+      const email = ref(''),
+        password = ref('')
+      const emailErr = ref(''),
+        passErr = ref('')
+      const loading = ref(false),
+        showSuccess = ref(false)
 
       function handleLogin() {
         emailErr.value = passErr.value = ''
@@ -78,7 +84,10 @@ export const Default: Story = {
         if (!password.value) passErr.value = 'Password tidak boleh kosong'
         if (emailErr.value || passErr.value) return
         loading.value = true
-        setTimeout(() => { loading.value = false; showSuccess.value = true }, 1500)
+        setTimeout(() => {
+          loading.value = false
+          showSuccess.value = true
+        }, 1500)
       }
       return { email, password, emailErr, passErr, loading, showSuccess, handleLogin, GoogleSVG }
     },
@@ -146,17 +155,31 @@ export const ForgotPassword: Story = {
   render: () => ({
     components: { Input, Button, Modal, RiCheckboxCircleFill },
     setup() {
-      const email = ref(''), emailErr = ref('')
-      const loading = ref(false), countdown = ref(0), showSuccess = ref(false)
+      const email = ref(''),
+        emailErr = ref('')
+      const loading = ref(false),
+        countdown = ref(0),
+        showSuccess = ref(false)
       let timer: ReturnType<typeof setInterval> | null = null
 
       function handleSend() {
         emailErr.value = ''
-        if (!email.value) { emailErr.value = 'Email wajib diisi'; return }
+        if (!email.value) {
+          emailErr.value = 'Email wajib diisi'
+          return
+        }
         loading.value = true
         setTimeout(() => {
-          loading.value = false; showSuccess.value = true; countdown.value = 10
-          timer = setInterval(() => { countdown.value--; if (countdown.value <= 0 && timer) { clearInterval(timer); timer = null } }, 1000)
+          loading.value = false
+          showSuccess.value = true
+          countdown.value = 10
+          timer = setInterval(() => {
+            countdown.value--
+            if (countdown.value <= 0 && timer) {
+              clearInterval(timer)
+              timer = null
+            }
+          }, 1000)
         }, 1500)
       }
       return { email, emailErr, loading, countdown, showSuccess, handleSend }
@@ -218,19 +241,26 @@ export const ResetPassword: Story = {
   render: () => ({
     components: { Input, Button, Modal, RiCheckboxCircleFill },
     setup() {
-      const newPass = ref(''), confirmPass = ref('')
-      const newPassErr = ref(''), confirmErr = ref('')
-      const loading = ref(false), showSuccess = ref(false)
+      const newPass = ref(''),
+        confirmPass = ref('')
+      const newPassErr = ref(''),
+        confirmErr = ref('')
+      const loading = ref(false),
+        showSuccess = ref(false)
 
       function handleReset() {
         newPassErr.value = confirmErr.value = ''
         if (!newPass.value) newPassErr.value = 'Password wajib diisi'
         else if (newPass.value.length < 8) newPassErr.value = 'Minimal 8 karakter'
         if (!confirmPass.value) confirmErr.value = 'Konfirmasi wajib diisi'
-        else if (newPass.value && confirmPass.value !== newPass.value) confirmErr.value = 'Password tidak cocok'
+        else if (newPass.value && confirmPass.value !== newPass.value)
+          confirmErr.value = 'Password tidak cocok'
         if (newPassErr.value || confirmErr.value) return
         loading.value = true
-        setTimeout(() => { loading.value = false; showSuccess.value = true }, 1500)
+        setTimeout(() => {
+          loading.value = false
+          showSuccess.value = true
+        }, 1500)
       }
       return { newPass, confirmPass, newPassErr, confirmErr, loading, showSuccess, handleReset }
     },
@@ -284,27 +314,59 @@ export const SignUp: Story = {
     setup() {
       type Step = 'email' | 'form-email' | 'form-google'
       const step = ref<Step>('email')
-      const email = ref(''), emailErr = ref('')
-      const password = ref(''), name = ref(''), phone = ref(''), referral = ref('')
-      const passErr = ref(''), nameErr = ref(''), phoneErr = ref('')
-      const loading = ref(false), showSuccess = ref(false)
+      const email = ref(''),
+        emailErr = ref('')
+      const password = ref(''),
+        name = ref(''),
+        phone = ref(''),
+        referral = ref('')
+      const passErr = ref(''),
+        nameErr = ref(''),
+        phoneErr = ref('')
+      const loading = ref(false),
+        showSuccess = ref(false)
 
       function handleEmailNext() {
         emailErr.value = ''
-        if (!email.value) { emailErr.value = 'Email wajib diisi'; return }
-        if (!email.value.includes('@')) { emailErr.value = 'Format email tidak valid'; return }
+        if (!email.value) {
+          emailErr.value = 'Email wajib diisi'
+          return
+        }
+        if (!email.value.includes('@')) {
+          emailErr.value = 'Format email tidak valid'
+          return
+        }
         step.value = 'form-email'
       }
       function handleRegister() {
         passErr.value = nameErr.value = phoneErr.value = ''
         if (step.value === 'form-email' && !password.value) passErr.value = 'Password wajib diisi'
-        if (!name.value)  nameErr.value  = 'Nama lengkap wajib diisi'
+        if (!name.value) nameErr.value = 'Nama lengkap wajib diisi'
         if (!phone.value) phoneErr.value = 'No. handphone wajib diisi'
         if (passErr.value || nameErr.value || phoneErr.value) return
         loading.value = true
-        setTimeout(() => { loading.value = false; showSuccess.value = true }, 1500)
+        setTimeout(() => {
+          loading.value = false
+          showSuccess.value = true
+        }, 1500)
       }
-      return { step, email, emailErr, password, name, phone, referral, passErr, nameErr, phoneErr, loading, showSuccess, handleEmailNext, handleRegister, GoogleSVG }
+      return {
+        step,
+        email,
+        emailErr,
+        password,
+        name,
+        phone,
+        referral,
+        passErr,
+        nameErr,
+        phoneErr,
+        loading,
+        showSuccess,
+        handleEmailNext,
+        handleRegister,
+        GoogleSVG,
+      }
     },
     template: `
       <div style="${GRID}">
@@ -416,87 +478,184 @@ export const AuthFlow: Story = {
       const page = ref<Page>('login')
 
       const taglines: Record<Page, string> = {
-        login:           'Mulai dari RSVP sampai kado<br/>digital, semua bisa kamu atur<br/>di Abadikan.',
-        forgot:          'Tenang, akunmu tetap aman.<br/>Kamu hanya perlu mengatur<br/>ulang dan bisa melanjutkan<br/>menyiapkan undangan.',
-        reset:           'Buat password baru<br/>sekarang, biar akunmu tetap<br/>aman dan lanjutin undangan',
-        signup:          'Mulai ceritamu di Abadikan.<br/>Undangan digital yang bikin<br/>kisah cintamu berkesan',
-        'signup-email':  'Mulai ceritamu di Abadikan.<br/>Undangan digital yang bikin<br/>kisah cintamu berkesan',
-        'signup-google': 'Mulai ceritamu di Abadikan.<br/>Undangan digital yang bikin<br/>kisah cintamu berkesan',
+        login: 'Mulai dari RSVP sampai kado<br/>digital, semua bisa kamu atur<br/>di Abadikan.',
+        forgot:
+          'Tenang, akunmu tetap aman.<br/>Kamu hanya perlu mengatur<br/>ulang dan bisa melanjutkan<br/>menyiapkan undangan.',
+        reset: 'Buat password baru<br/>sekarang, biar akunmu tetap<br/>aman dan lanjutin undangan',
+        signup:
+          'Mulai ceritamu di Abadikan.<br/>Undangan digital yang bikin<br/>kisah cintamu berkesan',
+        'signup-email':
+          'Mulai ceritamu di Abadikan.<br/>Undangan digital yang bikin<br/>kisah cintamu berkesan',
+        'signup-google':
+          'Mulai ceritamu di Abadikan.<br/>Undangan digital yang bikin<br/>kisah cintamu berkesan',
       }
       const tagline = computed(() => taglines[page.value])
 
-      const loading = ref(false), showSuccess = ref(false)
+      const loading = ref(false),
+        showSuccess = ref(false)
 
       // Login
-      const loginEmail = ref(''), loginPass = ref(''), loginEmailErr = ref(''), loginPassErr = ref('')
+      const loginEmail = ref(''),
+        loginPass = ref(''),
+        loginEmailErr = ref(''),
+        loginPassErr = ref('')
       function handleLogin() {
         loginEmailErr.value = loginPassErr.value = ''
         if (!loginEmail.value) loginEmailErr.value = 'Email tidak boleh kosong'
-        if (!loginPass.value)  loginPassErr.value  = 'Password tidak boleh kosong'
+        if (!loginPass.value) loginPassErr.value = 'Password tidak boleh kosong'
         if (loginEmailErr.value || loginPassErr.value) return
         loading.value = true
-        setTimeout(() => { loading.value = false; showSuccess.value = true }, 1500)
+        setTimeout(() => {
+          loading.value = false
+          showSuccess.value = true
+        }, 1500)
       }
 
       // Forgot
-      const forgotEmail = ref(''), forgotEmailErr = ref(''), countdown = ref(0)
+      const forgotEmail = ref(''),
+        forgotEmailErr = ref(''),
+        countdown = ref(0)
       let timer: ReturnType<typeof setInterval> | null = null
       function handleForgot() {
         forgotEmailErr.value = ''
-        if (!forgotEmail.value) { forgotEmailErr.value = 'Email wajib diisi'; return }
+        if (!forgotEmail.value) {
+          forgotEmailErr.value = 'Email wajib diisi'
+          return
+        }
         loading.value = true
         setTimeout(() => {
-          loading.value = false; showSuccess.value = true; countdown.value = 10
-          timer = setInterval(() => { countdown.value--; if (countdown.value <= 0 && timer) { clearInterval(timer); timer = null } }, 1000)
+          loading.value = false
+          showSuccess.value = true
+          countdown.value = 10
+          timer = setInterval(() => {
+            countdown.value--
+            if (countdown.value <= 0 && timer) {
+              clearInterval(timer)
+              timer = null
+            }
+          }, 1000)
         }, 1500)
       }
 
       // Reset
-      const newPass = ref(''), confirmPass = ref(''), newPassErr = ref(''), confirmErr = ref('')
+      const newPass = ref(''),
+        confirmPass = ref(''),
+        newPassErr = ref(''),
+        confirmErr = ref('')
       function handleReset() {
         newPassErr.value = confirmErr.value = ''
         if (!newPass.value) newPassErr.value = 'Password wajib diisi'
         else if (newPass.value.length < 8) newPassErr.value = 'Minimal 8 karakter'
         if (!confirmPass.value) confirmErr.value = 'Konfirmasi wajib diisi'
-        else if (newPass.value && confirmPass.value !== newPass.value) confirmErr.value = 'Password tidak cocok'
+        else if (newPass.value && confirmPass.value !== newPass.value)
+          confirmErr.value = 'Password tidak cocok'
         if (newPassErr.value || confirmErr.value) return
         loading.value = true
-        setTimeout(() => { loading.value = false; showSuccess.value = true }, 1500)
+        setTimeout(() => {
+          loading.value = false
+          showSuccess.value = true
+        }, 1500)
       }
 
       // Signup
-      const signupEmail = ref(''), signupEmailErr = ref('')
-      const signupPass = ref(''), signupName = ref(''), signupPhone = ref(''), signupReferral = ref('')
-      const signupPassErr = ref(''), signupNameErr = ref(''), signupPhoneErr = ref('')
+      const signupEmail = ref(''),
+        signupEmailErr = ref('')
+      const signupPass = ref(''),
+        signupName = ref(''),
+        signupPhone = ref(''),
+        signupReferral = ref('')
+      const signupPassErr = ref(''),
+        signupNameErr = ref(''),
+        signupPhoneErr = ref('')
       function handleSignupEmail() {
         signupEmailErr.value = ''
-        if (!signupEmail.value) { signupEmailErr.value = 'Email wajib diisi'; return }
-        if (!signupEmail.value.includes('@')) { signupEmailErr.value = 'Format email tidak valid'; return }
+        if (!signupEmail.value) {
+          signupEmailErr.value = 'Email wajib diisi'
+          return
+        }
+        if (!signupEmail.value.includes('@')) {
+          signupEmailErr.value = 'Format email tidak valid'
+          return
+        }
         page.value = 'signup-email'
       }
       function handleRegister() {
         signupPassErr.value = signupNameErr.value = signupPhoneErr.value = ''
-        if (page.value === 'signup-email' && !signupPass.value) signupPassErr.value = 'Password wajib diisi'
-        if (!signupName.value)  signupNameErr.value  = 'Nama lengkap wajib diisi'
+        if (page.value === 'signup-email' && !signupPass.value)
+          signupPassErr.value = 'Password wajib diisi'
+        if (!signupName.value) signupNameErr.value = 'Nama lengkap wajib diisi'
         if (!signupPhone.value) signupPhoneErr.value = 'No. handphone wajib diisi'
         if (signupPassErr.value || signupNameErr.value || signupPhoneErr.value) return
         loading.value = true
-        setTimeout(() => { loading.value = false; showSuccess.value = true }, 1500)
+        setTimeout(() => {
+          loading.value = false
+          showSuccess.value = true
+        }, 1500)
       }
 
-      function go(p: Page) { page.value = p; showSuccess.value = false; loading.value = false }
+      function go(p: Page) {
+        page.value = p
+        showSuccess.value = false
+        loading.value = false
+      }
 
-      const successTitle = computed(() => ({ login: 'Berhasil Masuk!', forgot: 'Email Terkirim!', reset: 'Password Berhasil Diubah!', signup: 'Akun Berhasil Dibuat!', 'signup-email': 'Akun Berhasil Dibuat!', 'signup-google': 'Akun Berhasil Dibuat!' }[page.value]))
-      const successBtn   = computed(() => ({ login: 'Lanjut ke Dashboard', forgot: 'Oke, Mengerti', reset: 'Masuk Sekarang', signup: 'Mulai Sekarang', 'signup-email': 'Mulai Sekarang', 'signup-google': 'Mulai Sekarang' }[page.value]))
+      const successTitle = computed(
+        () =>
+          ({
+            login: 'Berhasil Masuk!',
+            forgot: 'Email Terkirim!',
+            reset: 'Password Berhasil Diubah!',
+            signup: 'Akun Berhasil Dibuat!',
+            'signup-email': 'Akun Berhasil Dibuat!',
+            'signup-google': 'Akun Berhasil Dibuat!',
+          })[page.value]
+      )
+      const successBtn = computed(
+        () =>
+          ({
+            login: 'Lanjut ke Dashboard',
+            forgot: 'Oke, Mengerti',
+            reset: 'Masuk Sekarang',
+            signup: 'Mulai Sekarang',
+            'signup-email': 'Mulai Sekarang',
+            'signup-google': 'Mulai Sekarang',
+          })[page.value]
+      )
 
       return {
-        page, tagline, loading, showSuccess,
-        loginEmail, loginPass, loginEmailErr, loginPassErr, handleLogin,
-        forgotEmail, forgotEmailErr, countdown, handleForgot,
-        newPass, confirmPass, newPassErr, confirmErr, handleReset,
-        signupEmail, signupEmailErr, signupPass, signupName, signupPhone, signupReferral,
-        signupPassErr, signupNameErr, signupPhoneErr, handleSignupEmail, handleRegister,
-        successTitle, successBtn, go, GoogleSVG,
+        page,
+        tagline,
+        loading,
+        showSuccess,
+        loginEmail,
+        loginPass,
+        loginEmailErr,
+        loginPassErr,
+        handleLogin,
+        forgotEmail,
+        forgotEmailErr,
+        countdown,
+        handleForgot,
+        newPass,
+        confirmPass,
+        newPassErr,
+        confirmErr,
+        handleReset,
+        signupEmail,
+        signupEmailErr,
+        signupPass,
+        signupName,
+        signupPhone,
+        signupReferral,
+        signupPassErr,
+        signupNameErr,
+        signupPhoneErr,
+        handleSignupEmail,
+        handleRegister,
+        successTitle,
+        successBtn,
+        go,
+        GoogleSVG,
       }
     },
     template: `

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref } from 'vue'
 import Drawer from './Drawer.vue'
 import Button from '@/components/atoms/Button/Button.vue'
-import Input  from '@/components/atoms/Input/Input.vue'
+import Input from '@/components/atoms/Input/Input.vue'
 
 const canvas = () => ({
   template: `
@@ -16,9 +16,9 @@ const canvas = () => ({
 })
 
 const meta: Meta<typeof Drawer> = {
-  title:      'Molecules/Drawer',
-  component:  Drawer,
-  tags:       ['autodocs'],
+  title: 'Molecules/Drawer',
+  component: Drawer,
+  tags: ['autodocs'],
   decorators: [canvas],
   parameters: { layout: 'fullscreen' },
 }
@@ -55,7 +55,10 @@ export const Left: Story = {
   name: 'Left',
   render: () => ({
     components: { Drawer, Button },
-    setup() { const open = ref(false); return { open } },
+    setup() {
+      const open = ref(false)
+      return { open }
+    },
     template: `
       <div>
         <Button @click="open = true">Open Left Drawer</Button>
@@ -72,7 +75,10 @@ export const Bottom: Story = {
   name: 'Bottom Sheet',
   render: () => ({
     components: { Drawer, Button },
-    setup() { const open = ref(false); return { open } },
+    setup() {
+      const open = ref(false)
+      return { open }
+    },
     template: `
       <div>
         <Button @click="open = true">Open Bottom Sheet</Button>

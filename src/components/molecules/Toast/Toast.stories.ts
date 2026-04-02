@@ -15,7 +15,10 @@ type Copy = {
     autoDismiss: string
     persistent: string
   }
-  allVariants: Record<'info' | 'success' | 'warning' | 'danger', { title: string; description: string }>
+  allVariants: Record<
+    'info' | 'success' | 'warning' | 'danger',
+    { title: string; description: string }
+  >
   withAction: {
     warning: { title: string; description: string; dismiss: string; upgrade: string }
     danger: { title: string; description: string; retry: string }
@@ -44,10 +47,22 @@ const copyMap: Record<Locale, Copy> = {
       persistent: 'Persistent',
     },
     allVariants: {
-      info: { title: 'System update available', description: 'A new version (v2.4.1) is ready to install.' },
-      success: { title: 'Payment successful', description: 'Your invoice has been paid. A receipt was sent.' },
-      warning: { title: 'Storage almost full', description: "You've used 92% of your 5 GB storage." },
-      danger: { title: 'Failed to save changes', description: 'Your changes could not be saved. Please try again.' },
+      info: {
+        title: 'System update available',
+        description: 'A new version (v2.4.1) is ready to install.',
+      },
+      success: {
+        title: 'Payment successful',
+        description: 'Your invoice has been paid. A receipt was sent.',
+      },
+      warning: {
+        title: 'Storage almost full',
+        description: "You've used 92% of your 5 GB storage.",
+      },
+      danger: {
+        title: 'Failed to save changes',
+        description: 'Your changes could not be saved. Please try again.',
+      },
     },
     withAction: {
       warning: {
@@ -63,9 +78,21 @@ const copyMap: Record<Locale, Copy> = {
       },
     },
     autoDismiss: {
-      info: { label: 'Show Info', title: 'Info toast', description: 'This will auto-dismiss in 5 seconds.' },
-      success: { label: 'Show Success', title: 'Success toast', description: 'Operation completed successfully.' },
-      warning: { label: 'Show Warning', title: 'Warning toast', description: 'Please review before continuing.' },
+      info: {
+        label: 'Show Info',
+        title: 'Info toast',
+        description: 'This will auto-dismiss in 5 seconds.',
+      },
+      success: {
+        label: 'Show Success',
+        title: 'Success toast',
+        description: 'Operation completed successfully.',
+      },
+      warning: {
+        label: 'Show Warning',
+        title: 'Warning toast',
+        description: 'Please review before continuing.',
+      },
       error: { label: 'Show Error', title: 'Error toast', description: 'Something went wrong.' },
       dismissAll: 'Dismiss All',
     },
@@ -84,10 +111,22 @@ const copyMap: Record<Locale, Copy> = {
       persistent: 'Persisten',
     },
     allVariants: {
-      info: { title: 'Pembaruan sistem tersedia', description: 'Versi baru (v2.4.1) siap dipasang.' },
-      success: { title: 'Pembayaran berhasil', description: 'Tagihan Anda telah dibayar. Tanda terima telah dikirim.' },
-      warning: { title: 'Penyimpanan hampir penuh', description: 'Anda telah menggunakan 92% dari penyimpanan 5 GB.' },
-      danger: { title: 'Gagal menyimpan perubahan', description: 'Perubahan Anda tidak dapat disimpan. Silakan coba lagi.' },
+      info: {
+        title: 'Pembaruan sistem tersedia',
+        description: 'Versi baru (v2.4.1) siap dipasang.',
+      },
+      success: {
+        title: 'Pembayaran berhasil',
+        description: 'Tagihan Anda telah dibayar. Tanda terima telah dikirim.',
+      },
+      warning: {
+        title: 'Penyimpanan hampir penuh',
+        description: 'Anda telah menggunakan 92% dari penyimpanan 5 GB.',
+      },
+      danger: {
+        title: 'Gagal menyimpan perubahan',
+        description: 'Perubahan Anda tidak dapat disimpan. Silakan coba lagi.',
+      },
     },
     withAction: {
       warning: {
@@ -103,9 +142,21 @@ const copyMap: Record<Locale, Copy> = {
       },
     },
     autoDismiss: {
-      info: { label: 'Tampilkan Info', title: 'Toast info', description: 'Ini akan tertutup otomatis dalam 5 detik.' },
-      success: { label: 'Tampilkan Sukses', title: 'Toast sukses', description: 'Operasi berhasil diselesaikan.' },
-      warning: { label: 'Tampilkan Peringatan', title: 'Toast peringatan', description: 'Silakan tinjau sebelum melanjutkan.' },
+      info: {
+        label: 'Tampilkan Info',
+        title: 'Toast info',
+        description: 'Ini akan tertutup otomatis dalam 5 detik.',
+      },
+      success: {
+        label: 'Tampilkan Sukses',
+        title: 'Toast sukses',
+        description: 'Operasi berhasil diselesaikan.',
+      },
+      warning: {
+        label: 'Tampilkan Peringatan',
+        title: 'Toast peringatan',
+        description: 'Silakan tinjau sebelum melanjutkan.',
+      },
       error: { label: 'Tampilkan Error', title: 'Toast error', description: 'Terjadi kesalahan.' },
       dismissAll: 'Tutup Semua',
     },
@@ -187,15 +238,15 @@ const meta: Meta<typeof Toast> = {
   decorators: [canvas],
   parameters: { layout: 'fullscreen' },
   argTypes: {
-    variant:     { control: 'select', options: ['info', 'success', 'warning', 'danger'] },
-    title:       { control: 'text' },
+    variant: { control: 'select', options: ['info', 'success', 'warning', 'danger'] },
+    title: { control: 'text' },
     description: { control: 'text' },
     dismissible: { control: 'boolean' },
   },
   args: {
-    id:          'toast-preview',
-    variant:     'info',
-    title:       'Toast title',
+    id: 'toast-preview',
+    variant: 'info',
+    title: 'Toast title',
     description: 'This is a toast description with extra context.',
     dismissible: true,
   },
@@ -206,8 +257,10 @@ type Story = StoryObj<typeof Toast>
 const W = 'display:flex;flex-direction:column;gap:10px;'
 
 // Text-link action styles (macOS notification style)
-const lP = 'background:none;border:none;padding:0;cursor:pointer;font-size:13px;font-weight:600;color:var(--color-text-primary);letter-spacing:-0.01em;'
-const lM = 'background:none;border:none;padding:0;cursor:pointer;font-size:13px;font-weight:400;color:var(--color-text-tertiary);letter-spacing:-0.01em;'
+const lP =
+  'background:none;border:none;padding:0;cursor:pointer;font-size:13px;font-weight:600;color:var(--color-text-primary);letter-spacing:-0.01em;'
+const lM =
+  'background:none;border:none;padding:0;cursor:pointer;font-size:13px;font-weight:400;color:var(--color-text-tertiary);letter-spacing:-0.01em;'
 
 // ── All Variants ──────────────────────────────────────────────────────────────
 
@@ -219,7 +272,9 @@ export const AllVariants: Story = {
     components: { Toast },
     setup() {
       const dismissed = ref<Record<string, boolean>>({})
-      const onDismiss = (id: string) => { dismissed.value[id] = true }
+      const onDismiss = (id: string) => {
+        dismissed.value[id] = true
+      }
       return { dismissed, onDismiss, copy: useCopy() }
     },
     template: `
@@ -299,13 +354,14 @@ export const Persistent: Story = {
     components: { ToastContainer, Button },
     setup() {
       const { toast, dismissAll } = useToast()
-      const showPersistent = () => toast({
-        title: copyMap[getLocale()].persistent.title,
-        description: copyMap[getLocale()].persistent.description,
-        variant: 'danger',
-        duration: 0,
-        dismissible: true,
-      })
+      const showPersistent = () =>
+        toast({
+          title: copyMap[getLocale()].persistent.title,
+          description: copyMap[getLocale()].persistent.description,
+          variant: 'danger',
+          duration: 0,
+          dismissible: true,
+        })
       return { showPersistent, dismissAll, copy: useCopy() }
     },
     template: `

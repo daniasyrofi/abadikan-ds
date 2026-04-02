@@ -2,7 +2,7 @@ import { onMounted, onUnmounted, type Ref } from 'vue'
 
 export function useClickOutside(
   target: Ref<HTMLElement | null>,
-  handler: (event: MouseEvent) => void,
+  handler: (event: MouseEvent) => void
 ) {
   function listener(event: MouseEvent) {
     if (!target.value) return
@@ -11,6 +11,6 @@ export function useClickOutside(
     handler(event)
   }
 
-  onMounted(()   => document.addEventListener('mousedown', listener))
+  onMounted(() => document.addEventListener('mousedown', listener))
   onUnmounted(() => document.removeEventListener('mousedown', listener))
 }

@@ -5,7 +5,7 @@ interface Props {
   /** Maximum height of the scroll area. @default 'auto' */
   maxHeight?: string
   /** Maximum width of the scroll area. */
-  maxWidth?:  string
+  maxWidth?: string
   /** Which axes are scrollable. @default 'vertical' */
   direction?: ScrollDirection
 }
@@ -16,20 +16,22 @@ withDefaults(defineProps<Props>(), {
 })
 
 const overflowMap: Record<ScrollDirection, { overflowX: string; overflowY: string }> = {
-  vertical:   { overflowX: 'hidden',  overflowY: 'auto' },
-  horizontal: { overflowX: 'auto',    overflowY: 'hidden' },
-  both:       { overflowX: 'auto',    overflowY: 'auto' },
+  vertical: { overflowX: 'hidden', overflowY: 'auto' },
+  horizontal: { overflowX: 'auto', overflowY: 'hidden' },
+  both: { overflowX: 'auto', overflowY: 'auto' },
 }
 </script>
 
 <template>
   <div
     class="ds-scroll-area"
-    :style="{
-      maxHeight,
-      ...(maxWidth ? { maxWidth } : {}),
-      ...overflowMap[direction],
-    } as Record<string, string>"
+    :style="
+      {
+        maxHeight,
+        ...(maxWidth ? { maxWidth } : {}),
+        ...overflowMap[direction],
+      } as Record<string, string>
+    "
   >
     <slot />
   </div>
@@ -41,15 +43,15 @@ const overflowMap: Record<ScrollDirection, { overflowX: string; overflowY: strin
   scrollbar-color: var(--color-border-strong) transparent;
 }
 .ds-scroll-area::-webkit-scrollbar {
-  width:  6px;
+  width: 6px;
   height: 6px;
 }
 .ds-scroll-area::-webkit-scrollbar-track {
-  background:    transparent;
+  background: transparent;
   border-radius: var(--radius-full);
 }
 .ds-scroll-area::-webkit-scrollbar-thumb {
-  background:    var(--color-border-strong);
+  background: var(--color-border-strong);
   border-radius: var(--radius-full);
 }
 .ds-scroll-area::-webkit-scrollbar-thumb:hover {

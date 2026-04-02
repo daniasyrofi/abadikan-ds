@@ -53,7 +53,7 @@ describe('Table', () => {
 
   it('emits sort event when sortable column header is clicked', async () => {
     const wrapper = mount(Table, { props: { columns, data } })
-    const sortableHeader = wrapper.findAll('th').find(th => th.text().includes('Name'))
+    const sortableHeader = wrapper.findAll('th').find((th) => th.text().includes('Name'))
     if (sortableHeader) {
       await sortableHeader.trigger('click')
       expect(wrapper.emitted('sort')).toBeTruthy()
@@ -65,7 +65,7 @@ describe('Table', () => {
 
   it('toggles sort direction on second click', async () => {
     const wrapper = mount(Table, { props: { columns, data } })
-    const nameHeader = wrapper.findAll('th').find(th => th.text().includes('Name'))
+    const nameHeader = wrapper.findAll('th').find((th) => th.text().includes('Name'))
     if (nameHeader) {
       await nameHeader.trigger('click')
       await nameHeader.trigger('click')
@@ -79,7 +79,7 @@ describe('Table', () => {
 
   it('does not emit sort for non-sortable column', async () => {
     const wrapper = mount(Table, { props: { columns, data } })
-    const emailHeader = wrapper.findAll('th').find(th => th.text().includes('Email'))
+    const emailHeader = wrapper.findAll('th').find((th) => th.text().includes('Email'))
     if (emailHeader) {
       await emailHeader.trigger('click')
       expect(wrapper.emitted('sort')).toBeFalsy()
@@ -138,7 +138,9 @@ describe('Table', () => {
     })
 
     it('shows empty state when filter matches nothing', () => {
-      const wrapper = mount(Table, { props: { columns, data, filterBy: 'xyz123', emptyText: 'Nothing found' } })
+      const wrapper = mount(Table, {
+        props: { columns, data, filterBy: 'xyz123', emptyText: 'Nothing found' },
+      })
       expect(wrapper.text()).toContain('Nothing found')
     })
 
@@ -163,7 +165,7 @@ describe('Table', () => {
   describe('client-side sorting', () => {
     it('sorts rows ascending by name after one click', async () => {
       const wrapper = mount(Table, { props: { columns, data } })
-      const nameHeader = wrapper.findAll('th').find(th => th.text().includes('Name'))!
+      const nameHeader = wrapper.findAll('th').find((th) => th.text().includes('Name'))!
       await nameHeader.trigger('click')
       const rows = wrapper.find('tbody').findAll('tr')
       expect(rows[0].text()).toContain('Alice')
@@ -173,7 +175,7 @@ describe('Table', () => {
 
     it('sorts rows descending by name after two clicks', async () => {
       const wrapper = mount(Table, { props: { columns, data } })
-      const nameHeader = wrapper.findAll('th').find(th => th.text().includes('Name'))!
+      const nameHeader = wrapper.findAll('th').find((th) => th.text().includes('Name'))!
       await nameHeader.trigger('click')
       await nameHeader.trigger('click')
       const rows = wrapper.find('tbody').findAll('tr')

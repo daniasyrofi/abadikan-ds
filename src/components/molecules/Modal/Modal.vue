@@ -4,29 +4,29 @@ import { cn } from '@/lib/utils'
 import { RiCloseLine } from '@remixicon/vue'
 import Button from '@/components/atoms/Button/Button.vue'
 
-type ModalSize       = 'sm' | 'md' | 'lg' | 'xl' | 'full'
-type ScrollBehavior  = 'inside' | 'outside'
+type ModalSize = 'sm' | 'md' | 'lg' | 'xl' | 'full'
+type ScrollBehavior = 'inside' | 'outside'
 
 interface Props {
   /** Controls the open/closed state of the modal. Supports v-model. */
-  modelValue:      boolean
+  modelValue: boolean
   /** Visual size/max-width of the modal. @default 'md' */
-  size?:           ModalSize
+  size?: ModalSize
   /** Disables the close button when false. @default true */
-  closable?:       boolean
+  closable?: boolean
   /** Closes the modal when clicking the backdrop overlay. @default true */
   closeOnOverlay?: boolean
   /** Prevents closing the modal through any user action (escape, overlay, close button). @default false */
-  preventClose?:   boolean
+  preventClose?: boolean
   /** Determines if scrolling happens inside the modal panel or on the page body. @default 'inside' */
   scrollBehavior?: ScrollBehavior
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  size:           'md',
-  closable:       true,
+  size: 'md',
+  closable: true,
   closeOnOverlay: true,
-  preventClose:   false,
+  preventClose: false,
   scrollBehavior: 'inside',
 })
 
@@ -34,18 +34,18 @@ const emit = defineEmits<{
   'update:modelValue': [value: boolean]
 }>()
 
-const titleId    = useId()
-const descId     = useId()
-const panelRef   = ref<HTMLElement | null>(null)
+const titleId = useId()
+const descId = useId()
+const panelRef = ref<HTMLElement | null>(null)
 let previousFocus: HTMLElement | null = null
 
 // ── Size map ─────────────────────────────────────────────────────────────────
 
 const sizeMap: Record<ModalSize, string> = {
-  sm:   'max-w-[400px]',
-  md:   'max-w-[560px]',
-  lg:   'max-w-[720px]',
-  xl:   'max-w-[900px]',
+  sm: 'max-w-[400px]',
+  md: 'max-w-[560px]',
+  lg: 'max-w-[720px]',
+  xl: 'max-w-[900px]',
   full: 'max-w-full mx-4',
 }
 
@@ -74,7 +74,7 @@ function handleKeydown(e: KeyboardEvent) {
     if (focusable.length === 0) return
 
     const first = focusable[0]
-    const last  = focusable[focusable.length - 1]
+    const last = focusable[focusable.length - 1]
 
     if (e.shiftKey) {
       if (document.activeElement === first) {
@@ -124,7 +124,7 @@ watch(
       nextTick(() => previousFocus?.focus())
     }
   },
-  { immediate: true },
+  { immediate: true }
 )
 
 onBeforeUnmount(() => {
@@ -140,7 +140,7 @@ const overlayClasses = computed(() =>
     'bg-black/30 backdrop-blur-[12px]',
     props.scrollBehavior === 'outside'
       ? 'overflow-y-auto w-full h-full'
-      : 'flex items-center justify-center p-4',
+      : 'flex items-center justify-center p-4'
   )
 )
 
@@ -149,10 +149,8 @@ const panelClasses = computed(() =>
     'ds-modal-panel relative w-full',
     'flex flex-col',
     sizeMap[props.size],
-    props.scrollBehavior === 'outside'
-      ? 'mx-auto my-8'
-      : 'max-h-[calc(100vh-4rem)]',
-    props.size === 'full' && 'min-h-[calc(100vh-2rem)]',
+    props.scrollBehavior === 'outside' ? 'mx-auto my-8' : 'max-h-[calc(100vh-4rem)]',
+    props.size === 'full' && 'min-h-[calc(100vh-2rem)]'
   )
 )
 </script>
@@ -167,11 +165,7 @@ const panelClasses = computed(() =>
       leave-from-class="opacity-100"
       leave-to-class="opacity-0"
     >
-      <div
-        v-if="modelValue"
-        :class="overlayClasses"
-        @click.self="handleOverlayClick"
-      >
+      <div v-if="modelValue" :class="overlayClasses" @click.self="handleOverlayClick">
         <!-- Panel -->
         <Transition
           enter-active-class="transition duration-[--duration-slow] ease-[--ease-out]"
@@ -195,7 +189,7 @@ const panelClasses = computed(() =>
             <div
               v-if="$slots.header || $slots.title || closable"
               class="flex items-start gap-4 px-6 pt-6 pb-3 relative border-b"
-              style="border-color: var(--color-border-subtle);"
+              style="border-color: var(--color-border-subtle)"
             >
               <slot name="header">
                 <div class="flex-1 min-w-0 flex flex-col gap-1">
@@ -236,11 +230,13 @@ const panelClasses = computed(() =>
 
             <!-- Body -->
             <div
-              :class="cn(
-                'px-6 pb-6',
-                ($slots.header || $slots.title || $slots.description) ? 'pt-3' : 'pt-6',
-                scrollBehavior === 'inside' && 'max-h-[60vh] overflow-y-auto',
-              )"
+              :class="
+                cn(
+                  'px-6 pb-6',
+                  $slots.header || $slots.title || $slots.description ? 'pt-3' : 'pt-6',
+                  scrollBehavior === 'inside' && 'max-h-[60vh] overflow-y-auto'
+                )
+              "
             >
               <slot />
             </div>
@@ -249,7 +245,12 @@ const panelClasses = computed(() =>
             <div
               v-if="$slots.footer"
               class="flex items-center justify-end gap-3 px-6 py-3 border-t"
-              style="border-color: var(--color-border-subtle); background-color: var(--color-neutral-light); border-bottom-left-radius: inherit; border-bottom-right-radius: inherit;"
+              style="
+                border-color: var(--color-border-subtle);
+                background-color: var(--color-neutral-light);
+                border-bottom-left-radius: inherit;
+                border-bottom-right-radius: inherit;
+              "
             >
               <slot name="footer" />
             </div>
@@ -264,6 +265,8 @@ const panelClasses = computed(() =>
 .ds-modal-panel {
   background-color: var(--color-surface);
   border-radius: var(--radius-2xl);
-  box-shadow: var(--shadow-2xl), inset 0 0 0 1px var(--color-border-subtle);
+  box-shadow:
+    var(--shadow-2xl),
+    inset 0 0 0 1px var(--color-border-subtle);
 }
 </style>

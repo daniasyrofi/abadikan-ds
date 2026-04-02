@@ -3,48 +3,48 @@ import { computed } from 'vue'
 import { cn } from '@/lib/utils'
 
 type Variant = 'default' | 'outlined' | 'elevated' | 'flat' | 'glass'
-type Padding  = 'none' | 'sm' | 'md' | 'lg'
-type Radius   = 'sm' | 'md' | 'lg' | 'xl'
+type Padding = 'none' | 'sm' | 'md' | 'lg'
+type Radius = 'sm' | 'md' | 'lg' | 'xl'
 
 interface Props {
   /** Stylistic variant of the card. @default 'default' */
-  variant?:   Variant
+  variant?: Variant
   /** Internal padding layout. @default 'md' */
-  padding?:   Padding
+  padding?: Padding
   /** Border radius scale. @default 'lg' */
-  radius?:    Radius
+  radius?: Radius
   /** Adds subtle lift effect on hover without making it interactive. @default false */
   hoverable?: boolean
   /** Makes the card fully interactive (button role, focusable, clickable). @default false */
   clickable?: boolean
   /** HTML element to render the card as. @default 'div' */
-  as?:        string
+  as?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  variant:   'default',
-  padding:   'md',
-  radius:    'lg',
+  variant: 'default',
+  padding: 'md',
+  radius: 'lg',
   hoverable: false,
   clickable: false,
-  as:        'div',
+  as: 'div',
 })
 
 const emit = defineEmits<{ click: [e: MouseEvent] }>()
 
 const variantClasses: Record<Variant, string> = {
-  default:  'bg-[--color-surface] ds-card--default',
+  default: 'bg-[--color-surface] ds-card--default',
   outlined: 'bg-[--color-surface] ds-card--outlined',
   elevated: 'bg-[--color-surface] ds-card--elevated',
-  flat:     'bg-[--color-surface]',
-  glass:    'ds-card--glass',
+  flat: 'bg-[--color-surface]',
+  glass: 'ds-card--glass',
 }
 
 const paddingClasses: Record<Padding, string> = {
   none: '',
-  sm:   'p-3',
-  md:   'p-5',
-  lg:   'p-7',
+  sm: 'p-3',
+  md: 'p-5',
+  lg: 'p-7',
 }
 
 const radiusClasses: Record<Radius, string> = {
@@ -56,9 +56,9 @@ const radiusClasses: Record<Radius, string> = {
 
 const bodyPaddingClasses: Record<Padding, string> = {
   none: '',
-  sm:   'px-3 py-2',
-  md:   'px-5 py-3',
-  lg:   'px-7 py-4',
+  sm: 'px-3 py-2',
+  md: 'px-5 py-3',
+  lg: 'px-7 py-4',
 }
 
 const classes = computed(() =>
@@ -66,7 +66,8 @@ const classes = computed(() =>
     'relative overflow-hidden flex flex-col',
     'transition-all duration-[--duration-slow] ease-[--ease-out]',
     variantClasses[props.variant],
-    props.variant === 'glass' && '[background:var(--color-surface-glass)] [backdrop-filter:var(--glass-blur)]',
+    props.variant === 'glass' &&
+      '[background:var(--color-surface-glass)] [backdrop-filter:var(--glass-blur)]',
     radiusClasses[props.radius],
     !hasStructuredSlots.value && paddingClasses[props.padding],
     props.hoverable && 'ds-card--hoverable hover:-translate-y-1.5 cursor-default',
@@ -75,7 +76,7 @@ const classes = computed(() =>
       'hover:-translate-y-1.5',
       'active:scale-[0.99] active:translate-y-0',
       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--color-primary]',
-    ],
+    ]
   )
 )
 
@@ -87,9 +88,7 @@ const slots = defineSlots<{
   footer?: () => unknown
 }>()
 
-const hasStructuredSlots = computed(() =>
-  !!(slots.media || slots.header || slots.footer)
-)
+const hasStructuredSlots = computed(() => !!(slots.media || slots.header || slots.footer))
 </script>
 
 <template>
@@ -108,7 +107,7 @@ const hasStructuredSlots = computed(() =>
       v-if="$slots.media"
       class="w-full overflow-hidden"
       :class="radiusClasses[radius]"
-      style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;"
+      style="border-bottom-left-radius: 0; border-bottom-right-radius: 0"
     >
       <slot name="media" />
     </div>
@@ -116,12 +115,17 @@ const hasStructuredSlots = computed(() =>
     <!-- Header slot -->
     <div
       v-if="$slots.header"
-      :class="cn(
-        'flex items-start justify-between gap-3',
-        bodyPaddingClasses[padding],
-        $slots.default || $slots.footer ? 'pb-0' : '',
-        !$slots.media ? 'pt-' + (padding === 'sm' ? '3' : padding === 'md' ? '5' : padding === 'lg' ? '7' : '0') : '',
-      )"
+      :class="
+        cn(
+          'flex items-start justify-between gap-3',
+          bodyPaddingClasses[padding],
+          $slots.default || $slots.footer ? 'pb-0' : '',
+          !$slots.media
+            ? 'pt-' +
+                (padding === 'sm' ? '3' : padding === 'md' ? '5' : padding === 'lg' ? '7' : '0')
+            : ''
+        )
+      "
     >
       <slot name="header" />
     </div>
@@ -129,10 +133,7 @@ const hasStructuredSlots = computed(() =>
     <!-- Default / body slot -->
     <div
       v-if="$slots.default"
-      :class="cn(
-        'flex-1',
-        hasStructuredSlots && bodyPaddingClasses[padding],
-      )"
+      :class="cn('flex-1', hasStructuredSlots && bodyPaddingClasses[padding])"
     >
       <slot />
     </div>
@@ -140,11 +141,9 @@ const hasStructuredSlots = computed(() =>
     <!-- Footer slot -->
     <div
       v-if="$slots.footer"
-      :class="cn(
-        'flex items-center gap-2',
-        bodyPaddingClasses[padding],
-        $slots.default ? 'pt-0' : '',
-      )"
+      :class="
+        cn('flex items-center gap-2', bodyPaddingClasses[padding], $slots.default ? 'pt-0' : '')
+      "
     >
       <slot name="footer" />
     </div>
@@ -160,15 +159,25 @@ const hasStructuredSlots = computed(() =>
  */
 
 /* ── Radius ── */
-.ds-card--radius-sm { border-radius: var(--radius-md); }
-.ds-card--radius-md { border-radius: var(--radius-lg); }
-.ds-card--radius-lg { border-radius: var(--radius-xl); }
-.ds-card--radius-xl { border-radius: var(--radius-2xl); }
+.ds-card--radius-sm {
+  border-radius: var(--radius-md);
+}
+.ds-card--radius-md {
+  border-radius: var(--radius-lg);
+}
+.ds-card--radius-lg {
+  border-radius: var(--radius-xl);
+}
+.ds-card--radius-xl {
+  border-radius: var(--radius-2xl);
+}
 
 /* ── Variants ── */
 .ds-card--default {
   background-color: var(--card-bg, var(--color-surface));
-  box-shadow: var(--card-shadow, var(--shadow-md)), inset 0 0 0 1px var(--card-border, var(--color-border));
+  box-shadow:
+    var(--card-shadow, var(--shadow-md)),
+    inset 0 0 0 1px var(--card-border, var(--color-border));
 }
 .ds-card--outlined {
   background-color: var(--card-bg, var(--color-surface));
@@ -176,18 +185,26 @@ const hasStructuredSlots = computed(() =>
 }
 .ds-card--elevated {
   background-color: var(--card-bg, var(--color-surface));
-  box-shadow: var(--card-shadow, var(--shadow-2xl)), inset 0 0 0 1px var(--card-border, var(--color-border));
+  box-shadow:
+    var(--card-shadow, var(--shadow-2xl)),
+    inset 0 0 0 1px var(--card-border, var(--color-border));
 }
 .ds-card--glass {
-  background: var(--card-bg, var(--color-surface-glass, rgba(255,255,255,0.7)));
+  background: var(--card-bg, var(--color-surface-glass, rgba(255, 255, 255, 0.7)));
   backdrop-filter: blur(20px);
-  box-shadow: var(--card-shadow, var(--shadow-xl)), inset 0 0 0 1px var(--card-border, var(--color-border));
+  box-shadow:
+    var(--card-shadow, var(--shadow-xl)),
+    inset 0 0 0 1px var(--card-border, var(--color-border));
 }
 .ds-card--hoverable:hover,
 .ds-card--clickable:hover {
-  box-shadow: var(--card-shadow-hover, var(--shadow-xl)), inset 0 0 0 1px var(--card-border, var(--color-border));
+  box-shadow:
+    var(--card-shadow-hover, var(--shadow-xl)),
+    inset 0 0 0 1px var(--card-border, var(--color-border));
 }
 .ds-card--clickable:focus-visible {
-  box-shadow: 0 0 0 2px var(--color-primary), inset 0 0 0 1px var(--card-border, var(--color-border));
+  box-shadow:
+    0 0 0 2px var(--color-primary),
+    inset 0 0 0 1px var(--card-border, var(--color-border));
 }
 </style>

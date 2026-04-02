@@ -69,7 +69,14 @@ const copyMap: Record<Locale, Copy> = {
       countSuffix: 'guests',
       empty: 'All guests are shown here',
     },
-    guests: ['Budi Santoso', 'Siti Rahayu', 'Ahmad Fauzi', 'Dewi Lestari', 'Raka Pratama', 'Nurul Hidayah'],
+    guests: [
+      'Budi Santoso',
+      'Siti Rahayu',
+      'Ahmad Fauzi',
+      'Dewi Lestari',
+      'Raka Pratama',
+      'Nurul Hidayah',
+    ],
   },
   id: {
     storyNames: {
@@ -101,7 +108,14 @@ const copyMap: Record<Locale, Copy> = {
       countSuffix: 'tamu',
       empty: 'Seluruh tamu ditampilkan di sini',
     },
-    guests: ['Budi Santoso', 'Siti Rahayu', 'Ahmad Fauzi', 'Dewi Lestari', 'Raka Pratama', 'Nurul Hidayah'],
+    guests: [
+      'Budi Santoso',
+      'Siti Rahayu',
+      'Ahmad Fauzi',
+      'Dewi Lestari',
+      'Raka Pratama',
+      'Nurul Hidayah',
+    ],
   },
   zh: {
     storyNames: {
@@ -159,22 +173,22 @@ const meta: Meta<typeof SearchInput> = {
   decorators: [withCanvas],
   parameters: { layout: 'fullscreen' },
   argTypes: {
-    modelValue:  { control: 'text' },
-    size:        { control: 'select', options: ['sm', 'md', 'lg'] },
+    modelValue: { control: 'text' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
     placeholder: { control: 'text' },
-    loading:     { control: 'boolean' },
-    clearable:   { control: 'boolean' },
-    debounce:    { control: 'number' },
-    disabled:    { control: 'boolean' },
+    loading: { control: 'boolean' },
+    clearable: { control: 'boolean' },
+    debounce: { control: 'number' },
+    disabled: { control: 'boolean' },
   },
   args: {
-    modelValue:  '',
-    size:        'md',
+    modelValue: '',
+    size: 'md',
     placeholder: 'Search...',
-    loading:     false,
-    clearable:   true,
-    debounce:    300,
-    disabled:    false,
+    loading: false,
+    clearable: true,
+    debounce: 300,
+    disabled: false,
   },
 }
 export default meta
@@ -188,11 +202,11 @@ export const Default: Story = {
   render: () => ({
     components: { SearchInput },
     setup() {
-      const query   = ref('')
+      const query = ref('')
       const copy = useCopy()
       const results = computed(() =>
         query.value.trim()
-          ? copy.value.guests.filter(g => g.toLowerCase().includes(query.value.toLowerCase()))
+          ? copy.value.guests.filter((g) => g.toLowerCase().includes(query.value.toLowerCase()))
           : copy.value.guests
       )
       return { query, results, copy }

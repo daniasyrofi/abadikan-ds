@@ -17,28 +17,28 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   variant: 'text',
-  lines:   1,
+  lines: 1,
 })
 
 const radiusMap: Record<SkeletonVariant, string> = {
-  text:        'var(--radius-sm)',
-  rounded:     'var(--radius-md)',
+  text: 'var(--radius-sm)',
+  rounded: 'var(--radius-md)',
   rectangular: '0px',
-  circular:    'var(--radius-full)',
+  circular: 'var(--radius-full)',
 }
 
 const lineStyle = computed(() => ({
-  width:        props.width  ?? '100%',
-  height:       props.height ?? '1em',
+  width: props.width ?? '100%',
+  height: props.height ?? '1em',
   borderRadius: radiusMap[props.variant],
-  display:      'block',
+  display: 'block',
 }))
 
 const singleStyle = computed(() => ({
-  width:        props.width  ?? '100%',
-  height:       props.height ?? (props.variant === 'circular' ? '40px' : '1em'),
+  width: props.width ?? '100%',
+  height: props.height ?? (props.variant === 'circular' ? '40px' : '1em'),
   borderRadius: radiusMap[props.variant],
-  display:      'block',
+  display: 'block',
 }))
 </script>
 

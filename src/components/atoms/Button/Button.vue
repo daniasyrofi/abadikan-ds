@@ -4,34 +4,34 @@ import { cn } from '@/lib/utils'
 import Spinner from '@/components/atoms/Spinner/Spinner.vue'
 
 type Variant = 'default' | 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'link'
-type Size    = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 interface Props {
-  variant?:  Variant
-  size?:     Size
+  variant?: Variant
+  size?: Size
   disabled?: boolean
-  loading?:  boolean
+  loading?: boolean
   fullWidth?: boolean
-  iconOnly?:  boolean
-  as?:        string
-  href?:      string
-  type?:      'button' | 'submit' | 'reset'
+  iconOnly?: boolean
+  as?: string
+  href?: string
+  type?: 'button' | 'submit' | 'reset'
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  variant:   'default',
-  size:      'md',
-  disabled:  false,
-  loading:   false,
+  variant: 'default',
+  size: 'md',
+  disabled: false,
+  loading: false,
   fullWidth: false,
-  iconOnly:  false,
-  as:        'button',
-  type:      'button',
+  iconOnly: false,
+  as: 'button',
+  type: 'button',
 })
 
 const emit = defineEmits<{ click: [e: MouseEvent] }>()
 
-const tag = computed(() => props.href ? 'a' : props.as)
+const tag = computed(() => (props.href ? 'a' : props.as))
 
 const baseClasses = [
   'ds-btn',
@@ -180,7 +180,10 @@ const variantStyleVars = computed(() => {
     <slot v-else name="icon" />
 
     <!-- Trailing slot -->
-    <span v-if="$slots.trailing && !loading" class="shrink-0 -mr-1 flex items-center justify-center">
+    <span
+      v-if="$slots.trailing && !loading"
+      class="shrink-0 -mr-1 flex items-center justify-center"
+    >
       <slot name="trailing" />
     </span>
   </component>
@@ -207,10 +210,14 @@ const variantStyleVars = computed(() => {
 
 /* Focus rings using secondary (pink) for all except danger */
 .ds-btn:focus-visible {
-  box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-primary);
+  box-shadow:
+    0 0 0 2px var(--color-surface),
+    0 0 0 4px var(--color-primary);
 }
 
 .ds-btn--is-danger:focus-visible {
-  box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-danger);
+  box-shadow:
+    0 0 0 2px var(--color-surface),
+    0 0 0 4px var(--color-danger);
 }
 </style>

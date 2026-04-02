@@ -12,9 +12,9 @@ withDefaults(defineProps<Props>(), {
   searchable: false,
 })
 
-const ctx         = inject(SELECT_KEY)!
+const ctx = inject(SELECT_KEY)!
 const searchQuery = ref('')
-const listRef     = ref<HTMLElement | null>(null)
+const listRef = ref<HTMLElement | null>(null)
 
 // Provide search query to all descendant SelectItems
 provide(SELECT_SEARCH_KEY, searchQuery)
@@ -24,14 +24,14 @@ function getFocusableItems(): HTMLButtonElement[] {
   if (!listRef.value) return []
   return Array.from(
     listRef.value.querySelectorAll<HTMLButtonElement>('button[role="option"]:not([disabled])')
-  ).filter(el => el.offsetParent !== null)
+  ).filter((el) => el.offsetParent !== null)
 }
 
 function handleKeydown(e: KeyboardEvent) {
   const items = getFocusableItems()
   if (!items.length) return
 
-  const idx = items.findIndex(el => el === document.activeElement)
+  const idx = items.findIndex((el) => el === document.activeElement)
 
   switch (e.key) {
     case 'ArrowDown':
@@ -58,19 +58,22 @@ function handleKeydown(e: KeyboardEvent) {
 }
 
 // When dropdown opens: focus selected item or first item; when closes: clear search
-watch(() => ctx.isOpen.value, (open) => {
-  if (open) {
-    nextTick(() => {
-      const items = getFocusableItems()
-      if (!items.length) return
-      // Find first selected item, fall back to first item
-      const selectedEl = items.find(el => el.getAttribute('aria-selected') === 'true')
-      ;(selectedEl ?? items[0]).focus()
-    })
-  } else {
-    searchQuery.value = ''
+watch(
+  () => ctx.isOpen.value,
+  (open) => {
+    if (open) {
+      nextTick(() => {
+        const items = getFocusableItems()
+        if (!items.length) return
+        // Find first selected item, fall back to first item
+        const selectedEl = items.find((el) => el.getAttribute('aria-selected') === 'true')
+        ;(selectedEl ?? items[0]).focus()
+      })
+    } else {
+      searchQuery.value = ''
+    }
   }
-})
+)
 </script>
 
 <template>
@@ -92,9 +95,9 @@ watch(() => ctx.isOpen.value, (open) => {
       <div
         v-if="searchable"
         class="flex items-center gap-2 px-3 py-2"
-        style="border-bottom: 1px solid var(--color-border);"
+        style="border-bottom: 1px solid var(--color-border)"
       >
-        <RiSearchLine size="14" class="shrink-0" style="color: var(--color-text-tertiary);" />
+        <RiSearchLine size="14" class="shrink-0" style="color: var(--color-text-tertiary)" />
         <input
           ref="searchRef"
           v-model="searchQuery"
@@ -121,12 +124,20 @@ watch(() => ctx.isOpen.value, (open) => {
 .ds-select-dropdown {
   background-color: var(--color-surface);
   border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-2xl), inset 0 0 0 1px var(--color-border);
+  box-shadow:
+    var(--shadow-2xl),
+    inset 0 0 0 1px var(--color-border);
   overflow: hidden;
 }
 
-.ds-select-search { color: var(--color-text-primary); }
-.ds-select-search::placeholder { color: var(--color-text-tertiary); }
+.ds-select-search {
+  color: var(--color-text-primary);
+}
+.ds-select-search::placeholder {
+  color: var(--color-text-tertiary);
+}
 .ds-select-search:focus,
-.ds-select-search:focus-visible { outline: none; }
+.ds-select-search:focus-visible {
+  outline: none;
+}
 </style>

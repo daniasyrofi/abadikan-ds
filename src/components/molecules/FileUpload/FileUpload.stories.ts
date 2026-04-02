@@ -98,9 +98,9 @@ const meta: Meta<typeof FileUpload> = {
   decorators: [canvas],
   parameters: { layout: 'fullscreen' },
   argTypes: {
-    accept:   { control: 'text' },
+    accept: { control: 'text' },
     multiple: { control: 'boolean' },
-    maxSize:  { control: 'number' },
+    maxSize: { control: 'number' },
     maxFiles: { control: 'number' },
     disabled: { control: 'boolean' },
     previews: { control: 'boolean' },

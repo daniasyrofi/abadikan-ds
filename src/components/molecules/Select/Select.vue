@@ -6,37 +6,37 @@ import type { SelectSize } from './context'
 
 interface Props {
   /** The selected value (string) or values (string[]) — use with v-model. */
-  modelValue:  string | string[]
+  modelValue: string | string[]
   /** Allow selecting multiple values. @default false */
-  multiple?:   boolean
+  multiple?: boolean
   /** Size token passed to all child components. @default 'md' */
-  size?:       SelectSize
+  size?: SelectSize
   /** Disables the entire select. @default false */
-  disabled?:   boolean
+  disabled?: boolean
   /** Label rendered above the trigger. */
-  label?:      string
+  label?: string
   /** Helper text rendered below (hidden when error is set). */
   helperText?: string
   /** Error message — also applies error styling to the trigger. */
-  error?:      string
+  error?: string
   /** Shows a loading spinner and prevents opening. @default false */
-  loading?:    boolean
+  loading?: boolean
   /** Shows the value but prevents opening. @default false */
-  readonly?:   boolean
+  readonly?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  multiple:  false,
-  size:      'md',
-  disabled:  false,
-  loading:   false,
-  readonly:  false,
+  multiple: false,
+  size: 'md',
+  disabled: false,
+  loading: false,
+  readonly: false,
 })
 
 const emit = defineEmits<{ 'update:modelValue': [value: string | string[]] }>()
 
-const isOpen    = ref(false)
-const rootRef   = ref<HTMLElement | null>(null)
+const isOpen = ref(false)
+const rootRef = ref<HTMLElement | null>(null)
 const triggerId = useId()
 
 const hasError = computed(() => !!props.error)
@@ -56,7 +56,7 @@ function isSelected(value: string) {
 function selectItem(value: string) {
   if (props.multiple) {
     const next = [...selectedValues.value]
-    const idx  = next.indexOf(value)
+    const idx = next.indexOf(value)
     if (idx >= 0) next.splice(idx, 1)
     else next.push(value)
     emit('update:modelValue', next)
@@ -97,15 +97,15 @@ function handleClickOutside(e: MouseEvent) {
   }
 }
 
-onMounted(()        => document.addEventListener('click', handleClickOutside, true))
-onBeforeUnmount(()  => document.removeEventListener('click', handleClickOutside, true))
+onMounted(() => document.addEventListener('click', handleClickOutside, true))
+onBeforeUnmount(() => document.removeEventListener('click', handleClickOutside, true))
 
 provide(SELECT_KEY, {
-  multiple:       computed(() => props.multiple!),
-  size:           computed(() => props.size!),
-  disabled:       computed(() => props.disabled!),
-  loading:        computed(() => props.loading!),
-  readonly:       computed(() => props.readonly!),
+  multiple: computed(() => props.multiple!),
+  size: computed(() => props.size!),
+  disabled: computed(() => props.disabled!),
+  loading: computed(() => props.loading!),
+  readonly: computed(() => props.readonly!),
   hasError,
   isOpen,
   selectedValues,
@@ -123,7 +123,6 @@ provide(SELECT_KEY, {
 
 <template>
   <div ref="rootRef" class="flex flex-col gap-1.5 w-full">
-
     <!-- Label — linked to trigger button via triggerId -->
     <label
       v-if="label"
@@ -147,6 +146,5 @@ provide(SELECT_KEY, {
     >
       {{ error ?? helperText }}
     </p>
-
   </div>
 </template>

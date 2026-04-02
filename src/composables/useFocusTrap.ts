@@ -11,7 +11,7 @@ const FOCUSABLE = [
 
 export function useFocusTrap(
   container: Ref<HTMLElement | null>,
-  options: { enabled?: Ref<boolean>; onEscape?: () => void } = {},
+  options: { enabled?: Ref<boolean>; onEscape?: () => void } = {}
 ) {
   function getFocusable(): HTMLElement[] {
     if (!container.value) return []
@@ -32,7 +32,7 @@ export function useFocusTrap(
     if (focusable.length === 0) return
 
     const first = focusable[0]
-    const last  = focusable[focusable.length - 1]
+    const last = focusable[focusable.length - 1]
 
     if (event.shiftKey) {
       if (document.activeElement === first) {

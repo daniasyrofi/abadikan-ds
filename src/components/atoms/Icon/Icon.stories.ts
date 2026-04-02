@@ -20,12 +20,30 @@ type Copy = {
 }
 
 const commonIcons = [
-  'RiHomeLine', 'RiUser3Line', 'RiSettings3Line', 'RiSearchLine',
-  'RiHeartLine', 'RiStarLine', 'RiBellLine', 'RiMailLine',
-  'RiLockLine', 'RiCheckLine', 'RiCloseLine', 'RiArrowRightLine',
-  'RiAddLine', 'RiDeleteBinLine', 'RiEditLine', 'RiDownloadLine',
-  'RiEyeLine', 'RiEyeOffLine', 'RiInformationLine', 'RiAlertLine',
-  'RiCalendarLine', 'RiPhoneLine', 'RiMapPinLine', 'RiGlobeLine',
+  'RiHomeLine',
+  'RiUser3Line',
+  'RiSettings3Line',
+  'RiSearchLine',
+  'RiHeartLine',
+  'RiStarLine',
+  'RiBellLine',
+  'RiMailLine',
+  'RiLockLine',
+  'RiCheckLine',
+  'RiCloseLine',
+  'RiArrowRightLine',
+  'RiAddLine',
+  'RiDeleteBinLine',
+  'RiEditLine',
+  'RiDownloadLine',
+  'RiEyeLine',
+  'RiEyeOffLine',
+  'RiInformationLine',
+  'RiAlertLine',
+  'RiCalendarLine',
+  'RiPhoneLine',
+  'RiMapPinLine',
+  'RiGlobeLine',
 ]
 
 const copyMap: Record<Locale, Copy> = {
@@ -119,8 +137,8 @@ const meta: Meta<typeof Icon> = {
   tags: ['autodocs'],
   parameters: { layout: 'centered', icon: 'component' },
   argTypes: {
-    name:  { control: 'text' },
-    size:  { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
+    name: { control: 'text' },
+    size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
     color: { control: 'color' },
   },
   args: {
@@ -172,7 +190,9 @@ export const IconGrid: Story = {
       function copyName(name: string) {
         navigator.clipboard?.writeText(name)
         copied.value = name
-        setTimeout(() => { copied.value = null }, 1500)
+        setTimeout(() => {
+          copied.value = null
+        }, 1500)
       }
       return { copy, icons: commonIcons, copied, copyName }
     },

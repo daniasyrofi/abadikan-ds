@@ -42,13 +42,15 @@ function handleToggle() {
     <!-- Trigger -->
     <button
       type="button"
-      :class="cn(
-        'ds-accordion-trigger',
-        'flex items-center justify-between w-full text-left px-4 py-3.5',
-        'transition-colors duration-200 ease-out',
-        !disabled && 'cursor-pointer',
-        disabled && 'cursor-not-allowed opacity-50',
-      )"
+      :class="
+        cn(
+          'ds-accordion-trigger',
+          'flex items-center justify-between w-full text-left px-4 py-3.5',
+          'transition-colors duration-200 ease-out',
+          !disabled && 'cursor-pointer',
+          disabled && 'cursor-not-allowed opacity-50'
+        )
+      "
       :aria-expanded="open"
       :disabled="disabled"
       @click="handleToggle"
@@ -63,11 +65,13 @@ function handleToggle() {
       </div>
       <RiArrowDownSLine
         :size="'18'"
-        :class="cn(
-          'ds-accordion-chevron shrink-0 ml-3',
-          'transition-transform duration-200 ease-out',
-          open && 'rotate-180',
-        )"
+        :class="
+          cn(
+            'ds-accordion-chevron shrink-0 ml-3',
+            'transition-transform duration-200 ease-out',
+            open && 'rotate-180'
+          )
+        "
       />
     </button>
 

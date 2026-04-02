@@ -2,10 +2,19 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { computed, defineComponent, h } from 'vue'
 import Card from './Card.vue'
 import {
-  RiMailSendLine, RiGroupLine, RiEyeLine, RiStarLine,
-  RiCalendarEventLine, RiUserSmileLine, RiPieChartLine,
-  RiSettings4Line, RiMessage2Line, RiNotificationLine,
-  RiCheckLine, RiArrowRightSLine, RiAddLine,
+  RiMailSendLine,
+  RiGroupLine,
+  RiEyeLine,
+  RiStarLine,
+  RiCalendarEventLine,
+  RiUserSmileLine,
+  RiPieChartLine,
+  RiSettings4Line,
+  RiMessage2Line,
+  RiNotificationLine,
+  RiCheckLine,
+  RiArrowRightSLine,
+  RiAddLine,
 } from '@remixicon/vue'
 import { getI18nLocale, resolveLocale, type SupportedLocale } from '@/i18n'
 
@@ -31,7 +40,11 @@ type Copy = {
     pill: string
   }
   allVariants: {
-    variants: Array<{ variant: 'default' | 'outlined' | 'elevated' | 'flat'; name: string; desc: string }>
+    variants: Array<{
+      variant: 'default' | 'outlined' | 'elevated' | 'flat'
+      name: string
+      desc: string
+    }>
     responses: string
   }
   statsRow: Array<{ label: string }>
@@ -109,7 +122,11 @@ const copyMap: Record<Locale, Copy> = {
     allVariants: {
       variants: [
         { variant: 'default', name: 'Default', desc: 'Shadow + inset border - standard surface.' },
-        { variant: 'outlined', name: 'Outlined', desc: 'Border only, no elevation. Flat and clean.' },
+        {
+          variant: 'outlined',
+          name: 'Outlined',
+          desc: 'Border only, no elevation. Flat and clean.',
+        },
         { variant: 'elevated', name: 'Elevated', desc: 'Deep shadow. Floats above the page.' },
         { variant: 'flat', name: 'Flat', desc: 'No border, no shadow. Minimal contrast.' },
       ],
@@ -190,9 +207,18 @@ const copyMap: Record<Locale, Copy> = {
       button: 'New Invitation',
     },
     hoverable: {
-      default: { title: 'Default + Hoverable', body: 'Lifts on hover. Shadow transitions from md to xl.' },
-      elevated: { title: 'Elevated + Hoverable', body: 'Deep resting shadow. Even deeper on hover.' },
-      outlined: { title: 'Outlined + Clickable', body: 'Focus ring + active scale. Keyboard accessible.' },
+      default: {
+        title: 'Default + Hoverable',
+        body: 'Lifts on hover. Shadow transitions from md to xl.',
+      },
+      elevated: {
+        title: 'Elevated + Hoverable',
+        body: 'Deep resting shadow. Even deeper on hover.',
+      },
+      outlined: {
+        title: 'Outlined + Clickable',
+        body: 'Focus ring + active scale. Keyboard accessible.',
+      },
     },
   },
   id: {
@@ -216,9 +242,21 @@ const copyMap: Record<Locale, Copy> = {
     },
     allVariants: {
       variants: [
-        { variant: 'default', name: 'Bawaan', desc: 'Bayangan + border dalam - permukaan standar.' },
-        { variant: 'outlined', name: 'Bergaris', desc: 'Hanya border, tanpa elevasi. Rata dan bersih.' },
-        { variant: 'elevated', name: 'Elevasi', desc: 'Bayangan dalam. Mengapung di atas halaman.' },
+        {
+          variant: 'default',
+          name: 'Bawaan',
+          desc: 'Bayangan + border dalam - permukaan standar.',
+        },
+        {
+          variant: 'outlined',
+          name: 'Bergaris',
+          desc: 'Hanya border, tanpa elevasi. Rata dan bersih.',
+        },
+        {
+          variant: 'elevated',
+          name: 'Elevasi',
+          desc: 'Bayangan dalam. Mengapung di atas halaman.',
+        },
         { variant: 'flat', name: 'Datar', desc: 'Tanpa border, tanpa bayangan. Kontras minimal.' },
       ],
       responses: 'Respons tamu',
@@ -298,9 +336,18 @@ const copyMap: Record<Locale, Copy> = {
       button: 'Undangan Baru',
     },
     hoverable: {
-      default: { title: 'Bawaan + Dapat Dihover', body: 'Terangkat saat hover. Bayangan berubah dari md ke xl.' },
-      elevated: { title: 'Elevasi + Dapat Dihover', body: 'Bayangan saat diam sudah dalam. Saat hover lebih dalam lagi.' },
-      outlined: { title: 'Garis + Dapat Diklik', body: 'Focus ring + skala aktif. Bisa dipakai dengan keyboard.' },
+      default: {
+        title: 'Bawaan + Dapat Dihover',
+        body: 'Terangkat saat hover. Bayangan berubah dari md ke xl.',
+      },
+      elevated: {
+        title: 'Elevasi + Dapat Dihover',
+        body: 'Bayangan saat diam sudah dalam. Saat hover lebih dalam lagi.',
+      },
+      outlined: {
+        title: 'Garis + Dapat Diklik',
+        body: 'Focus ring + skala aktif. Bisa dipakai dengan keyboard.',
+      },
     },
   },
   zh: {
@@ -418,8 +465,10 @@ const useCopy = () => computed(() => copyMap[getLocale()])
 const getStoryName = (key: keyof Copy['storyNames']) => copyMap[getLocale()].storyNames[key]
 
 // ── Canvas ──────────────────────────────────────────────────────────────────────
-const withCanvas = (bg = 'var(--color-bg)') => () => ({
-  template: `
+const withCanvas =
+  (bg = 'var(--color-bg)') =>
+  () => ({
+    template: `
     <div style="
       min-height:100vh; display:flex; flex-direction:column;
       align-items:center; justify-content:center;
@@ -428,30 +477,35 @@ const withCanvas = (bg = 'var(--color-bg)') => () => ({
       background-image:radial-gradient(circle, var(--color-border) 1px, transparent 1px);
       background-size:24px 24px;
     "><story /></div>`,
-})
+  })
 
 // ── Shared style helpers ────────────────────────────────────────────────────────
 const S = {
   overline: `font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-text-tertiary);`,
   headline: `font-size:26px;font-weight:700;letter-spacing:-0.02em;color:var(--color-text-heading);line-height:1;`,
-  body:     `font-size:13px;line-height:1.6;color:var(--color-text-secondary);`,
-  label:    `font-size:12px;font-weight:500;color:var(--color-text-secondary);`,
-  meta:     `font-size:11px;color:var(--color-text-tertiary);`,
-  divider:  `height:1px;background:var(--color-border-subtle);margin:0;`,
+  body: `font-size:13px;line-height:1.6;color:var(--color-text-secondary);`,
+  label: `font-size:12px;font-weight:500;color:var(--color-text-secondary);`,
+  meta: `font-size:11px;color:var(--color-text-tertiary);`,
+  divider: `height:1px;background:var(--color-border-subtle);margin:0;`,
 }
 
 // ── Icon box ────────────────────────────────────────────────────────────────────
 const IconBox = defineComponent({
   props: { bg: String, color: String, size: { default: 36 } },
   setup(props, { slots }) {
-    return () => h('div', {
-      style: `
+    return () =>
+      h(
+        'div',
+        {
+          style: `
         width:${props.size}px;height:${props.size}px;
         border-radius:var(--radius-md);flex-shrink:0;
         background:${props.bg};color:${props.color};
         display:flex;align-items:center;justify-content:center;
       `,
-    }, slots.default?.())
+        },
+        slots.default?.()
+      )
   },
 })
 
@@ -459,14 +513,19 @@ const IconBox = defineComponent({
 const Pill = defineComponent({
   props: { color: String, bg: String, label: String },
   setup(props) {
-    return () => h('span', {
-      style: `
+    return () =>
+      h(
+        'span',
+        {
+          style: `
         display:inline-flex;align-items:center;gap:3px;
         padding:3px 9px;border-radius:var(--radius-full);
         font-size:11px;font-weight:600;letter-spacing:0.03em;
         color:${props.color};background:${props.bg};flex-shrink:0;
       `,
-    }, props.label)
+        },
+        props.label
+      )
   },
 })
 
@@ -478,9 +537,9 @@ const meta: Meta<typeof Card> = {
   decorators: [withCanvas()],
   parameters: { layout: 'fullscreen' },
   argTypes: {
-    variant:   { control: 'select', options: ['default', 'outlined', 'elevated', 'flat', 'glass'] },
-    padding:   { control: 'select', options: ['none', 'sm', 'md', 'lg'] },
-    radius:    { control: 'select', options: ['sm', 'md', 'lg', 'xl'] },
+    variant: { control: 'select', options: ['default', 'outlined', 'elevated', 'flat', 'glass'] },
+    padding: { control: 'select', options: ['none', 'sm', 'md', 'lg'] },
+    radius: { control: 'select', options: ['sm', 'md', 'lg', 'xl'] },
     hoverable: { control: 'boolean' },
     clickable: { control: 'boolean' },
   },
@@ -561,8 +620,13 @@ export const StatsRow: Story = {
   },
   render: () => ({
     components: {
-      Card, IconBox, Pill,
-      RiMailSendLine, RiGroupLine, RiEyeLine, RiStarLine,
+      Card,
+      IconBox,
+      Pill,
+      RiMailSendLine,
+      RiGroupLine,
+      RiEyeLine,
+      RiStarLine,
     },
     template: `
       <div style="display:flex;gap:16px;flex-wrap:wrap;max-width:900px;">
@@ -585,28 +649,44 @@ export const StatsRow: Story = {
       copy: useCopy(),
       stats: [
         {
-          icon: RiMailSendLine, label: copyMap[getLocale()].statsRow[0].label,
-          value: '1,284', delta: '+8.2%',
-          iconBg: 'var(--color-primary-light)', iconColor: 'var(--color-primary)',
-          deltaColor: 'var(--color-success)', deltaBg: 'var(--color-success-light)',
+          icon: RiMailSendLine,
+          label: copyMap[getLocale()].statsRow[0].label,
+          value: '1,284',
+          delta: '+8.2%',
+          iconBg: 'var(--color-primary-light)',
+          iconColor: 'var(--color-primary)',
+          deltaColor: 'var(--color-success)',
+          deltaBg: 'var(--color-success-light)',
         },
         {
-          icon: RiGroupLine, label: copyMap[getLocale()].statsRow[1].label,
-          value: '8,942', delta: '+24.1%',
-          iconBg: 'var(--color-success-light)', iconColor: 'var(--color-success)',
-          deltaColor: 'var(--color-success)', deltaBg: 'var(--color-success-light)',
+          icon: RiGroupLine,
+          label: copyMap[getLocale()].statsRow[1].label,
+          value: '8,942',
+          delta: '+24.1%',
+          iconBg: 'var(--color-success-light)',
+          iconColor: 'var(--color-success)',
+          deltaColor: 'var(--color-success)',
+          deltaBg: 'var(--color-success-light)',
         },
         {
-          icon: RiEyeLine, label: copyMap[getLocale()].statsRow[2].label,
-          value: '42.6k', delta: '+3.8%',
-          iconBg: 'var(--color-info-light)', iconColor: 'var(--color-info)',
-          deltaColor: 'var(--color-success)', deltaBg: 'var(--color-success-light)',
+          icon: RiEyeLine,
+          label: copyMap[getLocale()].statsRow[2].label,
+          value: '42.6k',
+          delta: '+3.8%',
+          iconBg: 'var(--color-info-light)',
+          iconColor: 'var(--color-info)',
+          deltaColor: 'var(--color-success)',
+          deltaBg: 'var(--color-success-light)',
         },
         {
-          icon: RiStarLine, label: copyMap[getLocale()].statsRow[3].label,
-          value: '4.87', delta: '−0.2',
-          iconBg: 'var(--color-warning-light)', iconColor: 'var(--color-warning)',
-          deltaColor: 'var(--color-danger)', deltaBg: 'color-mix(in oklch, var(--color-danger) 12%, transparent)',
+          icon: RiStarLine,
+          label: copyMap[getLocale()].statsRow[3].label,
+          value: '4.87',
+          delta: '−0.2',
+          iconBg: 'var(--color-warning-light)',
+          iconColor: 'var(--color-warning)',
+          deltaColor: 'var(--color-danger)',
+          deltaBg: 'color-mix(in oklch, var(--color-danger) 12%, transparent)',
         },
       ],
     }),
@@ -662,7 +742,8 @@ export const WithMedia: Story = {
             tagBg: 'rgba(255,255,255,0.18)',
             statusColor: 'var(--color-success)',
             statusBg: 'var(--color-success-light)',
-            gradient: 'linear-gradient(140deg, var(--color-primary) 0%, var(--color-secondary) 100%)',
+            gradient:
+              'linear-gradient(140deg, var(--color-primary) 0%, var(--color-secondary) 100%)',
           },
           {
             tagColor: 'rgba(255,255,255,0.95)',
@@ -688,9 +769,15 @@ export const FeatureGrid: Story = {
   },
   render: () => ({
     components: {
-      Card, IconBox, RiArrowRightSLine,
-      RiMailSendLine, RiGroupLine, RiCalendarEventLine,
-      RiPieChartLine, RiMessage2Line, RiSettings4Line,
+      Card,
+      IconBox,
+      RiArrowRightSLine,
+      RiMailSendLine,
+      RiGroupLine,
+      RiCalendarEventLine,
+      RiPieChartLine,
+      RiMessage2Line,
+      RiSettings4Line,
     },
     template: `
       <div style="display:grid;grid-template-columns:repeat(3,220px);gap:12px;">
@@ -719,11 +806,22 @@ export const FeatureGrid: Story = {
         { icon: RiMailSendLine, bg: 'var(--color-primary-light)', color: 'var(--color-primary)' },
         { icon: RiGroupLine, bg: 'var(--color-success-light)', color: 'var(--color-success)' },
         { icon: RiCalendarEventLine, bg: 'var(--color-info-light)', color: 'var(--color-info)' },
-        { icon: RiPieChartLine, bg: 'var(--color-secondary-light)', color: 'var(--color-secondary)' },
+        {
+          icon: RiPieChartLine,
+          bg: 'var(--color-secondary-light)',
+          color: 'var(--color-secondary)',
+        },
         { icon: RiMessage2Line, bg: 'var(--color-warning-light)', color: 'var(--color-warning)' },
-        { icon: RiSettings4Line, bg: 'var(--color-neutral-light)', color: 'var(--color-text-secondary)' },
+        {
+          icon: RiSettings4Line,
+          bg: 'var(--color-neutral-light)',
+          color: 'var(--color-text-secondary)',
+        },
       ]
-      const features = copy.value.featureGrid.items.map((item, index) => ({ ...iconBases[index], ...item }))
+      const features = copy.value.featureGrid.items.map((item, index) => ({
+        ...iconBases[index],
+        ...item,
+      }))
       return { copy, features }
     },
   }),
@@ -737,7 +835,15 @@ export const ActivityFeed: Story = {
     return getStoryName('activityFeed')
   },
   render: () => ({
-    components: { Card, IconBox, RiCheckLine, RiMailSendLine, RiEyeLine, RiMessage2Line, RiGroupLine },
+    components: {
+      Card,
+      IconBox,
+      RiCheckLine,
+      RiMailSendLine,
+      RiEyeLine,
+      RiMessage2Line,
+      RiGroupLine,
+    },
     template: `
       <Card variant="outlined" style="width:360px">
         <template #header>
@@ -782,7 +888,11 @@ export const ActivityFeed: Story = {
         { icon: RiMailSendLine, bg: 'var(--color-primary-light)', color: 'var(--color-primary)' },
         { icon: RiEyeLine, bg: 'var(--color-info-light)', color: 'var(--color-info)' },
         { icon: RiMessage2Line, bg: 'var(--color-warning-light)', color: 'var(--color-warning)' },
-        { icon: RiGroupLine, bg: 'var(--color-neutral-light)', color: 'var(--color-text-secondary)' },
+        {
+          icon: RiGroupLine,
+          bg: 'var(--color-neutral-light)',
+          color: 'var(--color-text-secondary)',
+        },
       ].map((item, index) => ({ ...item, ...copy.value.activityFeed.items[index] }))
       return { copy, activity }
     },

@@ -2,36 +2,36 @@
 import { computed } from 'vue'
 
 type StatTrend = 'up' | 'down' | 'neutral'
-type StatSize  = 'sm' | 'md' | 'lg'
+type StatSize = 'sm' | 'md' | 'lg'
 
 interface Props {
   /** Short descriptive label above the value. */
-  label:        string
+  label: string
   /** The primary metric value to display. */
-  value:        string | number
+  value: string | number
   /** Change delta shown next to the value (e.g. '+12%' or 3.5). */
-  delta?:       string | number
+  delta?: string | number
   /** Direction of the delta trend. @default 'neutral' */
-  trend?:       StatTrend
+  trend?: StatTrend
   /** Optional supporting text below the value row. */
   description?: string
   /** Visual size. @default 'md' */
-  size?:        StatSize
+  size?: StatSize
 }
 
 const props = withDefaults(defineProps<Props>(), {
   trend: 'neutral',
-  size:  'md',
+  size: 'md',
 })
 
 const trendColor = computed(() => {
-  if (props.trend === 'up')   return 'var(--color-success)'
+  if (props.trend === 'up') return 'var(--color-success)'
   if (props.trend === 'down') return 'var(--color-danger)'
   return 'var(--color-text-secondary)'
 })
 
 const trendArrow = computed(() => {
-  if (props.trend === 'up')   return '↑'
+  if (props.trend === 'up') return '↑'
   if (props.trend === 'down') return '↓'
   return '→'
 })
@@ -46,7 +46,7 @@ const valueSizeClass: Record<StatSize, string> = {
 <template>
   <div class="flex flex-col gap-1">
     <!-- Label -->
-    <p class="text-sm font-medium" style="color: var(--color-text-secondary);">
+    <p class="text-sm font-medium" style="color: var(--color-text-secondary)">
       <slot name="label">{{ label }}</slot>
     </p>
 
@@ -54,7 +54,7 @@ const valueSizeClass: Record<StatSize, string> = {
     <div class="flex items-baseline gap-2 flex-wrap">
       <span
         :class="['font-bold tabular-nums leading-none', valueSizeClass[size]]"
-        style="color: var(--color-text-primary);"
+        style="color: var(--color-text-primary)"
       >
         <slot name="value">{{ value }}</slot>
       </span>
@@ -74,7 +74,7 @@ const valueSizeClass: Record<StatSize, string> = {
     <p
       v-if="description || $slots.description"
       class="text-xs"
-      style="color: var(--color-text-tertiary);"
+      style="color: var(--color-text-tertiary)"
     >
       <slot name="description">{{ description }}</slot>
     </p>

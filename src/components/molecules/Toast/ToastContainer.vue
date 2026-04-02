@@ -10,11 +10,7 @@ const { toasts, dismiss } = useToast()
   <Teleport to="body">
     <!-- Outer live region so AT discovers new toasts even when injected via Teleport -->
     <div
-      :class="cn(
-        'fixed top-4 right-4 z-50',
-        'flex flex-col gap-3',
-        'pointer-events-none',
-      )"
+      :class="cn('fixed top-4 right-4 z-50', 'flex flex-col gap-3', 'pointer-events-none')"
       aria-live="polite"
       aria-label="Notifications"
       role="region"
@@ -28,11 +24,7 @@ const { toasts, dismiss } = useToast()
         leave-to-class="opacity-0 translate-x-full"
         move-class="transition-all duration-[--duration-normal] ease-[--ease-default]"
       >
-        <div
-          v-for="t in toasts"
-          :key="t.id"
-          class="pointer-events-auto"
-        >
+        <div v-for="t in toasts" :key="t.id" class="pointer-events-auto">
           <Toast
             :id="t.id"
             :variant="t.variant"

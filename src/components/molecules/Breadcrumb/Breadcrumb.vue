@@ -47,21 +47,10 @@ const separatorChar = computed(() => {
 <template>
   <nav aria-label="Breadcrumb">
     <ol :class="cn('flex items-center flex-wrap gap-1', textClass[size])">
-      <li
-        v-for="(item, index) in items"
-        :key="index"
-        class="inline-flex items-center gap-1"
-      >
+      <li v-for="(item, index) in items" :key="index" class="inline-flex items-center gap-1">
         <!-- Separator -->
-        <span
-          v-if="index > 0"
-          class="ds-breadcrumb-sep select-none mx-0.5"
-          aria-hidden="true"
-        >
-          <RiArrowRightSLine
-            v-if="separator === 'chevron'"
-            :size="String(iconPx[size])"
-          />
+        <span v-if="index > 0" class="ds-breadcrumb-sep select-none mx-0.5" aria-hidden="true">
+          <RiArrowRightSLine v-if="separator === 'chevron'" :size="String(iconPx[size])" />
           <span v-else>{{ separatorChar }}</span>
         </span>
 
@@ -69,12 +58,14 @@ const separatorChar = computed(() => {
         <a
           v-if="index < items.length - 1 && item.href"
           :href="item.href"
-          :class="cn(
-            'ds-breadcrumb-link',
-            'inline-flex items-center gap-1.5 rounded-[var(--radius-md)] px-1.5 py-0.5',
-            'transition-colors duration-200 ease-out',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]',
-          )"
+          :class="
+            cn(
+              'ds-breadcrumb-link',
+              'inline-flex items-center gap-1.5 rounded-[var(--radius-md)] px-1.5 py-0.5',
+              'transition-colors duration-200 ease-out',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]'
+            )
+          "
         >
           <component
             v-if="item.icon"
@@ -88,10 +79,12 @@ const separatorChar = computed(() => {
         <!-- Non-link intermediate -->
         <span
           v-else-if="index < items.length - 1"
-          :class="cn(
-            'ds-breadcrumb-link',
-            'inline-flex items-center gap-1.5 px-1.5 py-0.5 cursor-default',
-          )"
+          :class="
+            cn(
+              'ds-breadcrumb-link',
+              'inline-flex items-center gap-1.5 px-1.5 py-0.5 cursor-default'
+            )
+          "
         >
           <component
             v-if="item.icon"

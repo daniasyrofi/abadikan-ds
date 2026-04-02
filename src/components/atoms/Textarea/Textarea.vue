@@ -2,45 +2,45 @@
 import { computed, useId, ref, watch, nextTick, onMounted } from 'vue'
 import { cn } from '@/lib/utils'
 
-type TextareaSize   = 'sm' | 'md' | 'lg'
+type TextareaSize = 'sm' | 'md' | 'lg'
 type TextareaResize = 'none' | 'vertical' | 'both'
 
 interface Props {
-  modelValue:  string
-  size?:       TextareaSize
-  label?:      string
+  modelValue: string
+  size?: TextareaSize
+  label?: string
   placeholder?: string
   helperText?: string
-  error?:      string
-  rows?:       number
-  maxRows?:    number
+  error?: string
+  rows?: number
+  maxRows?: number
   autoResize?: boolean
-  disabled?:   boolean
-  readonly?:   boolean
-  counter?:    boolean
-  maxlength?:  number
-  required?:   boolean
-  resize?:     TextareaResize
+  disabled?: boolean
+  readonly?: boolean
+  counter?: boolean
+  maxlength?: number
+  required?: boolean
+  resize?: TextareaResize
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  size:       'md',
-  rows:       3,
+  size: 'md',
+  rows: 3,
   autoResize: true,
-  disabled:   false,
-  readonly:   false,
-  required:   false,
-  counter:    false,
-  resize:     'none',
+  disabled: false,
+  readonly: false,
+  required: false,
+  counter: false,
+  resize: 'none',
 })
 
 const emit = defineEmits<{ 'update:modelValue': [value: string] }>()
 
-const autoId     = useId()
+const autoId = useId()
 const textareaId = computed(() => autoId)
 const textareaEl = ref<HTMLTextAreaElement | null>(null)
-const hasError   = computed(() => !!props.error)
-const charCount  = computed(() => props.modelValue?.length ?? 0)
+const hasError = computed(() => !!props.error)
+const charCount = computed(() => props.modelValue?.length ?? 0)
 
 // ── Auto-resize ─────────────────────────────────────────────────────────
 
@@ -54,9 +54,9 @@ function recalcHeight() {
 
   if (props.maxRows) {
     const lineHeight = parseInt(getComputedStyle(el).lineHeight) || 20
-    const paddingTop    = parseInt(getComputedStyle(el).paddingTop) || 0
+    const paddingTop = parseInt(getComputedStyle(el).paddingTop) || 0
     const paddingBottom = parseInt(getComputedStyle(el).paddingBottom) || 0
-    const maxHeight     = props.maxRows * lineHeight + paddingTop + paddingBottom
+    const maxHeight = props.maxRows * lineHeight + paddingTop + paddingBottom
     newHeight = Math.min(newHeight, maxHeight)
   }
 
@@ -71,9 +71,12 @@ function handleInput(e: Event) {
   }
 }
 
-watch(() => props.modelValue, () => {
-  nextTick(recalcHeight)
-})
+watch(
+  () => props.modelValue,
+  () => {
+    nextTick(recalcHeight)
+  }
+)
 
 onMounted(() => {
   nextTick(recalcHeight)
@@ -105,7 +108,7 @@ const wrapperClasses = computed(() =>
     'rounded-[var(--radius-lg)] border outline-none',
     hasError.value && 'ds-textarea-wrapper--error',
     props.disabled && 'ds-textarea-wrapper--disabled cursor-not-allowed',
-    props.readonly && 'ds-textarea-wrapper--readonly',
+    props.readonly && 'ds-textarea-wrapper--readonly'
   )
 )
 
@@ -117,7 +120,7 @@ const textareaClasses = computed(() =>
     paddingClass[props.size],
     'leading-relaxed',
     props.disabled && 'cursor-not-allowed',
-    props.readonly && 'cursor-default',
+    props.readonly && 'cursor-default'
   )
 )
 </script>
@@ -128,10 +131,7 @@ const textareaClasses = computed(() =>
     <label
       v-if="label"
       :for="textareaId"
-      :class="cn(
-        'text-sm font-medium select-none flex items-center',
-        disabled && 'opacity-50',
-      )"
+      :class="cn('text-sm font-medium select-none flex items-center', disabled && 'opacity-50')"
       :style="{ color: 'var(--color-text-heading)' }"
     >
       {{ label }}
@@ -140,7 +140,8 @@ const textareaClasses = computed(() =>
         class="ml-1 font-bold inline-block"
         :style="{ color: 'var(--color-danger)' }"
         aria-hidden="true"
-      >*</span>
+        >*</span
+      >
     </label>
 
     <!-- Textarea wrapper -->
@@ -189,10 +190,10 @@ const textareaClasses = computed(() =>
 
       <span
         v-if="counter && maxlength"
-        :class="cn(
-          'text-[13px] font-medium shrink-0 tabular-nums',
-        )"
-        :style="{ color: charCount >= maxlength ? 'var(--color-danger)' : 'var(--color-text-tertiary)' }"
+        :class="cn('text-[13px] font-medium shrink-0 tabular-nums')"
+        :style="{
+          color: charCount >= maxlength ? 'var(--color-danger)' : 'var(--color-text-tertiary)',
+        }"
       >
         {{ charCount }}/{{ maxlength }}
       </span>

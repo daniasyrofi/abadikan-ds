@@ -2,34 +2,34 @@
 import { computed, useId } from 'vue'
 import { cn } from '@/lib/utils'
 
-type RadioSize  = 'sm' | 'md' | 'lg'
+type RadioSize = 'sm' | 'md' | 'lg'
 type RadioColor = 'primary' | 'secondary' | 'neutral' | 'danger'
 
 interface Props {
-  modelValue:   string | number
-  value:        string | number
-  size?:        RadioSize
-  color?:       RadioColor
-  disabled?:    boolean
-  readonly?:    boolean
-  label?:       string
+  modelValue: string | number
+  value: string | number
+  size?: RadioSize
+  color?: RadioColor
+  disabled?: boolean
+  readonly?: boolean
+  label?: string
   description?: string
-  error?:       string
-  name?:        string
+  error?: string
+  name?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  size:     'md',
-  color:    'primary',
+  size: 'md',
+  color: 'primary',
   disabled: false,
   readonly: false,
 })
 
 const emit = defineEmits<{ 'update:modelValue': [value: string | number] }>()
 
-const inputId  = useId()
+const inputId = useId()
 const isChecked = computed(() => props.modelValue === props.value)
-const hasError  = computed(() => !!props.error)
+const hasError = computed(() => !!props.error)
 
 function handleChange() {
   if (!props.disabled && !props.readonly) {
@@ -39,9 +39,9 @@ function handleChange() {
 
 // Size maps
 const outerSizeClass: Record<RadioSize, string> = {
-  sm: 'size-4',    // 16px
-  md: 'size-5',    // 20px
-  lg: 'size-6',    // 24px
+  sm: 'size-4', // 16px
+  md: 'size-5', // 20px
+  lg: 'size-6', // 24px
 }
 
 const innerSizeClass: Record<RadioSize, string> = {
@@ -51,8 +51,8 @@ const innerSizeClass: Record<RadioSize, string> = {
 }
 
 const labelTextClass: Record<RadioSize, string> = {
-  sm: 'text-xs',   // 12px
-  md: 'text-sm',   // 14px
+  sm: 'text-xs', // 12px
+  md: 'text-sm', // 14px
   lg: 'text-base', // 16px
 }
 
@@ -65,9 +65,9 @@ const descTextClass: Record<RadioSize, string> = {
 // Math for baseline alignment: (BoxHeight - LineHeight) / 2
 // Assumes text uses leading-none (LineHeight = FontSize)
 const offsetClass: Record<RadioSize, string> = {
-  sm: 'mt-[2px]',  // (16 - 12)/2 = 2px
-  md: 'mt-[3px]',  // (20 - 14)/2 = 3px
-  lg: 'mt-[4px]',  // (24 - 16)/2 = 4px
+  sm: 'mt-[2px]', // (16 - 12)/2 = 2px
+  md: 'mt-[3px]', // (20 - 14)/2 = 3px
+  lg: 'mt-[4px]', // (24 - 16)/2 = 4px
 }
 
 const outerStyle = computed(() => {
@@ -92,8 +92,11 @@ const outerClasses = computed(() =>
     'shrink-0 inline-flex items-center justify-center rounded-full',
     'border-2 transition-all duration-150 ease-out',
     outerSizeClass[props.size],
-    !isChecked.value && !hasError.value && !props.disabled && 'group-hover:[border-color:var(--color-neutral)]',
-    props.disabled && 'opacity-50',
+    !isChecked.value &&
+      !hasError.value &&
+      !props.disabled &&
+      'group-hover:[border-color:var(--color-neutral)]',
+    props.disabled && 'opacity-50'
   )
 )
 
@@ -101,9 +104,7 @@ const innerStyle = computed(() => {
   if (!isChecked.value) return { backgroundColor: 'transparent' }
   const colorVar = `var(--color-${props.color})`
   return {
-    backgroundColor: hasError.value
-      ? 'var(--color-danger)'
-      : colorVar,
+    backgroundColor: hasError.value ? 'var(--color-danger)' : colorVar,
   }
 })
 
@@ -111,14 +112,12 @@ const innerClasses = computed(() =>
   cn(
     'rounded-full transition-all duration-150 ease-out',
     innerSizeClass[props.size],
-    isChecked.value ? 'scale-100' : 'scale-0',
+    isChecked.value ? 'scale-100' : 'scale-0'
   )
 )
 
 const labelStyle = computed(() => ({
-  color: hasError.value
-    ? 'var(--color-danger)'
-    : 'var(--color-text-primary)',
+  color: hasError.value ? 'var(--color-danger)' : 'var(--color-text-primary)',
 }))
 
 const descriptionStyle = { color: 'var(--color-text-secondary)' }
@@ -126,7 +125,9 @@ const descriptionStyle = { color: 'var(--color-text-secondary)' }
 const errorStyle = { color: 'var(--color-danger)' }
 
 const focusRingVar = computed(() =>
-  hasError.value ? 'var(--ring-danger)' : `0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-${props.color})`
+  hasError.value
+    ? 'var(--ring-danger)'
+    : `0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-${props.color})`
 )
 </script>
 
@@ -134,10 +135,12 @@ const focusRingVar = computed(() =>
   <div :class="cn('inline-flex flex-col gap-1', disabled && 'cursor-not-allowed')">
     <label
       :for="inputId"
-      :class="cn(
-        'relative flex items-start gap-2.5',
-        disabled ? 'cursor-not-allowed' : readonly ? 'cursor-default' : 'cursor-pointer group',
-      )"
+      :class="
+        cn(
+          'relative flex items-start gap-2.5',
+          disabled ? 'cursor-not-allowed' : readonly ? 'cursor-default' : 'cursor-pointer group'
+        )
+      "
     >
       <!-- Hidden native input -->
       <input
@@ -163,17 +166,16 @@ const focusRingVar = computed(() =>
       </span>
 
       <!-- Text content -->
-      <span
-        v-if="label || description"
-        :class="cn('flex flex-col gap-1', offsetClass[size])"
-      >
+      <span v-if="label || description" :class="cn('flex flex-col gap-1', offsetClass[size])">
         <span
           v-if="label"
-          :class="cn(
-            labelTextClass[size],
-            'font-medium leading-none transition-colors',
-            disabled && 'opacity-50',
-          )"
+          :class="
+            cn(
+              labelTextClass[size],
+              'font-medium leading-none transition-colors',
+              disabled && 'opacity-50'
+            )
+          "
           :style="labelStyle"
         >
           {{ label }}
@@ -190,12 +192,7 @@ const focusRingVar = computed(() =>
     </label>
 
     <!-- Error message -->
-    <p
-      v-if="error"
-      :id="`${inputId}-desc`"
-      class="text-sm ml-7"
-      :style="errorStyle"
-    >
+    <p v-if="error" :id="`${inputId}-desc`" class="text-sm ml-7" :style="errorStyle">
       {{ error }}
     </p>
   </div>

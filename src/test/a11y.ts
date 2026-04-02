@@ -38,10 +38,7 @@ let configured = false
  * @param element - The root element to scan (e.g. wrapper.element)
  * @param options  - Optional axe.RunOptions overrides
  */
-export async function axeCheck(
-  element: Element,
-  options: axe.RunOptions = {},
-): Promise<void> {
+export async function axeCheck(element: Element, options: axe.RunOptions = {}): Promise<void> {
   if (!configured) {
     configureAxeForHappyDom()
     configured = true
@@ -62,13 +59,11 @@ export async function axeCheck(
 
     if (results.violations.length > 0) {
       const messages = results.violations.map((v) => {
-        const nodes = v.nodes
-          .map((n) => `  - ${n.html}\n    Fix: ${n.failureSummary}`)
-          .join('\n')
+        const nodes = v.nodes.map((n) => `  - ${n.html}\n    Fix: ${n.failureSummary}`).join('\n')
         return `[${v.id}] ${v.description} (impact: ${v.impact})\n${nodes}`
       })
       throw new Error(
-        `axe found ${results.violations.length} accessibility violation(s):\n\n${messages.join('\n\n')}`,
+        `axe found ${results.violations.length} accessibility violation(s):\n\n${messages.join('\n\n')}`
       )
     }
   } finally {

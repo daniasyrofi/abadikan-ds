@@ -24,14 +24,18 @@ describe('Avatar', () => {
 
   // ── Sizes ────────────────────────────────────────────────────
 
-  it.each(['xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const)(
-    'applies size class for %s',
-    (size) => {
-      const wrapper = mount(Avatar, { props: { name: 'AB', size } })
-      const sizeMap = { xs: 'size-6', sm: 'size-8', md: 'size-10', lg: 'size-12', xl: 'size-14', '2xl': 'size-16' }
-      expect(wrapper.classes()).toContain(sizeMap[size])
+  it.each(['xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const)('applies size class for %s', (size) => {
+    const wrapper = mount(Avatar, { props: { name: 'AB', size } })
+    const sizeMap = {
+      xs: 'size-6',
+      sm: 'size-8',
+      md: 'size-10',
+      lg: 'size-12',
+      xl: 'size-14',
+      '2xl': 'size-16',
     }
-  )
+    expect(wrapper.classes()).toContain(sizeMap[size])
+  })
 
   // ── Shapes ───────────────────────────────────────────────────
 

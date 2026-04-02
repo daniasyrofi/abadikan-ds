@@ -184,19 +184,19 @@ const meta: Meta<typeof NumberInput> = {
   parameters: { layout: 'fullscreen' },
   argTypes: {
     modelValue: { control: 'number' },
-    min:        { control: 'number' },
-    max:        { control: 'number' },
-    step:       { control: 'number' },
-    size:       { control: 'select', options: ['sm', 'md', 'lg'] },
-    disabled:   { control: 'boolean' },
-    label:      { control: 'text' },
+    min: { control: 'number' },
+    max: { control: 'number' },
+    step: { control: 'number' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    disabled: { control: 'boolean' },
+    label: { control: 'text' },
   },
   args: {
     modelValue: 1,
-    min:        0,
-    step:       1,
-    size:       'md',
-    disabled:   false,
+    min: 0,
+    step: 1,
+    size: 'md',
+    disabled: false,
   },
 }
 export default meta
@@ -302,7 +302,7 @@ export const StepValues: Story = {
   render: () => ({
     components: { NumberInput },
     setup() {
-      const temp   = ref(22.5)
+      const temp = ref(22.5)
       const budget = ref(5000000)
       return { temp, budget, copy: useCopy() }
     },
@@ -364,7 +364,9 @@ export const Disabled: Story = {
   },
   render: () => ({
     components: { NumberInput },
-    setup() { return { val: ref(3), copy: useCopy() } },
+    setup() {
+      return { val: ref(3), copy: useCopy() }
+    },
     template: `
       <div style="width:100%;max-width:200px;">
         <p style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:6px;">{{ copy.disabled.label }}</p>

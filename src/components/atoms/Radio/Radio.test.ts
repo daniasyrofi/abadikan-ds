@@ -16,7 +16,9 @@ describe('Radio', () => {
   })
 
   it('renders description text', () => {
-    const wrapper = mount(Radio, { props: { modelValue: '', value: 'a', description: 'Details here' } })
+    const wrapper = mount(Radio, {
+      props: { modelValue: '', value: 'a', description: 'Details here' },
+    })
     expect(wrapper.text()).toContain('Details here')
   })
 

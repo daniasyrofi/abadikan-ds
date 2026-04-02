@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref, defineComponent } from 'vue'
 import { Icons } from '@/lib/icons'
-import Navbar      from '@/components/organisms/Navbar/Navbar.vue'
-import Sidebar     from '@/components/organisms/Sidebar/Sidebar.vue'
+import Navbar from '@/components/organisms/Navbar/Navbar.vue'
+import Sidebar from '@/components/organisms/Sidebar/Sidebar.vue'
 import type { SidebarItem } from '@/components/organisms/Sidebar/Sidebar.vue'
-import Card        from '@/components/molecules/Card/Card.vue'
-import Breadcrumb  from '@/components/molecules/Breadcrumb/Breadcrumb.vue'
+import Card from '@/components/molecules/Card/Card.vue'
+import Breadcrumb from '@/components/molecules/Breadcrumb/Breadcrumb.vue'
 import SearchInput from '@/components/molecules/SearchInput/SearchInput.vue'
 import ThemeToggle from '@/components/molecules/ThemeToggle/ThemeToggle.vue'
-import Badge       from '@/components/atoms/Badge/Badge.vue'
-import Button      from '@/components/atoms/Button/Button.vue'
+import Badge from '@/components/atoms/Badge/Badge.vue'
+import Button from '@/components/atoms/Button/Button.vue'
 
 // ── Canvas ───────────────────────────────────────────────────────────────────
 const canvas = () => ({
@@ -31,7 +31,8 @@ const meta: Meta = {
     layout: 'fullscreen',
     docs: {
       description: {
-        component: 'Halaman dokumentasi **Abadikan.id** — sidebar navigasi, hero section, quick-start panel, dan feature cards.',
+        component:
+          'Halaman dokumentasi **Abadikan.id** — sidebar navigasi, hero section, quick-start panel, dan feature cards.',
       },
     },
   },
@@ -49,72 +50,72 @@ const logoBox = `
 // ── Nav items ─────────────────────────────────────────────────────────────────
 const NAV_ITEMS: SidebarItem[] = [
   {
-    id:    'intro',
+    id: 'intro',
     label: 'Intro',
-    icon:  Icons.Book,
+    icon: Icons.Book,
   },
   {
-    id:       'dashboard',
-    label:    'Dashboard',
-    icon:     Icons.Dashboard,
+    id: 'dashboard',
+    label: 'Dashboard',
+    icon: Icons.Dashboard,
     children: [
-      { id: 'dashboard-link',      label: 'Link Undangan'      },
-      { id: 'dashboard-progress',  label: 'Progress Undangan'  },
+      { id: 'dashboard-link', label: 'Link Undangan' },
+      { id: 'dashboard-progress', label: 'Progress Undangan' },
       { id: 'dashboard-statistik', label: 'Statistik Undangan' },
-      { id: 'dashboard-tamu',      label: 'Statistik Tamu'     },
-      { id: 'dashboard-pesan',     label: 'Pesan Terbaru'      },
+      { id: 'dashboard-tamu', label: 'Statistik Tamu' },
+      { id: 'dashboard-pesan', label: 'Pesan Terbaru' },
       { id: 'dashboard-analytics', label: 'Analytics Overview' },
-      { id: 'dashboard-trends',    label: 'Trends Analytics'   },
+      { id: 'dashboard-trends', label: 'Trends Analytics' },
     ],
   },
   {
-    id:       'edit-undangan',
-    label:    'Edit Undangan',
-    icon:     Icons.Form,
+    id: 'edit-undangan',
+    label: 'Edit Undangan',
+    icon: Icons.Form,
     children: [
-      { id: 'edit-template',  label: 'Pilih Template'  },
-      { id: 'edit-konten',    label: 'Isi Konten'       },
-      { id: 'edit-galeri',    label: 'Galeri Foto'      },
-      { id: 'edit-countdown', label: 'Countdown Timer'  },
+      { id: 'edit-template', label: 'Pilih Template' },
+      { id: 'edit-konten', label: 'Isi Konten' },
+      { id: 'edit-galeri', label: 'Galeri Foto' },
+      { id: 'edit-countdown', label: 'Countdown Timer' },
     ],
   },
   {
-    id:       'musik',
-    label:    'Musik',
-    icon:     Icons.Slider,
+    id: 'musik',
+    label: 'Musik',
+    icon: Icons.Slider,
     children: [
-      { id: 'musik-pilih',  label: 'Pilih Musik'         },
+      { id: 'musik-pilih', label: 'Pilih Musik' },
       { id: 'musik-upload', label: 'Upload Musik Sendiri' },
     ],
   },
   {
-    id:       'rsvp-tamu',
-    label:    'RSVP Tamu',
-    icon:     Icons.Mail,
+    id: 'rsvp-tamu',
+    label: 'RSVP Tamu',
+    icon: Icons.Mail,
     children: [
-      { id: 'rsvp-daftar',  label: 'Daftar Tamu'           },
-      { id: 'rsvp-konfirm', label: 'Konfirmasi Kehadiran'   },
-      { id: 'rsvp-export',  label: 'Export Data Tamu'       },
+      { id: 'rsvp-daftar', label: 'Daftar Tamu' },
+      { id: 'rsvp-konfirm', label: 'Konfirmasi Kehadiran' },
+      { id: 'rsvp-export', label: 'Export Data Tamu' },
     ],
   },
   {
-    id:       'kado',
-    label:    'Kado',
-    icon:     Icons.Folder,
+    id: 'kado',
+    label: 'Kado',
+    icon: Icons.Folder,
     children: [
-      { id: 'kado-rekening', label: 'Rekening Bank'    },
-      { id: 'kado-ewallet',  label: 'E-Wallet'         },
+      { id: 'kado-rekening', label: 'Rekening Bank' },
+      { id: 'kado-ewallet', label: 'E-Wallet' },
       { id: 'kado-wishlist', label: 'Wishlist Registry' },
     ],
   },
   {
-    id:       'digital-guestbook',
-    label:    'Digital Guestbook',
-    icon:     Icons.ChatMessage,
+    id: 'digital-guestbook',
+    label: 'Digital Guestbook',
+    icon: Icons.ChatMessage,
     children: [
-      { id: 'guestbook-ucapan',   label: 'Ucapan & Doa'    },
-      { id: 'guestbook-moderasi', label: 'Moderasi Pesan'   },
-      { id: 'guestbook-export',   label: 'Export Buku Tamu' },
+      { id: 'guestbook-ucapan', label: 'Ucapan & Doa' },
+      { id: 'guestbook-moderasi', label: 'Moderasi Pesan' },
+      { id: 'guestbook-export', label: 'Export Buku Tamu' },
     ],
   },
 ]
@@ -122,45 +123,45 @@ const NAV_ITEMS: SidebarItem[] = [
 // ── Feature cards ─────────────────────────────────────────────────────────────
 const FEATURE_CARDS = [
   {
-    id:          'edit-undangan',
-    icon:        Icons.Form,
-    title:       'Undangan Digital',
-    desc:        'Buat undangan cantik dari ratusan template premium. Personalisasi setiap detail — dari foto hingga countdown.',
-    badge:       'Mulai di sini',
-    badgeColor:  'primary' as const,
+    id: 'edit-undangan',
+    icon: Icons.Form,
+    title: 'Undangan Digital',
+    desc: 'Buat undangan cantik dari ratusan template premium. Personalisasi setiap detail — dari foto hingga countdown.',
+    badge: 'Mulai di sini',
+    badgeColor: 'primary' as const,
   },
   {
-    id:          'rsvp-tamu',
-    icon:        Icons.Mail,
-    title:       'RSVP & Manajemen Tamu',
-    desc:        'Kelola daftar tamu, lacak konfirmasi kehadiran, dan ekspor data kapan saja dalam satu dasbor.',
-    badge:       'Populer',
-    badgeColor:  'success' as const,
+    id: 'rsvp-tamu',
+    icon: Icons.Mail,
+    title: 'RSVP & Manajemen Tamu',
+    desc: 'Kelola daftar tamu, lacak konfirmasi kehadiran, dan ekspor data kapan saja dalam satu dasbor.',
+    badge: 'Populer',
+    badgeColor: 'success' as const,
   },
   {
-    id:          'kado',
-    icon:        Icons.Folder,
-    title:       'Kado Digital',
-    desc:        'Terima kado lewat transfer bank atau e-wallet. Tambah beberapa rekening sekaligus dengan mudah.',
-    badge:       null,
-    badgeColor:  'neutral' as const,
+    id: 'kado',
+    icon: Icons.Folder,
+    title: 'Kado Digital',
+    desc: 'Terima kado lewat transfer bank atau e-wallet. Tambah beberapa rekening sekaligus dengan mudah.',
+    badge: null,
+    badgeColor: 'neutral' as const,
   },
   {
-    id:          'digital-guestbook',
-    icon:        Icons.ChatMessage,
-    title:       'Buku Tamu Digital',
-    desc:        'Kumpulkan ucapan dan doa tamu secara real-time. Moderasi pesan dan abadikan kenangan selamanya.',
-    badge:       null,
-    badgeColor:  'neutral' as const,
+    id: 'digital-guestbook',
+    icon: Icons.ChatMessage,
+    title: 'Buku Tamu Digital',
+    desc: 'Kumpulkan ucapan dan doa tamu secara real-time. Moderasi pesan dan abadikan kenangan selamanya.',
+    badge: null,
+    badgeColor: 'neutral' as const,
   },
 ]
 
 // ── Quick-start steps ─────────────────────────────────────────────────────────
 const QUICK_STEPS = [
-  { step: '01', label: 'Buat akun gratis',       done: true  },
-  { step: '02', label: 'Pilih template undangan', done: true  },
-  { step: '03', label: 'Isi data pernikahan',     done: false },
-  { step: '04', label: 'Tambahkan daftar tamu',   done: false },
+  { step: '01', label: 'Buat akun gratis', done: true },
+  { step: '02', label: 'Pilih template undangan', done: true },
+  { step: '03', label: 'Isi data pernikahan', done: false },
+  { step: '04', label: 'Tambahkan daftar tamu', done: false },
   { step: '05', label: 'Bagikan link undanganmu', done: false },
 ]
 
@@ -174,8 +175,8 @@ export const Default: Story = {
 
     setup() {
       const sidebarCollapsed = ref(false)
-      const activeId         = ref('intro')
-      const searchQuery      = ref('')
+      const activeId = ref('intro')
+      const searchQuery = ref('')
 
       const breadcrumbs = [
         { label: 'Home', href: '#' },
@@ -188,9 +189,14 @@ export const Default: Story = {
       }
 
       return {
-        sidebarCollapsed, activeId, searchQuery,
-        breadcrumbs, onNav,
-        NAV_ITEMS, FEATURE_CARDS, QUICK_STEPS,
+        sidebarCollapsed,
+        activeId,
+        searchQuery,
+        breadcrumbs,
+        onNav,
+        NAV_ITEMS,
+        FEATURE_CARDS,
+        QUICK_STEPS,
         Icons,
       }
     },

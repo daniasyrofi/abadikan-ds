@@ -28,9 +28,7 @@ export const i18n = createI18n<[MessageSchema], SupportedLocale>({
 export const getI18nLocale = (): SupportedLocale => {
   const localeState = i18n.global.locale as unknown
   const rawLocale =
-    typeof localeState === 'string'
-      ? localeState
-      : (localeState as { value: unknown }).value
+    typeof localeState === 'string' ? localeState : (localeState as { value: unknown }).value
   return resolveLocale(rawLocale)
 }
 

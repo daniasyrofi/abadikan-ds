@@ -219,18 +219,18 @@ const meta: Meta<typeof Radio> = {
   tags: ['autodocs'],
   parameters: { layout: 'centered', icon: 'circleHollow' },
   argTypes: {
-    size:     { control: 'select', options: ['sm', 'md', 'lg'] },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
     disabled: { control: 'boolean' },
-    label:    { control: 'text' },
+    label: { control: 'text' },
     description: { control: 'text' },
-    error:    { control: 'text' },
+    error: { control: 'text' },
   },
   args: {
     modelValue: 'option1',
-    value:      'option1',
-    size:       'md',
-    disabled:   false,
-    label:      '',
+    value: 'option1',
+    size: 'md',
+    disabled: false,
+    label: '',
   },
 }
 export default meta
@@ -249,7 +249,12 @@ export const Default: Story = {
         ...args,
         label: args.label || copy.value.labels.option1,
       }))
-      watch(() => args.modelValue, (val) => { value.value = val })
+      watch(
+        () => args.modelValue,
+        (val) => {
+          value.value = val
+        }
+      )
       return { resolvedArgs, value }
     },
     template: '<Radio v-bind="resolvedArgs" v-model="value" />',
@@ -358,9 +363,21 @@ export const RadioGroup: Story = {
       const copy = useCopy()
       const selected = ref('standard')
       const options = computed(() => [
-        { value: 'standard',  label: copy.value.labels.standardShippingOption,  description: copy.value.labels.freeDelivery5To7 },
-        { value: 'express',   label: copy.value.labels.expressShipping,   description: copy.value.labels.price9_99 },
-        { value: 'overnight', label: copy.value.labels.overnightShipping, description: copy.value.labels.price19_99 },
+        {
+          value: 'standard',
+          label: copy.value.labels.standardShippingOption,
+          description: copy.value.labels.freeDelivery5To7,
+        },
+        {
+          value: 'express',
+          label: copy.value.labels.expressShipping,
+          description: copy.value.labels.price9_99,
+        },
+        {
+          value: 'overnight',
+          label: copy.value.labels.overnightShipping,
+          description: copy.value.labels.price19_99,
+        },
       ])
       return { copy, selected, options }
     },
@@ -391,9 +408,21 @@ export const PaymentMethod: Story = {
       const copy = useCopy()
       const method = ref('card')
       const opts = computed(() => [
-        { value: 'card',   label: copy.value.labels.creditDebitCard, description: copy.value.labels.visaMastercardAmex },
-        { value: 'bank',   label: copy.value.labels.bankTransfer,    description: copy.value.labels.manualTransfer },
-        { value: 'wallet', label: copy.value.labels.digitalWallet,   description: copy.value.labels.walletOptions },
+        {
+          value: 'card',
+          label: copy.value.labels.creditDebitCard,
+          description: copy.value.labels.visaMastercardAmex,
+        },
+        {
+          value: 'bank',
+          label: copy.value.labels.bankTransfer,
+          description: copy.value.labels.manualTransfer,
+        },
+        {
+          value: 'wallet',
+          label: copy.value.labels.digitalWallet,
+          description: copy.value.labels.walletOptions,
+        },
       ])
       return { copy, method, opts }
     },

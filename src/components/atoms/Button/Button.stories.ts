@@ -1,9 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { computed, ref } from 'vue'
-import {
-  RiAddLine, RiArrowRightLine, RiDeleteBinLine,
-  RiDownloadLine
-} from '@remixicon/vue'
+import { RiAddLine, RiArrowRightLine, RiDeleteBinLine, RiDownloadLine } from '@remixicon/vue'
 import Button from './Button.vue'
 import { getI18nLocale, resolveLocale, type SupportedLocale } from '@/i18n'
 
@@ -12,7 +9,10 @@ type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 type Copy = {
   defaultLabel: string
-  variantLabels: Record<'default' | 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'link', string>
+  variantLabels: Record<
+    'default' | 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'link',
+    string
+  >
   sizeLabels: Record<Size, string>
   downloadAria: Record<Size, string>
   storyNames: {
@@ -218,7 +218,10 @@ const meta: Meta<typeof Button> = {
   tags: ['autodocs'],
   parameters: { layout: 'centered', icon: 'button' },
   argTypes: {
-    variant: { control: 'select', options: ['default', 'primary', 'secondary', 'outline', 'ghost', 'danger', 'link'] },
+    variant: {
+      control: 'select',
+      options: ['default', 'primary', 'secondary', 'outline', 'ghost', 'danger', 'link'],
+    },
     size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
     disabled: { control: 'boolean' },
     loading: { control: 'boolean' },
@@ -255,7 +258,10 @@ export const AllVariants: Story = {
   },
   render: () => ({
     components: { Button },
-    setup: () => ({ copy: useCopy(), variants: ['default', 'primary', 'secondary', 'outline', 'ghost', 'danger', 'link'] as const }),
+    setup: () => ({
+      copy: useCopy(),
+      variants: ['default', 'primary', 'secondary', 'outline', 'ghost', 'danger', 'link'] as const,
+    }),
     template: `
       <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
         <Button v-for="variant in variants" :key="variant" :variant="variant">{{ copy.variantLabels[variant] }}</Button>
@@ -359,7 +365,7 @@ export const Loading: Story = {
       const loading = ref(false)
       async function handleClick() {
         loading.value = true
-        await new Promise(r => setTimeout(r, 2000))
+        await new Promise((r) => setTimeout(r, 2000))
         loading.value = false
       }
       return { copy, loading, handleClick }

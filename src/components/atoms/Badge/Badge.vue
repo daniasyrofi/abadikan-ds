@@ -3,24 +3,24 @@ import { computed } from 'vue'
 import { cn } from '@/lib/utils'
 import { RiCloseLine } from '@remixicon/vue'
 
-type Variant    = 'neutral' | 'primary' | 'danger' | 'success' | 'warning' | 'info' | 'secondary'
-type Size       = 'sm' | 'md' | 'lg'
+type Variant = 'neutral' | 'primary' | 'danger' | 'success' | 'warning' | 'info' | 'secondary'
+type Size = 'sm' | 'md' | 'lg'
 type BadgeStyle = 'subtle' | 'solid' | 'outline'
 
 interface Props {
-  variant?:    Variant
-  size?:       Size
+  variant?: Variant
+  size?: Size
   badgeStyle?: BadgeStyle
-  dot?:        boolean
-  removable?:  boolean
+  dot?: boolean
+  removable?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  variant:    'neutral',
-  size:       'md',
+  variant: 'neutral',
+  size: 'md',
   badgeStyle: 'subtle',
-  dot:        false,
-  removable:  false,
+  dot: false,
+  removable: false,
 })
 
 const emit = defineEmits<{ remove: [] }>()
@@ -29,13 +29,37 @@ const emit = defineEmits<{ remove: [] }>()
 type ColorTokens = { bg: string; light: string; text: string }
 
 const colorMap: Record<Variant, ColorTokens> = {
-  neutral:   { bg: 'var(--color-neutral)',   light: 'var(--color-neutral-light)',   text: 'var(--color-neutral)' },
-  primary:   { bg: 'var(--color-primary)', light: 'var(--color-primary-light)', text: 'var(--color-primary)' },
-  danger:    { bg: 'var(--color-danger)',     light: 'var(--color-danger-light)',    text: 'var(--color-danger)' },
-  success:   { bg: 'var(--color-success)',    light: 'var(--color-success-light)',   text: 'var(--color-success)' },
-  warning:   { bg: 'var(--color-warning)',    light: 'var(--color-warning-light)',   text: 'var(--color-warning)' },
-  info:      { bg: 'var(--color-info)',       light: 'var(--color-info-light)',      text: 'var(--color-info)' },
-  secondary: { bg: 'var(--color-secondary)',  light: 'var(--color-secondary-light)', text: 'var(--color-secondary)' },
+  neutral: {
+    bg: 'var(--color-neutral)',
+    light: 'var(--color-neutral-light)',
+    text: 'var(--color-neutral)',
+  },
+  primary: {
+    bg: 'var(--color-primary)',
+    light: 'var(--color-primary-light)',
+    text: 'var(--color-primary)',
+  },
+  danger: {
+    bg: 'var(--color-danger)',
+    light: 'var(--color-danger-light)',
+    text: 'var(--color-danger)',
+  },
+  success: {
+    bg: 'var(--color-success)',
+    light: 'var(--color-success-light)',
+    text: 'var(--color-success)',
+  },
+  warning: {
+    bg: 'var(--color-warning)',
+    light: 'var(--color-warning-light)',
+    text: 'var(--color-warning)',
+  },
+  info: { bg: 'var(--color-info)', light: 'var(--color-info-light)', text: 'var(--color-info)' },
+  secondary: {
+    bg: 'var(--color-secondary)',
+    light: 'var(--color-secondary-light)',
+    text: 'var(--color-secondary)',
+  },
 }
 
 // ── Computed inline styles based on variant + badgeStyle ────────────────────
@@ -50,21 +74,23 @@ const badgeInlineStyle = computed(() => {
     case 'subtle':
       return {
         backgroundColor: `var(--badge-bg, ${tokens.light})`,
-        color:           `var(--badge-text, ${tokens.text})`,
+        color: `var(--badge-text, ${tokens.text})`,
       }
     case 'solid':
       return {
         backgroundColor: `var(--badge-bg, ${tokens.bg})`,
-        color:           `var(--badge-text, var(--color-text-inverse))`,
+        color: `var(--badge-text, var(--color-text-inverse))`,
       }
     case 'outline':
       return {
         backgroundColor: 'transparent',
-        color:           `var(--badge-text, ${tokens.text})`,
-        borderWidth:     '1px',
-        borderStyle:     'solid',
-        borderColor:     `var(--badge-border, ${tokens.bg})`,
+        color: `var(--badge-text, ${tokens.text})`,
+        borderWidth: '1px',
+        borderStyle: 'solid',
+        borderColor: `var(--badge-border, ${tokens.bg})`,
       }
+    default:
+      return {}
   }
 })
 
@@ -94,7 +120,7 @@ const removeButtonSizeClass: Record<Size, string> = {
 const classes = computed(() =>
   cn(
     'inline-flex items-center font-medium select-none overflow-hidden max-w-full',
-    sizeClasses[props.size],
+    sizeClasses[props.size]
   )
 )
 </script>
@@ -116,10 +142,12 @@ const classes = computed(() =>
     <button
       v-if="removable"
       type="button"
-      :class="cn(
-        'shrink-0 -mr-0.5 flex items-center justify-center rounded-sm opacity-60 hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-1 transition-opacity duration-150 cursor-pointer',
-        removeButtonSizeClass[size],
-      )"
+      :class="
+        cn(
+          'shrink-0 -mr-0.5 flex items-center justify-center rounded-sm opacity-60 hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-1 transition-opacity duration-150 cursor-pointer',
+          removeButtonSizeClass[size]
+        )
+      "
       aria-label="Remove"
       @click.stop="emit('remove')"
     >

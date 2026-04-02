@@ -22,18 +22,27 @@ type Copy = {
     tabs: Record<'tab1' | 'tab2' | 'tab3' | 'tab4', string>
     panels: Record<'tab1' | 'tab2' | 'tab3', string>
   }
-  variants: Record<'line' | 'pill' | 'boxed', {
-    label: string
-    tabs: Record<'a' | 'b' | 'c', string>
-    panels: Record<'a' | 'b' | 'c', string>
-  }>
-  sizes: Record<'sm' | 'md' | 'lg', {
-    label: string
-    tabs: Record<'a' | 'b' | 'c', string>
-  }>
+  variants: Record<
+    'line' | 'pill' | 'boxed',
+    {
+      label: string
+      tabs: Record<'a' | 'b' | 'c', string>
+      panels: Record<'a' | 'b' | 'c', string>
+    }
+  >
+  sizes: Record<
+    'sm' | 'md' | 'lg',
+    {
+      label: string
+      tabs: Record<'a' | 'b' | 'c', string>
+    }
+  >
   vertical: {
     tabs: Record<'profile' | 'notifications' | 'security' | 'billing', string>
-    panels: Record<'profile' | 'notifications' | 'security' | 'billing', { title: string; body: string }>
+    panels: Record<
+      'profile' | 'notifications' | 'security' | 'billing',
+      { title: string; body: string }
+    >
   }
   withIcons: {
     tabs: Record<'home' | 'profile' | 'notifications' | 'settings', string>
@@ -98,9 +107,18 @@ const copyMap: Record<Locale, Copy> = {
         billing: 'Billing',
       },
       panels: {
-        profile: { title: 'Profile Settings', body: 'Manage your profile information and preferences.' },
-        notifications: { title: 'Notifications', body: 'Configure how and when you receive notifications.' },
-        security: { title: 'Security', body: 'Manage passwords, two-factor authentication, and sessions.' },
+        profile: {
+          title: 'Profile Settings',
+          body: 'Manage your profile information and preferences.',
+        },
+        notifications: {
+          title: 'Notifications',
+          body: 'Configure how and when you receive notifications.',
+        },
+        security: {
+          title: 'Security',
+          body: 'Manage passwords, two-factor authentication, and sessions.',
+        },
         billing: { title: 'Billing', body: 'View invoices and manage your payment methods.' },
       },
     },
@@ -184,9 +202,18 @@ const copyMap: Record<Locale, Copy> = {
         billing: 'Penagihan',
       },
       panels: {
-        profile: { title: 'Pengaturan Profil', body: 'Kelola informasi dan preferensi profil Anda.' },
-        notifications: { title: 'Notifikasi', body: 'Atur bagaimana dan kapan Anda menerima notifikasi.' },
-        security: { title: 'Keamanan', body: 'Kelola kata sandi, autentikasi dua faktor, dan sesi.' },
+        profile: {
+          title: 'Pengaturan Profil',
+          body: 'Kelola informasi dan preferensi profil Anda.',
+        },
+        notifications: {
+          title: 'Notifikasi',
+          body: 'Atur bagaimana dan kapan Anda menerima notifikasi.',
+        },
+        security: {
+          title: 'Keamanan',
+          body: 'Kelola kata sandi, autentikasi dua faktor, dan sesi.',
+        },
         billing: { title: 'Penagihan', body: 'Lihat tagihan dan kelola metode pembayaran Anda.' },
       },
     },
@@ -335,15 +362,15 @@ const meta: Meta<typeof Tabs> = {
   decorators: [canvas],
   parameters: { layout: 'fullscreen' },
   argTypes: {
-    variant:     { control: 'select', options: ['line', 'pill', 'boxed'] },
+    variant: { control: 'select', options: ['line', 'pill', 'boxed'] },
     orientation: { control: 'select', options: ['horizontal', 'vertical'] },
-    size:        { control: 'select', options: ['sm', 'md', 'lg'] },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
   },
   args: {
-    modelValue:  'tab1',
-    variant:     'line',
+    modelValue: 'tab1',
+    variant: 'line',
     orientation: 'horizontal',
-    size:        'md',
+    size: 'md',
   },
 }
 export default meta
@@ -490,7 +517,16 @@ export const WithIcons: Story = {
     return getStoryName('withIcons')
   },
   render: () => ({
-    components: { Tabs, TabsList, TabsTrigger, TabsContent, RiHomeLine, RiUserLine, RiSettings4Line, RiBellLine },
+    components: {
+      Tabs,
+      TabsList,
+      TabsTrigger,
+      TabsContent,
+      RiHomeLine,
+      RiUserLine,
+      RiSettings4Line,
+      RiBellLine,
+    },
     setup() {
       const active = ref('home')
       return { active, copy: useCopy() }

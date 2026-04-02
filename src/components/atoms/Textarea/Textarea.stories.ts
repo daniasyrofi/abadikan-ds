@@ -158,7 +158,8 @@ const copyMap: Record<Locale, Copy> = {
       largeTextarea: 'Textarea besar',
       description: 'Deskripsi',
       describeProject: 'Jelaskan proyek Anda...',
-      beDetailed: 'Sebisa mungkin jelaskan secara detail. Ini akan ditampilkan kepada semua kolaborator.',
+      beDetailed:
+        'Sebisa mungkin jelaskan secara detail. Ini akan ditampilkan kepada semua kolaborator.',
       bio: 'Bio',
       tweet: 'Tweet',
       tellUsAboutYourself: 'Ceritakan tentang diri Anda...',
@@ -247,30 +248,28 @@ const meta: Meta<typeof Textarea> = {
   tags: ['autodocs'],
   parameters: { layout: 'centered', icon: 'docList' },
   argTypes: {
-    modelValue:  { control: 'text' },
-    size:        { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
-    label:       { control: 'text' },
+    modelValue: { control: 'text' },
+    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    label: { control: 'text' },
     placeholder: { control: 'text' },
-    helperText:  { control: 'text' },
-    error:       { control: 'text' },
-    disabled:    { control: 'boolean' },
-    readonly:    { control: 'boolean' },
-    autoResize:  { control: 'boolean' },
-    counter:     { control: 'boolean' },
-    rows:        { control: 'number' },
-    maxlength:   { control: 'number' },
+    helperText: { control: 'text' },
+    error: { control: 'text' },
+    disabled: { control: 'boolean' },
+    readonly: { control: 'boolean' },
+    autoResize: { control: 'boolean' },
+    counter: { control: 'boolean' },
+    rows: { control: 'number' },
+    maxlength: { control: 'number' },
   },
   args: {
-    modelValue:  '',
-    size:        'md',
-    autoResize:  true,
-    disabled:    false,
-    readonly:    false,
-    counter:     false,
+    modelValue: '',
+    size: 'md',
+    autoResize: true,
+    disabled: false,
+    readonly: false,
+    counter: false,
   },
-  decorators: [
-    () => ({ template: '<div style="width:360px;"><story /></div>' }),
-  ],
+  decorators: [() => ({ template: '<div style="width:360px;"><story /></div>' })],
 }
 export default meta
 type Story = StoryObj<typeof Textarea>
@@ -286,7 +285,8 @@ export const Default: Story = {
       const val = ref(args.modelValue ?? '')
       return { args, copy, val }
     },
-    template: '<Textarea v-bind="args" v-model="val" :label="copy.labels.message" :placeholder="copy.labels.writeMessage" />',
+    template:
+      '<Textarea v-bind="args" v-model="val" :label="copy.labels.message" :placeholder="copy.labels.writeMessage" />',
   }),
 }
 
@@ -304,12 +304,16 @@ export const States: Story = {
       const disabled = ref('')
       const readonly = ref('')
 
-      watch(copy, (current) => {
-        filled.value = current.labels.filledContent
-        error.value = current.labels.errorValue
-        disabled.value = current.labels.disabledValue
-        readonly.value = current.labels.filledContentReadonly
-      }, { immediate: true })
+      watch(
+        copy,
+        (current) => {
+          filled.value = current.labels.filledContent
+          error.value = current.labels.errorValue
+          disabled.value = current.labels.disabledValue
+          readonly.value = current.labels.filledContentReadonly
+        },
+        { immediate: true }
+      )
 
       return { copy, normal, filled, error, disabled, readonly }
     },
@@ -333,7 +337,9 @@ export const AllSizes: Story = {
     components: { Textarea },
     setup: () => ({
       copy: useCopy(),
-      sm: ref(''), md: ref(''), lg: ref(''),
+      sm: ref(''),
+      md: ref(''),
+      lg: ref(''),
     }),
     template: `
       <div style="display:flex;flex-direction:column;gap:16px;">
@@ -427,16 +433,14 @@ export const FormExample: Story = {
   get name() {
     return getStoryName('feedbackForm')
   },
-  decorators: [
-    () => ({ template: '<div style="width:380px;"><story /></div>' }),
-  ],
+  decorators: [() => ({ template: '<div style="width:380px;"><story /></div>' })],
   render: () => ({
     components: { Textarea },
     setup() {
       const copy = useCopy()
       const subject = ref('')
-      const body    = ref('')
-      const steps   = ref('')
+      const body = ref('')
+      const steps = ref('')
       return { copy, subject, body, steps }
     },
     template: `

@@ -3,17 +3,17 @@ import { ref, computed, useId } from 'vue'
 
 interface Props {
   /** Controlled open state. Use with v-model. */
-  modelValue?:  boolean
+  modelValue?: boolean
   /** Initial open state when uncontrolled. @default false */
   defaultOpen?: boolean
   /** Prevents toggling. @default false */
-  disabled?:    boolean
+  disabled?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  modelValue:  undefined,
+  modelValue: undefined,
   defaultOpen: false,
-  disabled:    false,
+  disabled: false,
 })
 
 const emit = defineEmits<{
@@ -24,7 +24,7 @@ const contentId = useId()
 const internalOpen = ref(props.defaultOpen)
 
 const isOpen = computed({
-  get: () => props.modelValue !== undefined ? props.modelValue : internalOpen.value,
+  get: () => (props.modelValue !== undefined ? props.modelValue : internalOpen.value),
   set: (val: boolean) => {
     internalOpen.value = val
     emit('update:modelValue', val)
@@ -55,11 +55,7 @@ function toggle() {
       leave-from-class="opacity-100 max-h-[9999px]"
       leave-to-class="opacity-0 max-h-0"
     >
-      <div
-        v-show="isOpen"
-        :id="contentId"
-        role="region"
-      >
+      <div v-show="isOpen" :id="contentId" role="region">
         <slot :open="isOpen" />
       </div>
     </Transition>

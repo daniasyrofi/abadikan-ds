@@ -15,9 +15,9 @@ const canvas = () => ({
 })
 
 const meta: Meta<typeof Tag> = {
-  title:      'Molecules/Tag',
-  component:  Tag,
-  tags:       ['autodocs'],
+  title: 'Molecules/Tag',
+  component: Tag,
+  tags: ['autodocs'],
   decorators: [canvas],
   parameters: { layout: 'fullscreen' },
 }
@@ -89,7 +89,7 @@ export const Clickable: Story = {
       const selected = ref<string[]>([])
       const toggle = (v: string) => {
         selected.value = selected.value.includes(v)
-          ? selected.value.filter(s => s !== v)
+          ? selected.value.filter((s) => s !== v)
           : [...selected.value, v]
       }
       return { selected, toggle }

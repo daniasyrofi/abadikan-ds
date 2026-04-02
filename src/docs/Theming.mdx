@@ -9,11 +9,11 @@ the library without touching any component code.
 
 ## Token tiers
 
-| Tier | Example | Purpose |
-|------|---------|---------|
-| **Primitive** | `--blue-500: oklch(0.55 0.18 250)` | Raw palette values |
-| **Semantic** | `--color-primary: var(--blue-500)` | Intent-based aliases |
-| **Component** | `--btn-bg: var(--color-primary)` | Per-component overrides |
+| Tier          | Example                            | Purpose                 |
+| ------------- | ---------------------------------- | ----------------------- |
+| **Primitive** | `--blue-500: oklch(0.55 0.18 250)` | Raw palette values      |
+| **Semantic**  | `--color-primary: var(--blue-500)` | Intent-based aliases    |
+| **Component** | `--btn-bg: var(--color-primary)`   | Per-component overrides |
 
 Override at any tier in your own CSS — changes cascade downward automatically.
 
@@ -23,10 +23,10 @@ The simplest way to re-brand is to override semantic tokens in your global style
 
 ```css
 :root {
-  --color-primary:       oklch(0.55 0.22 160);  /* green */
-  --color-primary-hover: oklch(0.50 0.22 160);
+  --color-primary: oklch(0.55 0.22 160); /* green */
+  --color-primary-hover: oklch(0.5 0.22 160);
   --color-primary-light: oklch(0.93 0.08 160);
-  --radius-md: 0.75rem;                          /* rounder corners */
+  --radius-md: 0.75rem; /* rounder corners */
 }
 ```
 
@@ -39,11 +39,11 @@ import { createTheme, applyTheme } from '@abadikan/ds'
 
 // createTheme returns a flat Record<string, string> of CSS vars
 const greenTheme = createTheme({
-  primary:      'oklch(0.55 0.22 160)',
+  primary: 'oklch(0.55 0.22 160)',
   primaryHover: 'oklch(0.50 0.22 160)',
   primaryLight: 'oklch(0.93 0.08 160)',
-  radiusScale:  'soft',
-  fontUi:       '"DM Sans", sans-serif',
+  radiusScale: 'soft',
+  fontUi: '"DM Sans", sans-serif',
 })
 
 // applyTheme injects vars onto a target element (default: document.documentElement)
@@ -65,13 +65,13 @@ applyTheme({ primary: 'oklch(0.55 0.20 30)' }, el)
 
 ### `radiusScale` values
 
-| Value | Effect |
-|-------|--------|
-| `sharp` | `--radius-md: 0.125rem` |
-| `default` | `--radius-md: 0.375rem` *(library default)* |
-| `soft` | `--radius-md: 0.75rem` |
-| `round` | `--radius-md: 1rem` |
-| `pill` | `--radius-md: 9999px` |
+| Value     | Effect                                      |
+| --------- | ------------------------------------------- |
+| `sharp`   | `--radius-md: 0.125rem`                     |
+| `default` | `--radius-md: 0.375rem` _(library default)_ |
+| `soft`    | `--radius-md: 0.75rem`                      |
+| `round`   | `--radius-md: 1rem`                         |
+| `pill`    | `--radius-md: 9999px`                       |
 
 ## Motion tokens
 
@@ -81,8 +81,8 @@ Reduce animation by overriding duration tokens:
 /* Respect prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
   :root {
-    --duration-enter:  0ms;
-    --duration-exit:   0ms;
+    --duration-enter: 0ms;
+    --duration-exit: 0ms;
     --duration-expand: 0ms;
   }
 }
@@ -98,7 +98,7 @@ Shadows are aliased through elevation tokens so you can swap shadow styles globa
 ```css
 :root {
   --elevation-1: 0 1px 3px rgb(0 0 0 / 0.08), 0 1px 2px rgb(0 0 0 / 0.04);
-  --elevation-2: 0 4px 8px rgb(0 0 0 / 0.10), 0 2px 4px rgb(0 0 0 / 0.06);
+  --elevation-2: 0 4px 8px rgb(0 0 0 / 0.1), 0 2px 4px rgb(0 0 0 / 0.06);
 }
 ```
 

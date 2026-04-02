@@ -29,7 +29,10 @@ type Copy = {
     body: string
     showAgain: string
   }
-  dismissibleAllVariants: Record<'info' | 'success' | 'warning' | 'danger', { title: string; body: string }>
+  dismissibleAllVariants: Record<
+    'info' | 'success' | 'warning' | 'danger',
+    { title: string; body: string }
+  >
   dismissibleAllReset: string
   withoutTitle: Record<'info' | 'success' | 'warning' | 'danger', string>
   withoutIcon: Record<'info' | 'danger', { title: string; body: string }>
@@ -64,7 +67,10 @@ const copyMap: Record<Locale, Copy> = {
     allVariants: {
       info: { title: 'System update available', desc: 'A new version is ready to install.' },
       success: { title: 'Payment successful', desc: 'Your invoice has been paid.' },
-      warning: { title: 'Storage almost full', desc: 'You have used most of your available space.' },
+      warning: {
+        title: 'Storage almost full',
+        desc: 'You have used most of your available space.',
+      },
       danger: { title: 'Failed to save changes', desc: 'Your changes could not be saved.' },
     },
     allSizes: [
@@ -80,8 +86,14 @@ const copyMap: Record<Locale, Copy> = {
     dismissibleAllVariants: {
       info: { title: 'Update available', body: 'Version 2.4.1 is ready to install.' },
       success: { title: 'Profile saved', body: 'Your changes have been published successfully.' },
-      warning: { title: 'Low disk space', body: 'Only 500 MB remaining. Free up space to continue.' },
-      danger: { title: 'Connection error', body: 'Failed to sync data. Check your network connection.' },
+      warning: {
+        title: 'Low disk space',
+        body: 'Only 500 MB remaining. Free up space to continue.',
+      },
+      danger: {
+        title: 'Connection error',
+        body: 'Failed to sync data. Check your network connection.',
+      },
     },
     dismissibleAllReset: 'Reset all',
     withoutTitle: {
@@ -91,17 +103,37 @@ const copyMap: Record<Locale, Copy> = {
       danger: 'Invalid credentials. Please try again.',
     },
     withoutIcon: {
-      info: { title: 'Maintenance window', body: 'Scheduled maintenance on Sunday 02:00-04:00 UTC.' },
-      danger: { title: 'Account suspended', body: 'Your account has been suspended due to a policy violation.' },
+      info: {
+        title: 'Maintenance window',
+        body: 'Scheduled maintenance on Sunday 02:00-04:00 UTC.',
+      },
+      danger: {
+        title: 'Account suspended',
+        body: 'Your account has been suspended due to a policy violation.',
+      },
     },
     withCustomIcon: {
       title: 'Identity verified',
       body: 'Your identity has been verified. You now have full account access.',
     },
     withAction: {
-      warning: { title: 'Free trial expires in 2 days', body: 'Upgrade your plan to keep access to all features after the trial ends.', dismiss: 'Dismiss', upgrade: 'Upgrade now' },
-      danger: { title: 'Email not verified', body: 'Please verify your email address to unlock all account features.', skip: 'Skip for now', send: 'Send email' },
-      info: { title: 'New features available', body: 'We have shipped improvements to the dashboard, reporting, and exports.', view: 'View changelog' },
+      warning: {
+        title: 'Free trial expires in 2 days',
+        body: 'Upgrade your plan to keep access to all features after the trial ends.',
+        dismiss: 'Dismiss',
+        upgrade: 'Upgrade now',
+      },
+      danger: {
+        title: 'Email not verified',
+        body: 'Please verify your email address to unlock all account features.',
+        skip: 'Skip for now',
+        send: 'Send email',
+      },
+      info: {
+        title: 'New features available',
+        body: 'We have shipped improvements to the dashboard, reporting, and exports.',
+        view: 'View changelog',
+      },
     },
   },
   id: {
@@ -123,13 +155,28 @@ const copyMap: Record<Locale, Copy> = {
     allVariants: {
       info: { title: 'Pembaruan sistem tersedia', desc: 'Versi baru siap dipasang.' },
       success: { title: 'Pembayaran berhasil', desc: 'Tagihan Anda telah dibayar.' },
-      warning: { title: 'Penyimpanan hampir penuh', desc: 'Anda telah menggunakan sebagian besar ruang yang tersedia.' },
+      warning: {
+        title: 'Penyimpanan hampir penuh',
+        desc: 'Anda telah menggunakan sebagian besar ruang yang tersedia.',
+      },
       danger: { title: 'Gagal menyimpan perubahan', desc: 'Perubahan Anda tidak dapat disimpan.' },
     },
     allSizes: [
-      { key: 'sm', label: 'Kecil', body: 'Alert ringkas untuk ruang sempit atau umpan balik inline.' },
-      { key: 'md', label: 'Sedang', body: 'Ukuran default - seimbang untuk panel dan konten halaman.' },
-      { key: 'lg', label: 'Besar', body: 'Alert menonjol untuk pesan penting atau tingkat halaman.' },
+      {
+        key: 'sm',
+        label: 'Kecil',
+        body: 'Alert ringkas untuk ruang sempit atau umpan balik inline.',
+      },
+      {
+        key: 'md',
+        label: 'Sedang',
+        body: 'Ukuran default - seimbang untuk panel dan konten halaman.',
+      },
+      {
+        key: 'lg',
+        label: 'Besar',
+        body: 'Alert menonjol untuk pesan penting atau tingkat halaman.',
+      },
     ],
     dismissible: {
       title: 'Perubahan belum disimpan',
@@ -139,8 +186,14 @@ const copyMap: Record<Locale, Copy> = {
     dismissibleAllVariants: {
       info: { title: 'Pembaruan tersedia', body: 'Versi 2.4.1 siap dipasang.' },
       success: { title: 'Profil tersimpan', body: 'Perubahan Anda berhasil dipublikasikan.' },
-      warning: { title: 'Ruang disk rendah', body: 'Tersisa 500 MB. Bebaskan ruang untuk melanjutkan.' },
-      danger: { title: 'Kesalahan koneksi', body: 'Gagal menyinkronkan data. Periksa koneksi jaringan Anda.' },
+      warning: {
+        title: 'Ruang disk rendah',
+        body: 'Tersisa 500 MB. Bebaskan ruang untuk melanjutkan.',
+      },
+      danger: {
+        title: 'Kesalahan koneksi',
+        body: 'Gagal menyinkronkan data. Periksa koneksi jaringan Anda.',
+      },
     },
     dismissibleAllReset: 'Atur ulang semua',
     withoutTitle: {
@@ -150,17 +203,37 @@ const copyMap: Record<Locale, Copy> = {
       danger: 'Kredensial tidak valid. Silakan coba lagi.',
     },
     withoutIcon: {
-      info: { title: 'Jadwal pemeliharaan', body: 'Pemeliharaan terjadwal pada Minggu 02:00-04:00 UTC.' },
-      danger: { title: 'Akun ditangguhkan', body: 'Akun Anda telah ditangguhkan karena pelanggaran kebijakan.' },
+      info: {
+        title: 'Jadwal pemeliharaan',
+        body: 'Pemeliharaan terjadwal pada Minggu 02:00-04:00 UTC.',
+      },
+      danger: {
+        title: 'Akun ditangguhkan',
+        body: 'Akun Anda telah ditangguhkan karena pelanggaran kebijakan.',
+      },
     },
     withCustomIcon: {
       title: 'Identitas terverifikasi',
       body: 'Identitas Anda telah diverifikasi. Anda kini memiliki akses penuh ke akun.',
     },
     withAction: {
-      warning: { title: 'Uji coba gratis berakhir dalam 2 hari', body: 'Tingkatkan paket Anda agar tetap bisa mengakses semua fitur setelah masa uji coba berakhir.', dismiss: 'Tutup', upgrade: 'Tingkatkan sekarang' },
-      danger: { title: 'Email belum diverifikasi', body: 'Silakan verifikasi alamat email Anda untuk membuka semua fitur akun.', skip: 'Lewati dulu', send: 'Kirim email' },
-      info: { title: 'Fitur baru tersedia', body: 'Kami telah menghadirkan peningkatan pada dasbor, pelaporan, dan ekspor.', view: 'Lihat changelog' },
+      warning: {
+        title: 'Uji coba gratis berakhir dalam 2 hari',
+        body: 'Tingkatkan paket Anda agar tetap bisa mengakses semua fitur setelah masa uji coba berakhir.',
+        dismiss: 'Tutup',
+        upgrade: 'Tingkatkan sekarang',
+      },
+      danger: {
+        title: 'Email belum diverifikasi',
+        body: 'Silakan verifikasi alamat email Anda untuk membuka semua fitur akun.',
+        skip: 'Lewati dulu',
+        send: 'Kirim email',
+      },
+      info: {
+        title: 'Fitur baru tersedia',
+        body: 'Kami telah menghadirkan peningkatan pada dasbor, pelaporan, dan ekspor.',
+        view: 'Lihat changelog',
+      },
     },
   },
   zh: {
@@ -217,9 +290,23 @@ const copyMap: Record<Locale, Copy> = {
       body: '你的身份已验证。你现在拥有完整的账户访问权限。',
     },
     withAction: {
-      warning: { title: '免费试用将于 2 天后到期', body: '升级你的方案以在试用结束后继续使用所有功能。', dismiss: '关闭', upgrade: '立即升级' },
-      danger: { title: '邮箱未验证', body: '请验证你的邮箱地址以解锁全部账户功能。', skip: '暂不处理', send: '发送邮件' },
-      info: { title: '新功能已上线', body: '我们已为仪表盘、报表和导出功能带来改进。', view: '查看更新日志' },
+      warning: {
+        title: '免费试用将于 2 天后到期',
+        body: '升级你的方案以在试用结束后继续使用所有功能。',
+        dismiss: '关闭',
+        upgrade: '立即升级',
+      },
+      danger: {
+        title: '邮箱未验证',
+        body: '请验证你的邮箱地址以解锁全部账户功能。',
+        skip: '暂不处理',
+        send: '发送邮件',
+      },
+      info: {
+        title: '新功能已上线',
+        body: '我们已为仪表盘、报表和导出功能带来改进。',
+        view: '查看更新日志',
+      },
     },
   },
 }
@@ -253,17 +340,17 @@ const meta: Meta<typeof Alert> = {
   decorators: [canvas],
   parameters: { layout: 'fullscreen' },
   argTypes: {
-    variant:     { control: 'select', options: ['info', 'success', 'warning', 'danger'] },
-    size:        { control: 'select', options: ['sm', 'md', 'lg'] },
-    title:       { control: 'text' },
-    icon:        { control: 'boolean' },
+    variant: { control: 'select', options: ['info', 'success', 'warning', 'danger'] },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    title: { control: 'text' },
+    icon: { control: 'boolean' },
     dismissible: { control: 'boolean' },
   },
   args: {
-    variant:     'info',
-    size:        'md',
-    title:       'Informational alert',
-    icon:        true,
+    variant: 'info',
+    size: 'md',
+    title: 'Informational alert',
+    icon: true,
     dismissible: false,
   },
 }
@@ -273,9 +360,12 @@ type Story = StoryObj<typeof Alert>
 const W = 'width:440px;max-width:100%;display:flex;flex-direction:column;gap:10px;'
 
 // Inline text-link style (no solid buttons — matches macOS notification)
-const lP = 'background:none;border:none;padding:0;cursor:pointer;font-size:13px;font-weight:600;color:var(--color-text-primary);letter-spacing:-0.01em;'
-const lM = 'background:none;border:none;padding:0;cursor:pointer;font-size:13px;font-weight:400;color:var(--color-text-tertiary);letter-spacing:-0.01em;'
-const lD = 'background:color-mix(in oklab, var(--color-danger) 10%, transparent);border:1px solid color-mix(in oklab, var(--color-danger) 35%, transparent);padding:4px 10px;border-radius:999px;cursor:pointer;font-size:13px;font-weight:600;color:var(--color-danger-hover) !important;letter-spacing:-0.01em;line-height:1.2;'
+const lP =
+  'background:none;border:none;padding:0;cursor:pointer;font-size:13px;font-weight:600;color:var(--color-text-primary);letter-spacing:-0.01em;'
+const lM =
+  'background:none;border:none;padding:0;cursor:pointer;font-size:13px;font-weight:400;color:var(--color-text-tertiary);letter-spacing:-0.01em;'
+const lD =
+  'background:color-mix(in oklab, var(--color-danger) 10%, transparent);border:1px solid color-mix(in oklab, var(--color-danger) 35%, transparent);padding:4px 10px;border-radius:999px;cursor:pointer;font-size:13px;font-weight:600;color:var(--color-danger-hover) !important;letter-spacing:-0.01em;line-height:1.2;'
 
 // ── Default ───────────────────────────────────────────────────────────────────
 
@@ -373,7 +463,9 @@ export const DismissibleAllVariants: Story = {
     components: { Alert },
     setup() {
       const visible = ref({ info: true, success: true, warning: true, danger: true })
-      const resetAll = () => { visible.value = { info: true, success: true, warning: true, danger: true } }
+      const resetAll = () => {
+        visible.value = { info: true, success: true, warning: true, danger: true }
+      }
       return { visible, resetAll, copy: useCopy() }
     },
     template: `

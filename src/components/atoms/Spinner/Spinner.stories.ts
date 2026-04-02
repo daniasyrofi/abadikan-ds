@@ -132,7 +132,7 @@ const meta: Meta<typeof Spinner> = {
   tags: ['autodocs'],
   parameters: { layout: 'centered', icon: 'sync' },
   argTypes: {
-    size:  { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
+    size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
     color: { control: 'color' },
     label: { control: 'text' },
   },
@@ -205,7 +205,7 @@ export const InButton: Story = {
       const loading = ref(false)
       async function handleClick() {
         loading.value = true
-        await new Promise(r => setTimeout(r, 2000))
+        await new Promise((r) => setTimeout(r, 2000))
         loading.value = false
       }
       return { copy, loading, handleClick }
@@ -233,7 +233,7 @@ export const LoadingOverlay: Story = {
       const loading = ref(false)
       async function load() {
         loading.value = true
-        await new Promise(r => setTimeout(r, 2500))
+        await new Promise((r) => setTimeout(r, 2500))
         loading.value = false
       }
       return { copy, loading, load }

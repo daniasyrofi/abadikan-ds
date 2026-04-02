@@ -31,13 +31,16 @@ const localeText: Record<Locale, LocaleText> = {
     userName: 'User',
     assistantName: 'Assistant',
     userMessage: 'Hey, can you help me with a Vue component?',
-    assistantMessage: "Of course! I'd be happy to help you with a Vue component. What are you trying to build?",
+    assistantMessage:
+      "Of course! I'd be happy to help you with a Vue component. What are you trying to build?",
     avatarUserMessage: 'Hello! I have a question about design systems.',
-    avatarAssistantMessage: "Hi! I'd be happy to help with your design system question. What would you like to know?",
+    avatarAssistantMessage:
+      "Hi! I'd be happy to help with your design system question. What would you like to know?",
     typingLabel: 'Typing...',
     errorMessage: 'This message failed to send.',
     actionsUserMessage: 'Can you write me a function that sorts an array?',
-    actionsAssistantMessage: "Sure! Here's a simple sort function:\n\nfunction sortArray(arr) {\n  return [...arr].sort((a, b) => a - b);\n}\n\nThis creates a new sorted array without mutating the original.",
+    actionsAssistantMessage:
+      "Sure! Here's a simple sort function:\n\nfunction sortArray(arr) {\n  return [...arr].sort((a, b) => a - b);\n}\n\nThis creates a new sorted array without mutating the original.",
     storyNames: {
       userMessage: 'User Message',
       assistantMessage: 'Assistant Message',
@@ -51,13 +54,16 @@ const localeText: Record<Locale, LocaleText> = {
     userName: 'Pengguna',
     assistantName: 'Asisten',
     userMessage: 'Hei, bisa bantu saya dengan komponen Vue?',
-    assistantMessage: 'Tentu! Saya senang membantu Anda dengan komponen Vue. Apa yang ingin Anda bangun?',
+    assistantMessage:
+      'Tentu! Saya senang membantu Anda dengan komponen Vue. Apa yang ingin Anda bangun?',
     avatarUserMessage: 'Halo! Saya punya pertanyaan tentang design system.',
-    avatarAssistantMessage: 'Hai! Saya senang membantu pertanyaan design system Anda. Apa yang ingin Anda ketahui?',
+    avatarAssistantMessage:
+      'Hai! Saya senang membantu pertanyaan design system Anda. Apa yang ingin Anda ketahui?',
     typingLabel: 'Mengetik...',
     errorMessage: 'Pesan ini gagal dikirim.',
     actionsUserMessage: 'Bisakah kamu menulis fungsi untuk mengurutkan array?',
-    actionsAssistantMessage: 'Tentu! Berikut fungsi pengurutan sederhana:\n\nfunction sortArray(arr) {\n  return [...arr].sort((a, b) => a - b);\n}\n\nIni membuat array baru yang terurut tanpa mengubah array aslinya.',
+    actionsAssistantMessage:
+      'Tentu! Berikut fungsi pengurutan sederhana:\n\nfunction sortArray(arr) {\n  return [...arr].sort((a, b) => a - b);\n}\n\nIni membuat array baru yang terurut tanpa mengubah array aslinya.',
     storyNames: {
       userMessage: 'Pesan Pengguna',
       assistantMessage: 'Pesan Asisten',
@@ -77,7 +83,8 @@ const localeText: Record<Locale, LocaleText> = {
     typingLabel: '正在输入...',
     errorMessage: '此消息发送失败。',
     actionsUserMessage: '你能帮我写一个排序数组的函数吗？',
-    actionsAssistantMessage: '当然！这是一个简单的排序函数：\n\nfunction sortArray(arr) {\n  return [...arr].sort((a, b) => a - b);\n}\n\n这会在不修改原数组的情况下创建一个新的有序数组。',
+    actionsAssistantMessage:
+      '当然！这是一个简单的排序函数：\n\nfunction sortArray(arr) {\n  return [...arr].sort((a, b) => a - b);\n}\n\n这会在不修改原数组的情况下创建一个新的有序数组。',
     storyNames: {
       userMessage: '用户消息',
       assistantMessage: '助手消息',
@@ -91,22 +98,23 @@ const localeText: Record<Locale, LocaleText> = {
 
 const getLocale = (): Locale => resolveLocale(getI18nLocale())
 const useCopy = () => computed(() => localeText[getLocale()])
-const getStoryName = (key: keyof LocaleText['storyNames']) => localeText[getLocale()].storyNames[key]
+const getStoryName = (key: keyof LocaleText['storyNames']) =>
+  localeText[getLocale()].storyNames[key]
 
 const meta: Meta<typeof ChatMessage> = {
   title: 'Organisms/ChatMessage',
   component: ChatMessage,
   tags: ['autodocs'],
   argTypes: {
-    role:     { control: 'select', options: ['user', 'assistant'] },
-    status:   { control: 'select', options: ['sending', 'sent', 'error'] },
+    role: { control: 'select', options: ['user', 'assistant'] },
+    status: { control: 'select', options: ['sending', 'sent', 'error'] },
     isTyping: { control: 'boolean' },
-    actions:  { control: 'boolean' },
+    actions: { control: 'boolean' },
   },
   args: {
-    status:   'sent',
+    status: 'sent',
     isTyping: false,
-    actions:  false,
+    actions: false,
     timestamp: new Date(),
   },
   decorators: [

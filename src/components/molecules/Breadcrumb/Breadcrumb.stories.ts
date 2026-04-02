@@ -111,21 +111,9 @@ const copyMap: Record<Locale, Copy> = {
       { label: '文档', href: '#', icon: RiFolder3Line },
       { label: 'Report.pdf', icon: RiFileLine },
     ],
-    slashItems: [
-      { label: '首页', href: '#' },
-      { label: '设置', href: '#' },
-      { label: '个人资料' },
-    ],
-    dotItems: [
-      { label: '仪表盘', href: '#' },
-      { label: '分析', href: '#' },
-      { label: '概览' },
-    ],
-    sizesItems: [
-      { label: '首页', href: '#' },
-      { label: '分类', href: '#' },
-      { label: '当前页面' },
-    ],
+    slashItems: [{ label: '首页', href: '#' }, { label: '设置', href: '#' }, { label: '个人资料' }],
+    dotItems: [{ label: '仪表盘', href: '#' }, { label: '分析', href: '#' }, { label: '概览' }],
+    sizesItems: [{ label: '首页', href: '#' }, { label: '分类', href: '#' }, { label: '当前页面' }],
   },
 }
 

@@ -3,8 +3,8 @@ import { mount } from '@vue/test-utils'
 import SegmentedControl from './SegmentedControl.vue'
 
 const options = [
-  { label: 'Day',   value: 'day' },
-  { label: 'Week',  value: 'week' },
+  { label: 'Day', value: 'day' },
+  { label: 'Week', value: 'week' },
   { label: 'Month', value: 'month' },
 ]
 
@@ -19,7 +19,7 @@ describe('SegmentedControl', () => {
   it('marks selected option as aria-checked=true', () => {
     const wrapper = mount(SegmentedControl, { props: { modelValue: 'week', options } })
     const buttons = wrapper.findAll('button')
-    const weekBtn = buttons.find(b => b.text() === 'Week')
+    const weekBtn = buttons.find((b) => b.text() === 'Week')
     expect(weekBtn?.attributes('aria-checked')).toBe('true')
   })
 
@@ -31,13 +31,18 @@ describe('SegmentedControl', () => {
   })
 
   it('does not emit when disabled', async () => {
-    const wrapper = mount(SegmentedControl, { props: { modelValue: 'day', options, disabled: true } })
+    const wrapper = mount(SegmentedControl, {
+      props: { modelValue: 'day', options, disabled: true },
+    })
     await wrapper.findAll('button')[1].trigger('click')
     expect(wrapper.emitted('update:modelValue')).toBeFalsy()
   })
 
   it('does not emit for disabled option', async () => {
-    const opts = [{ label: 'A', value: 'a' }, { label: 'B', value: 'b', disabled: true }]
+    const opts = [
+      { label: 'A', value: 'a' },
+      { label: 'B', value: 'b', disabled: true },
+    ]
     const wrapper = mount(SegmentedControl, { props: { modelValue: 'a', options: opts } })
     await wrapper.findAll('button')[1].trigger('click')
     expect(wrapper.emitted('update:modelValue')).toBeFalsy()
@@ -49,7 +54,9 @@ describe('SegmentedControl', () => {
   })
 
   it('applies fullWidth class', () => {
-    const wrapper = mount(SegmentedControl, { props: { modelValue: 'day', options, fullWidth: true } })
+    const wrapper = mount(SegmentedControl, {
+      props: { modelValue: 'day', options, fullWidth: true },
+    })
     expect(wrapper.classes()).toContain('flex')
     expect(wrapper.classes()).toContain('w-full')
   })

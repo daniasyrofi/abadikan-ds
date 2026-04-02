@@ -10,20 +10,20 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   ratio: 16 / 9,
-  as:    'div',
+  as: 'div',
 })
 
 const outerStyle = computed(() => ({
-  position:    'relative' as const,
-  width:       '100%',
-  paddingTop:  `${(1 / props.ratio) * 100}%`,
-  overflow:    'hidden',
+  position: 'relative' as const,
+  width: '100%',
+  paddingTop: `${(1 / props.ratio) * 100}%`,
+  overflow: 'hidden',
 }))
 </script>
 
 <template>
   <component :is="as" :style="outerStyle">
-    <div style="position: absolute; inset: 0; width: 100%; height: 100%;">
+    <div style="position: absolute; inset: 0; width: 100%; height: 100%">
       <slot />
     </div>
   </component>

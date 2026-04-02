@@ -24,20 +24,22 @@ describe('LanguageToggle', () => {
   it('marks active locale as aria-checked=true', () => {
     const wrapper = mount(LanguageToggle, { global: { plugins: [makeI18n('en')] } })
     const buttons = wrapper.findAll('[role="radio"]')
-    const active = buttons.find(b => b.attributes('aria-checked') === 'true')
+    const active = buttons.find((b) => b.attributes('aria-checked') === 'true')
     expect(active?.text().toLowerCase()).toBe('en')
   })
 
   it('marks inactive locales as aria-checked=false', () => {
     const wrapper = mount(LanguageToggle, { global: { plugins: [makeI18n('en')] } })
-    const inactive = wrapper.findAll('[role="radio"]').filter(b => b.attributes('aria-checked') === 'false')
+    const inactive = wrapper
+      .findAll('[role="radio"]')
+      .filter((b) => b.attributes('aria-checked') === 'false')
     expect(inactive.length).toBe(2)
   })
 
   it('updates aria-checked when locale button is clicked', async () => {
     const wrapper = mount(LanguageToggle, { global: { plugins: [makeI18n('en')] } })
     const buttons = wrapper.findAll('[role="radio"]')
-    const idBtn = buttons.find(b => b.text().toLowerCase() === 'id')
+    const idBtn = buttons.find((b) => b.text().toLowerCase() === 'id')
     await idBtn?.trigger('click')
     expect(idBtn?.attributes('aria-checked')).toBe('true')
   })

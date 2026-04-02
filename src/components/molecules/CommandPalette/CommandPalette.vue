@@ -36,10 +36,10 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  modelValue:    false,
-  items:         () => [],
-  placeholder:   'Search commands…',
-  emptyText:     'No results found.',
+  modelValue: false,
+  items: () => [],
+  placeholder: 'Search commands…',
+  emptyText: 'No results found.',
   globalShortcut: true,
 })
 
@@ -51,15 +51,22 @@ const emit = defineEmits<{
 
 // ── State ─────────────────────────────────────────────────────────────────────
 
-const isOpen    = ref(props.modelValue)
-const query     = ref('')
+const isOpen = ref(props.modelValue)
+const query = ref('')
 const activeIdx = ref(0)
-const inputRef  = ref<HTMLInputElement | null>(null)
-const listRef   = ref<HTMLElement | null>(null)
+const inputRef = ref<HTMLInputElement | null>(null)
+const listRef = ref<HTMLElement | null>(null)
 
 // Sync isOpen ↔ modelValue
-watch(() => props.modelValue, (v) => { isOpen.value = v })
-watch(isOpen, (v) => { emit('update:modelValue', v) })
+watch(
+  () => props.modelValue,
+  (v) => {
+    isOpen.value = v
+  }
+)
+watch(isOpen, (v) => {
+  emit('update:modelValue', v)
+})
 
 // ── Filtered + grouped results ────────────────────────────────────────────────
 
@@ -70,7 +77,7 @@ const filteredItems = computed(() => {
     (item) =>
       item.label.toLowerCase().includes(q) ||
       item.description?.toLowerCase().includes(q) ||
-      item.group?.toLowerCase().includes(q),
+      item.group?.toLowerCase().includes(q)
   )
 })
 
@@ -85,22 +92,20 @@ const groups = computed(() => {
 })
 
 // Flat list of only selectable items for keyboard navigation
-const selectableItems = computed(() =>
-  filteredItems.value.filter((i) => !i.disabled),
-)
+const selectableItems = computed(() => filteredItems.value.filter((i) => !i.disabled))
 
 // ── Open / close ──────────────────────────────────────────────────────────────
 
 function open() {
   isOpen.value = true
-  query.value  = ''
+  query.value = ''
   activeIdx.value = 0
   nextTick(() => inputRef.value?.focus())
 }
 
 function close() {
   isOpen.value = false
-  query.value  = ''
+  query.value = ''
 }
 
 function toggle() {
@@ -156,7 +161,9 @@ function scrollActiveIntoView() {
 }
 
 // Reset active index when results change
-watch(filteredItems, () => { activeIdx.value = 0 })
+watch(filteredItems, () => {
+  activeIdx.value = 0
+})
 
 // ── Global shortcut ───────────────────────────────────────────────────────────
 
@@ -282,14 +289,16 @@ function setActive(item: CommandItem) {
                 :aria-disabled="item.disabled || undefined"
                 :data-active="isActive(item)"
                 :disabled="item.disabled || undefined"
-                :class="cn(
-                  'ds-cmd-item w-full flex items-center gap-3 px-2 py-2 text-left text-sm rounded-md',
-                  'transition-colors duration-75',
-                  isActive(item)
-                    ? 'ds-cmd-item--active text-[--color-text-primary]'
-                    : 'text-[--color-text-primary]',
-                  item.disabled && 'opacity-40 cursor-not-allowed',
-                )"
+                :class="
+                  cn(
+                    'ds-cmd-item w-full flex items-center gap-3 px-2 py-2 text-left text-sm rounded-md',
+                    'transition-colors duration-75',
+                    isActive(item)
+                      ? 'ds-cmd-item--active text-[--color-text-primary]'
+                      : 'text-[--color-text-primary]',
+                    item.disabled && 'opacity-40 cursor-not-allowed'
+                  )
+                "
                 @click="selectItem(item)"
                 @mouseenter="setActive(item)"
               >
@@ -326,7 +335,9 @@ function setActive(item: CommandItem) {
           </div>
 
           <!-- Footer hint -->
-          <div class="ds-cmd-footer flex items-center gap-4 px-4 py-2.5 ds-cmd-divider-t text-xs text-[--color-text-secondary] select-none">
+          <div
+            class="ds-cmd-footer flex items-center gap-4 px-4 py-2.5 ds-cmd-divider-t text-xs text-[--color-text-secondary] select-none"
+          >
             <span><kbd class="ds-cmd-kbd px-1 py-0.5 rounded font-mono">↑↓</kbd> Navigate</span>
             <span><kbd class="ds-cmd-kbd px-1 py-0.5 rounded font-mono">↵</kbd> Select</span>
             <span><kbd class="ds-cmd-kbd px-1 py-0.5 rounded font-mono">Esc</kbd> Close</span>
@@ -405,7 +416,9 @@ function setActive(item: CommandItem) {
 /* Panel slide */
 .ds-cmd-fade-enter-active .ds-cmd-panel,
 .ds-cmd-fade-leave-active .ds-cmd-panel {
-  transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1), opacity 150ms ease;
+  transition:
+    transform 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 150ms ease;
 }
 .ds-cmd-fade-enter-from .ds-cmd-panel,
 .ds-cmd-fade-leave-to .ds-cmd-panel {

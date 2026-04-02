@@ -7,12 +7,12 @@ const meta: Meta<typeof PinInput> = {
   component: PinInput,
   tags: ['autodocs'],
   argTypes: {
-    size:    { control: 'select', options: ['sm', 'md', 'lg'] },
-    type:    { control: 'select', options: ['number', 'alphanumeric'] },
-    length:  { control: 'number' },
-    masked:  { control: 'boolean' },
-    error:   { control: 'boolean' },
-    disabled:{ control: 'boolean' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    type: { control: 'select', options: ['number', 'alphanumeric'] },
+    length: { control: 'number' },
+    masked: { control: 'boolean' },
+    error: { control: 'boolean' },
+    disabled: { control: 'boolean' },
   },
 }
 export default meta
@@ -24,7 +24,7 @@ export const Default: Story = {
     components: { PinInput },
     setup: () => {
       const value = ref('')
-      const done  = ref(false)
+      const done = ref(false)
       return { args, value, done }
     },
     template: `

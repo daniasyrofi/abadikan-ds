@@ -140,7 +140,8 @@ const localeText: Record<Locale, LocaleText> = {
 
 const getLocale = (): Locale => resolveLocale(getI18nLocale())
 const useCopy = () => computed(() => localeText[getLocale()])
-const getStoryName = (key: keyof LocaleText['storyNames']) => localeText[getLocale()].storyNames[key]
+const getStoryName = (key: keyof LocaleText['storyNames']) =>
+  localeText[getLocale()].storyNames[key]
 
 const buildArgTypes = (locale: Locale): NonNullable<Meta<typeof ChatInput>['argTypes']> => {
   const copy = localeText[locale]

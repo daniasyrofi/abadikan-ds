@@ -33,14 +33,16 @@ const emit = defineEmits<{
 const textareaRef = ref<HTMLTextAreaElement | null>(null)
 const lineHeight = 24 // approx line height in px
 
-const canSubmit = computed(() => props.modelValue.trim().length > 0 && !props.loading && !props.disabled)
+const canSubmit = computed(
+  () => props.modelValue.trim().length > 0 && !props.loading && !props.disabled
+)
 
 const containerClass = computed(() =>
   cn(
     'ds-chat-input border border-[--color-border]',
     'transition-all duration-[--duration-normal] ease-[--ease-default]',
     'hover:border-[--color-border-strong]',
-    props.disabled && 'opacity-50 pointer-events-none',
+    props.disabled && 'opacity-50 pointer-events-none'
   )
 )
 
@@ -67,9 +69,12 @@ function handleKeydown(event: KeyboardEvent) {
   }
 }
 
-watch(() => props.modelValue, () => {
-  nextTick(resizeTextarea)
-})
+watch(
+  () => props.modelValue,
+  () => {
+    nextTick(resizeTextarea)
+  }
+)
 
 onMounted(() => {
   nextTick(resizeTextarea)
@@ -85,12 +90,14 @@ onMounted(() => {
       :placeholder="placeholder"
       :disabled="disabled"
       rows="1"
-      :class="cn(
-        'block w-full resize-none bg-transparent px-4 pt-3 pb-1',
-        'text-body-sm text-[--color-text-primary] placeholder:text-[--color-text-tertiary]',
-        'outline-none border-none',
-        'scrollbar-thin',
-      )"
+      :class="
+        cn(
+          'block w-full resize-none bg-transparent px-4 pt-3 pb-1',
+          'text-body-sm text-[--color-text-primary] placeholder:text-[--color-text-tertiary]',
+          'outline-none border-none',
+          'scrollbar-thin'
+        )
+      "
       :style="{ maxHeight: `${lineHeight * maxRows}px`, lineHeight: `${lineHeight}px` }"
       @input="handleInput"
       @keydown="handleKeydown"
@@ -109,14 +116,16 @@ onMounted(() => {
           <button
             type="button"
             :disabled="!canSubmit"
-            :class="cn(
-              'ds-chat-send flex items-center justify-center size-8',
-              'transition-all duration-[--duration-fast] ease-[--ease-default]',
-              'cursor-pointer',
-              canSubmit
-                ? 'bg-[--color-primary] text-[--color-text-inverse] hover:bg-[--color-primary-hover] shadow-sm hover:shadow-md active:scale-95'
-                : 'bg-[--color-neutral-subtle] text-[--color-text-tertiary] cursor-not-allowed',
-            )"
+            :class="
+              cn(
+                'ds-chat-send flex items-center justify-center size-8',
+                'transition-all duration-[--duration-fast] ease-[--ease-default]',
+                'cursor-pointer',
+                canSubmit
+                  ? 'bg-[--color-primary] text-[--color-text-inverse] hover:bg-[--color-primary-hover] shadow-sm hover:shadow-md active:scale-95'
+                  : 'bg-[--color-neutral-subtle] text-[--color-text-tertiary] cursor-not-allowed'
+              )
+            "
             aria-label="Send message"
             @click="canSubmit && emit('submit', modelValue)"
           >
@@ -136,7 +145,9 @@ onMounted(() => {
 }
 .ds-chat-input:focus-within {
   border-color: var(--color-primary);
-  box-shadow: var(--shadow-sm), 0 0 0 2px var(--color-primary-subtle);
+  box-shadow:
+    var(--shadow-sm),
+    0 0 0 2px var(--color-primary-subtle);
 }
 .ds-chat-send {
   border-radius: var(--radius-full);

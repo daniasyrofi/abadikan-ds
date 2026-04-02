@@ -101,17 +101,17 @@ describe('Combobox', () => {
 
   it('shows clear button when clearable and value is set', () => {
     const wrapper = mount(Combobox, { props: { ...base, modelValue: 'apple', clearable: true } })
-    const clearBtn = wrapper.findAll('button').find(b =>
-      (b.attributes('aria-label') ?? '').toLowerCase().includes('clear')
-    )
+    const clearBtn = wrapper
+      .findAll('button')
+      .find((b) => (b.attributes('aria-label') ?? '').toLowerCase().includes('clear'))
     expect(clearBtn).toBeDefined()
   })
 
   it('emits update:modelValue with empty string when cleared', async () => {
     const wrapper = mount(Combobox, { props: { ...base, modelValue: 'apple', clearable: true } })
-    const clearBtn = wrapper.findAll('button').find(b =>
-      (b.attributes('aria-label') ?? '').toLowerCase().includes('clear')
-    )
+    const clearBtn = wrapper
+      .findAll('button')
+      .find((b) => (b.attributes('aria-label') ?? '').toLowerCase().includes('clear'))
     if (clearBtn) {
       await clearBtn.trigger('click')
       const emissions = wrapper.emitted('update:modelValue') ?? []

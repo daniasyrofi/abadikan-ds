@@ -28,7 +28,7 @@ describe('PinInput', () => {
 
   it('applies disabled to all inputs', () => {
     const wrapper = mount(PinInput, { props: { disabled: true, length: 4 } })
-    wrapper.findAll('input').forEach(input => {
+    wrapper.findAll('input').forEach((input) => {
       expect((input.element as HTMLInputElement).disabled).toBe(true)
     })
   })
@@ -40,7 +40,7 @@ describe('PinInput', () => {
 
   it('renders password type when masked=true', () => {
     const wrapper = mount(PinInput, { props: { masked: true, length: 4 } })
-    wrapper.findAll('input').forEach(input => {
+    wrapper.findAll('input').forEach((input) => {
       expect((input.element as HTMLInputElement).type).toBe('password')
     })
   })

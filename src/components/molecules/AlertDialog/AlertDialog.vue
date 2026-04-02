@@ -7,29 +7,29 @@ type AlertDialogVariant = 'default' | 'danger'
 
 interface Props {
   /** Controls open/close state. Supports v-model. */
-  modelValue:     boolean
+  modelValue: boolean
   /** Dialog title text. */
-  title?:         string
+  title?: string
   /** Supporting description text. */
-  description?:   string
+  description?: string
   /** Confirm button label. @default 'Confirm' */
-  confirmLabel?:  string
+  confirmLabel?: string
   /** Cancel button label. @default 'Cancel' */
-  cancelLabel?:   string
+  cancelLabel?: string
   /** Semantic variant affecting the confirm button color. @default 'default' */
-  variant?:       AlertDialogVariant
+  variant?: AlertDialogVariant
   /** Shows a loading spinner on the confirm button. @default false */
-  loading?:       boolean
+  loading?: boolean
   /** Disables the confirm button. @default false */
   confirmDisabled?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  confirmLabel:     'Confirm',
-  cancelLabel:      'Cancel',
-  variant:          'default',
-  loading:          false,
-  confirmDisabled:  false,
+  confirmLabel: 'Confirm',
+  cancelLabel: 'Cancel',
+  variant: 'default',
+  loading: false,
+  confirmDisabled: false,
 })
 
 const emit = defineEmits<{
@@ -37,11 +37,11 @@ const emit = defineEmits<{
   /** Fired when the user confirms the action. */
   confirm: []
   /** Fired when the user cancels. */
-  cancel:  []
+  cancel: []
 }>()
 
-const titleId  = useId()
-const descId   = useId()
+const titleId = useId()
+const descId = useId()
 const panelRef = ref<HTMLElement | null>(null)
 let previousFocus: HTMLElement | null = null
 
@@ -59,16 +59,22 @@ function handleKeydown(e: KeyboardEvent) {
   if (e.key !== 'Tab' || !panelRef.value) return
   const focusable = Array.from(
     panelRef.value.querySelectorAll<HTMLElement>(
-      'button:not([disabled]), [tabindex]:not([tabindex="-1"])',
-    ),
+      'button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )
   )
   if (focusable.length === 0) return
   const first = focusable[0]
-  const last  = focusable[focusable.length - 1]
+  const last = focusable[focusable.length - 1]
   if (e.shiftKey) {
-    if (document.activeElement === first) { e.preventDefault(); last.focus() }
+    if (document.activeElement === first) {
+      e.preventDefault()
+      last.focus()
+    }
   } else {
-    if (document.activeElement === last)  { e.preventDefault(); first.focus() }
+    if (document.activeElement === last) {
+      e.preventDefault()
+      first.focus()
+    }
   }
 }
 
@@ -90,7 +96,7 @@ watch(
       nextTick(() => previousFocus?.focus())
     }
   },
-  { immediate: true },
+  { immediate: true }
 )
 
 onBeforeUnmount(() => {
@@ -140,7 +146,7 @@ const confirmButtonVariant = props.variant === 'danger' ? 'danger' : 'primary'
                 v-if="title || $slots.title"
                 :id="titleId"
                 class="text-base font-semibold leading-snug"
-                style="color: var(--color-text-primary);"
+                style="color: var(--color-text-primary)"
               >
                 <slot name="title">{{ title }}</slot>
               </h2>
@@ -148,7 +154,7 @@ const confirmButtonVariant = props.variant === 'danger' ? 'danger' : 'primary'
                 v-if="description || $slots.description"
                 :id="descId"
                 class="text-sm leading-relaxed"
-                style="color: var(--color-text-secondary);"
+                style="color: var(--color-text-secondary)"
               >
                 <slot name="description">{{ description }}</slot>
               </p>
@@ -158,15 +164,15 @@ const confirmButtonVariant = props.variant === 'danger' ? 'danger' : 'primary'
             <!-- Footer actions -->
             <div
               class="flex items-center justify-end gap-2 px-6 py-4 border-t"
-              style="border-color: var(--color-border-subtle); background-color: var(--color-neutral-light); border-bottom-left-radius: inherit; border-bottom-right-radius: inherit;"
+              style="
+                border-color: var(--color-border-subtle);
+                background-color: var(--color-neutral-light);
+                border-bottom-left-radius: inherit;
+                border-bottom-right-radius: inherit;
+              "
             >
               <slot name="actions">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  data-cancel
-                  @click="cancel"
-                >
+                <Button variant="outline" size="sm" data-cancel @click="cancel">
                   {{ cancelLabel }}
                 </Button>
                 <Button
@@ -190,7 +196,9 @@ const confirmButtonVariant = props.variant === 'danger' ? 'danger' : 'primary'
 <style scoped>
 .ds-alert-dialog-panel {
   background-color: var(--color-surface);
-  border-radius:    var(--radius-2xl);
-  box-shadow:       var(--shadow-2xl), inset 0 0 0 1px var(--color-border-subtle);
+  border-radius: var(--radius-2xl);
+  box-shadow:
+    var(--shadow-2xl),
+    inset 0 0 0 1px var(--color-border-subtle);
 }
 </style>

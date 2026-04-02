@@ -7,9 +7,10 @@ import TabsTrigger from './TabsTrigger.vue'
 import TabsContent from './TabsContent.vue'
 
 function mountTabs(active = 'one', variant: 'line' | 'pill' | 'boxed' = 'line') {
-  return mount(defineComponent({
-    components: { Tabs, TabsList, TabsTrigger, TabsContent },
-    template: `
+  return mount(
+    defineComponent({
+      components: { Tabs, TabsList, TabsTrigger, TabsContent },
+      template: `
       <Tabs v-model="active" :variant="variant">
         <TabsList>
           <TabsTrigger value="one">One</TabsTrigger>
@@ -21,10 +22,11 @@ function mountTabs(active = 'one', variant: 'line' | 'pill' | 'boxed' = 'line') 
         <TabsContent value="three">Content Three</TabsContent>
       </Tabs>
     `,
-    setup() {
-      return { active: ref(active), variant }
-    },
-  }))
+      setup() {
+        return { active: ref(active), variant }
+      },
+    })
+  )
 }
 
 describe('Tabs', () => {
@@ -123,9 +125,10 @@ describe('Tabs', () => {
   })
 
   it('renders vertical orientation', () => {
-    const wrapper = mount(defineComponent({
-      components: { Tabs, TabsList, TabsTrigger, TabsContent },
-      template: `
+    const wrapper = mount(
+      defineComponent({
+        components: { Tabs, TabsList, TabsTrigger, TabsContent },
+        template: `
         <Tabs v-model="active" orientation="vertical">
           <TabsList>
             <TabsTrigger value="a">A</TabsTrigger>
@@ -135,15 +138,19 @@ describe('Tabs', () => {
           <TabsContent value="b">Content B</TabsContent>
         </Tabs>
       `,
-      setup() { return { active: ref('a') } },
-    }))
+        setup() {
+          return { active: ref('a') }
+        },
+      })
+    )
     expect(wrapper.find('[role="tablist"]').attributes('aria-orientation')).toBe('vertical')
   })
 
   it('navigates with ArrowDown in vertical orientation', async () => {
-    const wrapper = mount(defineComponent({
-      components: { Tabs, TabsList, TabsTrigger, TabsContent },
-      template: `
+    const wrapper = mount(
+      defineComponent({
+        components: { Tabs, TabsList, TabsTrigger, TabsContent },
+        template: `
         <Tabs v-model="active" orientation="vertical">
           <TabsList>
             <TabsTrigger value="a">A</TabsTrigger>
@@ -153,8 +160,11 @@ describe('Tabs', () => {
           <TabsContent value="b">B</TabsContent>
         </Tabs>
       `,
-      setup() { return { active: ref('a') } },
-    }))
+        setup() {
+          return { active: ref('a') }
+        },
+      })
+    )
     const tabs = wrapper.findAll('[role="tab"]')
     await tabs[0].trigger('keydown', { key: 'ArrowDown' })
     expect(tabs[1].attributes('aria-selected')).toBe('true')

@@ -37,12 +37,16 @@ describe('DateRangePicker', () => {
   })
 
   it('shows label when provided', () => {
-    const wrapper = mount(DateRangePicker, { props: { modelValue: emptyRange, label: 'Trip dates' } })
+    const wrapper = mount(DateRangePicker, {
+      props: { modelValue: emptyRange, label: 'Trip dates' },
+    })
     expect(wrapper.find('label').text()).toContain('Trip dates')
   })
 
   it('shows error message', () => {
-    const wrapper = mount(DateRangePicker, { props: { modelValue: emptyRange, error: 'Select range' } })
+    const wrapper = mount(DateRangePicker, {
+      props: { modelValue: emptyRange, error: 'Select range' },
+    })
     expect(wrapper.text()).toContain('Select range')
   })
 

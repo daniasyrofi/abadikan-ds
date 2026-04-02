@@ -8,42 +8,45 @@ type SearchSize = 'sm' | 'md' | 'lg'
 
 interface Props {
   /** The search query string. Supports v-model. */
-  modelValue:  string
+  modelValue: string
   /** Visual size of the input. @default 'md' */
-  size?:       SearchSize
+  size?: SearchSize
   /** Text displayed when input is empty. @default 'Search...' */
   placeholder?: string
   /** Shows a loading spinner. @default false */
-  loading?:    boolean
+  loading?: boolean
   /** Shows a clear button when input is not empty. @default true */
-  clearable?:  boolean
+  clearable?: boolean
   /** Delay in ms before emitting 'search' event after typing. @default 300 */
-  debounce?:   number
+  debounce?: number
   /** Disables the input. @default false */
-  disabled?:   boolean
+  disabled?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  size:        'md',
+  size: 'md',
   placeholder: 'Search...',
-  loading:     false,
-  clearable:   true,
-  debounce:    300,
-  disabled:    false,
+  loading: false,
+  clearable: true,
+  debounce: 300,
+  disabled: false,
 })
 
 const emit = defineEmits<{
   'update:modelValue': [value: string]
-  'search': [value: string]
-  'clear': []
+  search: [value: string]
+  clear: []
 }>()
 
 const internalValue = ref(props.modelValue)
 let debounceTimer: ReturnType<typeof setTimeout> | null = null
 
-watch(() => props.modelValue, (v) => {
-  internalValue.value = v
-})
+watch(
+  () => props.modelValue,
+  (v) => {
+    internalValue.value = v
+  }
+)
 
 function handleUpdate(value: string) {
   internalValue.value = value

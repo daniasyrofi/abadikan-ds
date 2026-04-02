@@ -7,7 +7,7 @@ const meta: Meta<typeof AspectRatio> = {
   tags: ['autodocs'],
   argTypes: {
     ratio: { control: 'number' },
-    as:    { control: 'text' },
+    as: { control: 'text' },
   },
 }
 export default meta

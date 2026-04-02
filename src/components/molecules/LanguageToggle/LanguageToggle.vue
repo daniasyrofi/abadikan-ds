@@ -37,12 +37,9 @@ const btnSize: Record<string, string> = {
 
 <template>
   <div
-    :class="cn(
-      'ds-lang-toggle',
-      'inline-flex items-center',
-      'rounded-full',
-      wrapperSize[props.size],
-    )"
+    :class="
+      cn('ds-lang-toggle', 'inline-flex items-center', 'rounded-full', wrapperSize[props.size])
+    "
     role="radiogroup"
     aria-label="Language"
   >
@@ -52,16 +49,18 @@ const btnSize: Record<string, string> = {
       type="button"
       role="radio"
       :aria-checked="locale === loc"
-      :class="cn(
-        'ds-lang-btn inline-flex items-center justify-center rounded-full',
-        'font-semibold uppercase tracking-wider',
-        'cursor-pointer select-none',
-        'focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[--color-primary]',
-        btnSize[props.size],
-        locale === loc
-          ? 'ds-lang-btn--active'
-          : 'text-[--color-text-secondary] hover:text-[--color-text-primary] hover:bg-[--color-neutral-light]',
-      )"
+      :class="
+        cn(
+          'ds-lang-btn inline-flex items-center justify-center rounded-full',
+          'font-semibold uppercase tracking-wider',
+          'cursor-pointer select-none',
+          'focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[--color-primary]',
+          btnSize[props.size],
+          locale === loc
+            ? 'ds-lang-btn--active'
+            : 'text-[--color-text-secondary] hover:text-[--color-text-primary] hover:bg-[--color-neutral-light]'
+        )
+      "
       @click="setLocale(loc)"
     >
       {{ loc }}
@@ -72,7 +71,9 @@ const btnSize: Record<string, string> = {
 <style scoped>
 .ds-lang-toggle {
   background-color: var(--color-neutral-light);
-  box-shadow: var(--shadow-sm), inset 0 0 0 1px var(--color-border);
+  box-shadow:
+    var(--shadow-sm),
+    inset 0 0 0 1px var(--color-border);
   position: relative;
   isolation: isolate;
 }
@@ -81,7 +82,7 @@ const btnSize: Record<string, string> = {
   color: var(--color-text-primary);
   box-shadow:
     0 6px 12px -10px oklch(0.2 0 0 / 0.25),
-    0 1px 2px oklch(0.2 0 0 / 0.10),
+    0 1px 2px oklch(0.2 0 0 / 0.1),
     inset 0 0 0 1px var(--color-border);
   animation: ds-lang-activate 220ms var(--ease-out);
 }
@@ -115,7 +116,7 @@ const btnSize: Record<string, string> = {
   100% {
     box-shadow:
       0 6px 12px -10px oklch(0.2 0 0 / 0.25),
-      0 1px 2px oklch(0.2 0 0 / 0.10),
+      0 1px 2px oklch(0.2 0 0 / 0.1),
       inset 0 0 0 1px var(--color-border);
     filter: saturate(1);
   }

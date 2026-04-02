@@ -22,7 +22,9 @@ describe('Icon', () => {
   it('is aria-hidden by default (decorative)', () => {
     const wrapper = mount(Icon, { props: { name: 'RiHomeLine' } })
     // The component itself is aria-hidden when no label
-    expect(wrapper.find('[aria-hidden="true"]').exists() || !wrapper.find('[aria-label]').exists()).toBe(true)
+    expect(
+      wrapper.find('[aria-hidden="true"]').exists() || !wrapper.find('[aria-label]').exists()
+    ).toBe(true)
   })
 
   it('is not aria-hidden when label is provided', () => {

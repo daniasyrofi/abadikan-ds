@@ -172,15 +172,15 @@ const meta: Meta<typeof Toggle> = {
   parameters: { layout: 'centered', icon: 'switchAlt' },
   argTypes: {
     modelValue: { control: 'boolean' },
-    size:       { control: 'select', options: ['sm', 'md', 'lg'] },
-    disabled:   { control: 'boolean' },
-    label:      { control: 'text' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    disabled: { control: 'boolean' },
+    label: { control: 'text' },
   },
   args: {
     modelValue: false,
-    size:       'md',
-    disabled:   false,
-    label:      '',
+    size: 'md',
+    disabled: false,
+    label: '',
   },
 }
 export default meta
@@ -275,10 +275,10 @@ export const SettingsPanel: Story = {
       const copy = useCopy()
       const settings = ref({
         notifications: true,
-        emails:        false,
-        dark:          false,
-        analytics:     true,
-        twoFactor:     false,
+        emails: false,
+        dark: false,
+        analytics: true,
+        twoFactor: false,
       })
       return { copy, settings }
     },

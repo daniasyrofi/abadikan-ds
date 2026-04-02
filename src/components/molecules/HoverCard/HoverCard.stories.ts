@@ -6,10 +6,10 @@ const meta: Meta<typeof HoverCard> = {
   component: HoverCard,
   tags: ['autodocs'],
   argTypes: {
-    placement:  { control: 'select', options: ['top', 'bottom', 'left', 'right'] },
-    openDelay:  { control: 'number' },
+    placement: { control: 'select', options: ['top', 'bottom', 'left', 'right'] },
+    openDelay: { control: 'number' },
     closeDelay: { control: 'number' },
-    width:      { control: 'text' },
+    width: { control: 'text' },
   },
 }
 export default meta

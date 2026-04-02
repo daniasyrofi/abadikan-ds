@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, onBeforeUnmount, useId } from 'vue'
 import { cn } from '@/lib/utils'
-import {
-  RiCalendarLine,
-  RiArrowLeftSLine,
-  RiArrowRightSLine,
-} from '@remixicon/vue'
+import { RiCalendarLine, RiArrowLeftSLine, RiArrowRightSLine } from '@remixicon/vue'
 
 type Size = 'sm' | 'md' | 'lg'
 
@@ -89,7 +85,7 @@ watch(
       }
     }
   },
-  { immediate: true },
+  { immediate: true }
 )
 
 // Formatted display value
@@ -165,8 +161,18 @@ function makeCell(date: Date, isCurrentMonth: boolean) {
 
 const monthYearLabel = computed(() => {
   const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December',
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
   ]
   return `${monthNames[viewMonth.value]} ${viewYear.value}`
 })
@@ -227,10 +233,7 @@ function formatDate(d: Date, fmt: string): string {
   const day = String(d.getDate()).padStart(2, '0')
   const month = String(d.getMonth() + 1).padStart(2, '0')
   const year = d.getFullYear()
-  return fmt
-    .replace('dd', day)
-    .replace('MM', month)
-    .replace('yyyy', String(year))
+  return fmt.replace('dd', day).replace('MM', month).replace('yyyy', String(year))
 }
 
 // Size maps
@@ -266,11 +269,9 @@ const triggerClasses = computed(() =>
     'px-3',
     hasError.value && 'ds-datepicker-trigger--error',
     isOpen.value && 'ds-datepicker-trigger--focus',
-    props.disabled && 'ds-datepicker-trigger--disabled cursor-not-allowed',
+    props.disabled && 'ds-datepicker-trigger--disabled cursor-not-allowed'
   )
 )
-
-
 </script>
 
 <template>
@@ -279,10 +280,7 @@ const triggerClasses = computed(() =>
     <label
       v-if="label"
       :for="triggerId"
-      :class="cn(
-        'text-sm font-medium text-[--color-text-primary]',
-        disabled && 'opacity-50',
-      )"
+      :class="cn('text-sm font-medium text-[--color-text-primary]', disabled && 'opacity-50')"
     >
       {{ label }}
     </label>
@@ -296,10 +294,12 @@ const triggerClasses = computed(() =>
       @click="toggleOpen"
     >
       <span
-        :class="cn(
-          'flex-1 text-left truncate',
-          displayValue ? 'ds-datepicker-trigger-text' : 'ds-datepicker-trigger-text--placeholder',
-        )"
+        :class="
+          cn(
+            'flex-1 text-left truncate',
+            displayValue ? 'ds-datepicker-trigger-text' : 'ds-datepicker-trigger-text--placeholder'
+          )
+        "
       >
         {{ displayValue || placeholder }}
       </span>
@@ -323,10 +323,7 @@ const triggerClasses = computed(() =>
       leave-from-class="ds-cal-leave-to"
       leave-to-class="ds-cal-leave-from"
     >
-      <div
-        v-if="isOpen"
-        class="ds-calendar-popup"
-      >
+      <div v-if="isOpen" class="ds-calendar-popup">
         <!-- Month/Year header -->
         <div class="flex items-center justify-between mb-3">
           <button
@@ -340,23 +337,14 @@ const triggerClasses = computed(() =>
           <span class="text-sm font-semibold tracking-tight ds-cal-month-label">
             {{ monthYearLabel }}
           </span>
-          <button
-            type="button"
-            class="ds-cal-nav-btn"
-            aria-label="Next month"
-            @click="nextMonth"
-          >
+          <button type="button" class="ds-cal-nav-btn" aria-label="Next month" @click="nextMonth">
             <RiArrowRightSLine :size="'16'" />
           </button>
         </div>
 
         <!-- Day-of-week header -->
         <div class="grid grid-cols-7 mb-1">
-          <span
-            v-for="day in DAYS"
-            :key="day"
-            class="ds-cal-day-header"
-          >
+          <span v-for="day in DAYS" :key="day" class="ds-cal-day-header">
             {{ day }}
           </span>
         </div>
@@ -370,12 +358,18 @@ const triggerClasses = computed(() =>
             :disabled="cell.isDisabled"
             :class="[
               'ds-cal-day',
-              cell.isSelected  && 'ds-cal-day--selected',
+              cell.isSelected && 'ds-cal-day--selected',
               cell.isToday && !cell.isSelected && 'ds-cal-day--today',
               !cell.isCurrentMonth && !cell.isSelected && 'ds-cal-day--outside',
-              cell.isDisabled  && 'ds-cal-day--disabled',
+              cell.isDisabled && 'ds-cal-day--disabled',
             ]"
-            :aria-label="cell.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })"
+            :aria-label="
+              cell.date.toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+              })
+            "
             :aria-selected="cell.isSelected || undefined"
             @click="selectDate(cell)"
           >
@@ -441,8 +435,8 @@ const triggerClasses = computed(() =>
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
   box-shadow:
-    0 10px 15px oklch(0.20 0 0 / 0.07),
-    0 4px 6px oklch(0.20 0 0 / 0.04);
+    0 10px 15px oklch(0.2 0 0 / 0.07),
+    0 4px 6px oklch(0.2 0 0 / 0.04);
 }
 
 /* ── Nav buttons (prev/next month) ── */
@@ -454,7 +448,9 @@ const triggerClasses = computed(() =>
   height: 28px;
   border-radius: var(--radius-md);
   color: var(--color-text-secondary);
-  transition: background-color 150ms ease, color 150ms ease;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
 }
 
 .ds-cal-nav-btn:hover {
@@ -489,7 +485,9 @@ const triggerClasses = computed(() =>
   border-radius: var(--radius-md);
   cursor: pointer;
   color: var(--color-text-primary);
-  transition: background-color 100ms ease, color 100ms ease;
+  transition:
+    background-color 100ms ease,
+    color 100ms ease;
 }
 
 .ds-cal-day:hover:not(:disabled):not(.ds-cal-day--selected) {
@@ -522,7 +520,9 @@ const triggerClasses = computed(() =>
 /* ── Transitions ── */
 .ds-cal-enter-active,
 .ds-cal-leave-active {
-  transition: opacity 150ms ease, transform 150ms ease;
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease;
 }
 
 .ds-cal-enter-from {

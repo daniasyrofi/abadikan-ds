@@ -34,7 +34,9 @@ describe('FileUpload', () => {
   it('is disabled when disabled=true', () => {
     const wrapper = mount(FileUpload, { props: { disabled: true } })
     // Dropzone should have pointer-events disabled or a disabled-like class
-    expect(wrapper.classes().join(' ') + wrapper.html()).toMatch(/disabled|pointer-events-none|opacity/)
+    expect(wrapper.classes().join(' ') + wrapper.html()).toMatch(
+      /disabled|pointer-events-none|opacity/
+    )
   })
 
   it('shows file size hint derived from accept prop', () => {

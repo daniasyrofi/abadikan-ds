@@ -15,9 +15,9 @@ const canvas = () => ({
 })
 
 const meta: Meta<typeof DateRangePicker> = {
-  title:      'Molecules/DateRangePicker',
-  component:  DateRangePicker,
-  tags:       ['autodocs'],
+  title: 'Molecules/DateRangePicker',
+  component: DateRangePicker,
+  tags: ['autodocs'],
   decorators: [canvas],
   parameters: { layout: 'fullscreen' },
 }
@@ -75,7 +75,9 @@ export const WithMinMax: Story = {
       const range = ref<DateRange>({ start: null, end: null })
       const today = new Date()
       const minDate = today.toISOString().slice(0, 10)
-      const maxDate = new Date(today.getFullYear(), today.getMonth() + 2, 0).toISOString().slice(0, 10)
+      const maxDate = new Date(today.getFullYear(), today.getMonth() + 2, 0)
+        .toISOString()
+        .slice(0, 10)
       return { range, minDate, maxDate }
     },
     template: `

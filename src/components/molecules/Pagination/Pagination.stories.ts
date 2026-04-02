@@ -135,12 +135,12 @@ const meta: Meta<typeof Pagination> = {
   decorators: [withCanvas],
   parameters: { layout: 'fullscreen' },
   argTypes: {
-    modelValue:      { control: 'number' },
-    total:           { control: 'number' },
-    perPage:         { control: 'number' },
+    modelValue: { control: 'number' },
+    total: { control: 'number' },
+    perPage: { control: 'number' },
     maxVisiblePages: { control: 'number' },
-    showFirstLast:   { control: 'boolean' },
-    size:            { control: 'select', options: ['sm', 'md', 'lg'] },
+    showFirstLast: { control: 'boolean' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
   },
 }
 export default meta
@@ -154,11 +154,11 @@ export const Default: Story = {
   render: () => ({
     components: { Pagination },
     setup() {
-      const page   = ref(1)
-      const total  = 247
-      const perPg  = 10
-      const start  = computed(() => (page.value - 1) * perPg + 1)
-      const end    = computed(() => Math.min(page.value * perPg, total))
+      const page = ref(1)
+      const total = 247
+      const perPg = 10
+      const start = computed(() => (page.value - 1) * perPg + 1)
+      const end = computed(() => Math.min(page.value * perPg, total))
       return { page, total, perPg, start, end, copy: useCopy() }
     },
     template: `

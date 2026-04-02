@@ -4,7 +4,15 @@ import { RiStarLine, RiCheckLine, RiAlertLine, RiFlashlightLine } from '@remixic
 import Badge from './Badge.vue'
 import { getI18nLocale, resolveLocale, type SupportedLocale } from '@/i18n'
 
-const variants = ['neutral', 'primary', 'danger', 'success', 'warning', 'info', 'secondary'] as const
+const variants = [
+  'neutral',
+  'primary',
+  'danger',
+  'success',
+  'warning',
+  'info',
+  'secondary',
+] as const
 const styles = ['subtle', 'solid', 'outline'] as const
 const sizes = ['sm', 'md', 'lg'] as const
 

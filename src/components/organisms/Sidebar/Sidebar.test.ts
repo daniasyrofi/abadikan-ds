@@ -7,7 +7,8 @@ const items = [
   { id: 'settings', label: 'Settings', route: '/settings' },
   { id: 'help', label: 'Help', badge: '3' },
   {
-    id: 'admin', label: 'Admin',
+    id: 'admin',
+    label: 'Admin',
     children: [
       { id: 'users', label: 'Users' },
       { id: 'roles', label: 'Roles' },
@@ -36,15 +37,13 @@ describe('Sidebar', () => {
 
   it('emits itemClick when item is clicked', async () => {
     const wrapper = mount(Sidebar, { props: { items } })
-    const itemBtns = wrapper.findAll('[data-id], button, a').filter(el =>
-      el.text() === 'Home'
-    )
+    const itemBtns = wrapper.findAll('[data-id], button, a').filter((el) => el.text() === 'Home')
     if (itemBtns.length > 0) {
       await itemBtns[0].trigger('click')
     } else {
       // Find any element containing the label
       const allClickable = wrapper.findAll('button, a, [role="button"]')
-      const homeBtn = allClickable.find(el => el.text().includes('Home'))
+      const homeBtn = allClickable.find((el) => el.text().includes('Home'))
       if (homeBtn) await homeBtn.trigger('click')
     }
     expect(wrapper.emitted('itemClick')).toBeTruthy()
@@ -69,7 +68,7 @@ describe('Sidebar', () => {
     const wrapper = mount(Sidebar, { props: { items } })
     // Admin has children — find and expand
     const allBtns = wrapper.findAll('button, a, [role="button"]')
-    const adminBtn = allBtns.find(el => el.text().includes('Admin'))
+    const adminBtn = allBtns.find((el) => el.text().includes('Admin'))
     if (adminBtn) {
       await adminBtn.trigger('click')
       expect(wrapper.text()).toContain('Users')

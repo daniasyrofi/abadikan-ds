@@ -19,7 +19,8 @@ describe('Card', () => {
   })
 
   it.each(['default', 'outlined', 'elevated', 'flat', 'glass'] as const)(
-    'renders variant %s without errors', (variant) => {
+    'renders variant %s without errors',
+    (variant) => {
       const wrapper = mount(Card, { props: { variant }, slots: { default: 'content' } })
       expect(wrapper.text()).toContain('content')
     }

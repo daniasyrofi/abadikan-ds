@@ -41,7 +41,9 @@ describe('ProgressBar', () => {
   })
 
   it('hides percentage when indeterminate', () => {
-    const wrapper = mount(ProgressBar, { props: { value: 75, showValue: true, indeterminate: true } })
+    const wrapper = mount(ProgressBar, {
+      props: { value: 75, showValue: true, indeterminate: true },
+    })
     expect(wrapper.text()).not.toContain('75%')
   })
 

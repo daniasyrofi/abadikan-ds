@@ -235,8 +235,11 @@ const meta: Meta<typeof DropdownMenu> = {
   decorators: [canvas],
   parameters: { layout: 'fullscreen' },
   argTypes: {
-    placement: { control: 'select', options: ['bottom-start', 'bottom-end', 'top-start', 'top-end'] },
-    width:     { control: 'text' },
+    placement: {
+      control: 'select',
+      options: ['bottom-start', 'bottom-end', 'top-start', 'top-end'],
+    },
+    width: { control: 'text' },
   },
   args: {
     placement: 'bottom-start',

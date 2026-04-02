@@ -30,16 +30,18 @@ const iconSize: Record<string, number> = {
 <template>
   <button
     type="button"
-    :class="cn(
-      'ds-theme-toggle',
-      'inline-flex items-center justify-center rounded-full',
-      'bg-[--color-surface]',
-      'text-[--color-text-secondary] hover:text-[--color-text-primary]',
-      'transition-all duration-[--duration-normal] ease-[--ease-default]',
-      'cursor-pointer',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[--color-primary]',
-      sizeClasses[props.size],
-    )"
+    :class="
+      cn(
+        'ds-theme-toggle',
+        'inline-flex items-center justify-center rounded-full',
+        'bg-[--color-surface]',
+        'text-[--color-text-secondary] hover:text-[--color-text-primary]',
+        'transition-all duration-[--duration-normal] ease-[--ease-default]',
+        'cursor-pointer',
+        'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[--color-primary]',
+        sizeClasses[props.size]
+      )
+    "
     :aria-label="theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'"
     @click="toggle"
   >
@@ -52,11 +54,15 @@ const iconSize: Record<string, number> = {
 
 <style scoped>
 .ds-theme-toggle {
-  box-shadow: var(--shadow-sm), inset 0 0 0 1px var(--color-border);
+  box-shadow:
+    var(--shadow-sm),
+    inset 0 0 0 1px var(--color-border);
 }
 .ds-theme-toggle:hover {
   background-color: var(--color-neutral-light);
-  box-shadow: var(--shadow-md), inset 0 0 0 1px var(--color-border);
+  box-shadow:
+    var(--shadow-md),
+    inset 0 0 0 1px var(--color-border);
 }
 
 .theme-icon-enter-active,

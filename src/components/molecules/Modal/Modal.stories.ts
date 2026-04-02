@@ -132,7 +132,8 @@ const copyMap: Record<Locale, Copy> = {
       trigger: 'Hapus Akun',
       title: 'Anda yakin?',
       description: 'Tindakan ini tidak dapat dibatalkan.',
-      checkbox: 'Saya mengerti bahwa menghapus akun bersifat permanen dan semua data saya akan hilang.',
+      checkbox:
+        'Saya mengerti bahwa menghapus akun bersifat permanen dan semua data saya akan hilang.',
     },
     scroll: {
       inside: 'Scroll di Dalam',
@@ -217,17 +218,17 @@ const meta: Meta<typeof Modal> = {
   decorators: [canvas],
   parameters: { layout: 'fullscreen' },
   argTypes: {
-    size:           { control: 'select', options: ['sm', 'md', 'lg', 'xl', 'full'] },
-    closable:       { control: 'boolean' },
+    size: { control: 'select', options: ['sm', 'md', 'lg', 'xl', 'full'] },
+    closable: { control: 'boolean' },
     closeOnOverlay: { control: 'boolean' },
-    preventClose:   { control: 'boolean' },
+    preventClose: { control: 'boolean' },
     scrollBehavior: { control: 'select', options: ['inside', 'outside'] },
   },
   args: {
-    size:           'md',
-    closable:       true,
+    size: 'md',
+    closable: true,
     closeOnOverlay: true,
-    preventClose:   false,
+    preventClose: false,
     scrollBehavior: 'inside',
   },
 }
@@ -239,7 +240,16 @@ export const Default: Story = {
     return getStoryName('default')
   },
   render: (args) => ({
-    components: { Modal, Button, Input, DropdownMenu, Toggle, RiMagicLine, RiPencilLine, RiArrowDownSLine },
+    components: {
+      Modal,
+      Button,
+      Input,
+      DropdownMenu,
+      Toggle,
+      RiMagicLine,
+      RiPencilLine,
+      RiArrowDownSLine,
+    },
     setup() {
       const open = ref(false)
       return { open, args, copy: useCopy() }

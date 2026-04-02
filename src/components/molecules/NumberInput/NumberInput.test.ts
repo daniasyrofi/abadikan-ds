@@ -57,13 +57,13 @@ describe('NumberInput', () => {
   it('disables both buttons when disabled', () => {
     const wrapper = mount(NumberInput, { props: { modelValue: 5, disabled: true } })
     const buttons = wrapper.findAll('button')
-    buttons.forEach(btn => expect(btn.attributes('disabled')).toBeDefined())
+    buttons.forEach((btn) => expect(btn.attributes('disabled')).toBeDefined())
   })
 
   it('disables buttons when readonly', () => {
     const wrapper = mount(NumberInput, { props: { modelValue: 5, readonly: true } })
     const buttons = wrapper.findAll('button')
-    buttons.forEach(btn => expect(btn.attributes('disabled')).toBeDefined())
+    buttons.forEach((btn) => expect(btn.attributes('disabled')).toBeDefined())
   })
 
   it('does not emit when readonly and + clicked', async () => {

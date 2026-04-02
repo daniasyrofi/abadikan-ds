@@ -35,32 +35,33 @@ const emit = defineEmits<{ dismiss: [id: string] }>()
 // ── Only icon squircle color differs per variant ──────────────────────────────
 
 const colorMap: Record<Variant, { iconBg: string }> = {
-  info:    { iconBg: 'var(--color-info)' },
+  info: { iconBg: 'var(--color-info)' },
   success: { iconBg: 'var(--color-success)' },
   warning: { iconBg: 'var(--color-warning)' },
-  danger:  { iconBg: 'var(--color-danger)' },
+  danger: { iconBg: 'var(--color-danger)' },
 }
 
 const iconMap: Record<Variant, typeof RiInformationLine> = {
-  info:    RiInformationLine,
+  info: RiInformationLine,
   success: RiCheckboxCircleLine,
   warning: RiAlertLine,
-  danger:  RiErrorWarningLine,
+  danger: RiErrorWarningLine,
 }
 
-const tokens      = computed(() => colorMap[props.variant])
-const iconCmp     = computed(() => iconMap[props.variant])
+const tokens = computed(() => colorMap[props.variant])
+const iconCmp = computed(() => iconMap[props.variant])
 
 const wrapperStyle = {
-  width:           '340px',
-  display:         'flex',
-  alignItems:      'flex-start',
-  gap:             '12px',
-  padding:         '14px 16px',
-  borderRadius:    'var(--radius-2xl)',
+  width: '340px',
+  display: 'flex',
+  alignItems: 'flex-start',
+  gap: '12px',
+  padding: '14px 16px',
+  borderRadius: 'var(--radius-2xl)',
   backgroundColor: 'var(--color-surface)',
-  boxShadow:       'var(--shadow-xl), 0 0 0 1px color-mix(in oklch, var(--color-border) 80%, transparent)',
-  position:        'relative' as const,
+  boxShadow:
+    'var(--shadow-xl), 0 0 0 1px color-mix(in oklch, var(--color-border) 80%, transparent)',
+  position: 'relative' as const,
 }
 </script>
 
@@ -74,38 +75,44 @@ const wrapperStyle = {
     <!-- Squircle icon -->
     <span
       :style="{
-        width:           '30px',
-        height:          '30px',
-        minWidth:        '30px',
-        borderRadius:    '9px',
-        display:         'flex',
-        alignItems:      'center',
-        justifyContent:  'center',
+        width: '30px',
+        height: '30px',
+        minWidth: '30px',
+        borderRadius: '9px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: tokens.iconBg,
-        marginTop:       '1px',
-        flexShrink:      '0',
+        marginTop: '1px',
+        flexShrink: '0',
       }"
     >
-      <component
-        :is="iconCmp"
-        :size="'16'"
-        style="color: #fff;"
-        aria-hidden="true"
-      />
+      <component :is="iconCmp" :size="'16'" style="color: #fff" aria-hidden="true" />
     </span>
 
     <!-- Content -->
     <div :class="cn('flex-1 min-w-0 flex flex-col gap-0.5', dismissible ? 'pr-4' : '')">
-      <p style="font-size:14px;font-weight:600;line-height:1.3;letter-spacing:-0.01em;color:var(--color-text-primary);">
+      <p
+        style="
+          font-size: 14px;
+          font-weight: 600;
+          line-height: 1.3;
+          letter-spacing: -0.01em;
+          color: var(--color-text-primary);
+        "
+      >
         {{ title }}
       </p>
       <p
         v-if="description"
-        style="font-size:13px;line-height:1.55;color:var(--color-text-secondary);"
+        style="font-size: 13px; line-height: 1.55; color: var(--color-text-secondary)"
       >
         {{ description }}
       </p>
-      <div v-if="$slots.action" style="margin-top:6px;display:flex;align-items:center;gap:14px;">
+      <div
+        v-if="$slots.action"
+        style="margin-top: 6px; display: flex; align-items: center; gap: 14px"
+      >
         <slot name="action" />
       </div>
     </div>
@@ -117,9 +124,15 @@ const wrapperStyle = {
       size="xs"
       icon-only
       style="
-        position:absolute; top:10px; right:10px;
-        width:20px; height:20px; min-height:20px; padding:0;
-        opacity:0.35; transition:opacity 0.15s;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 20px;
+        height: 20px;
+        min-height: 20px;
+        padding: 0;
+        opacity: 0.35;
+        transition: opacity 0.15s;
       "
       @mouseenter="($event.currentTarget as HTMLElement).style.opacity = '0.8'"
       @mouseleave="($event.currentTarget as HTMLElement).style.opacity = '0.35'"

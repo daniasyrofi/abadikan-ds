@@ -7,10 +7,10 @@ const meta: Meta<typeof Rating> = {
   component: Rating,
   tags: ['autodocs'],
   argTypes: {
-    size:       { control: 'select', options: ['sm', 'md', 'lg'] },
-    max:        { control: 'number' },
-    readonly:   { control: 'boolean' },
-    disabled:   { control: 'boolean' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    max: { control: 'number' },
+    readonly: { control: 'boolean' },
+    disabled: { control: 'boolean' },
     allowClear: { control: 'boolean' },
   },
 }

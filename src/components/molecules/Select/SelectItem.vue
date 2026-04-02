@@ -6,10 +6,10 @@ import { SELECT_KEY, SELECT_SEARCH_KEY } from './context'
 
 interface Props {
   /** The value emitted when this item is selected. */
-  value:     string
+  value: string
   /** Display label used in the trigger and for search filtering.
    *  Falls back to the string value of `value` if omitted. */
-  label?:    string
+  label?: string
   /** Prevents this item from being selected. @default false */
   disabled?: boolean
 }
@@ -18,11 +18,11 @@ const props = withDefaults(defineProps<Props>(), {
   disabled: false,
 })
 
-const ctx         = inject(SELECT_KEY)!
+const ctx = inject(SELECT_KEY)!
 const searchQuery = inject(SELECT_SEARCH_KEY, ref(''))
 
 const displayLabel = computed(() => props.label ?? String(props.value))
-const isSelected   = computed(() => ctx.isSelected(props.value))
+const isSelected = computed(() => ctx.isSelected(props.value))
 
 // Filter visibility based on search query from SelectContent
 const isVisible = computed(() => {
@@ -31,7 +31,7 @@ const isVisible = computed(() => {
 })
 
 // Register this item's label in root context so SelectTrigger can display it
-onMounted(()       => ctx.registerItem(props.value, displayLabel.value))
+onMounted(() => ctx.registerItem(props.value, displayLabel.value))
 onBeforeUnmount(() => ctx.unregisterItem(props.value))
 
 function handleClick() {
@@ -39,7 +39,7 @@ function handleClick() {
   ctx.selectItem(props.value)
 }
 
-const checkboxSize = computed(() => ({ sm: 'sm', md: 'sm', lg: 'md' } as const)[ctx.size.value])
+const checkboxSize = computed(() => (({ sm: 'sm', md: 'sm', lg: 'md' }) as const)[ctx.size.value])
 
 const itemClasses = computed(() =>
   cn(
@@ -48,7 +48,7 @@ const itemClasses = computed(() =>
     ctx.size.value === 'sm' ? 'px-2 py-1.5 text-sm' : 'px-2.5 py-2 text-sm',
     ctx.size.value === 'lg' && 'text-base',
     props.disabled && 'opacity-40 cursor-not-allowed',
-    isSelected.value && 'ds-select-item--selected',
+    isSelected.value && 'ds-select-item--selected'
   )
 )
 </script>
@@ -80,9 +80,17 @@ const itemClasses = computed(() =>
 </template>
 
 <style scoped>
-.ds-select-item        { color: var(--color-text-primary); }
+.ds-select-item {
+  color: var(--color-text-primary);
+}
 .ds-select-item:focus,
-.ds-select-item:focus-visible { outline: none; }
-.ds-select-item:hover:not(:disabled)       { background-color: var(--color-neutral-light); }
-.ds-select-item--selected:not(:hover)      { background-color: color-mix(in oklch, var(--color-secondary-light) 60%, transparent); }
+.ds-select-item:focus-visible {
+  outline: none;
+}
+.ds-select-item:hover:not(:disabled) {
+  background-color: var(--color-neutral-light);
+}
+.ds-select-item--selected:not(:hover) {
+  background-color: color-mix(in oklch, var(--color-secondary-light) 60%, transparent);
+}
 </style>

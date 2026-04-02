@@ -36,7 +36,9 @@ describe('ChatMessage', () => {
 
   it('applies different layout for user vs assistant', () => {
     const user = mount(ChatMessage, { props: { role: 'user', content: 'Hi', timestamp: ts } })
-    const assistant = mount(ChatMessage, { props: { role: 'assistant', content: 'Hi', timestamp: ts } })
+    const assistant = mount(ChatMessage, {
+      props: { role: 'assistant', content: 'Hi', timestamp: ts },
+    })
     // containerClass binds to the root div — user gets flex-row-reverse
     expect(user.html()).toContain('flex-row-reverse')
     expect(assistant.html()).not.toContain('flex-row-reverse')
@@ -61,9 +63,9 @@ describe('ChatMessage', () => {
     const wrapper = mount(ChatMessage, {
       props: { role: 'assistant', content: 'Copy me', timestamp: ts, actions: true },
     })
-    const copyBtn = wrapper.findAll('button').find(b =>
-      (b.attributes('aria-label') ?? '').toLowerCase().includes('copy')
-    )
+    const copyBtn = wrapper
+      .findAll('button')
+      .find((b) => (b.attributes('aria-label') ?? '').toLowerCase().includes('copy'))
     if (copyBtn) {
       await copyBtn.trigger('click')
       expect(wrapper.emitted('copy')).toBeTruthy()

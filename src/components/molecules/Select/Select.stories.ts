@@ -11,38 +11,54 @@ import Badge from '@/components/atoms/Badge/Badge.vue'
 import { getI18nLocale, resolveLocale, type SupportedLocale } from '@/i18n'
 
 type Locale = SupportedLocale
-type Option        = { label: string; value: string; disabled?: boolean }
+type Option = { label: string; value: string; disabled?: boolean }
 type GroupedOption = Option & { group: string }
 
 type Copy = {
   storyNames: {
-    default: string; multiple: string; searchable: string; withGroups: string
-    clearable: string; disabled: string; allSizes: string; withError: string; customItems: string
+    default: string
+    multiple: string
+    searchable: string
+    withGroups: string
+    clearable: string
+    disabled: string
+    allSizes: string
+    withError: string
+    customItems: string
   }
   fruitOptions: Option[]
   groupedOptions: GroupedOption[]
-  default:    { label: string; placeholder: string; selected: string }
-  multiple:   { label: string; placeholder: string; selected: string }
+  default: { label: string; placeholder: string; selected: string }
+  multiple: { label: string; placeholder: string; selected: string }
   searchable: { label: string; placeholder: string }
-  grouped:    { label: string; placeholder: string }
-  clearable:  { label: string; helper: string }
-  disabled:   { label: string }
-  withError:  { label: string; error: string; helper: string }
-  sizes:      { small: string; medium: string; large: string }
+  grouped: { label: string; placeholder: string }
+  clearable: { label: string; helper: string }
+  disabled: { label: string }
+  withError: { label: string; error: string; helper: string }
+  sizes: { small: string; medium: string; large: string }
   sizePlaceholders: { small: string; medium: string; large: string }
 }
 
 const copyMap: Record<Locale, Copy> = {
   en: {
     storyNames: {
-      default: 'Default', multiple: 'Multiple', searchable: 'Searchable',
-      withGroups: 'With Groups', clearable: 'Clearable', disabled: 'Disabled',
-      allSizes: 'All Sizes', withError: 'With Error', customItems: 'Custom Items',
+      default: 'Default',
+      multiple: 'Multiple',
+      searchable: 'Searchable',
+      withGroups: 'With Groups',
+      clearable: 'Clearable',
+      disabled: 'Disabled',
+      allSizes: 'All Sizes',
+      withError: 'With Error',
+      customItems: 'Custom Items',
     },
     fruitOptions: [
-      { label: 'Apple', value: 'apple' }, { label: 'Banana', value: 'banana' },
-      { label: 'Cherry', value: 'cherry' }, { label: 'Dragonfruit', value: 'dragonfruit' },
-      { label: 'Elderberry', value: 'elderberry' }, { label: 'Fig', value: 'fig' },
+      { label: 'Apple', value: 'apple' },
+      { label: 'Banana', value: 'banana' },
+      { label: 'Cherry', value: 'cherry' },
+      { label: 'Dragonfruit', value: 'dragonfruit' },
+      { label: 'Elderberry', value: 'elderberry' },
+      { label: 'Fig', value: 'fig' },
       { label: 'Grape', value: 'grape' },
     ],
     groupedOptions: [
@@ -55,26 +71,39 @@ const copyMap: Record<Locale, Copy> = {
       { label: 'Salmon', value: 'salmon', group: 'Protein' },
       { label: 'Chicken', value: 'chicken', group: 'Protein' },
     ],
-    default:    { label: 'Favorite fruit', placeholder: 'Select...', selected: 'Selected:' },
-    multiple:   { label: 'Pick fruits', placeholder: 'Choose fruits...', selected: 'Selected:' },
+    default: { label: 'Favorite fruit', placeholder: 'Select...', selected: 'Selected:' },
+    multiple: { label: 'Pick fruits', placeholder: 'Choose fruits...', selected: 'Selected:' },
     searchable: { label: 'Search and select', placeholder: 'Type to search...' },
-    grouped:    { label: 'Food category', placeholder: 'Select food...' },
-    clearable:  { label: 'Clearable select', helper: 'Click the × to clear the selection.' },
-    disabled:   { label: 'Disabled select' },
-    withError:  { label: 'Allergies', error: 'Please select at least one option.', helper: 'Choose all that apply.' },
-    sizes:      { small: 'Small', medium: 'Medium', large: 'Large' },
+    grouped: { label: 'Food category', placeholder: 'Select food...' },
+    clearable: { label: 'Clearable select', helper: 'Click the × to clear the selection.' },
+    disabled: { label: 'Disabled select' },
+    withError: {
+      label: 'Allergies',
+      error: 'Please select at least one option.',
+      helper: 'Choose all that apply.',
+    },
+    sizes: { small: 'Small', medium: 'Medium', large: 'Large' },
     sizePlaceholders: { small: 'Select small', medium: 'Select medium', large: 'Select large' },
   },
   id: {
     storyNames: {
-      default: 'Bawaan', multiple: 'Banyak', searchable: 'Bisa Dicari',
-      withGroups: 'Dengan Grup', clearable: 'Dapat Dikosongkan', disabled: 'Nonaktif',
-      allSizes: 'Semua Ukuran', withError: 'Dengan Error', customItems: 'Item Kustom',
+      default: 'Bawaan',
+      multiple: 'Banyak',
+      searchable: 'Bisa Dicari',
+      withGroups: 'Dengan Grup',
+      clearable: 'Dapat Dikosongkan',
+      disabled: 'Nonaktif',
+      allSizes: 'Semua Ukuran',
+      withError: 'Dengan Error',
+      customItems: 'Item Kustom',
     },
     fruitOptions: [
-      { label: 'Apel', value: 'apple' }, { label: 'Pisang', value: 'banana' },
-      { label: 'Ceri', value: 'cherry' }, { label: 'Buah Naga', value: 'dragonfruit' },
-      { label: 'Mengkudu', value: 'elderberry' }, { label: 'Ara', value: 'fig' },
+      { label: 'Apel', value: 'apple' },
+      { label: 'Pisang', value: 'banana' },
+      { label: 'Ceri', value: 'cherry' },
+      { label: 'Buah Naga', value: 'dragonfruit' },
+      { label: 'Mengkudu', value: 'elderberry' },
+      { label: 'Ara', value: 'fig' },
       { label: 'Anggur', value: 'grape' },
     ],
     groupedOptions: [
@@ -87,26 +116,42 @@ const copyMap: Record<Locale, Copy> = {
       { label: 'Salmon', value: 'salmon', group: 'Protein' },
       { label: 'Ayam', value: 'chicken', group: 'Protein' },
     ],
-    default:    { label: 'Buah favorit', placeholder: 'Pilih...', selected: 'Dipilih:' },
-    multiple:   { label: 'Pilih buah', placeholder: 'Pilih buah...', selected: 'Dipilih:' },
+    default: { label: 'Buah favorit', placeholder: 'Pilih...', selected: 'Dipilih:' },
+    multiple: { label: 'Pilih buah', placeholder: 'Pilih buah...', selected: 'Dipilih:' },
     searchable: { label: 'Cari dan pilih', placeholder: 'Ketik untuk mencari...' },
-    grouped:    { label: 'Kategori makanan', placeholder: 'Pilih makanan...' },
-    clearable:  { label: 'Pilihan yang bisa dikosongkan', helper: 'Klik × untuk menghapus pilihan.' },
-    disabled:   { label: 'Pilihan nonaktif' },
-    withError:  { label: 'Alergi', error: 'Harap pilih setidaknya satu opsi.', helper: 'Pilih semua yang berlaku.' },
-    sizes:      { small: 'Kecil', medium: 'Sedang', large: 'Besar' },
+    grouped: { label: 'Kategori makanan', placeholder: 'Pilih makanan...' },
+    clearable: {
+      label: 'Pilihan yang bisa dikosongkan',
+      helper: 'Klik × untuk menghapus pilihan.',
+    },
+    disabled: { label: 'Pilihan nonaktif' },
+    withError: {
+      label: 'Alergi',
+      error: 'Harap pilih setidaknya satu opsi.',
+      helper: 'Pilih semua yang berlaku.',
+    },
+    sizes: { small: 'Kecil', medium: 'Sedang', large: 'Besar' },
     sizePlaceholders: { small: 'Pilih kecil', medium: 'Pilih sedang', large: 'Pilih besar' },
   },
   zh: {
     storyNames: {
-      default: '默认', multiple: '多选', searchable: '可搜索',
-      withGroups: '带分组', clearable: '可清除', disabled: '禁用',
-      allSizes: '所有尺寸', withError: '带错误', customItems: '自定义选项',
+      default: '默认',
+      multiple: '多选',
+      searchable: '可搜索',
+      withGroups: '带分组',
+      clearable: '可清除',
+      disabled: '禁用',
+      allSizes: '所有尺寸',
+      withError: '带错误',
+      customItems: '自定义选项',
     },
     fruitOptions: [
-      { label: '苹果', value: 'apple' }, { label: '香蕉', value: 'banana' },
-      { label: '樱桃', value: 'cherry' }, { label: '火龙果', value: 'dragonfruit' },
-      { label: '接骨木莓', value: 'elderberry' }, { label: '无花果', value: 'fig' },
+      { label: '苹果', value: 'apple' },
+      { label: '香蕉', value: 'banana' },
+      { label: '樱桃', value: 'cherry' },
+      { label: '火龙果', value: 'dragonfruit' },
+      { label: '接骨木莓', value: 'elderberry' },
+      { label: '无花果', value: 'fig' },
       { label: '葡萄', value: 'grape' },
     ],
     groupedOptions: [
@@ -119,20 +164,20 @@ const copyMap: Record<Locale, Copy> = {
       { label: '三文鱼', value: 'salmon', group: '蛋白质' },
       { label: '鸡肉', value: 'chicken', group: '蛋白质' },
     ],
-    default:    { label: '最喜欢的水果', placeholder: '请选择...', selected: '已选择：' },
-    multiple:   { label: '选择水果', placeholder: '请选择水果...', selected: '已选择：' },
+    default: { label: '最喜欢的水果', placeholder: '请选择...', selected: '已选择：' },
+    multiple: { label: '选择水果', placeholder: '请选择水果...', selected: '已选择：' },
     searchable: { label: '搜索并选择', placeholder: '输入以搜索...' },
-    grouped:    { label: '食物分类', placeholder: '选择食物...' },
-    clearable:  { label: '可清除选择', helper: '点击 × 可清除选择。' },
-    disabled:   { label: '禁用选择器' },
-    withError:  { label: '过敏情况', error: '请至少选择一项。', helper: '请选择所有适用项。' },
-    sizes:      { small: '小', medium: '中', large: '大' },
+    grouped: { label: '食物分类', placeholder: '选择食物...' },
+    clearable: { label: '可清除选择', helper: '点击 × 可清除选择。' },
+    disabled: { label: '禁用选择器' },
+    withError: { label: '过敏情况', error: '请至少选择一项。', helper: '请选择所有适用项。' },
+    sizes: { small: '小', medium: '中', large: '大' },
     sizePlaceholders: { small: '选择小尺寸', medium: '选择中尺寸', large: '选择大尺寸' },
   },
 }
 
-const getLocale    = (): Locale => resolveLocale(getI18nLocale())
-const useCopy      = () => computed(() => copyMap[getLocale()])
+const getLocale = (): Locale => resolveLocale(getI18nLocale())
+const useCopy = () => computed(() => copyMap[getLocale()])
 const getStoryName = (key: keyof Copy['storyNames']) => copyMap[getLocale()].storyNames[key]
 
 // Helper: group array into Record<groupName, items[]>
@@ -156,27 +201,30 @@ const canvas = () => ({
 })
 
 const meta: Meta<typeof Select> = {
-  title:      'Molecules/Select',
-  component:  Select,
-  tags:       ['autodocs'],
+  title: 'Molecules/Select',
+  component: Select,
+  tags: ['autodocs'],
   decorators: [canvas],
   parameters: { layout: 'fullscreen' },
   argTypes: {
-    modelValue:  { control: 'text', description: 'Selected value(s). String for single, string[] for multiple.' },
-    multiple:    { control: 'boolean' },
-    size:        { control: 'select', options: ['sm', 'md', 'lg'] },
-    label:       { control: 'text' },
-    helperText:  { control: 'text' },
-    error:       { control: 'text' },
-    loading:     { control: 'boolean' },
-    readonly:    { control: 'boolean' },
-    disabled:    { control: 'boolean' },
+    modelValue: {
+      control: 'text',
+      description: 'Selected value(s). String for single, string[] for multiple.',
+    },
+    multiple: { control: 'boolean' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    label: { control: 'text' },
+    helperText: { control: 'text' },
+    error: { control: 'text' },
+    loading: { control: 'boolean' },
+    readonly: { control: 'boolean' },
+    disabled: { control: 'boolean' },
   },
   args: {
     modelValue: '',
-    size:       'md',
-    multiple:   false,
-    disabled:   false,
+    size: 'md',
+    multiple: false,
+    disabled: false,
   },
 }
 export default meta
@@ -185,12 +233,14 @@ type Story = StoryObj<typeof Select>
 // ── Stories ───────────────────────────────────────────────────────────────────
 
 export const Default: Story = {
-  get name() { return getStoryName('default') },
+  get name() {
+    return getStoryName('default')
+  },
   render: () => ({
     components: { Select, SelectTrigger, SelectContent, SelectItem },
     setup() {
       const value = ref('')
-      const copy  = useCopy()
+      const copy = useCopy()
       return { value, copy }
     },
     template: `
@@ -213,12 +263,14 @@ export const Default: Story = {
 }
 
 export const Multiple: Story = {
-  get name() { return getStoryName('multiple') },
+  get name() {
+    return getStoryName('multiple')
+  },
   render: () => ({
     components: { Select, SelectTrigger, SelectContent, SelectItem },
     setup() {
       const value = ref<string[]>([])
-      const copy  = useCopy()
+      const copy = useCopy()
       return { value, copy }
     },
     template: `
@@ -241,12 +293,14 @@ export const Multiple: Story = {
 }
 
 export const Searchable: Story = {
-  get name() { return getStoryName('searchable') },
+  get name() {
+    return getStoryName('searchable')
+  },
   render: () => ({
     components: { Select, SelectTrigger, SelectContent, SelectItem },
     setup() {
       const value = ref('')
-      const copy  = useCopy()
+      const copy = useCopy()
       return { value, copy }
     },
     template: `
@@ -266,12 +320,14 @@ export const Searchable: Story = {
 }
 
 export const WithGroups: Story = {
-  get name() { return getStoryName('withGroups') },
+  get name() {
+    return getStoryName('withGroups')
+  },
   render: () => ({
     components: { Select, SelectTrigger, SelectContent, SelectItem, SelectGroup },
     setup() {
-      const value   = ref('')
-      const copy    = useCopy()
+      const value = ref('')
+      const copy = useCopy()
       const grouped = computed(() => groupBy(copy.value.groupedOptions))
       return { value, copy, grouped }
     },
@@ -294,12 +350,14 @@ export const WithGroups: Story = {
 }
 
 export const Clearable: Story = {
-  get name() { return getStoryName('clearable') },
+  get name() {
+    return getStoryName('clearable')
+  },
   render: () => ({
     components: { Select, SelectTrigger, SelectContent, SelectItem },
     setup() {
       const value = ref('banana')
-      const copy  = useCopy()
+      const copy = useCopy()
       return { value, copy }
     },
     template: `
@@ -319,12 +377,14 @@ export const Clearable: Story = {
 }
 
 export const Disabled: Story = {
-  get name() { return getStoryName('disabled') },
+  get name() {
+    return getStoryName('disabled')
+  },
   render: () => ({
     components: { Select, SelectTrigger, SelectContent, SelectItem },
     setup() {
       const value = ref('cherry')
-      const copy  = useCopy()
+      const copy = useCopy()
       return { value, copy }
     },
     template: `
@@ -344,11 +404,15 @@ export const Disabled: Story = {
 }
 
 export const AllSizes: Story = {
-  get name() { return getStoryName('allSizes') },
+  get name() {
+    return getStoryName('allSizes')
+  },
   render: () => ({
     components: { Select, SelectTrigger, SelectContent, SelectItem },
     setup() {
-      const sm = ref(''); const md = ref(''); const lg = ref('')
+      const sm = ref('')
+      const md = ref('')
+      const lg = ref('')
       const copy = useCopy()
       return { sm, md, lg, copy }
     },
@@ -381,12 +445,14 @@ export const AllSizes: Story = {
 }
 
 export const WithError: Story = {
-  get name() { return getStoryName('withError') },
+  get name() {
+    return getStoryName('withError')
+  },
   render: () => ({
     components: { Select, SelectTrigger, SelectContent, SelectItem },
     setup() {
       const value = ref('')
-      const copy  = useCopy()
+      const copy = useCopy()
       return { value, copy }
     },
     template: `
@@ -407,9 +473,19 @@ export const WithError: Story = {
 }
 
 export const CustomItems: Story = {
-  get name() { return getStoryName('customItems') },
+  get name() {
+    return getStoryName('customItems')
+  },
   render: () => ({
-    components: { Select, SelectTrigger, SelectContent, SelectItem, SelectSeparator, Avatar, Badge },
+    components: {
+      Select,
+      SelectTrigger,
+      SelectContent,
+      SelectItem,
+      SelectSeparator,
+      Avatar,
+      Badge,
+    },
     setup() {
       const value = ref('')
       return { value }

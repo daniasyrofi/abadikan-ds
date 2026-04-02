@@ -32,7 +32,7 @@ describe('Tooltip', () => {
       slots: { default: '<button>Hover me</button>' },
     })
     await wrapper.trigger('mouseenter')
-    await new Promise(r => setTimeout(r, 10))
+    await new Promise((r) => setTimeout(r, 10))
     const tooltip = wrapper.find('[role="tooltip"]')
     if (tooltip.exists()) {
       expect((tooltip.element as HTMLElement).style.display).not.toBe('none')
@@ -45,10 +45,10 @@ describe('Tooltip', () => {
       slots: { default: '<button>Hover me</button>' },
     })
     await wrapper.trigger('mouseenter')
-    await new Promise(r => setTimeout(r, 10))
+    await new Promise((r) => setTimeout(r, 10))
     await wrapper.trigger('mouseleave')
     // hide() uses a 100ms timeout — wait for it
-    await new Promise(r => setTimeout(r, 150))
+    await new Promise((r) => setTimeout(r, 150))
     const tooltip = wrapper.find('[role="tooltip"]')
     if (tooltip.exists()) {
       expect((tooltip.element as HTMLElement).style.display).toBe('none')
@@ -64,7 +64,7 @@ describe('Tooltip', () => {
       slots: { default: '<span>trigger</span>' },
     })
     await wrapper.trigger('mouseenter')
-    await new Promise(r => setTimeout(r, 10))
+    await new Promise((r) => setTimeout(r, 10))
     expect(wrapper.text()).toContain('My tooltip text')
   })
 
@@ -77,7 +77,7 @@ describe('Tooltip', () => {
       },
     })
     await wrapper.trigger('mouseenter')
-    await new Promise(r => setTimeout(r, 10))
+    await new Promise((r) => setTimeout(r, 10))
     expect(wrapper.text()).toContain('Slot tip')
   })
 
@@ -95,7 +95,7 @@ describe('Tooltip', () => {
       slots: { default: '<button>Click me</button>' },
     })
     await wrapper.trigger('click')
-    await new Promise(r => setTimeout(r, 10))
+    await new Promise((r) => setTimeout(r, 10))
     expect(wrapper.find('[role="tooltip"]').exists()).toBe(true)
   })
 
@@ -105,9 +105,9 @@ describe('Tooltip', () => {
       slots: { default: '<button>Click me</button>' },
     })
     await wrapper.trigger('click')
-    await new Promise(r => setTimeout(r, 10))
+    await new Promise((r) => setTimeout(r, 10))
     await wrapper.trigger('click')
-    await new Promise(r => setTimeout(r, 150))
+    await new Promise((r) => setTimeout(r, 150))
     expect(wrapper.find('[role="tooltip"]').exists()).toBe(false)
   })
 
@@ -117,7 +117,7 @@ describe('Tooltip', () => {
       slots: { default: '<input />' },
     })
     await wrapper.trigger('focusin')
-    await new Promise(r => setTimeout(r, 10))
+    await new Promise((r) => setTimeout(r, 10))
     expect(wrapper.find('[role="tooltip"]').exists()).toBe(true)
   })
 
@@ -127,9 +127,9 @@ describe('Tooltip', () => {
       slots: { default: '<input />' },
     })
     await wrapper.trigger('focusin')
-    await new Promise(r => setTimeout(r, 10))
+    await new Promise((r) => setTimeout(r, 10))
     await wrapper.trigger('focusout')
-    await new Promise(r => setTimeout(r, 150))
+    await new Promise((r) => setTimeout(r, 150))
     expect(wrapper.find('[role="tooltip"]').exists()).toBe(false)
   })
 
@@ -139,7 +139,7 @@ describe('Tooltip', () => {
       slots: { default: '<span>x</span>' },
     })
     await wrapper.trigger('mouseenter')
-    await new Promise(r => setTimeout(r, 10))
+    await new Promise((r) => setTimeout(r, 10))
     // arrow span should not be present
     const arrowEl = wrapper.find('[aria-hidden="true"]')
     expect(arrowEl.exists()).toBe(false)

@@ -46,13 +46,8 @@ const formattedTime = computed(() => {
   return `${hours}:${minutes}`
 })
 
-
-
 const containerClass = computed(() =>
-  cn(
-    'group flex items-end gap-2 max-w-full',
-    isUser.value ? 'flex-row-reverse' : 'flex-row',
-  )
+  cn('group flex items-end gap-2 max-w-full', isUser.value ? 'flex-row-reverse' : 'flex-row')
 )
 
 const bubbleClass = computed(() =>
@@ -60,17 +55,14 @@ const bubbleClass = computed(() =>
     'relative max-w-[75%] px-4 py-3 text-body-sm',
     'animate-[fadeIn_0.2s_ease-out]',
     isUser.value
-      ? [
-          'bg-[--color-neutral] text-[--color-text-inverse]',
-          'ds-bubble ds-bubble--user',
-        ]
+      ? ['bg-[--color-neutral] text-[--color-text-inverse]', 'ds-bubble ds-bubble--user']
       : [
           'bg-[--color-surface] border border-[--color-border]',
           'text-[--color-text-primary]',
           'ds-bubble ds-bubble--assistant',
         ],
     props.status === 'sending' && 'opacity-60',
-    props.status === 'error' && 'shadow-[0_0_0_1px_var(--color-danger)]',
+    props.status === 'error' && 'shadow-[0_0_0_1px_var(--color-danger)]'
   )
 )
 
@@ -100,11 +92,13 @@ function handleRetry() {
       <!-- Actions overlay (copy) -->
       <div
         v-if="actions && status === 'sent' && !isTyping"
-        :class="cn(
-          'absolute -top-3 opacity-0 group-hover:opacity-100',
-          'transition-opacity duration-[--duration-fast] ease-[--ease-default]',
-          isUser ? 'left-2' : 'right-2',
-        )"
+        :class="
+          cn(
+            'absolute -top-3 opacity-0 group-hover:opacity-100',
+            'transition-opacity duration-[--duration-fast] ease-[--ease-default]',
+            isUser ? 'left-2' : 'right-2'
+          )
+        "
       >
         <button
           type="button"
@@ -147,12 +141,16 @@ function handleRetry() {
 
   <!-- Timestamp -->
   <div
-    :class="cn(
-      'mt-1 text-caption text-[--color-text-tertiary]',
-      isUser ? 'text-right mr-10' : 'text-left ml-10',
-    )"
+    :class="
+      cn(
+        'mt-1 text-caption text-[--color-text-tertiary]',
+        isUser ? 'text-right mr-10' : 'text-left ml-10'
+      )
+    "
   >
-    <span v-if="userName" class="font-medium text-[--color-text-secondary]">{{ userName }} &middot; </span>
+    <span v-if="userName" class="font-medium text-[--color-text-secondary]"
+      >{{ userName }} &middot;
+    </span>
     <span>{{ formattedTime }}</span>
   </div>
 </template>

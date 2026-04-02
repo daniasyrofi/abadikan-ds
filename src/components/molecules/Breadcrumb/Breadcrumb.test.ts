@@ -28,7 +28,7 @@ describe('Breadcrumb', () => {
     const wrapper = mount(Breadcrumb, { props: { items } })
     // Last item has no href — should not be an anchor
     const links = wrapper.findAll('a')
-    const linkTexts = links.map(l => l.text())
+    const linkTexts = links.map((l) => l.text())
     expect(linkTexts).not.toContain('Widget')
   })
 

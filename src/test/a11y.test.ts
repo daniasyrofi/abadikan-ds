@@ -31,8 +31,12 @@ beforeAll(() => {
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
       value: vi.fn().mockImplementation((q: string) => ({
-        matches: false, media: q, onchange: null,
-        addEventListener: vi.fn(), removeEventListener: vi.fn(), dispatchEvent: vi.fn(),
+        matches: false,
+        media: q,
+        onchange: null,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        dispatchEvent: vi.fn(),
       })),
     })
   }
@@ -64,7 +68,9 @@ describe('a11y: Input', () => {
   })
 
   it('input with error has no violations', async () => {
-    const { element } = mount(Input, { props: { label: 'Email', modelValue: '', error: 'Required' } })
+    const { element } = mount(Input, {
+      props: { label: 'Email', modelValue: '', error: 'Required' },
+    })
     await axeCheck(element)
   })
 })
@@ -157,7 +163,11 @@ describe('a11y: Stepper', () => {
 
 describe('a11y: Breadcrumb', () => {
   it('breadcrumb has no violations', async () => {
-    const items = [{ label: 'Home', href: '/' }, { label: 'Products', href: '/products' }, { label: 'Widget' }]
+    const items = [
+      { label: 'Home', href: '/' },
+      { label: 'Products', href: '/products' },
+      { label: 'Widget' },
+    ]
     const { element } = mount(Breadcrumb, { props: { items } })
     await axeCheck(element)
   })

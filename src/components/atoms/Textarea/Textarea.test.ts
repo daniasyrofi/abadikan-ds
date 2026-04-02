@@ -21,7 +21,9 @@ describe('Textarea', () => {
   })
 
   it('renders error message and hides helper text', () => {
-    const wrapper = mount(Textarea, { props: { modelValue: '', helperText: 'Help', error: 'Too short' } })
+    const wrapper = mount(Textarea, {
+      props: { modelValue: '', helperText: 'Help', error: 'Too short' },
+    })
     expect(wrapper.text()).toContain('Too short')
     expect(wrapper.text()).not.toContain('Help')
   })
@@ -81,7 +83,7 @@ describe('Textarea', () => {
   it('associates label with textarea via id/for', () => {
     const wrapper = mount(Textarea, { props: { modelValue: '', label: 'Notes' } })
     const textareaId = wrapper.find('textarea').attributes('id')
-    const labelFor   = wrapper.find('label').attributes('for')
+    const labelFor = wrapper.find('label').attributes('for')
     expect(textareaId).toBeTruthy()
     expect(textareaId).toBe(labelFor)
   })
