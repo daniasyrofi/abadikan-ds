@@ -18,11 +18,13 @@
 export * from './components/index'
 
 // ── Composables ───────────────────────────────────────────────
-export { useTheme }           from './composables/useTheme'
-export { useClickOutside }    from './composables/useClickOutside'
-export { useFocusTrap }       from './composables/useFocusTrap'
-export { useSpacing }         from './composables/useSpacing'
-export { useInvitationTheme } from './composables/useInvitationTheme'
+export { useTheme }             from './composables/useTheme'
+export { useClickOutside }      from './composables/useClickOutside'
+export { useFocusTrap }         from './composables/useFocusTrap'
+export { useSpacing }           from './composables/useSpacing'
+export { useInvitationTheme }   from './composables/useInvitationTheme'
+export { createTheme, applyTheme } from './composables/createTheme'
+export type { ThemeTokens }     from './composables/createTheme'
 
 // ── Variant & Size Types ──────────────────────────────────────
 export type * from './types'

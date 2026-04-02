@@ -132,18 +132,83 @@ export const shadows = {
   highlight: 'var(--shadow-highlight)',
 } as const
 
+// ── Elevation ─────────────────────────────────────────────────────────────────
+// Semantic surface elevation levels — use instead of raw shadow-* values.
+
+export const elevation = {
+  /** Flat — no shadow (tags, inline elements on colored bg) */
+  0:       'var(--elevation-0)',
+  /** Raised — card, input, button */
+  1:       'var(--elevation-1)',
+  /** Floating — dropdown, popover, hover card */
+  2:       'var(--elevation-2)',
+  /** Dialog — modal, drawer, alert dialog */
+  3:       'var(--elevation-3)',
+  /** Notification — toast, command palette */
+  4:       'var(--elevation-4)',
+} as const
+
+export type ElevationLevel = keyof typeof elevation
+
+// ── Typography scale ──────────────────────────────────────────────────────────
+
+export const fontSizes = {
+  '2xs':  '0.625rem',
+  xs:     '0.75rem',
+  sm:     '0.875rem',
+  base:   '1rem',
+  lg:     '1.125rem',
+  xl:     '1.25rem',
+  '2xl':  '1.5rem',
+  '3xl':  '1.875rem',
+  '4xl':  '2.25rem',
+  '5xl':  '3rem',
+} as const
+
+export const lineHeights = {
+  none:    '1',
+  tight:   '1.25',
+  snug:    '1.375',
+  normal:  '1.5',
+  relaxed: '1.625',
+  loose:   '2',
+} as const
+
+export const letterSpacings = {
+  tighter: '-0.05em',
+  tight:   '-0.025em',
+  normal:  '0em',
+  wide:    '0.025em',
+  wider:   '0.05em',
+  widest:  '0.1em',
+} as const
+
 // ── Duration / easing ─────────────────────────────────────────────────────────
 
 export const duration = {
-  fast:   '100ms',
-  normal: '200ms',
-  slow:   '300ms',
+  instant: '50ms',
+  fast:    '100ms',
+  normal:  '200ms',
+  slow:    '300ms',
+  /** For elements entering the screen. */
+  enter:   '200ms',
+  /** For elements leaving the screen — slightly faster than enter. */
+  exit:    '150ms',
+  /** For height-based expansions (Accordion, Collapsible). */
+  expand:  '280ms',
+  /** Full-page transitions. */
+  page:    '400ms',
 } as const
 
 export const easing = {
   default: 'cubic-bezier(0.4, 0, 0.2, 1)',
   in:      'cubic-bezier(0.4, 0, 1, 1)',
   out:     'cubic-bezier(0, 0, 0.2, 1)',
+  /** Slight overshoot — great for menus, tooltips. */
+  spring:  'cubic-bezier(0.34, 1.56, 0.64, 1)',
+  /** More pronounced bounce — use sparingly. */
+  bounce:  'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+  sharp:   'cubic-bezier(0.4, 0, 0.6, 1)',
 } as const
 
 // ── Breakpoints ───────────────────────────────────────────────────────────────

@@ -2,6 +2,7 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
+import dts from 'vite-plugin-dts'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin'
@@ -13,6 +14,16 @@ export default defineConfig(({ command }) => ({
   plugins: [
     tailwindcss(),
     vue(),
+    ...(command === 'build' ? [
+      dts({
+        tsconfigPath: './tsconfig.app.json',
+        include:      ['src'],
+        exclude:      ['src/**/*.stories.ts', 'src/**/*.test.ts', 'src/test/**', 'src/main.ts'],
+        outDir:       'dist',
+        rollupTypes:  true,
+        insertTypesEntry: true,
+      }),
+    ] : []),
   ],
   resolve: {
     alias: {

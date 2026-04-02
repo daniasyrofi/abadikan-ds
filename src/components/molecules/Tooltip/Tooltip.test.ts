@@ -19,7 +19,7 @@ describe('Tooltip', () => {
     const tooltip = wrapper.find('[role="tooltip"]')
     // v-show sets display:none when hidden
     if (tooltip.exists()) {
-      expect(tooltip.element.style.display).toBe('none')
+      expect((tooltip.element as HTMLElement).style.display).toBe('none')
     } else {
       // Not rendered at all — acceptable
       expect(tooltip.exists()).toBe(false)
@@ -35,7 +35,7 @@ describe('Tooltip', () => {
     await new Promise(r => setTimeout(r, 10))
     const tooltip = wrapper.find('[role="tooltip"]')
     if (tooltip.exists()) {
-      expect(tooltip.element.style.display).not.toBe('none')
+      expect((tooltip.element as HTMLElement).style.display).not.toBe('none')
     }
   })
 
@@ -51,7 +51,7 @@ describe('Tooltip', () => {
     await new Promise(r => setTimeout(r, 150))
     const tooltip = wrapper.find('[role="tooltip"]')
     if (tooltip.exists()) {
-      expect(tooltip.element.style.display).toBe('none')
+      expect((tooltip.element as HTMLElement).style.display).toBe('none')
     } else {
       // Already unmounted — acceptable
       expect(true).toBe(true)

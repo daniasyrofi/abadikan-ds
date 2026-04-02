@@ -7,6 +7,13 @@
 
 // ── Atoms ──────────────────────────────────────────────────────────────────────
 
+// AspectRatio / Container / Stack / Center / KBD / VisuallyHidden (layout primitives)
+export type ContainerSize   = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full'
+export type StackDirection  = 'vertical' | 'horizontal'
+export type StackAlign      = 'start' | 'center' | 'end' | 'stretch' | 'baseline'
+export type StackJustify    = 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'
+export type KbdSize         = 'sm' | 'md' | 'lg'
+
 // Avatar
 export type AvatarSize   = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 export type AvatarShape  = 'circle' | 'rounded' | 'square'
@@ -114,8 +121,38 @@ export type { ToastType, ToastOptions, ToastVariant } from './components/molecul
 export type TooltipPlacement = 'top' | 'bottom' | 'left' | 'right'
 export type TooltipTrigger   = 'hover' | 'click' | 'focus'
 
+// AlertDialog
+export type AlertDialogVariant = 'default' | 'danger'
+
+// Collapsible — no extra exported types
+
 // CommandPalette (re-exported from source)
 export type { CommandItem } from './components/molecules/index'
+
+// EmptyState
+export type EmptyStateSize = 'sm' | 'md' | 'lg'
+
+// HoverCard
+export type HoverCardPlacement = 'top' | 'bottom' | 'left' | 'right'
+
+// PinInput
+export type PinType = 'number' | 'alphanumeric'
+export type PinSize = 'sm' | 'md' | 'lg'
+
+// Rating
+export type RatingSize = 'sm' | 'md' | 'lg'
+
+// ScrollArea — no extra exported types
+
+// SegmentedControl (re-exported from source)
+export type { SegmentOption } from './components/molecules/index'
+
+// Stat
+export type StatTrend = 'up' | 'down' | 'neutral'
+export type StatSize  = 'sm' | 'md' | 'lg'
+
+// TagInput
+export type TagInputSize = 'sm' | 'md' | 'lg'
 
 // ── Organisms ─────────────────────────────────────────────────────────────────
 

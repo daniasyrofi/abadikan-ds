@@ -14,7 +14,6 @@ withDefaults(defineProps<Props>(), {
 
 const ctx         = inject(SELECT_KEY)!
 const searchQuery = ref('')
-const searchRef   = ref<HTMLInputElement | null>(null)
 const listRef     = ref<HTMLElement | null>(null)
 
 // Provide search query to all descendant SelectItems

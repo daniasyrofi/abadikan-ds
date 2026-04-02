@@ -38,7 +38,7 @@ describe('Tag', () => {
     const wrapper = mount(Tag, { props: { removable: true, disabled: true }, slots: { default: 'Tag' } })
     // disabled tag has pointer-events-none; the remove button is still in DOM but disabled
     const removeBtn = wrapper.find('button[aria-label="Remove tag"]')
-    if (removeBtn.exists() && !removeBtn.element.disabled) {
+    if (removeBtn.exists() && !(removeBtn.element as HTMLButtonElement).disabled) {
       await removeBtn.trigger('click')
     }
     expect(wrapper.emitted('remove')).toBeFalsy()

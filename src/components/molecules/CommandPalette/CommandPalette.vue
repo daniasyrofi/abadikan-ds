@@ -219,7 +219,7 @@ function setActive(item: CommandItem) {
           <!-- Search row -->
           <div class="ds-cmd-search flex items-center gap-3 px-4 ds-cmd-divider-b">
             <RiSearchLine
-              :size="18"
+              size="18"
               class="shrink-0 text-[--color-text-tertiary]"
               aria-hidden="true"
             />
@@ -242,7 +242,7 @@ function setActive(item: CommandItem) {
               aria-label="Close command palette"
               @click="close"
             >
-              <RiCloseLine :size="16" aria-hidden="true" />
+              <RiCloseLine size="16" aria-hidden="true" />
             </button>
           </div>
 

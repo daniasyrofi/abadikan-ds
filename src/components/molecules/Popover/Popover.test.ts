@@ -17,7 +17,7 @@ describe('Popover', () => {
     })
     const popover = wrapper.find('[role="dialog"]')
     if (popover.exists()) {
-      expect(popover.element.style.display).toBe('none')
+      expect((popover.element as HTMLElement).style.display).toBe('none')
     } else {
       expect(popover.exists()).toBe(false)
     }
@@ -31,7 +31,7 @@ describe('Popover', () => {
     await wrapper.find('button').trigger('click')
     const popover = wrapper.find('[role="dialog"]')
     if (popover.exists()) {
-      expect(popover.element.style.display).not.toBe('none')
+      expect((popover.element as HTMLElement).style.display).not.toBe('none')
     }
     expect(wrapper.text()).toContain('Popover body')
   })
@@ -45,7 +45,7 @@ describe('Popover', () => {
     await wrapper.find('button').trigger('click')
     const popover = wrapper.find('[role="dialog"]')
     if (popover.exists()) {
-      expect(popover.element.style.display).toBe('none')
+      expect((popover.element as HTMLElement).style.display).toBe('none')
     }
   })
 

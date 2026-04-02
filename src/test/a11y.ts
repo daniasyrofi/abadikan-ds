@@ -11,9 +11,7 @@
  *   })
  */
 import axe from 'axe-core'
-import type { DOMWindow } from 'happy-dom'
 
-// Extend axe's window reference to happy-dom's environment
 function configureAxeForHappyDom() {
   // axe-core requires window.document — happy-dom provides it
   // Disable rules that require full browser layout engine

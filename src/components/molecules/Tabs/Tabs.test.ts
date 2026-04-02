@@ -51,8 +51,8 @@ describe('Tabs', () => {
     const panels = wrapper.findAll('[role="tabpanel"]')
     // happy-dom does not apply CSS so isVisible() is unreliable.
     // v-show sets display:none on hidden elements — check inline style instead.
-    expect(panels[0].element.style.display).not.toBe('none')
-    expect(panels[1].element.style.display).toBe('none')
+    expect((panels[0].element as HTMLElement).style.display).not.toBe('none')
+    expect((panels[1].element as HTMLElement).style.display).toBe('none')
   })
 
   it('switches tab on click', async () => {

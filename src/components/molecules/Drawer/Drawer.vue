@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, watch, onBeforeUnmount, ref, nextTick, useId } from 'vue'
-import { cn } from '@/lib/utils'
 import { RiCloseLine } from '@remixicon/vue'
 import Button from '@/components/atoms/Button/Button.vue'
 

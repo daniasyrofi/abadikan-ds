@@ -17,7 +17,6 @@ import {
   RiCodeBoxLine,
   RiGitBranchLine,
   RiCheckboxCircleLine,
-  RiTimeLine,
   RiCloseCircleLine,
   RiIndeterminateCircleLine,
   RiLoader2Line,
