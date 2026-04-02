@@ -495,10 +495,7 @@ function cellClass(cell: CalCell) {
             type="button"
             class="ds-drp-clear-btn text-xs"
             :disabled="!modelValue.start && !modelValue.end"
-            @click="
-              emit('update:modelValue', { start: null, end: null })
-              isOpen = false
-            "
+            @click="emit('update:modelValue', { start: null, end: null }); isOpen = false"
           >
             Clear
           </button>
