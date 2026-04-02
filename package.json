@@ -69,6 +69,7 @@
     "@vitest/coverage-v8": "^4.1.2",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.9.0",
+    "chromatic": "^16.0.0",
     "happy-dom": "^20.8.9",
     "mutationobserver-shim": "^0.3.7",
     "playwright": "^1.58.2",
