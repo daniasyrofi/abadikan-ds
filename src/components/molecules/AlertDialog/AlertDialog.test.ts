@@ -1,11 +1,19 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import AlertDialog from './AlertDialog.vue'
 
 describe('AlertDialog', () => {
+  afterEach(() => {
+    document.body.innerHTML = ''
+  })
+
   it('does not render when modelValue=false', () => {
-    const wrapper = mount(AlertDialog, { props: { modelValue: false, title: 'Delete?' } })
-    expect(wrapper.find('[role="alertdialog"]').exists()).toBe(false)
+    const wrapper = mount(AlertDialog, {
+      props: { modelValue: false, title: 'Delete?' },
+      attachTo: document.body,
+    })
+    expect(document.body.querySelector('[role="alertdialog"]')).toBeNull()
+    wrapper.unmount()
   })
 
   it('renders when modelValue=true', () => {
@@ -13,7 +21,7 @@ describe('AlertDialog', () => {
       props: { modelValue: true, title: 'Delete?' },
       attachTo: document.body,
     })
-    expect(wrapper.find('[role="alertdialog"]').exists()).toBe(true)
+    expect(document.body.querySelector('[role="alertdialog"]')).not.toBeNull()
     wrapper.unmount()
   })
 
@@ -22,7 +30,7 @@ describe('AlertDialog', () => {
       props: { modelValue: true, title: 'Are you sure?' },
       attachTo: document.body,
     })
-    expect(wrapper.text()).toContain('Are you sure?')
+    expect(document.body.textContent).toContain('Are you sure?')
     wrapper.unmount()
   })
 
@@ -31,7 +39,7 @@ describe('AlertDialog', () => {
       props: { modelValue: true, description: 'This cannot be undone.' },
       attachTo: document.body,
     })
-    expect(wrapper.text()).toContain('This cannot be undone.')
+    expect(document.body.textContent).toContain('This cannot be undone.')
     wrapper.unmount()
   })
 
@@ -40,8 +48,8 @@ describe('AlertDialog', () => {
       props: { modelValue: true, cancelLabel: 'No' },
       attachTo: document.body,
     })
-    const cancelBtn = wrapper.find('[data-cancel]')
-    await cancelBtn.trigger('click')
+    const cancelBtn = document.body.querySelector<HTMLElement>('[data-cancel]')
+    await cancelBtn?.click()
     expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([false])
     expect(wrapper.emitted('cancel')).toBeTruthy()
     wrapper.unmount()
@@ -52,9 +60,9 @@ describe('AlertDialog', () => {
       props: { modelValue: true, confirmLabel: 'Yes, delete' },
       attachTo: document.body,
     })
-    const buttons = wrapper.findAll('button')
-    const confirmBtn = buttons.find(b => b.text().includes('Yes, delete'))
-    await confirmBtn?.trigger('click')
+    const buttons = Array.from(document.body.querySelectorAll<HTMLElement>('button'))
+    const confirmBtn = buttons.find(b => b.textContent?.includes('Yes, delete'))
+    await confirmBtn?.click()
     expect(wrapper.emitted('confirm')).toBeTruthy()
     wrapper.unmount()
   })
@@ -64,7 +72,7 @@ describe('AlertDialog', () => {
       props: { modelValue: true, variant: 'danger' },
       attachTo: document.body,
     })
-    expect(wrapper.find('[role="alertdialog"]').exists()).toBe(true)
+    expect(document.body.querySelector('[role="alertdialog"]')).not.toBeNull()
     wrapper.unmount()
   })
 })

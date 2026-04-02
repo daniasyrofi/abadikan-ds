@@ -35,15 +35,6 @@ interface TabsProps {
   orientation?: O
   /** Visual size of the tab triggers. @default 'md' */
   size?:        S
-interface Props {
-  /** The value of the currently active tab. Supports v-model. */
-  modelValue:   string
-  /** Visual style variant. @default 'line' */
-  variant?:     TabsVariant
-  /** Layout orientation of the tabs. @default 'horizontal' */
-  orientation?: TabsOrientation
-  /** Visual size of the tab triggers. @default 'md' */
-  size?:        TabsSize
 }
 
 const props = withDefaults(defineProps<TabsProps>(), {

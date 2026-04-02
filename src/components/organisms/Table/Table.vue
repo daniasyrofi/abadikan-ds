@@ -7,7 +7,6 @@ import Spinner  from '../../atoms/Spinner/Spinner.vue'
 import { useVirtualList } from '@/composables/useVirtualList'
 
 export interface TableColumn {
-interface Column {
   /** Unique key mapping to a property in each data row. */
   key:       string
   /** Display label for the column header. */
@@ -55,21 +54,6 @@ interface Props {
   rowHeight?:    number
   /** Height of the scrollable container in pixels. Used only when `virtual` is true. @default 400 */
   containerHeight?: number
-  columns:      Column[]
-  /** Array of row data objects. Each key should match a column key. */
-  data:         Record<string, any>[]
-  /** Shows a loading overlay with a spinner. @default false */
-  loading?:     boolean
-  /** Adds row selection checkboxes and a select-all header. @default false */
-  selectable?:  boolean
-  /** Highlights rows on hover. @default true */
-  hoverable?:   boolean
-  /** Applies alternating row background colors. @default false */
-  striped?:     boolean
-  /** Keeps the table header fixed while the body scrolls. @default false */
-  stickyHeader?: boolean
-  /** Text displayed when the data array is empty. @default 'No data' */
-  emptyText?:   string
 }
 
 const props = withDefaults(defineProps<Props>(), {
