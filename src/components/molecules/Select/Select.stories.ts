@@ -30,6 +30,65 @@ type Copy = {
   withError:  { label: string; error: string; helper: string }
   sizes:      { small: string; medium: string; large: string }
   sizePlaceholders: { small: string; medium: string; large: string }
+import { getI18nLocale, resolveLocale, type SupportedLocale } from '@/i18n'
+
+type Locale = SupportedLocale
+
+type Option = { label: string; value: string; icon?: string; disabled?: boolean; group?: string }
+
+type Copy = {
+  storyNames: {
+    default: string
+    multiple: string
+    searchable: string
+    withGroups: string
+    clearable: string
+    disabled: string
+    allSizes: string
+    withError: string
+  }
+  fruitOptions: Option[]
+  groupedOptions: Option[]
+  default: {
+    label: string
+    selected: string
+    placeholder: string
+  }
+  multiple: {
+    label: string
+    placeholder: string
+    selected: string
+  }
+  searchable: {
+    label: string
+    placeholder: string
+  }
+  grouped: {
+    label: string
+    placeholder: string
+  }
+  clearable: {
+    label: string
+    helper: string
+  }
+  disabled: {
+    label: string
+  }
+  withError: {
+    label: string
+    error: string
+    helper: string
+  }
+  sizePlaceholders: {
+    small: string
+    medium: string
+    large: string
+  }
+  sizes: {
+    small: string
+    medium: string
+    large: string
+  }
 }
 
 const copyMap: Record<Locale, Copy> = {
@@ -38,6 +97,14 @@ const copyMap: Record<Locale, Copy> = {
       default: 'Default', multiple: 'Multiple', searchable: 'Searchable',
       withGroups: 'With Groups', clearable: 'Clearable', disabled: 'Disabled',
       allSizes: 'All Sizes', withError: 'With Error', customItems: 'Custom Items',
+      default: 'Default',
+      multiple: 'Multiple',
+      searchable: 'Searchable',
+      withGroups: 'With Groups',
+      clearable: 'Clearable',
+      disabled: 'Disabled',
+      allSizes: 'All Sizes',
+      withError: 'With Error',
     },
     fruitOptions: [
       { label: 'Apple', value: 'apple' }, { label: 'Banana', value: 'banana' },
@@ -70,6 +137,27 @@ const copyMap: Record<Locale, Copy> = {
       default: 'Bawaan', multiple: 'Banyak', searchable: 'Bisa Dicari',
       withGroups: 'Dengan Grup', clearable: 'Dapat Dikosongkan', disabled: 'Nonaktif',
       allSizes: 'Semua Ukuran', withError: 'Dengan Error', customItems: 'Item Kustom',
+    grouped: { label: 'Food category', placeholder: 'Select food...' },
+    clearable: { label: 'Clearable select', helper: 'Click the x to clear the selection.' },
+    disabled: { label: 'Disabled select' },
+    withError: { label: 'Allergies', error: 'Please select at least one option.', helper: 'Choose all that apply.' },
+    sizePlaceholders: {
+      small: 'Select small size',
+      medium: 'Select medium size',
+      large: 'Select large size',
+    },
+    sizes: { small: 'Small', medium: 'Medium', large: 'Large' },
+  },
+  id: {
+    storyNames: {
+      default: 'Bawaan',
+      multiple: 'Banyak',
+      searchable: 'Bisa Dicari',
+      withGroups: 'Dengan Grup',
+      clearable: 'Dapat Dikosongkan',
+      disabled: 'Nonaktif',
+      allSizes: 'Semua Ukuran',
+      withError: 'Dengan Error',
     },
     fruitOptions: [
       { label: 'Apel', value: 'apple' }, { label: 'Pisang', value: 'banana' },
@@ -102,6 +190,27 @@ const copyMap: Record<Locale, Copy> = {
       default: '默认', multiple: '多选', searchable: '可搜索',
       withGroups: '带分组', clearable: '可清除', disabled: '禁用',
       allSizes: '所有尺寸', withError: '带错误', customItems: '自定义选项',
+    grouped: { label: 'Kategori makanan', placeholder: 'Pilih makanan...' },
+    clearable: { label: 'Pilihan yang bisa dikosongkan', helper: 'Klik x untuk menghapus pilihan.' },
+    disabled: { label: 'Pilihan nonaktif' },
+    withError: { label: 'Alergi', error: 'Harap pilih setidaknya satu opsi.', helper: 'Pilih semua yang berlaku.' },
+    sizePlaceholders: {
+      small: 'Pilih ukuran kecil',
+      medium: 'Pilih ukuran sedang',
+      large: 'Pilih ukuran besar',
+    },
+    sizes: { small: 'Kecil', medium: 'Sedang', large: 'Besar' },
+  },
+  zh: {
+    storyNames: {
+      default: '默认',
+      multiple: '多选',
+      searchable: '可搜索',
+      withGroups: '带分组',
+      clearable: '可清除',
+      disabled: '禁用',
+      allSizes: '所有尺寸',
+      withError: '带错误',
     },
     fruitOptions: [
       { label: '苹果', value: 'apple' }, { label: '香蕉', value: 'banana' },
@@ -128,6 +237,16 @@ const copyMap: Record<Locale, Copy> = {
     withError:  { label: '过敏情况', error: '请至少选择一项。', helper: '请选择所有适用项。' },
     sizes:      { small: '小', medium: '中', large: '大' },
     sizePlaceholders: { small: '选择小尺寸', medium: '选择中尺寸', large: '选择大尺寸' },
+    grouped: { label: '食物分类', placeholder: '选择食物...' },
+    clearable: { label: '可清除选择', helper: '点击 x 可清除选择。' },
+    disabled: { label: '禁用选择器' },
+    withError: { label: '过敏情况', error: '请至少选择一项。', helper: '请选择所有适用项。' },
+    sizePlaceholders: {
+      small: '选择小尺寸',
+      medium: '选择中尺寸',
+      large: '选择大尺寸',
+    },
+    sizes: { small: '小', medium: '中', large: '大' },
   },
 }
 
@@ -161,6 +280,28 @@ const meta: Meta<typeof Select> = {
   tags:       ['autodocs'],
   decorators: [canvas],
   parameters: { layout: 'fullscreen' },
+  argTypes: {
+    modelValue:  { control: 'text', description: 'Selected value(s). String for single, string[] for multiple.' },
+    options:     { control: 'object', description: 'Array of Option objects: { label, value, icon?, disabled?, group? }' },
+    multiple:    { control: 'boolean' },
+    size:        { control: 'select', options: ['sm', 'md', 'lg'] },
+    label:       { control: 'text' },
+    placeholder: { control: 'text' },
+    helperText:  { control: 'text' },
+    error:       { control: 'text' },
+    searchable:  { control: 'boolean' },
+    clearable:   { control: 'boolean' },
+    disabled:    { control: 'boolean' },
+  },
+  args: {
+    modelValue:  '',
+    size:        'md',
+    placeholder: 'Select...',
+    multiple:    false,
+    searchable:  false,
+    clearable:   false,
+    disabled:    false,
+  },
 }
 export default meta
 type Story = StoryObj<typeof Select>
@@ -190,6 +331,14 @@ export const Default: Story = {
         <p style="margin-top:8px;font-size:12px;color:var(--color-text-tertiary);">
           {{ copy.default.selected }} {{ value || 'none' }}
         </p>
+        <Select
+          v-bind="args"
+          v-model="value"
+          :label="copy.default.label"
+          :placeholder="copy.default.placeholder"
+          :options="copy.fruitOptions"
+        />
+        <p style="margin-top:8px;font-size:12px;color:var(--color-text-tertiary);">{{ copy.default.selected }} {{ value || 'none' }}</p>
       </div>
     `,
   }),
@@ -218,6 +367,14 @@ export const Multiple: Story = {
         <p style="margin-top:8px;font-size:12px;color:var(--color-text-tertiary);">
           {{ copy.multiple.selected }} {{ value.join(', ') || 'none' }}
         </p>
+        <Select
+          v-model="value"
+          :label="copy.multiple.label"
+          :options="copy.fruitOptions"
+          multiple
+          :placeholder="copy.multiple.placeholder"
+        />
+        <p style="margin-top:8px;font-size:12px;color:var(--color-text-tertiary);">{{ copy.multiple.selected }} {{ value.join(', ') || 'none' }}</p>
       </div>
     `,
   }),
@@ -243,6 +400,13 @@ export const Searchable: Story = {
             </SelectItem>
           </SelectContent>
         </Select>
+        <Select
+          v-model="value"
+          :label="copy.searchable.label"
+          :options="copy.fruitOptions"
+          searchable
+          :placeholder="copy.searchable.placeholder"
+        />
       </div>
     `,
   }),
@@ -271,6 +435,13 @@ export const WithGroups: Story = {
             </SelectGroup>
           </SelectContent>
         </Select>
+        <Select
+          v-model="value"
+          :label="copy.grouped.label"
+          :options="copy.groupedOptions"
+          searchable
+          :placeholder="copy.grouped.placeholder"
+        />
       </div>
     `,
   }),
@@ -296,6 +467,13 @@ export const Clearable: Story = {
             </SelectItem>
           </SelectContent>
         </Select>
+        <Select
+          v-model="value"
+          :label="copy.clearable.label"
+          :options="copy.fruitOptions"
+          clearable
+          :helper-text="copy.clearable.helper"
+        />
       </div>
     `,
   }),
@@ -321,6 +499,12 @@ export const Disabled: Story = {
             </SelectItem>
           </SelectContent>
         </Select>
+        <Select
+          v-model="value"
+          :label="copy.disabled.label"
+          :options="copy.fruitOptions"
+          disabled
+        />
       </div>
     `,
   }),
@@ -428,6 +612,36 @@ export const CustomItems: Story = {
         <p style="margin-top:8px;font-size:12px;color:var(--color-text-tertiary);">
           Selected: {{ value || 'none' }}
         </p>
+      <div style="display:flex;flex-direction:column;gap:16px;width:320px;">
+        <Select v-model="sm" size="sm" :label="copy.sizes.small" :options="copy.fruitOptions" :placeholder="copy.sizePlaceholders.small" />
+        <Select v-model="md" size="md" :label="copy.sizes.medium" :options="copy.fruitOptions" :placeholder="copy.sizePlaceholders.medium" />
+        <Select v-model="lg" size="lg" :label="copy.sizes.large" :options="copy.fruitOptions" :placeholder="copy.sizePlaceholders.large" />
+      </div>
+    `,
+  }),
+}
+
+// ── With Error ─────────────────────────────────────────────────────────────────
+// Demonstrates the error prop (red border + error message) and helperText fallback.
+export const WithError: Story = {
+  get name() {
+    return getStoryName('withError')
+  },
+  render: () => ({
+    components: { Select },
+    setup() {
+      const value = ref('')
+      return { value, copy: useCopy() }
+    },
+    template: `
+      <div style="width:320px;">
+        <Select
+          v-model="value"
+          :label="copy.withError.label"
+          :options="copy.fruitOptions"
+          :error="copy.withError.error"
+          :helper-text="copy.withError.helper"
+        />
       </div>
     `,
   }),

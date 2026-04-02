@@ -110,6 +110,7 @@ const btnWidthClass: Record<Size, string> = {
       <button
         type="button"
         :disabled="disabled || readonly || !canDecrement"
+        :disabled="disabled || !canDecrement"
         :class="cn(
           'ds-number-btn ds-number-btn--left',
           'shrink-0 flex items-center justify-center',
@@ -146,6 +147,7 @@ const btnWidthClass: Record<Size, string> = {
       <button
         type="button"
         :disabled="disabled || readonly || !canIncrement"
+        :disabled="disabled || !canIncrement"
         :class="cn(
           'ds-number-btn ds-number-btn--right',
           'shrink-0 flex items-center justify-center',
