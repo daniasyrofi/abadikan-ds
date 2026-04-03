@@ -12,6 +12,8 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    # Skip entirely if NPM_TOKEN is not configured — avoids publish failures
+    if: ${{ secrets.NPM_TOKEN != '' }}
     permissions:
       contents: write       # push version bump commits + tags
       pull-requests: write  # create "Version Packages" PR
