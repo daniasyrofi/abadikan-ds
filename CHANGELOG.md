@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0
+
+### Minor Changes
+
+- 41e606a: update designsystem
+
 All notable changes to `@abadikan/ds` are documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to [Semantic Versioning](https://semver.org/).
@@ -9,6 +15,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 ## [Unreleased]
 
 ### Added
+
 - **Advanced Data Table** — `Table` component now supports:
   - `filterBy` prop — global real-time filter (case-insensitive, respects `filterable: false`)
   - Client-side sorting — rows sorted internally via computed, sort event still emitted
@@ -35,6 +42,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - **useVirtualList** composable — windowed list rendering for large datasets
 
 ### Changed
+
 - Coverage config: `all: true` — untested files now counted toward coverage thresholds
 - CI: `coverage` artifact always uploaded (including on test failure)
 
@@ -47,6 +55,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 #### Components (46 total)
 
 **Atoms (12)**
+
 - `Avatar` — circular/rounded/square, 6 sizes, status indicators
 - `Badge` — 7 variants × 3 styles (subtle/solid/outline), dot mode, removable
 - `Button` — 7 variants, 5 sizes, loading state, icon-only, polymorphic (`as` prop)
@@ -61,6 +70,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - `Toggle` — 4 colors, 3 sizes, aria-checked
 
 **Molecules (28)**
+
 - `Accordion` / `AccordionItem` — single/multiple open, smooth animation
 - `Alert` — 4 variants, 2 sizes, dismissible, icon + action slots
 - `AvatarGroup` — stacked avatars, overflow badge, sizing
@@ -91,6 +101,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - `Tooltip` — 4 placements, hover/click/focus trigger
 
 **Organisms (6)**
+
 - `ChatInput` — auto-resize textarea, file attach, send button
 - `ChatMessage` — avatar, timestamp, actions, code block highlight
 - `Form` — validation, error display, native submit
@@ -99,14 +110,17 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 - `Table` — sortable columns, row selection, sticky header, loading, custom cell slots
 
 #### Testing
+
 - 599 unit tests across 48 files — 100% component coverage
 - axe-core 4.11.1 WCAG 2.1 AA audit for all key components
 
 #### CI/CD
+
 - `.github/workflows/ci.yml` — typecheck, unit tests + coverage, a11y, build, Storybook build
 - `.github/workflows/chromatic.yml` — visual regression via Chromatic (TurboSnap)
 
 #### Design Tokens
+
 - Tier 1: primitive OKLCH colors
 - Tier 2: semantic CSS custom properties (light + dark mode)
 - JS token exports: `colors`, `spacing`, `radii`, `shadows`, `duration`, `fonts`, `zIndex`
