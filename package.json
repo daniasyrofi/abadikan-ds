@@ -64,7 +64,7 @@
     },
     {
       "path": "dist/style.css",
-      "limit": "10 kB"
+      "limit": "25 kB"
     }
   ],
   "peerDependencies": {

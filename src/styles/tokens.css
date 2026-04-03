@@ -4,6 +4,9 @@
  * Imported automatically via @abadikan/ds/style.css
  */
 
+/* Font embedded as base64 — no HTTP request, always available */
+@import './fonts.css';
+
 /* ── Primitive tokens (raw values) ──────────────────────────── */
 :root {
   /* Red (primary brand) */
