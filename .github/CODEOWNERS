@@ -3,11 +3,11 @@
 # Format: <pattern> <@github-username>
 
 # Global: semua file
-* @daniasyrofi
+* @abadikan-ds
 
 # Design tokens & styles — critical, require review
-src/styles/ @daniasyrofi
-src/tokens/ @daniasyrofi
+src/styles/ @abadikan-ds
+src/tokens/ @abadikan-ds
 
 # CI/CD — always review workflow changes
-.github/ @daniasyrofi
+.github/ @abadikan-ds
