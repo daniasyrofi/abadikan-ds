@@ -5,6 +5,7 @@ const meta: Meta<typeof Skeleton> = {
   title: 'Atoms/Skeleton',
   component: Skeleton,
   tags: ['autodocs'],
+  parameters: { icon: 'component' },
   argTypes: {
     variant: { control: 'select', options: ['text', 'circular', 'rectangular', 'rounded'] },
     width: { control: 'text' },
