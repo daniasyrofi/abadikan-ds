@@ -23,7 +23,11 @@ const config: StorybookConfig = {
   viteFinal: async (config) => {
     const { mergeConfig } = await import('vite')
     const tailwindcss = (await import('@tailwindcss/vite')).default
+    // On GitHub Actions, set base to /repo-name/ so assets load correctly from GitHub Pages
+    const repoName = process.env.GITHUB_REPOSITORY?.split('/')[1]
+    const base = repoName && process.env.GITHUB_ACTIONS ? `/${repoName}/` : '/'
     return mergeConfig(config, {
+      base,
       plugins: [tailwindcss()],
       resolve: {
         alias: {

@@ -2534,9 +2534,12 @@
       observer.observe(document.body, { attributes: true, childList: true, subtree: true });
     }
     
-    // Initial redirect
+    // Initial redirect — preserve base path (works on localhost AND GitHub Pages /repo-name/)
     if (window.location.search === "" || window.location.search === "?path=/") {
-      window.location.replace("/?path=/story/welcome--welcome");
+      var basePath = window.location.pathname.endsWith('/')
+        ? window.location.pathname
+        : window.location.pathname + '/';
+      window.location.replace(basePath + "?path=/story/welcome--welcome");
     }
   })();
 </script>
