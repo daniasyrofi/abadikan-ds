@@ -3,12 +3,7 @@
      ABADIKAN DESIGN SYSTEM — Storybook Sidebar
   ══════════════════════════════════════════ */
 
-  @font-face {
-    font-family: 'AbadikanSans';
-    src: url('/AbadikanSans.otf') format('opentype');
-    font-weight: 100 900;
-    font-style: normal;
-  }
+  /* AbadikanSans loaded via preview CSS; sidebar falls back to system UI */
 
   /* ── Custom Remix icon box styling ── */
   [data-ri-icon-box] {
@@ -178,7 +173,7 @@
     width: 36px !important;
     height: 36px !important;
     border-radius: 8px !important;
-    background-image: url('/AbadikanLogo.svg') !important;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iI0Q3MjUzOSIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTguODYzMzQgMTkuNTUzOUM3LjU5OTYyIDE5LjE4NTMgNi41NDAyMSAxOC4zMjE4IDUuOTMwMiAxNy4xNjMyQzUuODY2NTMgMTcuMDQ1OCA1LjgxMTEzIDE2Ljk0MDIgNS43NjM4MyAxNi44NDkxQzUuMDExOTMgMTUuMzk2NCA1LjQ3MDk1IDEzLjYyMTIgNi44NTMwNCAxMi43NDQ2QzEwLjM1ODMgMTAuNTM0OSAxMy45NTIzIDguNDU5OTEgMTcuNjM1NiA2LjUyMDQ1QzE5LjA4NTMgNS43NjE4NCAyMC44NDkxIDYuMjUzIDIxLjc3NzkgNy41OTk5NkMyMS45NTc2IDcuODYwNTMgMjIuMjM5MiA4LjI5NjU0IDIyLjU3MzcgOC44MzA1NUMyMi44NDY3IDkuMjY0MyAyMi45NjE1IDkuNzc3NDIgMjIuODk4OCAxMC4yODM5QzIyLjc1MTMgMTEuNDc0MiAyMi4zOTE4IDEyLjUzMjggMjEuODgwOSAxMy4zMzk2QzIxLjU0OTYgMTMuODYyNiAyMS4xNjAyIDE0LjI4MiAyMC43MjE2IDE0LjUwNTJDMjAuNzU0MiAxMy44MzQyIDIwLjcwMzkgMTMuMjA0MSAyMC41MzUxIDEyLjY3ODdDMTkuOTEzNSAxMC43NDQgMTcuNjg1OCAxMC4wNTE2IDE2LjM0NTIgMTEuMjEyQzE1LjkxNDEgMTEuNTg1MiAxNS42NDIzIDEyLjAxMzMgMTUuNTA2MSAxMi40NTk4QzE1LjA3MzUgMTEuOTAyOSAxNC40NjYgMTEuNDMxMyAxMy44MDQ4IDExLjE2NDVDMTMuMDgwNiAxMC44NzE5IDEyLjMwMzUgMTAuODIyMSAxMS42MTQ1IDExLjA4MDlDOS41MzkxMiAxMS44NjA2IDkuMTYzMDkgMTMuODYxNSA5LjkxODUgMTUuNTEwNEMxMC41MzQ4IDE2Ljg1NiAxMS44NjkzIDE3Ljk2NjIgMTMuMzIxMiAxOC43OTRDMTMuMzE2OSAxOC44MDEgMTMuMzEyNSAxOC44MDgxIDEzLjMwOCAxOC44MTUyQzEzLjA0NSAxOS4yNDIgMTIuMzkzMyAxOS42MzE5IDExLjQ3MTcgMTkuNzc3OEMxMC43NDA2IDE5Ljg5MzcgOS44NjY2IDE5Ljg0NzYgOC44NjMzNCAxOS41NTM5Wk0yNC4zMDg2IDEyLjc1MjhDMjQuMzQ5OCAxMi42MzUgMjQuNDU3MSAxMi41NTI1IDI0LjU4MjQgMTIuNTQxOEMyNC43MDc4IDEyLjUzMTEgMjQuODI4MSAxMi41OTQxIDI0Ljg5MDMgMTIuNzAzMUMyNS41OCAxMy45MTAzIDI2LjEwODYgMTQuODk1MiAyNi4yMjgyIDE1LjE1NDVDMjYuOTExNSAxNi42MzcxIDI2LjUxODkgMTguMzc3NiAyNS4xMzk4IDE5LjI1NEMyMS42MjgyIDIxLjQ3MjYgMTguMDMyNyAyMy41NDg3IDE0LjM1MjkgMjUuNDgxOEMxMi45MDIyIDI2LjIzODkgMTEuMTA0NSAyNS43Njg1IDEwLjIxMTUgMjQuMzk3OUMxMC4xNDg2IDI0LjMwMTQgOS4wNjY5OCAyMi41NzQ0IDguNTc1ODMgMjEuNzg5NkM4LjUzNzg2IDIxLjcyNzQgOC41NDExNSAyMS42NDg5IDguNTg0IDIxLjU5MDVDOC42MjcwMiAyMS41MzIgOC43MDEzOCAyMS41MDUxIDguNzcyNjIgMjEuNTIyM0MxMC40NTEyIDIxLjkyOTMgMTEuODMyIDIxLjc4MjcgMTIuODQ0OSAyMS40MjA1QzEzLjkwMDIgMjEuMDQzMyAxNC42MTI1IDIwLjQxNTMgMTQuOTczOSAxOS44MjkxQzE1LjAxMSAxOS43NjkgMTUuMDQ3NCAxOS43MDg5IDE1LjA4MzIgMTkuNjQ4OUMxNS4yNTU2IDE5LjcxOTUgMTUuNDI2MyAxOS43ODU5IDE1LjU5NDQgMTkuODQ3OUwxNS41OTQ3IDE5Ljg0OEMxNi40ODY0IDIwLjE3NjUgMTcuNDcyOCAyMC4xMjkgMTguMzI1MSAxOS43MTcxQzE5LjE3NzIgMTkuMzA1MiAxOS44MjA3IDE4LjU2NDQgMjAuMTA1OSAxNy42Njc2QzIwLjIxNTcgMTcuMzIyOSAyMC4zMTc0IDE2Ljk2MTQgMjAuNDA1NCAxNi41OTMxQzIxLjYwOCAxNi40NTM3IDIyLjcxNTQgMTUuNjY2MSAyMy41MzQyIDE0LjM3MzRDMjMuODM0OCAxMy44OTg4IDI0LjA5NjMgMTMuMzUzMyAyNC4zMDg2IDEyLjc1MjhaTTE0LjE2NDkgMTcuMDc3QzEzLjEwMTMgMTYuNDc0NiAxMi4xNDI0IDE1LjY5NDYgMTEuNjk0MiAxNC43MTYyQzExLjM4NzMgMTQuMDQ2MiAxMS40Njg4IDEzLjIwNzQgMTIuMzEyMSAxMi44OTA0QzEyLjYzMTkgMTIuNzcwNCAxMi45OTUxIDEyLjg5MDEgMTMuMzE1MiAxMy4wNzI0QzEzLjY5NzUgMTMuMjkwMiAxNC4wMzI1IDEzLjYyNTggMTQuMTc0NyAxMy45OTc3QzE0LjU2ODQgMTUuMDI3NSAxNC41MjkzIDE2LjAzMTYgMTQuMTY0OSAxNy4wNzdaTTE4Ljc5NzggMTQuNDcxNUMxOC4zOTMxIDE0LjM1NzYgMTguMDMyOSAxNC4xNzcgMTcuNjY1MyAxMy44MDkxQzE3LjQ3OSAxMy42MjI3IDE3LjM1NDggMTMuNDEyNiAxNy4zNTEzIDEzLjE5MzRDMTcuMzQ4MiAxMy4wMDM4IDE3LjQ1MjMgMTIuODI2OCAxNy42MzE1IDEyLjY3MTZDMTcuOTkzOCAxMi4zNTgxIDE4LjUwODUgMTIuNzM2NiAxOC42NzY0IDEzLjI1OTNDMTguNzkwMiAxMy42MTM0IDE4LjgyMTYgMTQuMDI4MiAxOC43OTc4IDE0LjQ3MTVaTTE4LjQ1NDIgMTYuMzc1MUMxOC4zODg0IDE2LjYxNTUgMTguMzE3NSAxNi44NTE1IDE4LjI0NSAxNy4wNzg0TDE4LjI0NDkgMTcuMDc4N0MxOC4xMiAxNy40NzIxIDE3LjgzNzkgMTcuNzk2OCAxNy40NjQ0IDE3Ljk3NzRDMTcuMDkwOSAxOC4xNTggMTYuNjU4NiAxOC4xNzg3IDE2LjI2NzkgMTguMDM1QzE2LjE1OTkgMTcuOTk1MSAxNi4wNDk4IDE3Ljk1MzMgMTUuOTM4NCAxNy45MDk2QzE2LjI3NTUgMTcuMDE5IDE2LjQzNzIgMTYuMTUyMSAxNi40MDc1IDE1LjI4OThDMTcuMDYzNiAxNS45MDY3IDE3LjY5NDQgMTYuMTg5NiAxOC40NTQyIDE2LjM3NTFaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K') !important;
     background-size: cover !important;
     background-repeat: no-repeat !important;
   }
@@ -2402,19 +2397,19 @@
         }
         
         // 2. Check for classes on html/body (direct SB toggle evidence)
-        if (document.documentElement.classList.contains('dark') || 
-            document.body.classList.contains('dark') ||
-            document.documentElement.classList.contains('sb-main-dark') || 
-            document.body.classList.contains('sb-main-dark')) {
+        if (document.documentElement.classList.contains('dark') ||
+            (document.body && document.body.classList.contains('dark')) ||
+            document.documentElement.classList.contains('sb-main-dark') ||
+            (document.body && document.body.classList.contains('sb-main-dark'))) {
           isDark = true;
         }
 
         const themeValue = isDark ? 'dark' : 'light';
         const currentAttr = document.documentElement.getAttribute('data-theme');
-        
+
         if (currentAttr !== themeValue) {
           document.documentElement.setAttribute('data-theme', themeValue);
-          document.body.setAttribute('data-theme', themeValue);
+          if (document.body) document.body.setAttribute('data-theme', themeValue);
           // Force a repaint if needed
           window.dispatchEvent(new Event('resize'));
         }
@@ -2523,11 +2518,15 @@
         }
       });
     });
-    sidebarObserver.observe(document.body, { attributes: true, subtree: true, attributeFilter: ['aria-expanded'] });
+    if (document.body) {
+      sidebarObserver.observe(document.body, { attributes: true, subtree: true, attributeFilter: ['aria-expanded'] });
+    }
 
     // Observe both html and body for attribute changes (where Storybook sets themes)
     observer.observe(document.documentElement, { attributes: true });
-    observer.observe(document.body, { attributes: true, childList: true, subtree: true });
+    if (document.body) {
+      observer.observe(document.body, { attributes: true, childList: true, subtree: true });
+    }
     
     // Initial redirect
     if (window.location.search === "" || window.location.search === "?path=/") {
