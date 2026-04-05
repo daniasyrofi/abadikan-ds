@@ -2,6 +2,7 @@
 import { computed, useId } from 'vue'
 import { cn } from '@/lib/utils'
 import { Icons } from '@/lib/icons'
+import { baselineOffset } from '@/lib/opticalAlign'
 
 type CheckboxSize = 'sm' | 'md' | 'lg'
 type CheckboxColor = 'primary' | 'secondary' | 'neutral' | 'danger'
@@ -70,13 +71,14 @@ const descTextClass: Record<CheckboxSize, string> = {
   lg: 'text-sm',
 }
 
-// Math for baseline alignment: (BoxHeight - LineHeight) / 2
-// Assumes text uses leading-none (LineHeight = FontSize)
-const offsetClass: Record<CheckboxSize, string> = {
-  sm: 'mt-[2px]', // (16 - 12)/2 = 2px
-  md: 'mt-[3px]', // (20 - 14)/2 = 3px
-  lg: 'mt-[4px]', // (24 - 16)/2 = 4px
-}
+// Baseline alignment: (BoxHeight - FontSize) / 2
+const boxHeights: Record<CheckboxSize, number> = { sm: 16, md: 20, lg: 24 }
+const fontSizes: Record<CheckboxSize, number> = { sm: 12, md: 14, lg: 16 }
+const offsetClass = computed(() => ({
+  sm: `mt-[${baselineOffset(boxHeights.sm, fontSizes.sm)}px]`,
+  md: `mt-[${baselineOffset(boxHeights.md, fontSizes.md)}px]`,
+  lg: `mt-[${baselineOffset(boxHeights.lg, fontSizes.lg)}px]`,
+}))
 
 const boxClasses = computed(() =>
   cn(

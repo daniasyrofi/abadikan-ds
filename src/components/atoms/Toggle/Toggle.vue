@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, useId } from 'vue'
 import { cn } from '@/lib/utils'
+import { baselineOffset } from '@/lib/opticalAlign'
 
 type Size = 'sm' | 'md' | 'lg'
 type ToggleColor = 'primary' | 'secondary' | 'neutral' | 'danger'
@@ -54,13 +55,14 @@ const labelTextClass: Record<Size, string> = {
   lg: 'text-base', // 16px
 }
 
-// Math for baseline alignment: (TrackHeight - LineHeight) / 2
-// Assumes text uses leading-none (LineHeight = FontSize)
-const offsetClass: Record<Size, string> = {
-  sm: 'mt-[2px]', // (16 - 12)/2 = 2px
-  md: 'mt-[3px]', // (20 - 14)/2 = 3px
-  lg: 'mt-[4px]', // (24 - 16)/2 = 4px
-}
+// Baseline alignment: (TrackHeight - FontSize) / 2
+const trackHeights: Record<Size, number> = { sm: 16, md: 20, lg: 24 }
+const fontSizePx: Record<Size, number> = { sm: 12, md: 14, lg: 16 }
+const offsetClass = computed(() => ({
+  sm: `mt-[${baselineOffset(trackHeights.sm, fontSizePx.sm)}px]`,
+  md: `mt-[${baselineOffset(trackHeights.md, fontSizePx.md)}px]`,
+  lg: `mt-[${baselineOffset(trackHeights.lg, fontSizePx.lg)}px]`,
+}))
 
 const trackClasses = computed(() =>
   cn(

@@ -96,6 +96,13 @@ const paddingClass: Record<TextareaSize, string> = {
   lg: 'px-4 py-3',
 }
 
+// Golden formula: applied_radius = max(0, base_radius - vertical_padding)
+const radiusClass: Record<TextareaSize, string> = {
+  sm: 'rounded-[max(0px,calc(var(--radius-2xl)-8px))]',   // 20-8=12px
+  md: 'rounded-[max(0px,calc(var(--radius-2xl)-10px))]',  // 20-10=10px
+  lg: 'rounded-[max(0px,calc(var(--radius-2xl)-12px))]',  // 20-12=8px
+}
+
 const resizeStyle = computed(() => {
   if (props.autoResize) return 'resize: none;'
   return `resize: ${props.resize};`
@@ -105,7 +112,7 @@ const wrapperClasses = computed(() =>
   cn(
     'ds-textarea-wrapper',
     'relative w-full overflow-hidden transition-all duration-200 ease-out',
-    'rounded-[var(--radius-lg)] border outline-none',
+    radiusClass[props.size], 'border outline-none',
     hasError.value && 'ds-textarea-wrapper--error',
     props.disabled && 'ds-textarea-wrapper--disabled cursor-not-allowed',
     props.readonly && 'ds-textarea-wrapper--readonly'

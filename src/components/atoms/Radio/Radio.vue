@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, useId } from 'vue'
 import { cn } from '@/lib/utils'
+import { baselineOffset } from '@/lib/opticalAlign'
 
 type RadioSize = 'sm' | 'md' | 'lg'
 type RadioColor = 'primary' | 'secondary' | 'neutral' | 'danger'
@@ -62,13 +63,14 @@ const descTextClass: Record<RadioSize, string> = {
   lg: 'text-sm',
 }
 
-// Math for baseline alignment: (BoxHeight - LineHeight) / 2
-// Assumes text uses leading-none (LineHeight = FontSize)
-const offsetClass: Record<RadioSize, string> = {
-  sm: 'mt-[2px]', // (16 - 12)/2 = 2px
-  md: 'mt-[3px]', // (20 - 14)/2 = 3px
-  lg: 'mt-[4px]', // (24 - 16)/2 = 4px
-}
+// Baseline alignment: (BoxHeight - FontSize) / 2
+const boxHeights: Record<RadioSize, number> = { sm: 16, md: 20, lg: 24 }
+const fontSizes: Record<RadioSize, number> = { sm: 12, md: 14, lg: 16 }
+const offsetClass = computed(() => ({
+  sm: `mt-[${baselineOffset(boxHeights.sm, fontSizes.sm)}px]`,
+  md: `mt-[${baselineOffset(boxHeights.md, fontSizes.md)}px]`,
+  lg: `mt-[${baselineOffset(boxHeights.lg, fontSizes.lg)}px]`,
+}))
 
 const outerStyle = computed(() => {
   const colorVar = `var(--color-${props.color})`

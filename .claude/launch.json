@@ -9,8 +9,8 @@
     },
     {
       "name": "Storybook",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["storybook", "dev", "-p", "6006"],
+      "runtimeExecutable": "/bin/zsh",
+      "runtimeArgs": ["-c", "export PATH=/usr/local/bin:$PATH && npm run storybook"],
       "port": 6006,
       "autoPort": false
     },

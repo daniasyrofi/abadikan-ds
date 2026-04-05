@@ -109,13 +109,31 @@ const iconSizePx: Record<InputSize, string> = {
   lg: '18',
 }
 
+const radiusClass: Record<InputSize, string> = {
+  sm: 'rounded-[max(0px,calc(var(--radius-2xl)-6px))]',
+  md: 'rounded-[max(0px,calc(var(--radius-2xl)-8px))]',
+  lg: 'rounded-[max(0px,calc(var(--radius-2xl)-10px))]',
+}
+
+const prefixRadiusStyle = computed(() => {
+  const pyPx: Record<InputSize, number> = { sm: 6, md: 8, lg: 10 }
+  const r = `max(0px, calc(var(--radius-2xl) - ${pyPx[props.size]}px))`
+  return `${r} 0 0 ${r}`
+})
+
+const suffixRadiusStyle = computed(() => {
+  const pyPx: Record<InputSize, number> = { sm: 6, md: 8, lg: 10 }
+  const r = `max(0px, calc(var(--radius-2xl) - ${pyPx[props.size]}px))`
+  return `0 ${r} ${r} 0`
+})
+
 // Wrapper controls the background, border, and focus rings.
 // We use a flex container so prefix/suffix panels can stretch fully to the top and bottom.
 const wrapperClasses = computed(() =>
   cn(
     'ds-input-wrapper',
     'relative flex items-center w-full transition-colors duration-200 ease-out',
-    'rounded-[var(--radius-lg)] border outline-none overflow-hidden',
+    radiusClass[props.size], 'border outline-none overflow-hidden',
     heightClass[props.size],
     hasError.value && 'ds-input-wrapper--error',
     props.disabled && 'ds-input-wrapper--disabled cursor-not-allowed',
@@ -158,7 +176,7 @@ const wrapperClasses = computed(() =>
           borderRight: '1px solid var(--color-border)',
           backgroundColor: 'var(--color-bg-subtle)',
           color: 'var(--color-text-secondary)',
-          borderRadius: 'var(--radius-lg) 0 0 var(--radius-lg)',
+          borderRadius: prefixRadiusStyle,
         }"
       >
         <slot name="prefix" />
@@ -248,7 +266,7 @@ const wrapperClasses = computed(() =>
             borderLeft: '1px solid var(--color-border)',
             backgroundColor: 'var(--color-bg-subtle)',
             color: 'var(--color-text-secondary)',
-            borderRadius: '0 var(--radius-lg) var(--radius-lg) 0',
+            borderRadius: suffixRadiusStyle,
           }"
         >
           <slot name="suffix" />
