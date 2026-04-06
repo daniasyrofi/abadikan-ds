@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, useAttrs } from 'vue'
 import { cn } from '@/lib/utils'
 import Spinner from '@/components/atoms/Spinner/Spinner.vue'
 
@@ -31,6 +31,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<{ click: [e: MouseEvent] }>()
 const slots = defineSlots()
+const attrs = useAttrs()
 
 const tag = computed(() => (props.href ? 'a' : props.as))
 
@@ -173,19 +174,26 @@ const variantStyleVars = computed(() => {
     '--btn-hover-text': t.hoverText || t.text,
   }
 })
+
+const mergedStyle = computed(() => [variantStyleVars.value, attrs.style])
+
+const rootAttrs = computed(() => {
+  const { style: _style, ...rest } = attrs as Record<string, unknown>
+  return rest
+})
 </script>
 
 <template>
   <component
     :is="tag"
     :class="classes"
-    :style="variantStyleVars"
+    :style="mergedStyle"
     :disabled="disabled || loading || undefined"
     :href="href"
     :type="tag === 'button' ? type : undefined"
     :aria-disabled="disabled || loading"
     :aria-busy="loading"
-    v-bind="$attrs"
+    v-bind="rootAttrs"
     @click="!disabled && !loading && emit('click', $event)"
   >
     <!-- Leading slot -->
