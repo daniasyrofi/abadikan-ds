@@ -461,7 +461,7 @@ export const Default: Story = {
   get name() {
     return getStoryName('default')
   },
-  render: (args) => ({
+  render: (args: Record<string, unknown>) => ({
     components: { Badge },
     setup: () => {
       const copy = useCopy()

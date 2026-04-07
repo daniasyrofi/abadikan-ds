@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useId } from 'vue'
+import { computed, useId, ref } from 'vue'
 import { cn } from '@/lib/utils'
 
 type Size = 'sm' | 'md' | 'lg'
@@ -22,8 +22,13 @@ const props = withDefaults(defineProps<Props>(), {
   readonly: false,
 })
 
-const emit = defineEmits<{ 'update:modelValue': [value: boolean] }>()
+const emit = defineEmits<{
+  'update:modelValue': [value: boolean]
+  focus: [event: FocusEvent]
+  blur: [event: FocusEvent]
+}>()
 const inputId = useId()
+const inputRef = ref<HTMLInputElement | null>(null)
 const labelId = useId() // used by <label> + aria-labelledby on the button
 
 function toggle() {
@@ -92,11 +97,18 @@ const thumbStyle = {
   borderRadius: 'var(--radius-full)',
   boxShadow: 'var(--shadow-sm)',
 }
+
+defineExpose({
+  el: inputRef,
+  focus: () => inputRef.value?.focus(),
+  blur: () => inputRef.value?.blur(),
+})
 </script>
 
 <template>
   <div class="relative flex items-center gap-2.5">
     <input
+      ref="inputRef"
       :id="inputId"
       type="checkbox"
       role="switch"
@@ -117,9 +129,12 @@ const thumbStyle = {
       :aria-labelledby="label ? labelId : undefined"
       :aria-label="!label ? label || 'Toggle' : undefined"
       :tabindex="disabled ? -1 : 0"
+      :data-state="modelValue ? 'checked' : 'unchecked'"
       @click="toggle"
       @keydown.space.prevent="toggle"
       @keydown.enter.prevent="toggle"
+      @focus="emit('focus', $event)"
+      @blur="emit('blur', $event)"
     >
       <span :class="thumbClasses" :style="thumbStyle" />
     </button>

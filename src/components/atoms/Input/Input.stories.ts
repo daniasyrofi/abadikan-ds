@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { computed, ref, watch } from 'vue'
+import { userEvent, within, expect } from 'storybook/test'
 import {
   RiSearchLine,
   RiMailLine,
@@ -468,6 +469,23 @@ export const PrefixSuffix: Story = {
 export const Features: Story = {
   get name() {
     return getStoryName('features')
+  },
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const canvas = within(canvasElement)
+
+    // The first textbox in this story is the clearable input
+    const inputs = canvas.getAllByRole('textbox')
+    const clearableInput = inputs[0]
+
+    // Type text into the clearable input
+    await userEvent.clear(clearableInput)
+    await userEvent.type(clearableInput, 'hello world')
+    await expect(clearableInput).toHaveValue('hello world')
+
+    // Click the clear button (aria-label="Clear")
+    const clearBtn = canvas.getByRole('button', { name: /clear/i })
+    await userEvent.click(clearBtn)
+    await expect(clearableInput).toHaveValue('')
   },
   render: () => ({
     components: { Input },

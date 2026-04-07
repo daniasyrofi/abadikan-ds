@@ -226,6 +226,14 @@ const wrapperClasses = computed(() =>
   )
 )
 
+defineExpose({
+  el: inputRef,
+  focus: () => inputRef.value?.focus(),
+  blur: () => inputRef.value?.blur(),
+  open,
+  close,
+})
+
 const optionClass = (idx: number, option: ComboboxOption) =>
   cn(
     'ds-combobox-option',

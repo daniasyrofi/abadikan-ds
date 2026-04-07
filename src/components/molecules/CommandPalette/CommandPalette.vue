@@ -203,6 +203,12 @@ function setActive(item: CommandItem) {
   const idx = selectableItems.value.indexOf(item)
   if (idx !== -1) activeIdx.value = idx
 }
+
+defineExpose({
+  el: inputRef,
+  open,
+  close,
+})
 </script>
 
 <template>

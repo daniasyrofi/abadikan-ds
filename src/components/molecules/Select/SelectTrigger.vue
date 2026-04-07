@@ -91,8 +91,12 @@ const triggerClasses = computed(() =>
     :aria-expanded="ctx.isOpen.value"
     :aria-readonly="ctx.readonly.value || undefined"
     aria-haspopup="listbox"
+    :data-state="ctx.isOpen.value ? 'open' : 'closed'"
+    :data-disabled="ctx.disabled.value ? '' : undefined"
     @click="ctx.toggle()"
     @keydown="handleKeydown"
+    @focus="ctx.onTriggerFocus($event)"
+    @blur="ctx.onTriggerBlur($event)"
   >
     <!-- Selected value / placeholder -->
     <span

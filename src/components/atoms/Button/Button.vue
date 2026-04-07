@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useAttrs } from 'vue'
+import { computed, useAttrs, ref } from 'vue'
 import { cn } from '@/lib/utils'
 import Spinner from '@/components/atoms/Spinner/Spinner.vue'
 
@@ -32,6 +32,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{ click: [e: MouseEvent] }>()
 const slots = defineSlots()
 const attrs = useAttrs()
+const buttonRef = ref<HTMLElement | null>(null)
 
 const tag = computed(() => (props.href ? 'a' : props.as))
 
@@ -47,7 +48,16 @@ const baseClasses = [
   'active:scale-[0.97]',
 ]
 
-const variantTokens: Record<Variant, any> = {
+interface VariantTokenSet {
+  bg: string
+  text: string
+  border: string
+  hoverBg: string
+  hoverBorder: string
+  hoverText?: string
+}
+
+const variantTokens: Record<Variant, VariantTokenSet> = {
   default: {
     bg: 'var(--color-neutral)',
     text: 'var(--color-text-inverse)',
@@ -177,6 +187,12 @@ const variantStyleVars = computed(() => {
 
 const mergedStyle = computed(() => [variantStyleVars.value, attrs.style])
 
+defineExpose({
+  el: buttonRef,
+  focus: () => buttonRef.value?.focus(),
+  blur: () => buttonRef.value?.blur(),
+})
+
 const rootAttrs = computed(() => {
   const { style: _style, ...rest } = attrs as Record<string, unknown>
   return rest
@@ -186,6 +202,7 @@ const rootAttrs = computed(() => {
 <template>
   <component
     :is="tag"
+    ref="buttonRef"
     :class="classes"
     :style="mergedStyle"
     :disabled="disabled || loading || undefined"

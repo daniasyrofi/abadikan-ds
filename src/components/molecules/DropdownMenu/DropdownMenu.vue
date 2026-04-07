@@ -159,7 +159,7 @@ const menuClasses = computed(() =>
 </script>
 
 <template>
-  <div class="relative inline-flex">
+  <div class="relative inline-flex" :data-state="isOpen ? 'open' : 'closed'">
     <!-- Trigger -->
     <div ref="triggerRef" @click="toggle">
       <slot name="trigger" />
@@ -185,6 +185,7 @@ const menuClasses = computed(() =>
             type="button"
             role="menuitem"
             :disabled="item.disabled"
+            :data-disabled="item.disabled ? '' : undefined"
             :class="
               cn(
                 'ds-dropdown-item flex w-full items-center gap-2.5 px-2 py-2 text-sm text-left',

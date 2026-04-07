@@ -38,10 +38,15 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{
   'update:modelValue': [value: string]
   clear: []
+  focus: [event: FocusEvent]
+  blur: [event: FocusEvent]
+  keydown: [event: KeyboardEvent]
+  keyup: [event: KeyboardEvent]
 }>()
 
 const autoId = useId()
 const inputId = computed(() => props.id ?? autoId)
+const inputRef = ref<HTMLInputElement | null>(null)
 const showPassword = ref(false)
 const hasError = computed(() => !!props.error)
 const charCount = computed(() => props.modelValue?.length ?? 0)
@@ -156,6 +161,12 @@ const wrapperClasses = computed(() =>
     props.readonly && 'ds-input-wrapper--readonly'
   )
 )
+
+defineExpose({
+  el: inputRef,
+  focus: () => inputRef.value?.focus(),
+  blur: () => inputRef.value?.blur(),
+})
 </script>
 
 <template>
@@ -209,6 +220,7 @@ const wrapperClasses = computed(() =>
 
       <!-- Native Input -->
       <input
+        ref="inputRef"
         :id="inputId"
         :type="effectiveType"
         :value="modelValue"
@@ -233,6 +245,10 @@ const wrapperClasses = computed(() =>
         "
         v-bind="$attrs"
         @input="handleInput"
+        @focus="emit('focus', $event)"
+        @blur="emit('blur', $event)"
+        @keydown="emit('keydown', $event)"
+        @keyup="emit('keyup', $event)"
       />
 
       <!-- Right Side Controls (Clear, Password Toggle, Trailing, Suffix) -->

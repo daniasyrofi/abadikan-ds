@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { computed, ref } from 'vue'
+import { within, expect } from 'storybook/test'
 import { RiAddLine, RiArrowRightLine, RiDeleteBinLine, RiDownloadLine } from '@remixicon/vue'
 import Button from './Button.vue'
 import { getI18nLocale, resolveLocale, type SupportedLocale } from '@/i18n'
@@ -295,7 +296,7 @@ export const Default: Story = {
   get name() {
     return getStoryName('default')
   },
-  render: (args) => ({
+  render: (args: Record<string, unknown>) => ({
     components: { Button },
     setup: () => {
       const copy = useCopy()
@@ -415,6 +416,18 @@ export const Loading: Story = {
   get name() {
     return getStoryName('loading')
   },
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const canvas = within(canvasElement)
+
+    // The always-loading buttons (outline and ghost variants) have aria-busy="true" statically
+    const buttons = canvas.getAllByRole('button')
+    const busyButtons = buttons.filter((btn) => btn.getAttribute('aria-busy') === 'true')
+    await expect(busyButtons.length).toBeGreaterThan(0)
+
+    for (const btn of busyButtons) {
+      await expect(btn).toHaveAttribute('aria-busy', 'true')
+    }
+  },
   render: () => ({
     components: { Button },
     setup() {
@@ -442,6 +455,21 @@ export const Loading: Story = {
 export const States: Story = {
   get name() {
     return getStoryName('states')
+  },
+  play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const canvas = within(canvasElement)
+
+    // All buttons in the disabled section should have aria-disabled="true"
+    const buttons = canvas.getAllByRole('button')
+    const disabledButtons = buttons.filter(
+      (btn) => btn.getAttribute('aria-disabled') === 'true'
+    )
+    await expect(disabledButtons.length).toBeGreaterThan(0)
+
+    // Each disabled button should have aria-disabled attribute
+    for (const btn of disabledButtons) {
+      await expect(btn).toHaveAttribute('aria-disabled', 'true')
+    }
   },
   render: () => ({
     components: { Button },

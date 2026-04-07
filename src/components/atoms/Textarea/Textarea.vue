@@ -34,7 +34,13 @@ const props = withDefaults(defineProps<Props>(), {
   resize: 'none',
 })
 
-const emit = defineEmits<{ 'update:modelValue': [value: string] }>()
+const emit = defineEmits<{
+  'update:modelValue': [value: string]
+  focus: [event: FocusEvent]
+  blur: [event: FocusEvent]
+  keydown: [event: KeyboardEvent]
+  keyup: [event: KeyboardEvent]
+}>()
 
 const autoId = useId()
 const textareaId = computed(() => autoId)
@@ -130,6 +136,12 @@ const textareaClasses = computed(() =>
     props.readonly && 'cursor-default'
   )
 )
+
+defineExpose({
+  el: textareaEl,
+  focus: () => textareaEl.value?.focus(),
+  blur: () => textareaEl.value?.blur(),
+})
 </script>
 
 <template>
@@ -169,6 +181,10 @@ const textareaClasses = computed(() =>
         :class="textareaClasses"
         v-bind="$attrs"
         @input="handleInput"
+        @focus="emit('focus', $event)"
+        @blur="emit('blur', $event)"
+        @keydown="emit('keydown', $event)"
+        @keyup="emit('keyup', $event)"
       />
     </div>
 

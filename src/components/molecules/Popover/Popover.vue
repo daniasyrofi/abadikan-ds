@@ -183,6 +183,7 @@ const popoverClasses = computed(() =>
   <div
     class="relative inline-flex"
     data-popover-root
+    :data-state="isOpen ? 'open' : 'closed'"
     @mouseenter="handleMouseenter"
     @mouseleave="handleMouseleave"
   >
@@ -200,7 +201,7 @@ const popoverClasses = computed(() =>
       leave-from-class="opacity-100 scale-100"
       leave-to-class="opacity-0 scale-95"
     >
-      <div v-if="isOpen" :class="popoverClasses" :style="widthStyle" role="dialog">
+      <div v-if="isOpen" :class="popoverClasses" :style="widthStyle" role="dialog" :data-state="isOpen ? 'open' : 'closed'">
         <!-- Header -->
         <div
           v-if="$slots.header || $slots.title || $slots.description"

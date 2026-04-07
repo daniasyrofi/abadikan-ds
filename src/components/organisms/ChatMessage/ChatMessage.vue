@@ -53,7 +53,7 @@ const containerClass = computed(() =>
 const bubbleClass = computed(() =>
   cn(
     'relative max-w-[75%] px-4 py-3 text-body-sm',
-    'animate-[fadeIn_0.2s_ease-out]',
+    'animate-[ds-fade-in_0.2s_ease-out]',
     isUser.value
       ? ['bg-[--color-neutral] text-[--color-text-inverse]', 'ds-bubble ds-bubble--user']
       : [
@@ -117,7 +117,7 @@ function handleRetry() {
           :key="i"
           class="size-2 rounded-full bg-current opacity-50"
           :style="{
-            animation: 'typingBounce 1.2s ease-in-out infinite',
+            animation: 'ds-typing-bounce 1.2s ease-in-out infinite',
             animationDelay: `${(i - 1) * 0.2}s`,
           }"
         />

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useId } from 'vue'
+import { computed, useId, ref } from 'vue'
 import { cn } from '@/lib/utils'
 import { Icons } from '@/lib/icons'
 import { baselineOffset } from '@/lib/opticalAlign'
@@ -28,9 +28,14 @@ const props = withDefaults(defineProps<Props>(), {
   readonly: false,
 })
 
-const emit = defineEmits<{ 'update:modelValue': [value: CheckboxValue] }>()
+const emit = defineEmits<{
+  'update:modelValue': [value: CheckboxValue]
+  focus: [event: FocusEvent]
+  blur: [event: FocusEvent]
+}>()
 
 const inputId = useId()
+const inputRef = ref<HTMLInputElement | null>(null)
 
 const isChecked = computed(() => props.modelValue === true)
 const isIndeterminate = computed(() => props.modelValue === 'indeterminate')
@@ -123,10 +128,19 @@ const focusRingVar = computed(() =>
     ? 'var(--ring-danger)'
     : `0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-${props.color})`
 )
+
+defineExpose({
+  el: inputRef,
+  focus: () => inputRef.value?.focus(),
+  blur: () => inputRef.value?.blur(),
+})
 </script>
 
 <template>
-  <div :class="cn('inline-flex flex-col gap-1', disabled && 'cursor-not-allowed')">
+  <div
+    :class="cn('inline-flex flex-col gap-1', disabled && 'cursor-not-allowed')"
+    :data-state="isIndeterminate ? 'indeterminate' : isChecked ? 'checked' : 'unchecked'"
+  >
     <label
       :class="
         cn(
@@ -140,6 +154,7 @@ const focusRingVar = computed(() =>
     >
       <!-- Hidden native input -->
       <input
+        ref="inputRef"
         :id="inputId"
         type="checkbox"
         class="sr-only peer"
@@ -152,6 +167,8 @@ const focusRingVar = computed(() =>
         :aria-invalid="hasError || undefined"
         :aria-describedby="description || error ? `${inputId}-desc` : undefined"
         @change="handleChange"
+        @focus="emit('focus', $event)"
+        @blur="emit('blur', $event)"
       />
 
       <!-- Visual box with Absolute SVG Icons to prevent sub-pixel layout shifts -->
