@@ -49,6 +49,7 @@ const showClear = computed(
 )
 
 function handleClear(e: MouseEvent) {
+  e.preventDefault()
   e.stopPropagation()
   ctx.clearAll()
 }
@@ -80,6 +81,8 @@ const triggerClasses = computed(() =>
     ctx.loading.value && 'cursor-wait'
   )
 )
+
+
 </script>
 
 <template>
@@ -106,25 +109,30 @@ const triggerClasses = computed(() =>
       {{ displayText || placeholder }}
     </span>
 
+    <!-- Loading spinner -->
+    <Spinner v-if="ctx.loading.value" :size="spinnerSize" color="neutral" />
+
     <!-- Clear button -->
     <button
       v-if="showClear"
       type="button"
-      class="ds-select-clear shrink-0 flex items-center justify-center transition-colors duration-200 cursor-pointer"
+      class="shrink-0 flex items-center justify-center transition-colors duration-200 cursor-pointer"
       aria-label="Clear selection"
       @click="handleClear"
     >
-      <RiCloseLine :size="String(iconSize)" />
+      <RiCloseLine :size="String(iconSize)" class="leading-none" />
     </button>
-
-    <!-- Loading spinner -->
-    <Spinner v-if="ctx.loading.value" :size="spinnerSize" color="neutral" />
 
     <!-- Chevron (hidden when loading or readonly) -->
     <RiArrowDownSLine
       v-else-if="!ctx.readonly.value"
       :size="String(iconSize)"
-      :class="cn('shrink-0 transition-transform duration-200', ctx.isOpen.value && 'rotate-180')"
+      :class="
+        cn(
+          'shrink-0 leading-none transition-transform duration-200',
+          ctx.isOpen.value && 'rotate-180'
+        )
+      "
       style="color: var(--color-text-tertiary)"
       aria-hidden="true"
     />

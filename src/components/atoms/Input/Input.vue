@@ -114,6 +114,12 @@ const pyClasses: Record<InputSize, string> = {
   lg: 'py-2.5',
 }
 
+const compactInsetClasses: Record<InputSize, string> = {
+  sm: 'pl-1.5',
+  md: 'pl-2',
+  lg: 'pl-2.5',
+}
+
 const iconSizePx: Record<InputSize, string> = {
   sm: '14',
   md: '16',
@@ -193,6 +199,7 @@ defineExpose({
       <!-- Prefix Area (Background filled block e.g. "https://") -->
       <div
         v-if="$slots.prefix"
+        data-testid="input-prefix-panel"
         :class="
           cn(
             'flex items-center self-stretch text-sm font-medium select-none whitespace-nowrap',
@@ -237,7 +244,7 @@ defineExpose({
             'flex-1 w-full bg-transparent outline-none focus-visible:outline-none h-full min-w-0 border-none focus:ring-0 focus-visible:ring-0',
             textSizeClass[size],
             pyClasses[size],
-            !$slots.prefix && !$slots.leading ? plClasses[size] : 'pl-2',
+            !$slots.prefix && !$slots.leading ? plClasses[size] : compactInsetClasses[size],
             !$slots.suffix && !$slots.trailing && !showClear && !isPassword ? prClasses[size] : '',
             disabled && 'cursor-not-allowed',
             readonly && 'cursor-default'
@@ -286,7 +293,7 @@ defineExpose({
         <!-- Trailing Icon -->
         <div
           v-if="$slots.trailing"
-          :class="cn('flex items-center pl-2 select-none', prClasses[size])"
+          :class="cn('flex items-center select-none', compactInsetClasses[size], prClasses[size])"
           :style="{ color: 'var(--color-text-tertiary)' }"
         >
           <slot name="trailing" />
