@@ -29,35 +29,35 @@ function contrastRatio(l1: number, l2: number): number {
 // Light mode semantic colors
 const lightMode = {
   // Backgrounds
-  bg: 0.98,             // --primitive-neutral-50
-  bgSubtle: 0.95,       // --primitive-neutral-100
-  surface: 1.0,         // #ffffff
-  surfaceRaised: 1.0,   // #ffffff
-  surfaceOverlay: 1.0,  // #ffffff
+  bg: 0.98, // --primitive-neutral-50
+  bgSubtle: 0.95, // --primitive-neutral-100
+  surface: 1.0, // #ffffff
+  surfaceRaised: 1.0, // #ffffff
+  surfaceOverlay: 1.0, // #ffffff
 
   // Text
-  textHeading: 0.2,     // --primitive-neutral-900
-  textPrimary: 0.4,     // --primitive-neutral-700
-  textSecondary: 0.55,  // --primitive-neutral-600
-  textTertiary: 0.73,   // --primitive-neutral-400
-  textMuted: 0.73,      // --primitive-neutral-400
-  textDisabled: 0.82,   // --primitive-neutral-300
+  textHeading: 0.2, // --primitive-neutral-900
+  textPrimary: 0.4, // --primitive-neutral-700
+  textSecondary: 0.55, // --primitive-neutral-600
+  textTertiary: 0.73, // --primitive-neutral-400
+  textMuted: 0.73, // --primitive-neutral-400
+  textDisabled: 0.82, // --primitive-neutral-300
 
   // Brand
-  primary: 0.55,        // --primitive-red-base
-  primaryLight: 0.92,   // --primitive-red-light
-  danger: 0.6,          // --primitive-danger-base
-  dangerLight: 0.92,    // --primitive-danger-light
-  success: 0.65,        // --primitive-success-base
-  successLight: 0.92,   // --primitive-success-light
-  warning: 0.75,        // --primitive-warning-base
-  warningLight: 0.94,   // --primitive-warning-light
-  info: 0.65,           // --primitive-info-base
-  infoLight: 0.92,      // --primitive-info-light
+  primary: 0.55, // --primitive-red-base
+  primaryLight: 0.92, // --primitive-red-light
+  danger: 0.6, // --primitive-danger-base
+  dangerLight: 0.92, // --primitive-danger-light
+  success: 0.65, // --primitive-success-base
+  successLight: 0.92, // --primitive-success-light
+  warning: 0.75, // --primitive-warning-base
+  warningLight: 0.94, // --primitive-warning-light
+  info: 0.65, // --primitive-info-base
+  infoLight: 0.92, // --primitive-info-light
 
   // Borders
-  border: 0.9,          // --primitive-neutral-200
-  borderStrong: 0.65,   // --primitive-neutral-500
+  border: 0.9, // --primitive-neutral-200
+  borderStrong: 0.65, // --primitive-neutral-500
 }
 
 // Dark mode semantic colors
@@ -95,8 +95,8 @@ const darkMode = {
 }
 
 // WCAG AA thresholds
-const AA_NORMAL_TEXT = 4.5  // normal text (< 18pt / < 14pt bold)
-const AA_LARGE_TEXT = 3.0   // large text (≥ 18pt / ≥ 14pt bold) & UI components
+const AA_NORMAL_TEXT = 4.5 // normal text (< 18pt / < 14pt bold)
+const AA_LARGE_TEXT = 3.0 // large text (≥ 18pt / ≥ 14pt bold) & UI components
 
 interface ColorPair {
   fg: string
@@ -110,18 +110,88 @@ interface ColorPair {
 function buildPairs(mode: typeof lightMode, modeName: string): ColorPair[] {
   return [
     // Normal text on backgrounds
-    { fg: 'textHeading', bg: 'bg', fgL: mode.textHeading, bgL: mode.bg, minRatio: AA_NORMAL_TEXT, description: `${modeName}: heading on bg` },
-    { fg: 'textHeading', bg: 'surface', fgL: mode.textHeading, bgL: mode.surface, minRatio: AA_NORMAL_TEXT, description: `${modeName}: heading on surface` },
-    { fg: 'textPrimary', bg: 'bg', fgL: mode.textPrimary, bgL: mode.bg, minRatio: AA_NORMAL_TEXT, description: `${modeName}: primary text on bg` },
-    { fg: 'textPrimary', bg: 'surface', fgL: mode.textPrimary, bgL: mode.surface, minRatio: AA_NORMAL_TEXT, description: `${modeName}: primary text on surface` },
-    { fg: 'textSecondary', bg: 'bg', fgL: mode.textSecondary, bgL: mode.bg, minRatio: AA_NORMAL_TEXT, description: `${modeName}: secondary text on bg` },
-    { fg: 'textSecondary', bg: 'surface', fgL: mode.textSecondary, bgL: mode.surface, minRatio: AA_NORMAL_TEXT, description: `${modeName}: secondary text on surface` },
+    {
+      fg: 'textHeading',
+      bg: 'bg',
+      fgL: mode.textHeading,
+      bgL: mode.bg,
+      minRatio: AA_NORMAL_TEXT,
+      description: `${modeName}: heading on bg`,
+    },
+    {
+      fg: 'textHeading',
+      bg: 'surface',
+      fgL: mode.textHeading,
+      bgL: mode.surface,
+      minRatio: AA_NORMAL_TEXT,
+      description: `${modeName}: heading on surface`,
+    },
+    {
+      fg: 'textPrimary',
+      bg: 'bg',
+      fgL: mode.textPrimary,
+      bgL: mode.bg,
+      minRatio: AA_NORMAL_TEXT,
+      description: `${modeName}: primary text on bg`,
+    },
+    {
+      fg: 'textPrimary',
+      bg: 'surface',
+      fgL: mode.textPrimary,
+      bgL: mode.surface,
+      minRatio: AA_NORMAL_TEXT,
+      description: `${modeName}: primary text on surface`,
+    },
+    {
+      fg: 'textSecondary',
+      bg: 'bg',
+      fgL: mode.textSecondary,
+      bgL: mode.bg,
+      minRatio: AA_NORMAL_TEXT,
+      description: `${modeName}: secondary text on bg`,
+    },
+    {
+      fg: 'textSecondary',
+      bg: 'surface',
+      fgL: mode.textSecondary,
+      bgL: mode.surface,
+      minRatio: AA_NORMAL_TEXT,
+      description: `${modeName}: secondary text on surface`,
+    },
 
     // UI components (3:1 minimum)
-    { fg: 'primary', bg: 'bg', fgL: mode.primary, bgL: mode.bg, minRatio: AA_LARGE_TEXT, description: `${modeName}: primary on bg (UI)` },
-    { fg: 'primary', bg: 'surface', fgL: mode.primary, bgL: mode.surface, minRatio: AA_LARGE_TEXT, description: `${modeName}: primary on surface (UI)` },
-    { fg: 'danger', bg: 'bg', fgL: mode.danger, bgL: mode.bg, minRatio: AA_LARGE_TEXT, description: `${modeName}: danger on bg (UI)` },
-    { fg: 'borderStrong', bg: 'bg', fgL: mode.borderStrong, bgL: mode.bg, minRatio: AA_LARGE_TEXT, description: `${modeName}: strong border on bg (UI)` },
+    {
+      fg: 'primary',
+      bg: 'bg',
+      fgL: mode.primary,
+      bgL: mode.bg,
+      minRatio: AA_LARGE_TEXT,
+      description: `${modeName}: primary on bg (UI)`,
+    },
+    {
+      fg: 'primary',
+      bg: 'surface',
+      fgL: mode.primary,
+      bgL: mode.surface,
+      minRatio: AA_LARGE_TEXT,
+      description: `${modeName}: primary on surface (UI)`,
+    },
+    {
+      fg: 'danger',
+      bg: 'bg',
+      fgL: mode.danger,
+      bgL: mode.bg,
+      minRatio: AA_LARGE_TEXT,
+      description: `${modeName}: danger on bg (UI)`,
+    },
+    {
+      fg: 'borderStrong',
+      bg: 'bg',
+      fgL: mode.borderStrong,
+      bgL: mode.bg,
+      minRatio: AA_LARGE_TEXT,
+      description: `${modeName}: strong border on bg (UI)`,
+    },
   ]
 }
 

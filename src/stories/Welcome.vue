@@ -49,7 +49,10 @@
     </div>
 
     <div class="sb-section-title" style="margin-top: var(--spacing-12)">
-      <h2 class="ds-text-h1" style="color: var(--color-text-heading); margin-bottom: var(--spacing-6)">
+      <h2
+        class="ds-text-h1"
+        style="color: var(--color-text-heading); margin-bottom: var(--spacing-6)"
+      >
         {{ $t('welcome.guide_title') }}
       </h2>
     </div>

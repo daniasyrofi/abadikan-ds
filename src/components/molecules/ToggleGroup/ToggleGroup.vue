@@ -34,7 +34,7 @@ const internalValue = ref<string | string[]>(
         ? [props.modelValue]
         : []
     : Array.isArray(props.modelValue)
-      ? props.modelValue[0] ?? ''
+      ? (props.modelValue[0] ?? '')
       : (props.modelValue ?? '')
 )
 
@@ -49,7 +49,7 @@ watch(
             ? [val]
             : []
         : Array.isArray(val)
-          ? val[0] ?? ''
+          ? (val[0] ?? '')
           : (val ?? '')
   }
 )

@@ -7,9 +7,7 @@ function mountGroup(props: Record<string, unknown>, items = ['bold', 'italic', '
   return mount(ToggleGroup, {
     props,
     slots: {
-      default: items
-        .map((v) => `<ToggleGroupItem value="${v}">${v}</ToggleGroupItem>`)
-        .join(''),
+      default: items.map((v) => `<ToggleGroupItem value="${v}">${v}</ToggleGroupItem>`).join(''),
     },
     global: { components: { ToggleGroupItem } },
   })

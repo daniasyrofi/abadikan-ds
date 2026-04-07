@@ -128,8 +128,12 @@ provide(SELECT_KEY, {
 
 defineExpose({
   el: rootRef,
-  open: () => { isOpen.value = true },
-  close: () => { isOpen.value = false },
+  open: () => {
+    isOpen.value = true
+  },
+  close: () => {
+    isOpen.value = false
+  },
 })
 </script>
 

@@ -197,13 +197,16 @@ function onMinutesKeydown(e: KeyboardEvent) {
   if (e.key === 'ArrowUp') {
     e.preventDefault()
     const cur = parseInt(minutesDisplay.value || '0', 10)
-    const next = (cur + props.minuteStep) > 59 ? 0 : cur + props.minuteStep
+    const next = cur + props.minuteStep > 59 ? 0 : cur + props.minuteStep
     minutesDisplay.value = String(next).padStart(2, '0')
     emitValue()
   } else if (e.key === 'ArrowDown') {
     e.preventDefault()
     const cur = parseInt(minutesDisplay.value || '0', 10)
-    const prev = (cur - props.minuteStep) < 0 ? Math.floor(59 / props.minuteStep) * props.minuteStep : cur - props.minuteStep
+    const prev =
+      cur - props.minuteStep < 0
+        ? Math.floor(59 / props.minuteStep) * props.minuteStep
+        : cur - props.minuteStep
     minutesDisplay.value = String(prev).padStart(2, '0')
     emitValue()
   }

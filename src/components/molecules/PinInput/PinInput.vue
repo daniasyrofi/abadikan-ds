@@ -134,7 +134,12 @@ const sizeMap: Record<PinSize, string> = {
 </script>
 
 <template>
-  <div ref="containerRef" class="inline-flex items-center gap-2" role="group" aria-label="PIN input">
+  <div
+    ref="containerRef"
+    class="inline-flex items-center gap-2"
+    role="group"
+    aria-label="PIN input"
+  >
     <input
       v-for="(digit, idx) in digits"
       :key="idx"

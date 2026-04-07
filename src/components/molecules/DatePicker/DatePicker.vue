@@ -261,8 +261,12 @@ defineExpose({
   el: containerRef,
   focus: () => triggerRef.value?.focus(),
   blur: () => triggerRef.value?.blur(),
-  open: () => { if (!props.disabled) isOpen.value = true },
-  close: () => { isOpen.value = false },
+  open: () => {
+    if (!props.disabled) isOpen.value = true
+  },
+  close: () => {
+    isOpen.value = false
+  },
 })
 
 const hasError = computed(() => !!props.error)

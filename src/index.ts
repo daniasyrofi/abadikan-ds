@@ -33,8 +33,21 @@ export { useBreakpoint } from './composables/useBreakpoint'
 export type { Breakpoint } from './composables/useBreakpoint'
 export { useResponsiveProp } from './composables/useResponsiveProp'
 export type { ResponsiveProp } from './composables/useResponsiveProp'
-export { useFormField, required, minLength, maxLength, pattern, email, min, max } from './composables/useFormField'
-export type { ValidationRule, UseFormFieldOptions, UseFormFieldReturn } from './composables/useFormField'
+export {
+  useFormField,
+  required,
+  minLength,
+  maxLength,
+  pattern,
+  email,
+  min,
+  max,
+} from './composables/useFormField'
+export type {
+  ValidationRule,
+  UseFormFieldOptions,
+  UseFormFieldReturn,
+} from './composables/useFormField'
 export { useVirtualList } from './composables/useVirtualList'
 export type { VirtualListOptions } from './composables/useVirtualList'
 

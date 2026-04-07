@@ -20,15 +20,18 @@ describe('useMediaQuery', () => {
   beforeEach(() => {
     listeners = []
     mockMatches = false
-    vi.stubGlobal('matchMedia', vi.fn((query: string) => ({
-      matches: mockMatches,
-      media: query,
-      addEventListener: (_: string, cb: () => void) => listeners.push(cb),
-      removeEventListener: (_: string, cb: () => void) => {
-        const idx = listeners.indexOf(cb)
-        if (idx >= 0) listeners.splice(idx, 1)
-      },
-    })))
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn((query: string) => ({
+        matches: mockMatches,
+        media: query,
+        addEventListener: (_: string, cb: () => void) => listeners.push(cb),
+        removeEventListener: (_: string, cb: () => void) => {
+          const idx = listeners.indexOf(cb)
+          if (idx >= 0) listeners.splice(idx, 1)
+        },
+      }))
+    )
   })
 
   it('returns false initially when query does not match', () => {

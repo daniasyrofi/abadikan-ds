@@ -11,37 +11,37 @@ We use three motion profiles that map to different UI scenarios.
 
 ## Motion Principles
 
-| Principle | Description |
-|-----------|-------------|
+| Principle      | Description                                                                                                                     |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | **Purposeful** | Every animation communicates something — state changes, spatial relationships, or feedback. Never animate for decoration alone. |
-| **Subtle** | Durations stay short (100–350ms). Users interact with UI constantly; motion must feel instant, not theatrical. |
-| **Accessible** | All animations respect `prefers-reduced-motion`. Critical state changes are communicated with color and text, not just motion. |
-| **Consistent** | Use the token system. Don't hardcode `300ms ease-in-out` — use `var(--duration-normal) var(--ease-out)`. |
+| **Subtle**     | Durations stay short (100–350ms). Users interact with UI constantly; motion must feel instant, not theatrical.                  |
+| **Accessible** | All animations respect `prefers-reduced-motion`. Critical state changes are communicated with color and text, not just motion.  |
+| **Consistent** | Use the token system. Don't hardcode `300ms ease-in-out` — use `var(--duration-normal) var(--ease-out)`.                        |
 
 ---
 
 ## Duration Tokens
 
-| Token | Value | When to use |
-|-------|-------|-------------|
-| `--duration-instant` | `0ms` | Toggling visibility without transition |
-| `--duration-fast` | `100ms` | Micro-interactions: button press, checkbox tick |
-| `--duration-normal` | `200ms` | Most UI transitions: dropdowns, tooltips appearing |
-| `--duration-slow` | `300ms` | Complex transitions: modals, drawers, page sections |
-| `--duration-slower` | `500ms` | Emphasis animations: success states, onboarding |
-| `--duration-stagger` | `50ms` | Delay increment between staggered list items |
+| Token                | Value   | When to use                                         |
+| -------------------- | ------- | --------------------------------------------------- |
+| `--duration-instant` | `0ms`   | Toggling visibility without transition              |
+| `--duration-fast`    | `100ms` | Micro-interactions: button press, checkbox tick     |
+| `--duration-normal`  | `200ms` | Most UI transitions: dropdowns, tooltips appearing  |
+| `--duration-slow`    | `300ms` | Complex transitions: modals, drawers, page sections |
+| `--duration-slower`  | `500ms` | Emphasis animations: success states, onboarding     |
+| `--duration-stagger` | `50ms`  | Delay increment between staggered list items        |
 
 ---
 
 ## Easing Tokens
 
-| Token | Value | When to use |
-|-------|-------|-------------|
-| `--ease-default` | `cubic-bezier(0.4, 0, 0.2, 1)` | General purpose — smooth in, smooth out |
-| `--ease-in` | `cubic-bezier(0.4, 0, 1, 1)` | Elements leaving the screen |
-| `--ease-out` | `cubic-bezier(0, 0, 0.2, 1)` | Elements entering the screen |
-| `--ease-spring` | `cubic-bezier(0.175, 0.885, 0.32, 1.275)` | Playful feedback: ratings, toggles |
-| `--ease-bounce` | `cubic-bezier(0.34, 1.56, 0.64, 1)` | Strong positive feedback: success, confetti |
+| Token            | Value                                     | When to use                                 |
+| ---------------- | ----------------------------------------- | ------------------------------------------- |
+| `--ease-default` | `cubic-bezier(0.4, 0, 0.2, 1)`            | General purpose — smooth in, smooth out     |
+| `--ease-in`      | `cubic-bezier(0.4, 0, 1, 1)`              | Elements leaving the screen                 |
+| `--ease-out`     | `cubic-bezier(0, 0, 0.2, 1)`              | Elements entering the screen                |
+| `--ease-spring`  | `cubic-bezier(0.175, 0.885, 0.32, 1.275)` | Playful feedback: ratings, toggles          |
+| `--ease-bounce`  | `cubic-bezier(0.34, 1.56, 0.64, 1)`       | Strong positive feedback: success, confetti |
 
 ---
 
@@ -52,8 +52,9 @@ We use three motion profiles that map to different UI scenarios.
 Use for everyday transitions: dropdowns, tooltips, menus, accordions.
 
 ```css
-transition: opacity var(--duration-normal) var(--ease-out),
-            transform var(--duration-normal) var(--ease-out);
+transition:
+  opacity var(--duration-normal) var(--ease-out),
+  transform var(--duration-normal) var(--ease-out);
 ```
 
 **Examples:** Select dropdown opening, Tooltip appearing, Collapsible expanding
@@ -122,7 +123,9 @@ Our `globals.css` includes:
 
 ```css
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -133,6 +136,7 @@ Our `globals.css` includes:
 ### For consumers
 
 Never use motion as the sole indicator of state change. Always pair with:
+
 - Color change
 - Icon swap
 - Text label update
@@ -153,12 +157,12 @@ Never use motion as the sole indicator of state change. Always pair with:
 
 Utility classes available globally after importing `@abadikan/ds/styles`:
 
-| Class | Keyframe | Use case |
-|-------|----------|----------|
-| `ds-fade-in` | `ds-fade-in` | General enter animation |
-| `ds-scale-in` | `ds-scale-in` | Popover / menu appear |
+| Class           | Keyframe        | Use case                     |
+| --------------- | --------------- | ---------------------------- |
+| `ds-fade-in`    | `ds-fade-in`    | General enter animation      |
+| `ds-scale-in`   | `ds-scale-in`   | Popover / menu appear        |
 | `ds-slide-down` | `ds-slide-down` | Accordion / collapsible open |
-| `ds-shake` | `ds-shake` | Form validation error |
+| `ds-shake`      | `ds-shake`      | Form validation error        |
 
 ---
 

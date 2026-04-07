@@ -81,62 +81,62 @@ const triggerClasses = computed(() =>
     ctx.loading.value && 'cursor-wait'
   )
 )
-
-
 </script>
 
 <template>
-  <button
-    :id="ctx.triggerId"
-    type="button"
-    :class="triggerClasses"
-    :disabled="ctx.disabled.value || ctx.loading.value"
-    :aria-expanded="ctx.isOpen.value"
-    :aria-readonly="ctx.readonly.value || undefined"
-    aria-haspopup="listbox"
-    :data-state="ctx.isOpen.value ? 'open' : 'closed'"
-    :data-disabled="ctx.disabled.value ? '' : undefined"
-    @click="ctx.toggle()"
-    @keydown="handleKeydown"
-    @focus="ctx.onTriggerFocus($event)"
-    @blur="ctx.onTriggerBlur($event)"
-  >
-    <!-- Selected value / placeholder -->
-    <span
-      class="flex-1 truncate"
-      :class="displayText ? 'ds-select-trigger-text' : 'ds-select-trigger-placeholder'"
+  <div class="relative w-full">
+    <button
+      :id="ctx.triggerId"
+      type="button"
+      :class="triggerClasses"
+      :disabled="ctx.disabled.value || ctx.loading.value"
+      :aria-expanded="ctx.isOpen.value"
+      :aria-readonly="ctx.readonly.value || undefined"
+      aria-haspopup="listbox"
+      :data-state="ctx.isOpen.value ? 'open' : 'closed'"
+      :data-disabled="ctx.disabled.value ? '' : undefined"
+      @click="ctx.toggle()"
+      @keydown="handleKeydown"
+      @focus="ctx.onTriggerFocus($event)"
+      @blur="ctx.onTriggerBlur($event)"
     >
-      {{ displayText || placeholder }}
-    </span>
+      <!-- Selected value / placeholder -->
+      <span
+        class="flex-1 truncate"
+        :class="displayText ? 'ds-select-trigger-text' : 'ds-select-trigger-placeholder'"
+      >
+        {{ displayText || placeholder }}
+      </span>
 
-    <!-- Loading spinner -->
-    <Spinner v-if="ctx.loading.value" :size="spinnerSize" color="neutral" />
+      <!-- Loading spinner -->
+      <Spinner v-if="ctx.loading.value" :size="spinnerSize" color="neutral" />
 
-    <!-- Clear button -->
+      <!-- Chevron (hidden when loading, readonly, or clearable with value) -->
+      <RiArrowDownSLine
+        v-else-if="!ctx.readonly.value && !showClear"
+        :size="String(iconSize)"
+        :class="
+          cn(
+            'shrink-0 leading-none transition-transform duration-200',
+            ctx.isOpen.value && 'rotate-180'
+          )
+        "
+        style="color: var(--color-text-tertiary)"
+        aria-hidden="true"
+      />
+    </button>
+
+    <!-- Clear button (outside trigger so it doesn't nest <button> inside <button>) -->
     <button
       v-if="showClear"
       type="button"
-      class="shrink-0 flex items-center justify-center transition-colors duration-200 cursor-pointer"
+      class="ds-select-clear absolute top-1/2 -translate-y-1/2 right-2 z-10 shrink-0 flex items-center justify-center transition-colors duration-200 cursor-pointer"
       aria-label="Clear selection"
-      @click="handleClear"
+      @click.stop="handleClear"
     >
       <RiCloseLine :size="String(iconSize)" class="leading-none" />
     </button>
-
-    <!-- Chevron (hidden when loading or readonly) -->
-    <RiArrowDownSLine
-      v-else-if="!ctx.readonly.value"
-      :size="String(iconSize)"
-      :class="
-        cn(
-          'shrink-0 leading-none transition-transform duration-200',
-          ctx.isOpen.value && 'rotate-180'
-        )
-      "
-      style="color: var(--color-text-tertiary)"
-      aria-hidden="true"
-    />
-  </button>
+  </div>
 </template>
 
 <style scoped>

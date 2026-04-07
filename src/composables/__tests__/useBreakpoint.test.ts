@@ -5,12 +5,15 @@ import { useBreakpoint } from '../useBreakpoint'
 
 describe('useBreakpoint', () => {
   beforeEach(() => {
-    vi.stubGlobal('matchMedia', vi.fn((query: string) => ({
-      matches: false,
-      media: query,
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-    })))
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn((query: string) => ({
+        matches: false,
+        media: query,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+      }))
+    )
   })
 
   it('returns xs when no breakpoints match', () => {

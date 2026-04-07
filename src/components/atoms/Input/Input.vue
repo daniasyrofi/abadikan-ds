@@ -132,27 +132,11 @@ const rightActionInsetClass: Record<InputSize, string> = {
   lg: 'pr-[9px]',
 }
 
-const radiusOffsetPx: Record<InputSize, number> = {
-  sm: 10,
-  md: 9,
-  lg: 8,
-}
-
 const radiusClass: Record<InputSize, string> = {
   sm: 'rounded-[max(0px,calc(var(--radius-2xl)-10px))]',
   md: 'rounded-[max(0px,calc(var(--radius-2xl)-9px))]',
   lg: 'rounded-[max(0px,calc(var(--radius-2xl)-8px))]',
 }
-
-const prefixRadiusStyle = computed(() => {
-  const r = `max(0px, calc(var(--radius-2xl) - ${radiusOffsetPx[props.size]}px))`
-  return `${r} 0 0 ${r}`
-})
-
-const suffixRadiusStyle = computed(() => {
-  const r = `max(0px, calc(var(--radius-2xl) - ${radiusOffsetPx[props.size]}px))`
-  return `0 ${r} ${r} 0`
-})
 
 // Wrapper controls the background, border, and focus rings.
 // We use a flex container so prefix/suffix panels can stretch fully to the top and bottom.
@@ -160,7 +144,8 @@ const wrapperClasses = computed(() =>
   cn(
     'ds-input-wrapper',
     'relative flex items-center w-full transition-colors duration-200 ease-out',
-    radiusClass[props.size], 'border outline-none overflow-hidden',
+    radiusClass[props.size],
+    'border outline-none overflow-hidden',
     heightClass[props.size],
     hasError.value && 'ds-input-wrapper--error',
     props.disabled && 'ds-input-wrapper--disabled cursor-not-allowed',
@@ -203,6 +188,7 @@ defineExpose({
         :class="
           cn(
             'flex items-center self-stretch text-sm font-medium select-none whitespace-nowrap',
+            'rounded-l-[calc(var(--radius-lg)-1px)]',
             prefixPadClasses[size]
           )
         "
@@ -210,7 +196,6 @@ defineExpose({
           borderRight: '1px solid var(--color-border)',
           backgroundColor: 'var(--color-bg-subtle)',
           color: 'var(--color-text-secondary)',
-          borderRadius: prefixRadiusStyle,
         }"
       >
         <slot name="prefix" />
@@ -263,7 +248,9 @@ defineExpose({
         :class="
           cn(
             'flex items-center self-stretch shrink-0 gap-1',
-            !$slots.suffix && (showClear || isPassword || $slots.trailing) && rightActionInsetClass[size]
+            !$slots.suffix &&
+              (showClear || isPassword || $slots.trailing) &&
+              rightActionInsetClass[size]
           )
         "
       >
@@ -302,17 +289,18 @@ defineExpose({
         <!-- Suffix Area (Background filled block e.g. ".com") -->
         <div
           v-if="$slots.suffix"
-        :class="
-          cn(
-            'flex items-center self-stretch text-sm font-medium select-none whitespace-nowrap',
-            suffixPadClasses[size]
-          )
-        "
+          data-testid="input-suffix-panel"
+          :class="
+            cn(
+              'flex items-center self-stretch text-sm font-medium select-none whitespace-nowrap',
+              'rounded-r-[calc(var(--radius-lg)-1px)]',
+              suffixPadClasses[size]
+            )
+          "
           :style="{
             borderLeft: '1px solid var(--color-border)',
             backgroundColor: 'var(--color-bg-subtle)',
             color: 'var(--color-text-secondary)',
-            borderRadius: suffixRadiusStyle,
           }"
         >
           <slot name="suffix" />

@@ -133,8 +133,12 @@ onBeforeUnmount(() => {
 
 defineExpose({
   el: panelRef,
-  open: () => { emit('update:modelValue', true) },
-  close: () => { if (!props.preventClose) emit('update:modelValue', false) },
+  open: () => {
+    emit('update:modelValue', true)
+  },
+  close: () => {
+    if (!props.preventClose) emit('update:modelValue', false)
+  },
 })
 
 const positionClass: Record<DrawerPlacement, string> = {

@@ -39,6 +39,12 @@ const emit = defineEmits<{
 
 const isUser = computed(() => props.role === 'user')
 
+const formattedTime = computed(() => {
+  const date = props.timestamp
+  const hours = date.getHours().toString().padStart(2, '0')
+  const minutes = date.getMinutes().toString().padStart(2, '0')
+  return `${hours}:${minutes}`
+})
 
 const containerClass = computed(() =>
   cn('group flex items-end gap-2 max-w-full', isUser.value ? 'flex-row-reverse' : 'flex-row')
@@ -146,6 +152,18 @@ function handleRetry() {
         />
       </div>
     </div>
+  </div>
+
+  <!-- Timestamp & user name -->
+  <div
+    :class="
+      cn('mt-1 text-caption text-[--color-text-tertiary]', isUser ? 'text-right' : 'text-left')
+    "
+  >
+    <span v-if="userName" class="font-medium text-[--color-text-secondary]"
+      >{{ userName }} &middot;
+    </span>
+    <span>{{ formattedTime }}</span>
   </div>
 </template>
 

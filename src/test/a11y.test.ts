@@ -333,10 +333,9 @@ describe('a11y: Select', () => {
 
 describe('a11y: Tabs', () => {
   it('tabs compound component has no violations', async () => {
-    const { element } = mount(
-      {
-        components: { Tabs, TabsList, TabsTrigger, TabsContent },
-        template: `
+    const { element } = mount({
+      components: { Tabs, TabsList, TabsTrigger, TabsContent },
+      template: `
           <Tabs model-value="a">
             <TabsList>
               <TabsTrigger value="a">Tab A</TabsTrigger>
@@ -346,18 +345,16 @@ describe('a11y: Tabs', () => {
             <TabsContent value="b">Content B</TabsContent>
           </Tabs>
         `,
-      }
-    )
+    })
     await axeCheck(element)
   })
 })
 
 describe('a11y: Accordion', () => {
   it('accordion with items has no violations', async () => {
-    const { element } = mount(
-      {
-        components: { Accordion, AccordionItem },
-        template: `
+    const { element } = mount({
+      components: { Accordion, AccordionItem },
+      template: `
           <Accordion>
             <AccordionItem value="item1" title="Section One">
               Content for section one
@@ -367,8 +364,7 @@ describe('a11y: Accordion', () => {
             </AccordionItem>
           </Accordion>
         `,
-      }
-    )
+    })
     await axeCheck(element)
   })
 })

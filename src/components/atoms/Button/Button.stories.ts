@@ -490,9 +490,7 @@ export const States: Story = {
 
     // All buttons in the disabled section should have aria-disabled="true"
     const buttons = canvas.getAllByRole('button')
-    const disabledButtons = buttons.filter(
-      (btn) => btn.getAttribute('aria-disabled') === 'true'
-    )
+    const disabledButtons = buttons.filter((btn) => btn.getAttribute('aria-disabled') === 'true')
     await expect(disabledButtons.length).toBeGreaterThan(0)
 
     // Each disabled button should have aria-disabled attribute

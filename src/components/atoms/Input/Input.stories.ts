@@ -539,9 +539,7 @@ export const FormExample: Story = {
   get name() {
     return getStoryName('formExample')
   },
-  decorators: [
-    () => ({ template: '<div style="width:360px;--radius-2xl:20px;"><story /></div>' }),
-  ],
+  decorators: [() => ({ template: '<div style="width:360px;--radius-2xl:20px;"><story /></div>' })],
   render: () => ({
     components: { Input, RiUser3Line, RiMailLine, RiLockLine, RiPhoneLine },
     setup: () => ({

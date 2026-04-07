@@ -188,12 +188,14 @@ export const Default: Story = {
     await userEvent.click(trigger)
 
     // Calendar panel should now be visible — find an enabled day button and click it
-    const dayButtons = canvas.getAllByRole('button').filter(
-      (btn) =>
-        btn.getAttribute('aria-label') !== 'Previous month' &&
-        btn.getAttribute('aria-label') !== 'Next month' &&
-        !btn.hasAttribute('disabled')
-    )
+    const dayButtons = canvas
+      .getAllByRole('button')
+      .filter(
+        (btn) =>
+          btn.getAttribute('aria-label') !== 'Previous month' &&
+          btn.getAttribute('aria-label') !== 'Next month' &&
+          !btn.hasAttribute('disabled')
+      )
     // Pick the first available day
     const firstDay = dayButtons[0]
     await userEvent.click(firstDay)
