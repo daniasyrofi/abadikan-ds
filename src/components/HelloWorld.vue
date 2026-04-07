@@ -5,6 +5,7 @@ import LandingStats from './landing/LandingStats.vue'
 import LandingTestimonials from './landing/LandingTestimonials.vue'
 import LandingPricing from './landing/LandingPricing.vue'
 import LandingCTA from './landing/LandingCTA.vue'
+import LandingFooter from './landing/LandingFooter.vue'
 </script>
 
 <template>
@@ -14,4 +15,5 @@ import LandingCTA from './landing/LandingCTA.vue'
   <LandingTestimonials />
   <LandingPricing />
   <LandingCTA />
+  <LandingFooter />
 </template>
