@@ -99,22 +99,25 @@ const icons = {
 
 <template>
   <div class="shared-navbar-root">
-    <!-- DS Navbar shell -->
-    <Navbar
-      variant="transparent"
-      :sticky="true"
-      :border="false"
-      :class="[
-        showMega
-          ? '!bg-white !border !border-[var(--color-border)] !rounded-b-none !shadow-none'
-          : bgActive
-            ? '!bg-white !border !border-[var(--color-border)] !rounded-b-[16px] !shadow-sm'
-            : '!bg-transparent !border !border-transparent !rounded-b-[16px] !shadow-none',
-      ]"
-      class="transition-[background-color,box-shadow,border-color] duration-300 !px-5 !max-w-full"
-      @mouseenter="onNavEnter"
-      @mouseleave="onNavLeave"
+    <!-- Outer positioning layer: fixed, full-width, transparent -->
+    <div
+      class="fixed top-0 left-0 right-0 z-[100] flex justify-center transition-[padding] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
+      :class="isScrolled ? 'px-4 py-2' : 'px-0 py-0'"
     >
+      <!-- Pill: visual layer — animates max-width, bg, border, radius, shadow -->
+      <div
+        class="w-full transition-[max-width,background-color,border-color,border-radius,box-shadow] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
+        :class="pillClasses"
+        @mouseenter="onNavEnter"
+        @mouseleave="onNavLeave"
+      >
+        <!-- DS Navbar: content shell only, no sticky, no visual overrides -->
+        <Navbar
+          variant="transparent"
+          :sticky="false"
+          :border="false"
+          class="!px-5 !max-w-full"
+        >
       <!-- ── Logo ─────────────────────────────────────────────────────────── -->
       <template #start>
         <div
@@ -487,7 +490,12 @@ const icons = {
           </button>
         </div>
       </template>
-    </Navbar>
+        </Navbar>
+      </div>
+    </div>
+
+    <!-- Spacer: prevents page content sliding under the fixed nav -->
+    <div class="h-[72px]" aria-hidden="true" />
 
     <!-- ── Mobile drawer ───────────────────────────────────────────────────── -->
     <transition
