@@ -65,25 +65,52 @@
       "path": "dist/atoms.mjs",
       "limit": "40 kB",
       "import": "*",
-      "ignore": ["vue", "vue-i18n", "@remixicon/vue", "remixicon", "clsx", "@fontsource/inter", "@fontsource/jetbrains-mono"]
+      "ignore": [
+        "vue",
+        "vue-i18n",
+        "@remixicon/vue",
+        "remixicon",
+        "clsx",
+        "@fontsource/inter",
+        "@fontsource/jetbrains-mono"
+      ]
     },
     {
       "path": "dist/molecules.mjs",
       "limit": "120 kB",
       "import": "*",
-      "ignore": ["vue", "vue-i18n", "@remixicon/vue", "remixicon", "clsx", "@fontsource/inter", "@fontsource/jetbrains-mono"]
+      "ignore": [
+        "vue",
+        "vue-i18n",
+        "@remixicon/vue",
+        "remixicon",
+        "clsx",
+        "@fontsource/inter",
+        "@fontsource/jetbrains-mono"
+      ]
     },
     {
       "path": "dist/organisms.mjs",
       "limit": "60 kB",
       "import": "*",
-      "ignore": ["vue", "vue-i18n", "@remixicon/vue", "remixicon", "clsx", "@fontsource/inter", "@fontsource/jetbrains-mono"]
+      "ignore": [
+        "vue",
+        "vue-i18n",
+        "@remixicon/vue",
+        "remixicon",
+        "clsx",
+        "@fontsource/inter",
+        "@fontsource/jetbrains-mono"
+      ]
     },
     {
       "path": "dist/tokens.mjs",
       "limit": "5 kB",
       "import": "*",
-      "ignore": ["vue", "vue-i18n"]
+      "ignore": [
+        "vue",
+        "vue-i18n"
+      ]
     },
     {
       "path": "dist/style.css",
@@ -100,6 +127,8 @@
     "@remixicon/vue": "^4.9.0",
     "@tailwindcss/vite": "^4.2.2",
     "clsx": "^2.1.1",
+    "gsap": "^3.14.2",
+    "lenis": "^1.3.21",
     "remixicon": "^4.9.1",
     "tailwindcss": "^4.2.2"
   },

@@ -59,6 +59,7 @@
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-xl: 16px;
+  --radius-2xl: 9999px;
   --radius-full: 9999px;
 
   /* Motion: duration */
@@ -169,9 +170,9 @@
   --color-text-disabled: var(--primitive-neutral-300);
   --color-text-inverse: #ffffff;
 
-  --color-primary: var(--primitive-red-base);
-  --color-primary-hover: var(--primitive-red-dark);
-  --color-primary-light: var(--primitive-red-light);
+  --color-primary: var(--primitive-neutral-900);
+  --color-primary-hover: var(--primitive-neutral-800);
+  --color-primary-light: var(--primitive-neutral-100);
   --color-primary-text: #ffffff;
 
   --color-secondary: var(--primitive-pink-base);

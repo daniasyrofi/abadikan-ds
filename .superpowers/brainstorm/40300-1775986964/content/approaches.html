@@ -1,0 +1,62 @@
+<h2>3 Pendekatan Redesign — Section 2 sampai CTA</h2>
+<p class="subtitle">Berdasarkan riset top wedding + SaaS websites. Saya rekomendasikan C.</p>
+
+<div class="options">
+
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Full Cinematic — Apple / Vercel Style</h3>
+      <p>Semua 10 section di-redesign total. 4 section dapat "pinned scroll" treatment (Problem, FeatureDeep, Gallery, HowItWorks). Setiap section terasa seperti chapter film. Library: GSAP ScrollTrigger + Lenis.</p>
+      <div class="pros-cons" style="margin-top: 0.75rem;">
+        <div class="pros"><h4>Kelebihan</h4><ul><li>Paling "wow" dan premium</li><li>Sangat berbeda dari kompetitor</li><li>Storytelling yang powerful</li></ul></div>
+        <div class="cons"><h4>Kekurangan</h4><ul><li>Effort terbesar, bisa buggy</li><li>Performa mobile perlu kerja ekstra</li><li>Risk: user confused, konversi turun</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Smooth Scroll + Rich Reveals — Stripe / Halodoc Style</h3>
+      <p>Layout baru untuk semua section, tapi tidak ada pinned scroll. Lenis untuk buttery smooth scroll. Setiap section punya animasi masuk yang lebih kaya: stagger, parallax subtle, text reveal. Library: Lenis + Motion One.</p>
+      <div class="pros-cons" style="margin-top: 0.75rem;">
+        <div class="pros"><h4>Kelebihan</h4><ul><li>Performa mobile sangat baik</li><li>Paling aman untuk konversi</li><li>Tidak membingungkan user</li></ul></div>
+        <div class="cons"><h4>Kekurangan</h4><ul><li>Kurang "wow" vs option A</li><li>Kompetitor bisa tiru lebih mudah</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>★ Hybrid Targeted — Linear / Craft Style (Rekomendasi)</h3>
+      <p>Layout baru semua section. <strong>2 section dapat cinematic pinned treatment</strong> di tempat yang paling berdampak. Section lain dapat smooth scroll + rich reveals. Library: GSAP ScrollTrigger + Lenis.</p>
+      <div style="margin-top: 0.75rem; padding: 0.75rem; background: rgba(255,255,255,0.05); border-radius: 6px; border-left: 3px solid rgba(255,255,255,0.3);">
+        <p style="margin: 0; font-size: 0.85rem;"><strong>Pinned treatment (2 section):</strong></p>
+        <ul style="margin: 0.4rem 0 0; font-size: 0.82rem; opacity: 0.85;">
+          <li><strong>FeatureDeep</strong> — sticky left panel, kanan scroll 5 fitur (seperti linear.app/features)</li>
+          <li><strong>Gallery</strong> — horizontal scroll tema saat page discroll vertikal</li>
+        </ul>
+        <p style="margin: 0.75rem 0 0; font-size: 0.85rem;"><strong>Rich reveal (8 section lain):</strong></p>
+        <ul style="margin: 0.4rem 0 0; font-size: 0.82rem; opacity: 0.85;">
+          <li>Problem: cards muncul satu-satu dengan stagger + parallax</li>
+          <li>Solution: pillars reveal dengan scale + fade</li>
+          <li>HowItWorks: SVG line draw + steps stagger</li>
+          <li>Testimonials: cards slide dengan offset berbeda</li>
+          <li>Pricing, Comparison, FAQ, CTA: upgraded reveals</li>
+        </ul>
+      </div>
+      <div class="pros-cons" style="margin-top: 0.75rem;">
+        <div class="pros"><h4>Kelebihan</h4><ul><li>Balance wow-factor vs performa</li><li>2 momen "sinematik" yang diingat</li><li>Mobile-friendly dengan fallback</li></ul></div>
+        <div class="cons"><h4>Kekurangan</h4><ul><li>Lebih kompleks dari B</li><li>Perlu testing mobile serius</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section" style="margin-top: 1.5rem; padding: 1rem; background: rgba(255,255,255,0.04); border-radius: 8px; border: 1px solid rgba(255,255,255,0.08);">
+  <p class="label">Kenapa C yang terbaik untuk Abadikan</p>
+  <p style="font-size: 0.85rem; opacity: 0.7; margin: 0.5rem 0 0;">Riset conversion rate: animasi pinned terlalu banyak justru menurunkan konversi di mobile (banyak user Indonesia pakai mid-range Android). Tapi 0 pinned terasa flat. 2 "wow moment" yang strategis = sweet spot. FeatureDeep dan Gallery adalah section yang paling benefit dari cinematic treatment.</p>
+</div>

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abadikan Landing — Redesign Overview</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0f0f0f;
+    color: #e8e8e8;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    padding: 2rem;
+  }
+  h1 { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 0.25rem; }
+  .meta { font-size: 0.75rem; color: #666; margin-bottom: 2rem; }
+  .meta span { color: #888; }
+
+  .page {
+    display: flex;
+    gap: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* Left: phone wireframe */
+  .phone-col {
+    flex: 0 0 200px;
+    position: sticky;
+    top: 2rem;
+    align-self: flex-start;
+  }
+  .phone {
+    width: 200px;
+    border: 1.5px solid #333;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #1a1a1a;
+  }
+  .phone-top { height: 14px; background: #111; display: flex; align-items: center; justify-content: center; }
+  .phone-top::after { content: ''; width: 40px; height: 4px; background: #333; border-radius: 99px; }
+  .phone-sections { display: flex; flex-direction: column; }
+
+  .ps {
+    padding: 8px 10px;
+    border-bottom: 1px solid #222;
+    font-size: 9px;
+    line-height: 1.3;
+    color: #888;
+    cursor: pointer;
+    transition: background 0.15s;
+    position: relative;
+  }
+  .ps:hover { background: #222; color: #ccc; }
+  .ps.pinned { background: #1c1510; border-left: 2px solid #c8622a; }
+  .ps.pinned:hover { background: #251a10; }
+  .ps-num { font-size: 8px; color: #555; margin-bottom: 2px; }
+  .ps-label { font-weight: 600; color: #aaa; }
+  .ps.pinned .ps-label { color: #e8874a; }
+  .ps-sub { font-size: 8px; color: #555; margin-top: 1px; }
+  .pinned-badge {
+    position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+    font-size: 7px; font-weight: 700; letter-spacing: 0.04em;
+    background: #c8622a22; color: #e8874a; padding: 2px 5px; border-radius: 99px;
+    border: 1px solid #c8622a44;
+  }
+
+  /* Right: section details */
+  .details-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1.25rem; }
+
+  .card {
+    background: #181818;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .card-head {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #222;
+    background: #1c1c1c;
+  }
+  .card-num {
+    font-size: 10px; font-weight: 700; color: #555;
+    background: #222; padding: 2px 7px; border-radius: 99px;
+  }
+  .card-title { font-weight: 700; color: #e8e8e8; font-size: 0.85rem; }
+  .card-type {
+    margin-left: auto; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em;
+    padding: 2px 8px; border-radius: 99px;
+  }
+  .type-pinned { background: #c8622a22; color: #e8874a; border: 1px solid #c8622a44; }
+  .type-rich { background: #2a4a2a; color: #7bcf7b; border: 1px solid #3a6a3a44; }
+
+  .card-body { padding: 0.875rem 1rem; }
+  .card-body p { font-size: 0.8rem; color: #999; line-height: 1.6; margin-bottom: 0.5rem; }
+  .card-body p:last-child { margin-bottom: 0; }
+
+  .wire {
+    background: #111; border-radius: 6px; padding: 0.75rem;
+    margin-top: 0.5rem; display: flex; flex-direction: column; gap: 4px;
+  }
+  .w-line { height: 6px; background: #2a2a2a; border-radius: 3px; }
+  .w-line.short { width: 40%; }
+  .w-line.med { width: 65%; }
+  .w-line.long { width: 90%; }
+  .w-line.accent { background: #c8622a44; }
+  .w-row { display: flex; gap: 6px; }
+  .w-box { flex: 1; height: 40px; background: #222; border-radius: 4px; }
+  .w-box.tall { height: 60px; }
+  .w-box.accent-fill { background: #c8622a22; border: 1px dashed #c8622a44; }
+
+  .w-split { display: flex; gap: 8px; margin-top: 4px; }
+  .w-left { width: 45%; background: #1e1e1e; border-radius: 4px; padding: 6px; display: flex; flex-direction: column; gap: 3px; }
+  .w-right { flex: 1; display: flex; flex-direction: column; gap: 4px; justify-content: center; }
+  .w-pill { width: 60%; height: 5px; background: #c8622a55; border-radius: 99px; }
+
+  .legend {
+    display: flex; gap: 1.5rem; margin-bottom: 1.5rem;
+    padding: 0.75rem 1rem;
+    background: #141414; border: 1px solid #222; border-radius: 8px;
+  }
+  .leg { display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; color: #888; }
+  .leg-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+  .dot-pinned { background: #c8622a; }
+  .dot-rich { background: #4a8a4a; }
+
+  .lib-row {
+    display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.75rem;
+    padding-top: 0.75rem; border-top: 1px solid #222;
+  }
+  .lib-chip {
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.03em;
+    padding: 2px 10px; border-radius: 99px;
+    background: #222; color: #999; border: 1px solid #333;
+  }
+</style>
+</head>
+<body>
+
+<div style="max-width: 900px; margin: 0 auto;">
+  <h1>Abadikan Landing — Redesign Map</h1>
+  <p class="meta">Approach C · <span>2 pinned cinematic</span> · <span>8 rich reveal</span> · GSAP ScrollTrigger + Lenis</p>
+
+  <div class="legend">
+    <div class="leg"><div class="leg-dot dot-pinned"></div> Pinned Scroll (sinematik, GSAP ScrollTrigger)</div>
+    <div class="leg"><div class="leg-dot dot-rich"></div> Rich Reveal (Lenis + stagger + parallax)</div>
+  </div>
+
+  <div class="page">
+
+    <!-- Phone strip -->
+    <div class="phone-col">
+      <div class="phone">
+        <div class="phone-top"></div>
+        <div class="phone-sections">
+          <div class="ps" style="background:#111;border-left:2px solid #444">
+            <div class="ps-num">S1</div>
+            <div class="ps-label" style="color:#666">Hero</div>
+            <div class="ps-sub">unchanged</div>
+          </div>
+          <div class="ps">
+            <div class="ps-num">S2</div>
+            <div class="ps-label">Problem</div>
+            <div class="ps-sub">cards stagger</div>
+          </div>
+          <div class="ps">
+            <div class="ps-num">S3</div>
+            <div class="ps-label">Solution</div>
+            <div class="ps-sub">split + reveal</div>
+          </div>
+          <div class="ps">
+            <div class="ps-num">S4</div>
+            <div class="ps-label">How It Works</div>
+            <div class="ps-sub">sticky + SVG line</div>
+          </div>
+          <div class="ps pinned">
+            <div class="ps-num">S5</div>
+            <div class="ps-label">Gallery</div>
+            <div class="ps-sub">horizontal scroll</div>
+            <div class="pinned-badge">PINNED</div>
+          </div>
+          <div class="ps pinned">
+            <div class="ps-num">S6</div>
+            <div class="ps-label">Feature Deep</div>
+            <div class="ps-sub">sticky panel swap</div>
+            <div class="pinned-badge">PINNED</div>
+          </div>
+          <div class="ps">
+            <div class="ps-num">S7</div>
+            <div class="ps-label">Testimonials</div>
+            <div class="ps-sub">stagger + counter</div>
+          </div>
+          <div class="ps">
+            <div class="ps-num">S8</div>
+            <div class="ps-label">Pricing</div>
+            <div class="ps-sub">stagger scale-up</div>
+          </div>
+          <div class="ps">
+            <div class="ps-num">S9</div>
+            <div class="ps-label">Comparison</div>
+            <div class="ps-sub">row reveal</div>
+          </div>
+          <div class="ps">
+            <div class="ps-num">S10</div>
+            <div class="ps-label">FAQ</div>
+            <div class="ps-sub">parallax heading</div>
+          </div>
+          <div class="ps">
+            <div class="ps-num">S11</div>
+            <div class="ps-label">CTA</div>
+            <div class="ps-sub">parallax glow</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Details -->
+    <div class="details-col">
+
+      <!-- S2 Problem -->
+      <div class="card">
+        <div class="card-head">
+          <span class="card-num">S2</span>
+          <span class="card-title">LandingProblem</span>
+          <span class="card-type type-rich">Rich Reveal</span>
+        </div>
+        <div class="card-body">
+          <p><strong style="color:#ddd">Layout baru:</strong> Full-bleed dark section. 4 pain card muncul satu-satu dari bawah dengan delay berbeda. Tiap card punya ikon besar + angka pain yang spesifik ("Rp 3 juta", "x50 chat", dst). Background subtle grain texture.</p>
+          <p><strong style="color:#ddd">Animasi:</strong> Card stagger masuk 0ms / 100ms / 200ms / 300ms. Parallax vertikal ringan saat scroll keluar (card drift ke atas sedikit). Overline + H2 muncul dengan text-reveal per-kata.</p>
+          <div class="wire">
+            <div class="w-line short accent"></div>
+            <div class="w-line med" style="height:10px;"></div>
+            <div style="height:6px;"></div>
+            <div class="w-row">
+              <div class="w-box tall"></div>
+              <div class="w-box tall"></div>
+              <div class="w-box tall"></div>
+              <div class="w-box tall"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S3 Solution -->
+      <div class="card">
+        <div class="card-head">
+          <span class="card-num">S3</span>
+          <span class="card-title">LandingSolution</span>
+          <span class="card-type type-rich">Rich Reveal</span>
+        </div>
+        <div class="card-body">
+          <p><strong style="color:#ddd">Layout baru:</strong> Heading + subtitle di tengah, lalu 4 pillar card horizontal dengan icon besar. Tiap card punya "before pain → after solution" framing yang jelas.</p>
+          <p><strong style="color:#ddd">Animasi:</strong> H2 muncul dengan word-by-word reveal. Cards masuk dari bawah dengan scale(0.95) → scale(1) + fade stagger. Card hover: lift + glow ring.</p>
+        </div>
+      </div>
+
+      <!-- S4 HowItWorks -->
+      <div class="card">
+        <div class="card-head">
+          <span class="card-num">S4</span>
+          <span class="card-title">LandingHowItWorks</span>
+          <span class="card-type type-rich">Rich Reveal + Sticky</span>
+        </div>
+        <div class="card-body">
+          <p><strong style="color:#ddd">Layout baru:</strong> 2-column. Left: heading sticky saat steps discroll. Right: 5 steps dengan vertical line yang menghubungkan — line ini "draw" dari atas ke bawah seiring scroll masuk ke viewport.</p>
+          <p><strong style="color:#ddd">Animasi:</strong> SVG vertical line stroke-dashoffset animation. Tiap step nomor + konten fade in saat line melewatinya. Step dot "pulse" saat aktif.</p>
+          <div class="wire">
+            <div class="w-split">
+              <div class="w-left">
+                <div class="w-line short accent"></div>
+                <div class="w-line med" style="height:8px"></div>
+                <div class="w-pill"></div>
+              </div>
+              <div class="w-right">
+                <div class="w-line long"></div>
+                <div class="w-line med"></div>
+                <div style="height:4px;"></div>
+                <div class="w-line long"></div>
+                <div class="w-line short"></div>
+                <div style="height:4px;"></div>
+                <div class="w-line long"></div>
+                <div class="w-line med"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S5 Gallery PINNED -->
+      <div class="card" style="border-color:#c8622a44;">
+        <div class="card-head" style="background:#1c1510;">
+          <span class="card-num">S5</span>
+          <span class="card-title" style="color:#e8874a">LandingGallery — PINNED</span>
+          <span class="card-type type-pinned">Cinematic</span>
+        </div>
+        <div class="card-body">
+          <p><strong style="color:#ddd">Layout baru:</strong> Section ini pin ke viewport. Kamu scroll, tapi page tidak bergerak — yang bergerak adalah tema-tema yang slide dari kanan ke kiri. Tiap tema tampil full-width dengan judul + tag di bawah. Progress indicator di kanan bawah (3 dari 8, dst).</p>
+          <p><strong style="color:#ddd">Animasi:</strong> GSAP ScrollTrigger horizontal. Tiap tema: parallax internal (foto bergerak sedikit lebih lambat dari container). Caption fade in dari bawah saat tema berhenti. Exit: tema lama slide keluar kiri, baru masuk kanan.</p>
+          <div class="wire" style="background:#1c1510; border: 1px solid #c8622a22;">
+            <div style="display:flex;gap:4px;overflow:hidden;border-radius:4px;">
+              <div style="flex:0 0 100%;height:80px;background:linear-gradient(135deg,#2a1a10,#3a2010);border-radius:4px;display:flex;align-items:flex-end;padding:6px;">
+                <div style="display:flex;flex-direction:column;gap:3px;">
+                  <div class="w-line short" style="background:#c8622a66;height:5px;"></div>
+                  <div class="w-line med" style="background:#c8622a33;height:4px;"></div>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:flex-end;margin-top:4px;">
+              <div style="font-size:8px;color:#c8622a88;">● ○ ○ ○ ○ ○ ○ ○</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S6 FeatureDeep PINNED -->
+      <div class="card" style="border-color:#c8622a44;">
+        <div class="card-head" style="background:#1c1510;">
+          <span class="card-num">S6</span>
+          <span class="card-title" style="color:#e8874a">LandingFeatureDeep — PINNED</span>
+          <span class="card-type type-pinned">Cinematic</span>
+        </div>
+        <div class="card-body">
+          <p><strong style="color:#ddd">Layout baru:</strong> Split 50/50. Left: sticky panel dengan visual/mockup yang berubah per fitur (screenshot UI atau ilustrasi). Right: 5 feature block — scroll melewati setiap block memperbarui panel kiri. Seperti linear.app/features.</p>
+          <p><strong style="color:#ddd">Animasi:</strong> GSAP ScrollTrigger pin. Panel kiri: crossfade antara visual saat active feature berubah. Active feature di kanan: highlight dengan left border glow. Non-active: dimmed opacity 0.4.</p>
+          <div class="wire" style="background:#1c1510; border: 1px solid #c8622a22;">
+            <div class="w-split">
+              <div class="w-left" style="background:#251a10;height:80px;justify-content:center;align-items:center;display:flex;">
+                <div style="font-size:8px;color:#c8622a66;text-align:center;">visual<br>berubah<br>per scroll</div>
+              </div>
+              <div class="w-right" style="gap:6px;">
+                <div style="padding:4px 6px;background:#c8622a22;border-left:2px solid #c8622a;border-radius:0 3px 3px 0;">
+                  <div class="w-line short" style="background:#c8622a66;height:4px;"></div>
+                </div>
+                <div style="padding:4px 6px;background:#1e1e1e;opacity:0.5;">
+                  <div class="w-line short" style="height:4px;"></div>
+                </div>
+                <div style="padding:4px 6px;background:#1e1e1e;opacity:0.5;">
+                  <div class="w-line short" style="height:4px;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S7-S11 -->
+      <div class="card">
+        <div class="card-head">
+          <span class="card-num">S7–S11</span>
+          <span class="card-title">Testimonials · Pricing · Comparison · FAQ · CTA</span>
+          <span class="card-type type-rich">Rich Reveal</span>
+        </div>
+        <div class="card-body">
+          <p><strong style="color:#ddd">Testimonials:</strong> 3 card masuk dari posisi berbeda (kiri, bawah, kanan) dengan stagger. Stat counter scrub seiring scroll masuk.</p>
+          <p><strong style="color:#ddd">Pricing:</strong> Cards masuk dari bawah dengan stagger. Featured card (Premium) muncul sedikit lebih awal dan lebih dramatic.</p>
+          <p><strong style="color:#ddd">Comparison:</strong> Table rows reveal satu-satu dari atas ke bawah saat scroll. Row Abadikan highlighted dengan left-border animation.</p>
+          <p><strong style="color:#ddd">FAQ:</strong> Left heading punya parallax sedikit lebih lambat dari accordion. Accordion open/close dengan smooth height animation.</p>
+          <p><strong style="color:#ddd">CTA:</strong> Radial glow background bergerak sangat lambat (parallax 0.1x). Text + button stagger masuk. Button: subtle pulse animation + magnetic hover.</p>
+        </div>
+      </div>
+
+      <!-- Tech stack -->
+      <div class="card">
+        <div class="card-head">
+          <span class="card-title">Tech Stack yang Ditambahkan</span>
+        </div>
+        <div class="card-body">
+          <p>Library berikut di-install sebagai dependency baru. Semua ringan dan mobile-friendly.</p>
+          <div class="lib-row">
+            <div class="lib-chip">lenis ~3KB</div>
+            <div class="lib-chip">gsap ~70KB</div>
+            <div class="lib-chip">@gsap/scrolltrigger included</div>
+            <div class="lib-chip">useScrollReveal → diganti composable baru</div>
+          </div>
+          <p style="margin-top:0.75rem;font-size:0.75rem;color:#666;">Mobile: Lenis dimatikan di touch device (smoothTouch: false). GSAP pinned sections punya fallback mobile — jadi sticky biasa dengan IntersectionObserver. Semua animasi pakai transform + opacity only (tidak ada layout reflow).</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
