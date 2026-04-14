@@ -11,8 +11,6 @@ import PageTentangKami from './pages/PageTentangKami.vue'
 import PageTutorial from './pages/PageTutorial.vue'
 import PageKontak from './pages/PageKontak.vue'
 import PageKoda from './pages/PageKoda.vue'
-import PageClonePreview from './pages/PageClonePreview.vue'
-
 const currentPage = ref('consumer')
 
 const navigate = (page: string) => {
@@ -36,7 +34,6 @@ const pageComponent = computed(() => {
     case 'tutorial': return PageTutorial
     case 'kontak': return PageKontak
     case 'koda': return PageKoda
-    case 'clone-preview': return PageClonePreview
     default: return LandingConsumer
   }
 })
