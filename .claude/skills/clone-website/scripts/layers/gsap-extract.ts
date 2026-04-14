@@ -51,14 +51,30 @@ export async function extractGSAP(page: Page): Promise<GSAPData> {
             targetSelectors = t.targets().map((el: Element) => getSelector(el))
           } catch {}
 
-          // Clean vars — remove internal GSAP properties
-          const vars = { ...t.vars }
-          const internalKeys = [
-            'id', 'onComplete', 'onStart', 'onUpdate', 'onReverseComplete',
-            'callbackScope', 'lazy', 'immediateRender', 'overwrite',
-            'stagger', 'scrollTrigger', 'paused',
+          // Clean vars — only keep serializable animation properties
+          const vars: Record<string, any> = {}
+          const animProps = [
+            'x', 'y', 'z', 'rotation', 'rotationX', 'rotationY', 'rotationZ',
+            'scale', 'scaleX', 'scaleY', 'opacity', 'width', 'height',
+            'top', 'left', 'right', 'bottom',
+            'xPercent', 'yPercent', 'transformOrigin',
+            'backgroundColor', 'color', 'borderColor',
+            'borderRadius', 'padding', 'margin',
+            'fontSize', 'letterSpacing', 'lineHeight',
+            'clipPath', 'filter', 'backdropFilter',
+            'ease', 'duration', 'delay', 'repeat', 'yoyo',
+            'autoAlpha', 'visibility', 'display',
+            'skewX', 'skewY', 'perspective',
           ]
-          internalKeys.forEach(k => delete vars[k])
+          for (const key of animProps) {
+            if (t.vars[key] !== undefined) {
+              const val = t.vars[key]
+              // Only keep primitive values and strings
+              if (typeof val === 'number' || typeof val === 'string' || typeof val === 'boolean') {
+                vars[key] = val
+              }
+            }
+          }
 
           return {
             targetSelectors,
@@ -83,14 +99,24 @@ export async function extractGSAP(page: Page): Promise<GSAPData> {
             if (st.trigger) triggerSelector = getSelector(st.trigger)
           } catch {}
 
-          let animationVars = null
+          let animationVars: Record<string, any> | null = null
           try {
             if (st.animation && st.animation.vars) {
-              animationVars = { ...st.animation.vars }
-              delete animationVars.onComplete
-              delete animationVars.onStart
-              delete animationVars.onUpdate
-              delete animationVars.scrollTrigger
+              animationVars = {}
+              const safeProps = [
+                'x', 'y', 'z', 'rotation', 'scale', 'scaleX', 'scaleY',
+                'opacity', 'autoAlpha', 'xPercent', 'yPercent',
+                'width', 'height', 'clipPath', 'filter',
+                'ease', 'duration', 'delay', 'transformOrigin',
+                'backgroundColor', 'color', 'borderRadius',
+                'skewX', 'skewY', 'perspective',
+              ]
+              for (const key of safeProps) {
+                const val = st.animation.vars[key]
+                if (val !== undefined && (typeof val === 'number' || typeof val === 'string' || typeof val === 'boolean')) {
+                  animationVars[key] = val
+                }
+              }
             }
           } catch {}
 
