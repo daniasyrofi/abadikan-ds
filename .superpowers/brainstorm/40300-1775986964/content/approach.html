@@ -1,0 +1,50 @@
+<h2>Seberapa "cinematic" interactivity-nya?</h2>
+<p class="subtitle">Ini menentukan library, effort, dan trade-off performa. Pilih yang paling sesuai dengan visi kamu.</p>
+
+<div class="options">
+
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Pinned Storytelling — Apple / Linear style</h3>
+      <p>Beberapa section di-"pin" sementara konten di dalamnya berubah seiring scroll. Misal: Feature section satu layar penuh, text/visual berganti saat kamu scroll. Terasa sinematik dan premium. <br><br>
+      <strong>Library:</strong> GSAP ScrollTrigger + Lenis (~73KB added)<br>
+      <strong>Effort:</strong> Tinggi — perlu rethink layout beberapa section<br>
+      <strong>Mobile:</strong> Bisa dioptimasi, tapi lebih kompleks<br>
+      <strong>Contoh:</strong> apple.com/iphone, linear.app/features
+      </p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Smooth Scroll + Rich Reveals — Stripe / Raycast style</h3>
+      <p>Lenis untuk scroll yang terasa "smooth seperti butter". Tiap section muncul dengan animasi yang lebih kaya: stagger cards, text reveal per-kata, parallax subtle pada gambar. Terasa polished tanpa redesign total.<br><br>
+      <strong>Library:</strong> Lenis + @vueuse/motion (~13KB added)<br>
+      <strong>Effort:</strong> Sedang — upgrade animasi section yang sudah ada<br>
+      <strong>Mobile:</strong> Sangat baik — smooth scroll dimatikan di touch<br>
+      <strong>Contoh:</strong> stripe.com, raycast.com
+      </p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Horizontal Scroll Gallery + Scroll Snap — Framer / Portfolio style</h3>
+      <p>Gallery tema bergerak horizontal saat page discroll vertikal. Section lain pakai scroll-snap sehingga tiap section "klik" ke tempatnya seperti presentasi. Terasa modern dan berbeda dari kompetitor.<br><br>
+      <strong>Library:</strong> GSAP atau native CSS scroll-snap (~30KB added)<br>
+      <strong>Effort:</strong> Sedang — terutama di Gallery section + page structure<br>
+      <strong>Mobile:</strong> Perlu treatment khusus — horizontal scroll bisa confusing<br>
+      <strong>Contoh:</strong> framer.com/templates, awwwards winners
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<div class="section" style="margin-top: 1.5rem; padding: 1rem; background: rgba(255,255,255,0.04); border-radius: 8px; border: 1px solid rgba(255,255,255,0.08);">
+  <p class="label">Catatan dari riset</p>
+  <p style="font-size: 0.85rem; opacity: 0.7; margin: 0.5rem 0 0;">Wedding platform = emotional, warm. Riset menunjukkan animasi paling efektif untuk konversi bukan yang paling dramatis, tapi yang paling purposeful — membantu user merasa sesuatu, bukan sekadar kagum. Kita bisa kombinasikan 2 approach jika perlu.</p>
+</div>

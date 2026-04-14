@@ -29,20 +29,20 @@ const showMega = ref(false)
 const mobileOpen = ref(false)
 
 const bgActive = computed(
-  () => isScrolled.value || hovering.value || showMega.value || mobileOpen.value
+  () => isScrolled.value || showMega.value || mobileOpen.value
 )
 
 const pillClasses = computed(() => {
-  if (!isScrolled.value && !hovering.value && !showMega.value && !mobileOpen.value) {
+  if (!isScrolled.value && !showMega.value && !mobileOpen.value) {
     // Hero state — transparent, full width
     return 'max-w-[1040px] bg-transparent border border-transparent rounded-none shadow-none'
   }
   if (showMega.value) {
-    // Mega menu open — pill top only, no shadow, no bottom radius
-    return 'max-w-[720px] bg-white border border-[var(--color-border)] rounded-t-[20px] rounded-b-none shadow-none'
+    // Mega menu open — flat top + flat bottom so mega panel connects flush
+    return 'max-w-[720px] bg-white border border-[var(--color-border)] rounded-none shadow-none'
   }
-  // Scrolled / hovered — full pill
-  return 'max-w-[720px] bg-white border border-[var(--color-border)] rounded-[20px] shadow-sm'
+  // Scrolled / hovered — flat top (flush to viewport), rounded bottom
+  return 'max-w-[720px] bg-white border border-[var(--color-border)] rounded-t-none rounded-b-[20px] shadow-sm'
 })
 
 function onScroll() {
@@ -102,7 +102,7 @@ const icons = {
     <!-- Outer positioning layer: fixed, full-width, transparent -->
     <div
       class="fixed top-0 left-0 right-0 z-[100] flex justify-center transition-[padding] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
-      :class="isScrolled ? 'px-4 py-2' : 'px-0 py-0'"
+      :class="isScrolled ? 'px-4 py-0' : 'px-0 py-0'"
     >
       <!-- Pill: visual layer — animates max-width, bg, border, radius, shadow -->
       <div
@@ -142,14 +142,15 @@ const icons = {
       <template #center>
         <!-- Desktop nav — hidden on mobile -->
         <nav
-          class="hidden md:flex h-full items-center justify-center gap-5"
+          class="hidden md:flex h-full items-center justify-center gap-[4px]"
           :style="{
             color: bgActive ? 'var(--color-text-heading)' : 'var(--color-text-inverse)',
             transition: 'color var(--duration-slow)',
           }"
         >
           <span
-            class="text-[14px] font-[500] cursor-pointer hover:opacity-70 transition-opacity whitespace-nowrap"
+            class="text-[14px] font-[600] cursor-pointer px-[8px] py-[4px] rounded-[4px] transition-colors whitespace-nowrap"
+            :class="bgActive ? 'hover:bg-black/[0.06]' : 'hover:bg-white/10'"
             @click="navigate('consumer')"
           >
             Beranda
@@ -162,7 +163,8 @@ const icons = {
             @mouseleave="onMegaLeave"
           >
             <span
-              class="text-[14px] font-[500] hover:opacity-70 transition-opacity flex items-center gap-[3px] h-full whitespace-nowrap"
+              class="text-[14px] font-[600] px-[8px] py-[4px] rounded-[4px] transition-colors flex items-center gap-[3px] whitespace-nowrap"
+              :class="bgActive ? 'hover:bg-black/[0.06]' : 'hover:bg-white/10'"
               @click="navigate('template')"
             >
               Template
@@ -384,19 +386,22 @@ const icons = {
           </div>
 
           <span
-            class="text-[14px] font-[500] cursor-pointer hover:opacity-70 transition-opacity whitespace-nowrap"
+            class="text-[14px] font-[600] cursor-pointer px-[8px] py-[4px] rounded-[4px] transition-colors whitespace-nowrap"
+            :class="bgActive ? 'hover:bg-black/[0.06]' : 'hover:bg-white/10'"
             @click="navigate('harga')"
           >
             Harga
           </span>
           <span
-            class="text-[14px] font-[500] cursor-pointer hover:opacity-70 transition-opacity whitespace-nowrap"
+            class="text-[14px] font-[600] cursor-pointer px-[8px] py-[4px] rounded-[4px] transition-colors whitespace-nowrap"
+            :class="bgActive ? 'hover:bg-black/[0.06]' : 'hover:bg-white/10'"
             @click="navigate('blog')"
           >
             Blog
           </span>
           <span
-            class="text-[14px] font-[500] cursor-pointer hover:opacity-70 transition-opacity whitespace-nowrap"
+            class="text-[14px] font-[600] cursor-pointer px-[8px] py-[4px] rounded-[4px] transition-colors whitespace-nowrap"
+            :class="bgActive ? 'hover:bg-black/[0.06]' : 'hover:bg-white/10'"
             @click="navigate('tentang-kami')"
           >
             Tentang Kami

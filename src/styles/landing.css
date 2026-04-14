@@ -1,0 +1,226 @@
+/* ============================================================
+   landing.css — Shared stylesheet for Abadikan.id landing pages
+   and sub-pages. Consumes tokens from globals.css.
+   ============================================================ */
+
+
+/* ── Typography ─────────────────────────────────────────── */
+
+.landing-hero-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 7vw + 1rem, 5rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+}
+
+.landing-h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw + 0.5rem, 3rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+.landing-h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2vw + 0.4rem, 1.75rem);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  font-weight: 700;
+}
+
+.landing-overline {
+  font-family: var(--font-ui);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.landing-subtitle {
+  font-family: var(--font-ui);
+  font-size: clamp(1rem, 0.5vw + 0.875rem, 1.25rem);
+  line-height: 1.65;
+  color: var(--color-text-secondary);
+  max-width: 44ch;
+}
+
+.landing-body {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-text-primary);
+}
+
+
+/* ── Layout ─────────────────────────────────────────────── */
+
+.landing-section {
+  padding-block: clamp(80px, 12vh, 160px);
+  width: 100%;
+}
+
+.landing-container {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(32px, 10%, 200px);
+}
+
+.landing-container--narrow {
+  max-width: 880px;
+  margin-inline: auto;
+  padding-inline: clamp(32px, 10%, 200px);
+}
+
+.landing-container--wide {
+  max-width: 1400px;
+  margin-inline: auto;
+  padding-inline: clamp(32px, 10%, 200px);
+}
+
+
+/* ── Page mini-hero (sub-pages) ─────────────────────────── */
+
+.landing-page-hero {
+  padding-block: clamp(60px, 10vh, 120px);
+  text-align: center;
+  background: var(--color-bg-subtle);
+}
+
+
+/* ── Scroll Reveal Animations ───────────────────────────── */
+
+/* Base state — hidden before reveal */
+.landing-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 500ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Revealed state */
+.landing-reveal.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered children — add data-reveal-child on each child */
+.landing-reveal [data-reveal-child] {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* When parent is revealed, children fade in staggered — capped at 400ms total */
+.landing-reveal.is-revealed [data-reveal-child]:nth-child(1)  { opacity: 1; transform: translateY(0); transition-delay: 0ms; }
+.landing-reveal.is-revealed [data-reveal-child]:nth-child(2)  { opacity: 1; transform: translateY(0); transition-delay: 60ms; }
+.landing-reveal.is-revealed [data-reveal-child]:nth-child(3)  { opacity: 1; transform: translateY(0); transition-delay: 120ms; }
+.landing-reveal.is-revealed [data-reveal-child]:nth-child(4)  { opacity: 1; transform: translateY(0); transition-delay: 180ms; }
+.landing-reveal.is-revealed [data-reveal-child]:nth-child(5)  { opacity: 1; transform: translateY(0); transition-delay: 240ms; }
+.landing-reveal.is-revealed [data-reveal-child]:nth-child(6)  { opacity: 1; transform: translateY(0); transition-delay: 300ms; }
+.landing-reveal.is-revealed [data-reveal-child]:nth-child(7)  { opacity: 1; transform: translateY(0); transition-delay: 340ms; }
+.landing-reveal.is-revealed [data-reveal-child]:nth-child(8)  { opacity: 1; transform: translateY(0); transition-delay: 370ms; }
+.landing-reveal.is-revealed [data-reveal-child]:nth-child(9)  { opacity: 1; transform: translateY(0); transition-delay: 390ms; }
+.landing-reveal.is-revealed [data-reveal-child]:nth-child(10) { opacity: 1; transform: translateY(0); transition-delay: 400ms; }
+.landing-reveal.is-revealed [data-reveal-child]:nth-child(11) { opacity: 1; transform: translateY(0); transition-delay: 400ms; }
+.landing-reveal.is-revealed [data-reveal-child]:nth-child(12) { opacity: 1; transform: translateY(0); transition-delay: 400ms; }
+
+/* ── CSS Scroll-Driven Animations (Chrome 115+, compositor thread) ── */
+@supports (animation-timeline: view()) {
+  .landing-reveal {
+    animation: landing-reveal-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+    /* reset transition — animation handles it */
+    transition: none;
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  .landing-reveal.is-revealed {
+    /* IO still adds this class as fallback — no-op in @supports context */
+  }
+  @keyframes landing-reveal-in {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Children with CSS scroll-driven stagger via animation-delay */
+  .landing-reveal [data-reveal-child] {
+    animation: landing-reveal-in linear both;
+    animation-timeline: view(block);
+    animation-range: entry 0% entry 40%;
+    transition: none;
+  }
+  .landing-reveal [data-reveal-child]:nth-child(1)  { animation-delay: 0ms; }
+  .landing-reveal [data-reveal-child]:nth-child(2)  { animation-delay: 60ms; }
+  .landing-reveal [data-reveal-child]:nth-child(3)  { animation-delay: 120ms; }
+  .landing-reveal [data-reveal-child]:nth-child(4)  { animation-delay: 180ms; }
+  .landing-reveal [data-reveal-child]:nth-child(5)  { animation-delay: 240ms; }
+  .landing-reveal [data-reveal-child]:nth-child(6)  { animation-delay: 300ms; }
+  .landing-reveal [data-reveal-child]:nth-child(n+7) { animation-delay: 340ms; }
+}
+
+/* ── Snap carousel (shared across sections) ──────────────── */
+.snap-carousel {
+  display: flex;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior-x: contain;
+  scroll-padding-inline: clamp(20px, 5vw, 32px);
+  gap: 16px;
+  padding-inline: clamp(20px, 5vw, 32px);
+  padding-block: 8px;
+}
+.snap-carousel::-webkit-scrollbar { display: none; }
+
+.snap-card {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  flex: 0 0 calc(100% - clamp(40px, 10vw, 64px));
+}
+
+/* ── Sticky split layout ─────────────────────────────────── */
+.sticky-split {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 768px) {
+  .sticky-split {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .sticky-split__panel {
+    position: sticky;
+    top: 6rem;
+    align-self: start;
+  }
+}
+
+
+/* ── Utility ─────────────────────────────────────────────── */
+
+.landing-divider {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  width: 100%;
+}
+
+
+/* ── Reduced motion ──────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-reveal,
+  .landing-reveal [data-reveal-child] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

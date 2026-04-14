@@ -92,6 +92,7 @@
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-xl: 16px;
+  --radius-2xl: 9999px;
   --radius-full: 9999px;
 
   /* ── Motion: duration ─────────────────────────────────────── */
@@ -189,9 +190,9 @@
     --color-text-disabled: var(--primitive-neutral-300);
     --color-text-inverse: #ffffff;
 
-    --color-primary: var(--primitive-red-base);
-    --color-primary-hover: var(--primitive-red-dark);
-    --color-primary-light: var(--primitive-red-light);
+    --color-primary: var(--primitive-neutral-900);
+    --color-primary-hover: var(--primitive-neutral-800);
+    --color-primary-light: var(--primitive-neutral-100);
     --color-primary-text: #ffffff;
 
     --color-secondary: var(--primitive-pink-base);
@@ -345,6 +346,20 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    /* Prevent accidental pull-to-refresh on Android/MIUI */
+    overscroll-behavior-y: contain;
+  }
+
+  /* Remove gray tap flash on Android Chrome */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Native tap feedback on interactive elements */
+  a:active,
+  button:active,
+  [role="button"]:active {
+    opacity: 0.85;
   }
 
   /* ── Typography utilities ─────────────────────────────────────── */
