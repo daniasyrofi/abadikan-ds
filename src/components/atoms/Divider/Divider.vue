@@ -57,7 +57,7 @@ const labelClasses = computed(() => cn('text-xs shrink-0', isHorizontal.value ? 
       />
       <span
         :class="labelClasses"
-        :style="{ color: 'var(--color-text-secondary)', backgroundColor: 'var(--color-surface)' }"
+        :style="{ color: 'var(--color-text-secondary)', backgroundColor: 'transparent' }"
         >{{ label }}</span
       >
       <div
