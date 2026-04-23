@@ -42,6 +42,9 @@ export default meta
 type Story = StoryObj
 
 const RED = '#D0003E'
+const BASE = import.meta.env.BASE_URL
+const WORDMARK_URL = `${BASE}abadikan-wordmark.svg`
+const DECOR_URL = `${BASE}abadikan-decor.svg`
 
 const GRID = 'display:grid;grid-template-columns:320px 1fr;min-height:100vh;width:100%;align-items:start;'
 const LEFT = `background-color:${RED};display:flex;flex-direction:column;height:100vh;padding:0 1.75rem 2rem;position:sticky;top:0;overflow:hidden;box-sizing:border-box;`
@@ -70,10 +73,10 @@ function leftPanel(tagline: string) {
   return `
     <div style="${LEFT}">
       <div style="${LOGO_WRAP}">
-        <img src="/abadikan-wordmark.svg" height="22" alt="abadikan.id" />
+        <img src="${WORDMARK_URL}" height="22" alt="abadikan.id" />
       </div>
       <div style="${DECOR}">
-        <img src="/abadikan-decor.svg" alt="" style="width:100%;display:block;opacity:0.6;" />
+        <img src="${DECOR_URL}" alt="" style="width:100%;display:block;opacity:0.6;" />
       </div>
       <p style="${TAGLINE}">${tagline}</p>
     </div>`
@@ -662,10 +665,10 @@ export const AuthFlow: Story = {
 
         <div style="${LEFT}">
           <div style="${LOGO_WRAP}">
-            <img src="/abadikan-wordmark.svg" height="22" alt="abadikan.id" />
+            <img src="${WORDMARK_URL}" height="22" alt="abadikan.id" />
           </div>
           <div style="${DECOR}">
-            <img src="/abadikan-decor.svg" alt="" style="width:100%;display:block;opacity:0.6;" />
+            <img src="${DECOR_URL}" alt="" style="width:100%;display:block;opacity:0.6;" />
           </div>
           <Transition name="tagline" mode="out-in">
             <p :key="tagline" style="${TAGLINE}" v-html="tagline"></p>
